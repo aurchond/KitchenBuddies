@@ -1,4 +1,4 @@
-package org.scheduling;
+package org.recipe_processing;
 
 public class Main {
     public static void main(String[] args) {
