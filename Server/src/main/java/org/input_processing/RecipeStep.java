@@ -1,4 +1,4 @@
-package org.recipe_processing;
+package org.input_processing;
 
 import java.util.List;
 
