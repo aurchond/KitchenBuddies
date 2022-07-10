@@ -8,6 +8,8 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
+        RecipeCreator rp = new RecipeCreator();
+
     }
     public static Recipe  createRecipe(
             List<Step> Steps,
