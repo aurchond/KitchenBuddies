@@ -33,12 +33,16 @@ public class Main {
         final Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
 
-        tx = createAsparagus(tx, session);
+        // These recipes are hard coded for testing purposes
+        createAsparagus(session);
+        createChicken(session);
+
+        tx.commit();
         tx.close();
     }
 
     //https://www.simplyrecipes.com/recipes/asparagus/
-    private static Transaction createAsparagus(Transaction tx, Session s) {
+    private static void createAsparagus(Session s) {
         // Step 1
         // Boil water in saucepan
         List<String> r1_ingredients = new ArrayList<String>();
@@ -109,8 +113,147 @@ public class Main {
         s.save(s1);
         s.save(s2);
         s.save(s3);
-        tx.commit();
 
-        return tx;
+//        return s;
     }
+
+    private static void createChicken(Session s) {
+        // Step 1
+        // Stir spices
+        List<String> ingredients = new ArrayList<String>();
+        ingredients.add("Flour");
+        ingredients.add("Salt");
+        ingredients.add("Pepper");
+        ingredients.add("Tarragon");
+        ingredients.add("Ginger");
+        ingredients.add("Mustard Powder");
+        ingredients.add("Thyme");
+        ingredients.add("Garlic Powder");
+        ingredients.add("Oregano");
+
+        List<Number> quantity = new ArrayList<Number>();
+        quantity.add(2);
+        quantity.add(2);
+        quantity.add(2);
+        quantity.add(1);
+        quantity.add(1);
+        quantity.add(1);
+        quantity.add(1);
+        quantity.add(1);
+        quantity.add(1);
+
+        List<String> tools = new ArrayList<String>();
+        tools.add("Spoon");
+        Step s1 = new Step(26L, 1, true, "bowl",
+                0, 5, 5, ingredients, quantity, tools);
+
+        ingredients.clear();
+        quantity.clear();
+        tools.clear();
+
+        // Step 2
+        // Beat eggs/milk\
+        ingredients.add("Eggs");
+        ingredients.add("Milk");
+
+        quantity.add(1);
+        quantity.add(0.25);
+
+        tools.add("Spoon");
+        Step s2 = new Step(26L, 2, true, "bowl",
+                0, 5, 5, ingredients, quantity, tools);
+
+        ingredients.clear();
+        quantity.clear();
+        tools.clear();
+
+        // Step 3
+        // Dredge Chicken
+        ingredients.add("Flour mix");
+        ingredients.add("Egg mix");
+        ingredients.add("Chicken");
+
+        quantity.add(1);
+        quantity.add(1);
+        quantity.add(8);
+
+        Step s3 = new Step(26L, 3, true, "plate",
+                0, 10, 15, ingredients, quantity, tools);
+
+        ingredients.clear();
+        quantity.clear();
+        tools.clear();
+
+        // Step 4
+        // Heat oven
+        Step s4 = new Step(26L, 4, false, "none",
+                0, 5, 1);
+
+        // Step 5
+        // Heat pan
+        Step s5 = new Step(26L, 5, false, "pan",
+                0, 1, 5);
+
+        // Step 6
+        // Pan fry chicken
+        ingredients.add("Chicken");
+        quantity.add(8);
+        tools.add("Spatula");
+        Step s6 = new Step(26L, 6, true, "none",
+                0, 5, 20, ingredients, quantity, tools);
+
+        ingredients.clear();
+        quantity.clear();
+        tools.clear();
+
+        // Step 7
+        // Bake chicken
+        ingredients.add("Chicken");
+        quantity.add(8);
+        tools.add("Spatula");
+        Step s7 = new Step(26L, 7, false, "baking sheet",
+                0, 2, 22, ingredients, quantity, tools);
+
+        // Step 8
+        // Take out food
+        Step s8 = new Step(26L, 8, false, "baking sheet",
+                0, 2, 50);
+
+
+        s1.addConnection(s3, 5);
+        s2.addConnection(s3, 5);
+        s3.addConnection(s6, 15);
+        s4.addConnection(s7, 5);
+        s5.addConnection(s6, 5);
+        s6.addConnection(s7, 20);
+        s7.addConnection(s8, 50);
+
+        s.save(s1);
+        s.save(s2);
+        s.save(s3);
+        s.save(s4);
+        s.save(s5);
+        s.save(s6);
+        s.save(s7);
+        s.save(s8);
+
+
+//        return s;
+    }
+
+    // TODO: Helper Functions for Database
+    /*
+    - Add Step to Recipe (or should we just add all the steps in one session?)
+    - Remove Step from Recipe
+    - Delete Recipe from database
+    - Update Recipe (add, delete, or modify properties)
+    - Copy over all nodes/connections from Recipe
+     */
+
+    // TODO: Add additional properties for a recipe
+    /*
+    - Add action (what is the step actually doing?) i.e. frying, baking, chopping, dicing, etc.
+    - Add measurement scales i.e. cups, tablespoons, etc.
+     */
+
 }
