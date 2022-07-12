@@ -1,4 +1,4 @@
-package com.example.kitchenbuddies.ui.dashboard
+package com.example.kitchenbuddies.ui.newMealSession
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
