@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:padding="16dp"
                 android:text="Property 1"
-                android:textColor="@color/dark_grey"
+                android:textColor="@color/purple_200"
                 android:textSize="18sp"
                 android:layout_toLeftOf="@id/tv_prop2"
                 android:maxLines="1"/>
@@ -49,7 +49,7 @@
                 android:id="@+id/tv_prop2"
                 android:text="Property 2"
                 android:textSize="18sp"
-                android:textColor="@color/dark_grey"
+                android:textColor="@color/purple_200"
                 android:padding="16dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
@@ -62,7 +62,7 @@
                 android:id="@+id/tv_prop3"
                 android:text="Property 3"
                 android:textSize="18sp"
-                android:textColor="@color/dark_grey"
+                android:textColor="@color/purple_200"
                 android:padding="16dp"
                 android:layout_below="@id/tv_prop1"/>
 

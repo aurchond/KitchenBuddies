@@ -1,10 +1,11 @@
-package com.example.kitchenbuddies
+package com.example.kitchenbuddies.ui.helper
 
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kitchenbuddies.R
 import kotlinx.android.synthetic.main.simple_expander.view.*
 import layout.Recipe
 
