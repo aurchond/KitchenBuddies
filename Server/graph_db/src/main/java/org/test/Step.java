@@ -10,14 +10,15 @@ import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
-@NodeEntity(label="Test_Step")
+@NodeEntity(label="Step")
 //this defines our step node and all its attributes
 public class Step {
     private String name;
 
-     //TODO: make ID like recipeID.stepID double?
-    private Long recipeID; //number identifying recipe in database
     @Id
+    private Double nodeID;
+
+    private Long recipeID; //number identifying recipe in database
     private Integer stepID; //step number from original recipe
     private Boolean prepStep; //defines if it is a prep step
     private String holdingResource; //what the ingredients are being kept in
@@ -46,7 +47,9 @@ public class Step {
         this.ingredientList = ingredientList;
         this.ingredientQuantity = ingredientQuantity;
         this.resourcesRequired = resourcesRequired;
-        this.name = stepID.toString();
+        Double step = Double.valueOf(stepID);
+        this.nodeID = recipeID.doubleValue() + Double.valueOf(step/10);
+        this.name = this.nodeID.toString();
     }
 
     //for steps like: "preheat oven to 350 degrees", there are no ingredients or resources required
@@ -59,6 +62,9 @@ public class Step {
         this.holdingID = holdingID;
         this.stepTime = stepTime;
         this.timeLeft = timeLeft;
+        Double step = Double.valueOf(stepID);
+        this.nodeID = recipeID.doubleValue() + Double.valueOf(step/10);
+        this.name = this.nodeID.toString();
     }
 
     public void addConnection(Step target, int distance) {
