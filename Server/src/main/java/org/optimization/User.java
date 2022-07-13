@@ -4,7 +4,7 @@ public class User {
     // Linked List with all their tasks
     // Pointer to most recent/current task
     // Int counter of how much work User is currently tasked
-
+    String name;
 
     public User () {
 

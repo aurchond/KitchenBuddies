@@ -7,10 +7,30 @@ import org.neo4j.ogm.annotation.Relationship;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Map.Entry;
+import java.util.AbstractMap.SimpleEntry;
 
 @NodeEntity(label="Step")
 //this defines our step node and all its attributes
 public class Step {
+    /*
+    This class represents a Step in a Recipe and contains the following
+
+    Double - id - RecipeId.StepId
+    Long - recipeId - identifies which recipe it is a part of (TODO: we will have to store in a db which integers match with which recipe titles)
+    Integer - StepId - the step number from the original recipe
+    List of Sting - ingredients - list of ingredients needed in this step
+    List of float - quantity - amount and unit for each ingredient in list above
+    Boolean - isPrepStep - True if this step involved preparation instead of cooking
+    List of Strings - toolsRequired - list of additional told to help with the step (eg knife)
+    String - holdingResource - the resource that contains the ingredients in this step (eg. cutting board, bowl, pan etc)
+    Integer - holdingId - keeps track of the various holding resources (ie, bowl1 vs bowl2)
+    Float - stepTime - the time it takes to complete the step in minutes TODO: need to check if we have access to a time class
+    Float - recipeTimeLeft - the time it takes to complete all the steps before this one in minutes
+    String - instructions - The text instructions for this step
+    TODO: does the step need to know there is a time dependency
+    # TODO: double check this(how do we keep the same element between steps) - For appliance such as stove we will keep a count of which elements are free and therefore it is part of toolsRequired?
+     */
     private String name;
 
     @Id
@@ -24,8 +44,10 @@ public class Step {
     private Integer stepTime; //how much time it takes to complete step
     private Integer timeLeft; //how much time remaining to complete original recipe
     private List<String> ingredientList; //names of ingredients
-    private List<Number> ingredientQuantity; //quantities of ingredients
+    private List<Entry<Integer, String>> ingredientQuantity; //quantities of ingredients [[8, cups]
     private List<String> resourcesRequired; //kitchen equipment like knife, cheese grater, etc.
+
+    private String instructions;
 
 
     @Relationship(type = Connection.TYPE, direction = Relationship.OUTGOING)
@@ -34,7 +56,7 @@ public class Step {
     //most used constructor
     public Step(Long recipeID, Integer stepID, Boolean prepStep, String holdingResource,
                 Integer holdingID, Integer stepTime, Integer timeLeft, List<String> ingredientList,
-                List<Number> ingredientQuantity, List<String> resourcesRequired) {
+                List<Entry<Integer, String>> ingredientQuantity, List<String> resourcesRequired) {
         this.recipeID = recipeID;
         this.stepID = stepID;
         this.prepStep = prepStep;
@@ -82,6 +104,18 @@ public class Step {
     public List<String> getIngredientList() { return this.ingredientList; }
     public List<Number> getIngredientQuantity() { return this.ingredientQuantity; }
     public List<String> getResourcesRequired() { return resourcesRequired; }
+    public List<Step> getTimeDependencies() {
+        //TODO: find all time dependencies
+        // return connections;
+        Step s;
+        return listOf(s);
+    }
+    public List<Step> getResourceDependencies() {
+        //TODO: find all Resource dependencies
+        // return connections;
+        Step s;
+        return listOf(s);
+    }
 
     //setter functions
     public void setRecipeID(Long ID) { this.recipeID = ID; }
