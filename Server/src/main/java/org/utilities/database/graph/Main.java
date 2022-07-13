@@ -26,13 +26,18 @@ public class Main {
                 .uri(uri)
                 .credentials("neo4j", "9hCaQ7nmAyf5AAkUwjrk5lY8ejC61PYa2-4-zLBc6hg")
                 .build();
-        SessionFactory sessionFactory = new SessionFactory(configuration, "org.test");
+        SessionFactory sessionFactory = new SessionFactory(configuration, "org.utilities.database.graph");
         final Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
 
         // These recipes are hard coded for testing purposes
-        createAsparagus(session);
-        createChicken(session);
+        //createAsparagus(session);
+        //createChicken(session);
+
+        Step s_test = new Step(372L, 7, false, "pan",
+                0, 5, 1);
+        s_test.setStepID(5);
+        session.save(s_test);
 
         tx.commit();
         tx.close();
@@ -240,6 +245,7 @@ public class Main {
 
     // TODO: Helper Functions for Database
     /*
+
     - Add Step to Recipe (or should we just add all the steps in one session?)
     - Remove Step from Recipe
     - Delete Recipe from database

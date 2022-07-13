@@ -40,6 +40,7 @@ public class Step {
         this.prepStep = prepStep;
         this.holdingResource = holdingResource;
         this.holdingID = holdingID;
+
         this.stepTime = stepTime;
         this.timeLeft = timeLeft;
         this.ingredientList = ingredientList;
@@ -70,6 +71,7 @@ public class Step {
     }
 
     //getter functions
+    public Double getNodeID() { return this.nodeID; }
     public Long getRecipeID() { return this.recipeID; }
     public Integer getStepID() {
         return this.stepID;
@@ -84,8 +86,19 @@ public class Step {
     public List<String> getResourcesRequired() { return resourcesRequired; }
 
     //setter functions
-    public void setRecipeID(Long ID) { this.recipeID = ID; }
-    public void setStepID(Integer ID) { this.stepID = ID; }
+    public void setRecipeID(Long ID) {
+        this.recipeID = ID;
+
+        this.nodeID = ID.doubleValue() + this.stepID; //TODO: include check to make all node IDs unique?
+        this.name = this.nodeID.toString();
+    }
+    public void setStepID(Integer ID) {
+        this.stepID = ID;
+
+        Double step = Double.valueOf(stepID);
+        this.nodeID = this.recipeID.doubleValue() + Double.valueOf(step/10);
+        this.name = this.nodeID.toString();
+    }
     public void setPrepStep(Boolean prep) { this.prepStep = prep; }
     public void setHoldingResource(String holdingResource) { this.holdingResource = holdingResource; }
     public void setHoldingID(Integer holdingID) { this.holdingID = holdingID; }
