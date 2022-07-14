@@ -7,16 +7,52 @@ import org.neo4j.ogm.transaction.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
 
         buildSampleRecipe();
+        testHelperFunctions();
+    }
 
-//        System.out.println(session.countEntitiesOfType(Step.class) + " stations saved");
-//        getRoute("Step 1", "Step 3", session);
-//        System.out.println(session.load(Step.class, s3.getRecipeID()).getStepID());
+    private static void testHelperFunctions() {
+        System.out.println("Hello world!");
+        String uri = "neo4j+s://db42e3f1.databases.neo4j.io";
+        Configuration configuration = new Configuration.Builder()
+                .uri(uri)
+                .credentials("neo4j", "9hCaQ7nmAyf5AAkUwjrk5lY8ejC61PYa2-4-zLBc6hg")
+                .build();
+        SessionFactory sessionFactory = new SessionFactory(configuration, "org.utilities.database.graph");
+        final Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
 
+        Step s_test = new Step(372L, 7, false, "pan",
+                0, 5, 1, "fry");
+        s_test.setStepID(5);
+        session.save(s_test);
+
+       RecipeHelper.deleteRecipe(session, 372L);
+       Iterable<Step> myRecipe;
+       myRecipe = RecipeHelper.copyRecipe(session, 25L);
+       for (Step t : myRecipe) {
+           Set<Connection> mySet = t.getConnections();
+           if (!mySet.isEmpty()) { //remember to have this check every time we look through a set!
+               System.out.println(mySet.iterator().next().getId());
+           }
+           //NOTE: you can modify the properties of the nodes
+           // but DO NOT save them otherwise the original recipe will be replaced
+           // there is a clone method available w/ APOC (call apoc.refactor.cloneNodes)
+       }
+
+       Iterable<Step> myHead;
+       myHead = RecipeHelper.getHeadNode(session, 26L);
+       for (Step t : myHead) {
+           System.out.println(t.getNodeID());
+       }
+
+       tx.commit();
+       tx.close();
     }
 
     private static void buildSampleRecipe() {
@@ -31,30 +67,8 @@ public class Main {
         Transaction tx = session.beginTransaction();
 
         // These recipes are hard coded for testing purposes
-        //createAsparagus(session);
-        //createChicken(session);
-
-        ///TESTING HELPER FUNCTIONS///
-        /*Step s_test = new Step(372L, 7, false, "pan",
-                0, 5, 1);
-        s_test.setStepID(5);
-        session.save(s_test);
-
-       deleteRecipe(session, 372L);
-       Iterable<Step> myRecipe;
-       myRecipe = copyRecipe(session, 25L);
-       for (Step t : myRecipe) {
-           Set<Connection> mySet = t.getConnections();
-           if (!mySet.isEmpty()) { //remember to have this check every time we look through a set!
-               System.out.println(mySet.iterator().next().getId());
-           }
-       }
-
-       Iterable<Step> myHead;
-       myHead = getHeadNode(session, 26L);
-       for (Step t : myHead) {
-           System.out.println(t.getNodeID());
-       }*/
+        createAsparagus(session);
+        createChicken(session);
 
        tx.commit();
        tx.close();

@@ -9,14 +9,9 @@ import java.util.Map;
 
 public class RecipeHelper {
 
-    // TODO: Helper Functions for Database
-    /*
+    /* TODO:
     - Add Step to Recipe (or should we just add all the steps in one session?)
     - Update Recipe (add, delete, or modify properties)
-     */
-
-    // TODO: Add additional properties for a recipe
-    /*
     - Add measurement scales i.e. cups, tablespoons, etc.
      */
 
