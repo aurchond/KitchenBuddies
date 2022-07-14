@@ -12,7 +12,7 @@
 
 
     <TextView
-        android:id="@+id/tv_medications"
+        android:id="@+id/tv_selected_recipes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -23,10 +23,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+        android:id="@+id/rv_selected_recipes"
         android:textColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:scrollbars="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 
@@ -35,7 +36,7 @@
         android:text="Add Recipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/recycler_view" />
+        app:layout_constraintTop_toBottomOf="@+id/rv_selected_recipes" />
 
 
 
@@ -49,4 +50,20 @@
         android:textStyle="bold"
         android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_cooking_buddies"
+        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+    <Button
+        android:id="@+id/tv_add_buddy"
+        android:text="Add Buddy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/rv_cooking_buddies" />
 </LinearLayout>

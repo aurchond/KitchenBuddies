@@ -2,15 +2,26 @@ package com.smacm.fydp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.OrientationHelper
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_new_meal_session.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
         setUpTabBar()
+    }
+
+    public fun setLayoutManager() {
+        // for the Cooking Buddies recycler view in the New Meal Session fragment
+        rv_cooking_buddies.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
     }
 
     private fun setUpTabBar()
