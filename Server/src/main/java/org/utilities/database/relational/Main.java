@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
     }
-    public HashMap<String, List<Integer>>  relationDbFunctionGetConstraints(User p_bud){
+    public static HashMap<String, List<Integer>>  relationDbFunctionGetConstraints(User p_bud){
         return new HashMap<String, List<Integer>>();
     }
 }

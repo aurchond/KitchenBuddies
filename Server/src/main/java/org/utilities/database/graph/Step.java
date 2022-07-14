@@ -10,6 +10,8 @@ import java.util.Set;
 import java.util.Map.Entry;
 import java.util.AbstractMap.SimpleEntry;
 
+import static org.neo4j.capabilities.Type.listOf;
+
 @NodeEntity(label="Step")
 //this defines our step node and all its attributes
 public class Step {
@@ -102,13 +104,13 @@ public class Step {
     public Integer getStepTime() { return this.stepTime; }
     public Integer getTimeLeft() { return this.timeLeft; }
     public List<String> getIngredientList() { return this.ingredientList; }
-    public List<Number> getIngredientQuantity() { return this.ingredientQuantity; }
+    public List<Entry<Integer,String>> getIngredientQuantity() { return this.ingredientQuantity; }
     public List<String> getResourcesRequired() { return resourcesRequired; }
     public List<Step> getTimeDependencies() {
         //TODO: find all time dependencies
         // return connections;
-        Step s;
-        return listOf(s);
+        Step s = new Step();
+        return (List<Step>) listOf(s);
     }
     public List<Step> getResourceDependencies() {
         //TODO: find all Resource dependencies
@@ -126,7 +128,7 @@ public class Step {
     public void setStepTime(Integer stepTime) { this.stepTime = stepTime; }
     public void setTimeLeft(Integer timeLeft) { this.timeLeft = timeLeft; }
     public void setIngredientList(List<String> ingredientList) { this.ingredientList = ingredientList; }
-    public void setIngredientQuantity(List<Number> ingredientQuantity) { this.ingredientQuantity = ingredientQuantity; }
+    public void setIngredientQuantity(List<Entry<Integer,String>> ingredientQuantity) { this.ingredientQuantity = ingredientQuantity; }
     public void setResourcesRequired(List<String> resourcesRequired) { this.resourcesRequired = resourcesRequired; }
 
 // hashCode, equals, toString, no-arg constructor ommitted..
