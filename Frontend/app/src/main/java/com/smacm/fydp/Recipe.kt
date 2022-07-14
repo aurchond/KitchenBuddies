@@ -1,6 +1,6 @@
-package com.example.kitchenbuddies.models
+package com.smacm.fydp
 
-class Recipe (
+data class Recipe (
     var name: String,
     var cook_time: String,
     var difficulty: String,

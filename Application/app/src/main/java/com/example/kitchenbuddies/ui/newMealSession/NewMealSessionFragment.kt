@@ -67,26 +67,5 @@ class NewMealSessionFragment : Fragment() {
             "Refill required---------- DO OTHIS and don't look back on it yuh",
             "Directions: Take daily at 9:00am (on empty stomach)."
         ))
-
-//        medicationsList.add(Medications(
-//            "Brilinta",
-//            "10 mg",
-//            "New prescription required",
-//            "Directions: Take twice a week at 11:00am"
-//        ))
-//
-//        medicationsList.add(Medications(
-//            "Libitor",
-//            "25 mg",
-//            "",
-//            "Directions: Take four times a week at 3:15pm"
-//        ))
-//
-//        medicationsList.add(Medications(
-//            "Warfarin",
-//            "100 mg",
-//            "",
-//            "Directions: Take once a week at 12:00pm"
-//        ))
     }
 }
