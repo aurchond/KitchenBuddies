@@ -257,6 +257,10 @@ public class Main {
     }
 
     public static ArrayList<Step> getRecipeFromDatabase(String recipeName){
+        /**
+         * two helper function getHeadNode(the head step), getAllNodes(iterable step list)
+         * loop through all nodes and add to hashmap<id,step>
+         */
         return new ArrayList<Step>();//TODO: fill in properly
     }
 

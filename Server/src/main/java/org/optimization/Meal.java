@@ -18,7 +18,6 @@ public class Meal {
 
     }
 
-
     public void createMeal(List<List<Step>> recipes, List<User> buddies) {
 
         /* Objects to pass in
@@ -128,8 +127,6 @@ public class Meal {
         // Check which user has the least amount of work so far
 
         // Check if constraint is available at this time
-
-
 
         /*
             // LOOP through current node and it's previous time dependent tasks
