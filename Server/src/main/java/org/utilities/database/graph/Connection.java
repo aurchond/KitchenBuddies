@@ -14,6 +14,9 @@ public class Connection {
     private Step start;
     @EndNode
     private Step end;
+
+    // If time < 0>, it is resource dependent
+    // If time >= 0, it is time dependent
     private Integer time;
 
     ////CONSTRUCTORS////

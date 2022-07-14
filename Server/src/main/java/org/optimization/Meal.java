@@ -1,6 +1,8 @@
 package org.optimization;
 
 
+import org.recipe_processing.Recipe;
+import org.utilities.database.graph.Connection;
 import org.utilities.database.graph.Step;
 
 import java.util.ArrayList;
@@ -13,12 +15,11 @@ public class Meal {
     // Hashmap of Kitchen Constraints (key=string, value=list<int>(each element is time the resource is next available))
     // List of Task Stacks (each element is a Task Class)
 
-
     public Meal () {
 
     }
 
-    public void createMeal(List<List<Step>> recipes, List<User> buddies) {
+    public void createMeal(List<Recipe> recipes, List<User> buddies) {
 
         /* Objects to pass in
             - List of Recipe keys to access database
@@ -49,21 +50,11 @@ public class Meal {
         List<Step> evalSteps = new ArrayList<Step>();
 
         // Initialize evalSteps list - get the last step in each recipe
-        for (List<Step> recipe: recipes) {
-            evalSteps.add(recipe.get(0)); //TODO: This assumes the first node is the final node in the recipe (MAKE SURE IT IS)
+        for (Recipe recipe: recipes) {
+            evalSteps.add(recipe.getFinalStep()); //TODO: This assumes the first node is the final node in the recipe (MAKE SURE IT IS)
         }
 
         // What if we store the last node of each recipe and have a hashmap for the rest of the nodes
-
-        //TODO: Take this out if first node is final recipe step
-        // Find end node of each recipe
-        // Instead of for loop to traverse, we could query the database to get the head node
-        // Should we just add a Step property called isLastStep and do a query?
-        /*  for each recipe
-                for recipe.node
-                    if recipe.node.next is null
-                        evalNodes.add(recipe.node)
-        */
 
         while (evalSteps.size() > 0) {
             // Find step to assign to user based on timeLeft
@@ -95,19 +86,25 @@ public class Meal {
             Step currStep = evalSteps.get(currStepId);
 
             // Helper function -> assign Step to User
-            this.mapResourceStepToUser(currStep);
+            this.mapResourceStepToUser(currStep, buddies, constraints);
 
             // Add all time dependent previous tasks from the current node to a new list
             List<Step> timeDependSteps = new ArrayList<Step>();
 
             // Iterate through time dependent tasks
-            for(Step s: currStep.getTimeDependencies()) {
-                this.mapTimeStepToUser(s);
+            for(Connection c: currStep.getTimeDependencies()) {
+                // step -> time dependent step before it
+
+                // TODO: Check whether we need to compare this Step's id to get the Step object from the hashmap
+                Step tStep = c.getEndNode();
+                Integer stepTime = c.getConnectionTime();
+
+                this.mapTimeStepToUser(tStep, stepTime);
             }
 
             // Add all resource dependent previous tasks from the current node to the evalNodes
-            for(Step s: currStep.getResourceDependencies()) {
-                evalSteps.add(s);
+            for(Connection c: currStep.getResourceDependencies()) {
+                evalSteps.add(c.getEndNode());
             }
 
 
@@ -118,29 +115,41 @@ public class Meal {
 
     }
 
-    private void mapTimeStepToUser(Step s) {
+    private void mapTimeStepToUser(
+            Step s,
+            Integer timeBetweenSteps,
+            Integer currTime,
+            List<User> buddies,
+            HashMap<String, List<Integer>> constraints
+    ) {
         // we could give more priority to the same user that just did the resource task that this task relies on
         System.out.println("");
     }
 
-    private void mapResourceStepToUser(Step s) {
+//    currNode = NodeE
+//    time = 11
+//    timeDependantNodes = [(NodeB, 10), (NodeC,15), (NodeD dependencies)]
+
+    private void mapResourceStepToUser(
+            Step s,
+            List<User> buddies,
+            HashMap<String, List<Integer>> constraints
+    ) {
         // Check which user has the least amount of work so far
+        Integer leastUserTime = buddies.get(0).getUserTime();
+        User user = buddies.get(0);
+
+        for (User u: buddies) {
+            if (u.getUserTime() < leastUserTime) {
+                leastUserTime = u.getUserTime();
+                user = u;
+            }
+        }
 
         // Check if constraint is available at this time
+        // holding holdingResource and resourcesRequired
 
         /*
-            // LOOP through current node and it's previous time dependent tasks
-            // Compare Time Dependant Nodes against current time
-            // If they need to get scheduled at this time that happens now
-            // This ensures they get priority
-            // Does this need monitoring
-                // if so does it have someone to watch it
-                    // Find user who has been available the longest
-                    // Check all user time counters, the one with the least is selected
-            curTime = User.timeCtr
-            // For init protoype, assume only elements, oven, big applicances for resources with infinite pans
-            // Does this node need a resource from the resource list
-            //If so find the earliest time this can happen
             // Extract/update data from resource hashmap
             earliestAvailableTime = inf
             boolean foundResource = False
@@ -153,6 +162,41 @@ public class Meal {
                     earliestAvailableTime = resourceTime
             if not foundResource
                 curTime = earliestAvailableTime
+         */
+
+        Integer earliestAvailableTime = leastUserTime;
+
+
+        // TODO: FINISHED HERE
+        List<String> resources = s.getResourcesRequired();
+        resources.add(s.getHoldingResource());
+        for(String resource: resources) {
+            for (Integer resourceId: constraints.get(resource)) {
+                if (resourceId <= leastUserTime) {
+                    break;
+                }
+            }
+        }
+
+        Boolean foundResource = false;
+
+
+
+
+        /*
+            // LOOP through current node and previous time dependent tasks
+            // Compare Time Dependant Nodes against current time
+            // If they need to get scheduled at this time that happens now
+            // This ensures they get priority
+            // Does this need monitoring
+                // if so does it have someone to watch it
+                    // Find user who has been available the longest
+                    // Check all user time counters, the one with the least is selected
+            curTime = User.timeCtr
+            // For init protoype, assume only elements, oven, big applicances for resources with infinite pans
+            // Does this node need a resource from the resource list
+            //If so find the earliest time this can happen
+
             // if resources are needed and found then Insert task into user
             // function should be in user object
             // update curTime based

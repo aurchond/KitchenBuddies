@@ -13,6 +13,10 @@ public class User {
 
     // make function check if user is free
     //
+    public Integer getUserTime(){
+        Integer workTime = null;//FILL Properly
+        return workTime;
+    }
 
     // make function to update tail ptr to be head at the end of optimization
 }

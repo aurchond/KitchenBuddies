@@ -4,13 +4,11 @@ import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.Map.Entry;
-import java.util.AbstractMap.SimpleEntry;
-
-import static org.neo4j.capabilities.Type.listOf;
+import java.util.Set;
 
 @NodeEntity(label="Step")
 //this defines our step node and all its attributes
@@ -106,17 +104,29 @@ public class Step {
     public List<String> getIngredientList() { return this.ingredientList; }
     public List<Entry<Integer,String>> getIngredientQuantity() { return this.ingredientQuantity; }
     public List<String> getResourcesRequired() { return resourcesRequired; }
-    public List<Step> getTimeDependencies() {
-        //TODO: find all time dependencies
-        // return connections;
-        Step s = new Step();
-        return (List<Step>) listOf(s);
+    public List<Connection> getTimeDependencies() {
+        List<Connection> stepConnections = new ArrayList<Connection>();
+
+        for (Connection c: connections) {
+            if (c.getConnectionTime() >= 0) {
+                stepConnections.add(c);
+            }
+        }
+
+        return stepConnections;
     }
-    public List<Step> getResourceDependencies() {
+    public List<Connection> getResourceDependencies() {
         //TODO: find all Resource dependencies
         // return connections;
-        Step s;
-        return listOf(s);
+        List<Connection> stepConnections = new ArrayList<Connection>();
+
+        for (Connection c: connections) {
+            if (c.getConnectionTime() < 0) {
+                stepConnections.add(c);
+            }
+        }
+
+        return stepConnections;
     }
 
     //setter functions

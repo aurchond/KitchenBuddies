@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
     }
-    public static List<Step>  createRecipe(
+    public static Recipe  createRecipe(
             List<Step> Steps,
             HashMap<String, List<Integer>> ingredients,
             HashMap<String, List<Integer>> toolsRequired,

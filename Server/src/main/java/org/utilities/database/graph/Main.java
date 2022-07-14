@@ -1,8 +1,6 @@
 package org.utilities.database.graph;
 
-import org.neo4j.ogm.config.Configuration;
 import org.neo4j.ogm.session.Session;
-import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.transaction.Transaction;
 
 import java.util.ArrayList;
@@ -21,13 +19,7 @@ public class Main {
 
     private static void buildSampleRecipe() {
         System.out.println("Hello world!");
-        String uri = "neo4j+s://db42e3f1.databases.neo4j.io";
-        Configuration configuration = new Configuration.Builder()
-                .uri(uri)
-                .credentials("neo4j", "9hCaQ7nmAyf5AAkUwjrk5lY8ejC61PYa2-4-zLBc6hg")
-                .build();
-        SessionFactory sessionFactory = new SessionFactory(configuration, "org.test");
-        final Session session = sessionFactory.openSession();
+        final Session session = RecipeHelper.createSession();
         Transaction tx = session.beginTransaction();
 
         // These recipes are hard coded for testing purposes
