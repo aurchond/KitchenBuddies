@@ -26,15 +26,17 @@ public class Step {
     private List<String> ingredientList; //names of ingredients
     private List<Number> ingredientQuantity; //quantities of ingredients
     private List<String> resourcesRequired; //kitchen equipment like knife, cheese grater, etc.
+    private String action; //e.g. cutting, dicing, frying, etc.
 
 
     @Relationship(type = Connection.TYPE, direction = Relationship.OUTGOING)
     private Set<Connection> connections = new HashSet<>();
 
+    ////CONSTRUCTORS////
     //most used constructor
     public Step(Long recipeID, Integer stepID, Boolean prepStep, String holdingResource,
                 Integer holdingID, Integer stepTime, Integer timeLeft, List<String> ingredientList,
-                List<Number> ingredientQuantity, List<String> resourcesRequired) {
+                List<Number> ingredientQuantity, List<String> resourcesRequired, String action) {
         this.recipeID = recipeID;
         this.stepID = stepID;
         this.prepStep = prepStep;
@@ -49,11 +51,12 @@ public class Step {
         Double step = Double.valueOf(stepID);
         this.nodeID = recipeID.doubleValue() + Double.valueOf(step/10);
         this.name = this.nodeID.toString();
+        this.action = action;
     }
 
     //for steps like: "preheat oven to 350 degrees", there are no ingredients or resources required
     public Step(Long recipeID, Integer stepID, Boolean prepStep, String holdingResource,
-                Integer holdingID, Integer stepTime, Integer timeLeft) {
+                Integer holdingID, Integer stepTime, Integer timeLeft, String action) {
         this.recipeID = recipeID;
         this.stepID = stepID;
         this.prepStep = prepStep;
@@ -64,13 +67,23 @@ public class Step {
         Double step = Double.valueOf(stepID);
         this.nodeID = recipeID.doubleValue() + Double.valueOf(step/10);
         this.name = this.nodeID.toString();
+        this.action = action;
     }
 
+    //empty default constructor
+    public Step() {
+
+    }
+
+    ////SETTING UP RELATIONS////
     public void addConnection(Step target, int distance) {
         this.connections.add(new Connection(this, target, distance));
     }
+    public Set<Connection> getConnections() {
+        return this.connections;
+    }
 
-    //getter functions
+    ////GETTER FUNCTIONS////
     public Double getNodeID() { return this.nodeID; }
     public Long getRecipeID() { return this.recipeID; }
     public Integer getStepID() {
@@ -83,9 +96,10 @@ public class Step {
     public Integer getTimeLeft() { return this.timeLeft; }
     public List<String> getIngredientList() { return this.ingredientList; }
     public List<Number> getIngredientQuantity() { return this.ingredientQuantity; }
-    public List<String> getResourcesRequired() { return resourcesRequired; }
+    public List<String> getResourcesRequired() { return this.resourcesRequired; }
+    public String getAction() { return this.action; }
 
-    //setter functions
+    ////SETTER FUNCTIONS////
     public void setRecipeID(Long ID) {
         this.recipeID = ID;
 
@@ -107,6 +121,7 @@ public class Step {
     public void setIngredientList(List<String> ingredientList) { this.ingredientList = ingredientList; }
     public void setIngredientQuantity(List<Number> ingredientQuantity) { this.ingredientQuantity = ingredientQuantity; }
     public void setResourcesRequired(List<String> resourcesRequired) { this.resourcesRequired = resourcesRequired; }
+    public void setAction(String action) { this.action = action; }
 
-// hashCode, equals, toString, no-arg constructor ommitted..
+    // hashCode, equals, toString omitted..
 }

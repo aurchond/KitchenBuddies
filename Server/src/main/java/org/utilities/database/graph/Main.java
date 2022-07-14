@@ -34,13 +34,30 @@ public class Main {
         //createAsparagus(session);
         //createChicken(session);
 
-        Step s_test = new Step(372L, 7, false, "pan",
+        ///TESTING HELPER FUNCTIONS///
+        /*Step s_test = new Step(372L, 7, false, "pan",
                 0, 5, 1);
         s_test.setStepID(5);
         session.save(s_test);
 
-        tx.commit();
-        tx.close();
+       deleteRecipe(session, 372L);
+       Iterable<Step> myRecipe;
+       myRecipe = copyRecipe(session, 25L);
+       for (Step t : myRecipe) {
+           Set<Connection> mySet = t.getConnections();
+           if (!mySet.isEmpty()) { //remember to have this check every time we look through a set!
+               System.out.println(mySet.iterator().next().getId());
+           }
+       }
+
+       Iterable<Step> myHead;
+       myHead = getHeadNode(session, 26L);
+       for (Step t : myHead) {
+           System.out.println(t.getNodeID());
+       }*/
+
+       tx.commit();
+       tx.close();
     }
 
     //https://www.simplyrecipes.com/recipes/asparagus/
@@ -55,12 +72,10 @@ public class Main {
 
         List<String> r1_tools = new ArrayList<String>();
         Step s1 = new Step(25L, 1, true, "saucepan",
-                0, 1, 10, r1_ingredients, r1_quantity, r1_tools);
+                0, 1, 10, r1_ingredients, r1_quantity, r1_tools, "boil");
 
         // Step 2
-        // Prepare asparagus
         // Prepare the asparagus while the water is heating. Rinse them thoroughly. Break off any tough, white bottoms and discard.
-        //
         //Cut the spears into 1- to 2-inch sections, slicing the asparagus at a slight diagonal.
         List<String> r2_ingredients = new ArrayList<String>();
         r2_ingredients.add("asparagus");
@@ -71,7 +86,7 @@ public class Main {
         r2_tools.add("knife");
 
         Step s2 = new Step(25L, 2, true, "cutting board",
-                0, 5, 5, r2_ingredients, r2_quantity, r2_tools);
+                0, 5, 5, r2_ingredients, r2_quantity, r2_tools, "cut");
 
         // Step 3
         // Boil asparagus and lower heat
@@ -81,7 +96,7 @@ public class Main {
         r2_quantity.add(1);
 
         Step s3 = new Step(25L, 3, false, "saucepan",
-                0, 10, 20, r2_ingredients, r2_quantity, r2_tools);
+                0, 10, 20, r2_ingredients, r2_quantity, r2_tools, "boil");
 
         // Step 4
         // Drain water, add ingredients
@@ -103,7 +118,7 @@ public class Main {
         r2_tools.add("spoon");
 
         Step s4 = new Step(25L, 4, false, "bowl",
-                0, 5, 25, r4_ingredients, r4_quantity, r4_tools);
+                0, 5, 25, r4_ingredients, r4_quantity, r4_tools, "season");
 
         // Step 1 -> Step 3 with 10 timeleft
         s1.addConnection(s3, 10);
@@ -147,14 +162,14 @@ public class Main {
         List<String> tools = new ArrayList<String>();
         tools.add("Spoon");
         Step s1 = new Step(26L, 1, true, "bowl",
-                0, 5, 5, ingredients, quantity, tools);
+                0, 5, 5, ingredients, quantity, tools, "mix");
 
         ingredients.clear();
         quantity.clear();
         tools.clear();
 
         // Step 2
-        // Beat eggs/milk\
+        // Beat eggs/milk
         ingredients.add("Eggs");
         ingredients.add("Milk");
 
@@ -163,7 +178,7 @@ public class Main {
 
         tools.add("Spoon");
         Step s2 = new Step(26L, 2, true, "bowl",
-                0, 5, 5, ingredients, quantity, tools);
+                0, 5, 5, ingredients, quantity, tools, "mix");
 
         ingredients.clear();
         quantity.clear();
@@ -180,7 +195,7 @@ public class Main {
         quantity.add(8);
 
         Step s3 = new Step(26L, 3, true, "plate",
-                0, 10, 15, ingredients, quantity, tools);
+                0, 10, 15, ingredients, quantity, tools, "dredge");
 
         ingredients.clear();
         quantity.clear();
@@ -189,12 +204,12 @@ public class Main {
         // Step 4
         // Heat oven
         Step s4 = new Step(26L, 4, false, "none",
-                0, 5, 1);
+                0, 5, 1, "pre-heat");
 
         // Step 5
         // Heat pan
         Step s5 = new Step(26L, 5, false, "pan",
-                0, 1, 5);
+                0, 1, 5, "heat");
 
         // Step 6
         // Pan fry chicken
@@ -202,7 +217,7 @@ public class Main {
         quantity.add(8);
         tools.add("Spatula");
         Step s6 = new Step(26L, 6, true, "none",
-                0, 5, 20, ingredients, quantity, tools);
+                0, 5, 20, ingredients, quantity, tools, "fry");
 
         ingredients.clear();
         quantity.clear();
@@ -214,12 +229,12 @@ public class Main {
         quantity.add(8);
         tools.add("Spatula");
         Step s7 = new Step(26L, 7, false, "baking sheet",
-                0, 2, 22, ingredients, quantity, tools);
+                0, 2, 22, ingredients, quantity, tools, "bake");
 
         // Step 8
         // Take out food
         Step s8 = new Step(26L, 8, false, "baking sheet",
-                0, 2, 50);
+                0, 2, 50, "remove");
 
 
         s1.addConnection(s3, 5);
@@ -242,21 +257,5 @@ public class Main {
 
 //        return s;
     }
-
-    // TODO: Helper Functions for Database
-    /*
-
-    - Add Step to Recipe (or should we just add all the steps in one session?)
-    - Remove Step from Recipe
-    - Delete Recipe from database
-    - Update Recipe (add, delete, or modify properties)
-    - Copy over all nodes/connections from Recipe
-     */
-
-    // TODO: Add additional properties for a recipe
-    /*
-    - Add action (what is the step actually doing?) i.e. frying, baking, chopping, dicing, etc.
-    - Add measurement scales i.e. cups, tablespoons, etc.
-     */
 
 }
