@@ -20,8 +20,6 @@ import static org.utilities.database.graph.Main.createChicken;
 public class MealCreator {
     public static void main(String[] args) {
         System.out.println("Hello world!");
-        Meal m = new Meal();
-        m.createMeal();
 
         String uri = "neo4j+s://db42e3f1.databases.neo4j.io";
         Configuration configuration = new Configuration.Builder()

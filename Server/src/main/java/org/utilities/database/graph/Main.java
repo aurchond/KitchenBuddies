@@ -252,5 +252,12 @@ public class Main {
     - Add action (what is the step actually doing?) i.e. frying, baking, chopping, dicing, etc.
     - Add measurement scales i.e. cups, tablespoons, etc.
      */
+    public static Boolean isRecipeInDatabase(String recipeName){
+        return true;//TODO: fill in properly
+    }
+
+    public static ArrayList<Step> getRecipeFromDatabase(String recipeName){
+        return new ArrayList<Step>();//TODO: fill in properly
+    }
 
 }
