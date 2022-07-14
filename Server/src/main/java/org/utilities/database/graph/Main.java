@@ -238,30 +238,4 @@ public class Main {
 //        return s;
     }
 
-    // TODO: Helper Functions for Database
-    /*
-    - Add Step to Recipe (or should we just add all the steps in one session?)
-    - Remove Step from Recipe
-    - Delete Recipe from database
-    - Update Recipe (add, delete, or modify properties)
-    - Copy over all nodes/connections from Recipe
-     */
-
-    // TODO: Add additional properties for a recipe
-    /*
-    - Add action (what is the step actually doing?) i.e. frying, baking, chopping, dicing, etc.
-    - Add measurement scales i.e. cups, tablespoons, etc.
-     */
-    public static Boolean isRecipeInDatabase(String recipeName){
-        return true;//TODO: fill in properly
-    }
-
-    public static ArrayList<Step> getRecipeFromDatabase(String recipeName){
-        /**
-         * two helper function getHeadNode(the head step), getAllNodes(iterable step list)
-         * loop through all nodes and add to hashmap<id,step>
-         */
-        return new ArrayList<Step>();//TODO: fill in properly
-    }
-
 }
