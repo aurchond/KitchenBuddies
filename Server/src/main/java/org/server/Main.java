@@ -32,8 +32,8 @@ public class Main {
                  HashMap<String, List<Integer>> toolsRequired = null;
                  HashMap<String, List<Integer>> holdingResource_Id = null;
 
-            List<Step> recipe = createRecipe( Steps, ingredients, toolsRequired, holdingResource_Id );// String will be formatted as "holdingResource_holdingId"
-            recipes.add(recipe);
+                List<Step> recipe = createRecipe( Steps, ingredients, toolsRequired, holdingResource_Id );// String will be formatted as "holdingResource_holdingId"
+                recipes.add(recipe);
              }
           }
         /**
@@ -41,7 +41,7 @@ public class Main {
          * createMeal(List<List<Step>> recipes, List<User> buddies)
          */
          Meal m = new Meal();
-        List<User> buddies = null;
+         List<User> buddies = null;
          m.createMeal(recipes, buddies);
          /**
          * Send off to users using the buddies listed and the result of create Meal
