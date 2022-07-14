@@ -54,6 +54,8 @@ public class Meal {
             evalSteps.add(recipe.get(0)); //TODO: This assumes the first node is the final node in the recipe (MAKE SURE IT IS)
         }
 
+        // What if we store the last node of each recipe and have a hashmap for the rest of the nodes
+
         //TODO: Take this out if first node is final recipe step
         // Find end node of each recipe
         // Instead of for loop to traverse, we could query the database to get the head node
@@ -118,10 +120,17 @@ public class Meal {
     }
 
     private void mapTimeStepToUser(Step s) {
+        // we could give more priority to the same user that just did the resource task that this task relies on
         System.out.println("");
     }
 
     private void mapResourceStepToUser(Step s) {
+        // Check which user has the least amount of work so far
+
+        // Check if constraint is available at this time
+
+
+
         /*
             // LOOP through current node and it's previous time dependent tasks
             // Compare Time Dependant Nodes against current time
