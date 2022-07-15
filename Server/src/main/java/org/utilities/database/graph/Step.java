@@ -110,6 +110,7 @@ public class Step {
     public List<String> getIngredientList() { return this.ingredientList; }
     public List<Number> getIngredientQuantity() { return this.ingredientQuantity; }
     public List<String> getResourcesRequired() { return resourcesRequired; }
+    public Set<Connection> getConnections() { return connections; }
     public List<Connection> getTimeDependencies() {
         List<Connection> stepConnections = new ArrayList<Connection>();
 
@@ -146,6 +147,30 @@ public class Step {
     public void setIngredientList(List<String> ingredientList) { this.ingredientList = ingredientList; }
     public void setIngredientQuantity(List<Number> ingredientQuantity) { this.ingredientQuantity = ingredientQuantity; }
     public void setResourcesRequired(List<String> resourcesRequired) { this.resourcesRequired = resourcesRequired; }
+    public void addConnection(Step end) {
+        Connection c = new Connection(this, end);
+        this.connections.add(c);
+    }
+
+    public boolean hasResourceConnection(Step step) {
+        for (Connection c: this.connections) {
+            if(c.getEndNode() == step) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasMultipleConnection() {
+        if(this.connections.size()>1) {
+                return true;
+        }
+        return false;
+    }
+
+    public void deleteConnection(Step endNode) {
+        //TODO: Fill in
+    }
 
     public Integer getUserTime() {
         return userTime;

@@ -20,6 +20,7 @@ public class Recipe {
     private String recipeName;
 
     public Recipe() {
+        private HashMap<Integer, Step> steps = new HashMap<Integer, Step>();
     }
 
     public Recipe(HashMap<Integer, Step> steps, Step finalStep) {
@@ -33,6 +34,10 @@ public class Recipe {
 
     public void setSteps(HashMap<Integer, Step> steps) {
         this.steps = steps;
+    }
+
+    public void addStep(Step step) {
+        this.steps.put(step.getStepID(), step);
     }
 
     public Step getFinalStep() {

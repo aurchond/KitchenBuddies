@@ -27,6 +27,12 @@ public class Connection {
         this.start = start;
         this.end = end;
         this.time = time;
+    }//TODO: can we specify the resource if it is a resource dependency since things like knives will sometimes be a dependency but not always
+
+    public Connection(Step start, Step end) {
+        this.start = start;
+        this.end = end;
+        this.time = -1;
     }
 
     //empty default constructor

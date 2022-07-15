@@ -24,6 +24,7 @@ public class Main {
                 //Input processing - parse out the steps from the text - this should output a list of steps
                 //TODO: get file that was passed in and parse it - look at java json lib to help with this
                 // - make sure to create the below hashmaps needed for createRecipe
+                // - make sure hashmaps have the stepIDs in order of smallest to largest
 
                 //Recipe Processing - Dependency creation + Saves Steps to DB
                 //TODO: convert nulls to actual values

@@ -1,9 +1,9 @@
 package org.recipe_processing;
 
-import org.input_processing.RecipeStep;
+import org.utilities.database.graph.Connection;
+import org.utilities.database.graph.Step;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class RecipeCreator {
     /**
@@ -20,7 +20,7 @@ public class RecipeCreator {
     public RecipeCreator() {
     }
     public Recipe createRecipe(
-            List<RecipeStep> Steps,
+            List<Step> Steps,
             HashMap<String, List<Integer>> ingredients,
             HashMap<String, List<Integer>> toolsRequired,
             HashMap<String, List<Integer>> holdingResource_Id // String will be formatted as "holdingResource_holdingId"
@@ -49,10 +49,73 @@ public class RecipeCreator {
          *  TODO: how to let a dependency replace another dependency
          */
 
+        //TODO: Check if we want to set the recipe ID in here
+        Recipe recipe = new Recipe();
+        HashMap<Integer, Step> steps = new HashMap<Integer, Step>();
+        for (Step step : Steps) {
+            steps.put(step.getStepID(), step);
+        }
+        recipe.setSteps(steps);
+        for (List<Integer> stepIds : ingredients.values()) {
+            createConnections(steps, stepIds);
+        }
+        // if you go in order for lowest to highest step, each step should only have one connection, than flip the connections at the end
+        for (List<Integer> stepIds : toolsRequired.values()) {
+            createConnections(steps, stepIds);
+        }
+        for (List<Integer> stepIds : holdingResource_Id.values()) {
+            createConnections(steps, stepIds);
+        }
 
+        //collapse dependancies
         /**
-         * Save Recipe to DB - TODO: Check with Shadi where the function for saving a recipe will be
-         */
-        return new Recipe(); //TODO: Replace with proper recipe
+        Iterate through each step {
+            If (current step has > 1 connection) {
+                - Check lowest step connection it has
+                - Go through all connections from 'lowest' to 'highest' step {
+                    if you can make a 'path' from the connected step -> current step that !directConnection  --- use DFS{
+                        remove connection from connected step to current step
+                    }
+                }
+            }
+         }
+
+
+         **/
+        for (Step step : Steps) {
+            if (step.hasMultipleConnection()){
+                List<Connection> connections = new ArrayList<>();
+                connections.addAll(step.getConnections());
+                Collections.sort(connections, new Comparator<Connection>() {
+                    public int compare(Connection o1, Connection o2) {
+                        // compare two instance of `Score` and return `int` as result.
+                        return (o2.getEndNode().getStepID()).compareTo(o1.getEndNode().getStepID());
+                    }
+                });
+                for(Connection c: connections){
+                    if(isFindsPath(c.getStartNode(), c.getEndNode())){
+                        step.deleteConnection(c.getEndNode());
+                    }
+                }
+            }
+        }
+
+        //assign the time left for each step
+
+        return recipe; //TODO: Replace with proper recipe
+    }
+
+    private boolean isFindsPath(Step startNode, Step endNode) {
+        //TODO implement DFS if you find a path than you return true
+    }
+
+    private void createConnections(HashMap<Integer, Step> steps, List<Integer> stepIds) {
+        for (Integer i = 0; i < stepIds.size() - 1 ; i++) {
+            Integer stepId1 = stepIds.get(i);
+            Integer stepId2 = stepIds.get(i+1);
+            if(!steps.get(stepId1).hasResourceConnection(steps.get(stepId2))){
+                steps.get(stepId1).addConnection(steps.get(stepId2));
+            }
+        }
     }
 }
