@@ -1,69 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="8dp"
-    android:background="@color/teal_700"
-    tools:context=".NewMealSessionFragment">
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
 
-
-    <TextView
-        android:id="@+id/tv_selected_recipes"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Selected Recipes"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_selected_recipes"
-        android:textColor="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:background="@color/teal_700"
+        tools:context=".NewMealSessionFragment">
 
 
-    <Button
-        android:id="@+id/bttn_add_recipe"
-        android:text="Add Recipe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/rv_selected_recipes" />
+        <TextView
+            android:id="@+id/tv_selected_recipes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Selected Recipes"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_selected_recipes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:textColor="@color/white"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/tv_selected_recipes"
+            tools:layout_editor_absoluteX="8dp" />
 
 
-
-    <TextView
-        android:id="@+id/tv_cooking_buddies"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Cooking Buddies"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/bttn_add_recipe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Recipe"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_selected_recipes" />
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_cooking_buddies"
-        android:textColor="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        <TextView
+            android:id="@+id/tv_cooking_buddies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Cooking Buddies"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/bttn_add_recipe"
+            android:layout_marginTop="30dp"/>
 
 
-    <Button
-        android:id="@+id/tv_add_buddy"
-        android:text="Add Buddy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/rv_cooking_buddies" />
-</LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_cooking_buddies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/tv_cooking_buddies"
+            tools:layout_editor_absoluteX="8dp" />
+
+
+        <Button
+            android:id="@+id/bttn_add_buddy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Buddy"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_cooking_buddies" />
+
+        <Button
+            android:id="@+id/bttn_begin_session"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Begin New Meal Session"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bttn_add_buddy" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
