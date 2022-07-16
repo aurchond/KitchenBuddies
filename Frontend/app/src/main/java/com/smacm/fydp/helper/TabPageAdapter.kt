@@ -1,8 +1,11 @@
-package com.smacm.fydp
+package com.smacm.fydp.helper
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.smacm.fydp.HomeFragment
+import com.smacm.fydp.NewMealSessionFragment
+import com.smacm.fydp.PastRecipesFragment
 
 class TabPageAdapter(activity: FragmentActivity, private val tabCount: Int) : FragmentStateAdapter(activity)
 {

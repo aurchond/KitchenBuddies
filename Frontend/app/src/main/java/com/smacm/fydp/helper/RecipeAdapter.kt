@@ -1,10 +1,11 @@
-package com.smacm.fydp
+package com.smacm.fydp.helper
 
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.smacm.fydp.R
 import kotlinx.android.synthetic.main.simple_expander.view.*
 
 class RecipeAdapter(val recipeList: List<Recipe>) :

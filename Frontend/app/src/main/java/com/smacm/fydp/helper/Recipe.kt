@@ -1,4 +1,4 @@
-package com.smacm.fydp
+package com.smacm.fydp.helper
 
 data class Recipe (
     var name: String,

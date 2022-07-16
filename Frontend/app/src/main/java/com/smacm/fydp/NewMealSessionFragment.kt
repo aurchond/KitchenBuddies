@@ -6,11 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.smacm.fydp.helper.BuddyAdapter
+import com.smacm.fydp.helper.Recipe
+import com.smacm.fydp.helper.RecipeAdapter
 import kotlinx.android.synthetic.main.fragment_new_meal_session.*
 
 class NewMealSessionFragment : Fragment() {
 
-    private var recipeList = ArrayList<Recipe>()
+    private val recipeList = ArrayList<Recipe>()
     private val buddyList = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,26 +60,32 @@ class NewMealSessionFragment : Fragment() {
 
     // initialize the recycler view with (temporary) mock data corresponding to mock data in calendar
     private fun initData() {
-        recipeList.add(Recipe(
+        recipeList.add(
+            Recipe(
             "Lasagna",
             "10 mins",
             "Hard",
             "October 22, 2021"
-        ))
+        )
+        )
 
-        recipeList.add(Recipe(
+        recipeList.add(
+            Recipe(
             "Lasagna",
             "10 mins",
             "Hard",
             "October 22, 2021"
-        ))
+        )
+        )
 
-        recipeList.add(Recipe(
+        recipeList.add(
+            Recipe(
             "Lasagna",
             "10 mins",
             "Hard",
             "October 22, 2021"
-        ))
+        )
+        )
 
 
         for (i in 1..10) {
