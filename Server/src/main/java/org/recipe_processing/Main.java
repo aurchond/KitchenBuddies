@@ -1,4 +1,4 @@
-package org.utilities.database.graphical;
+package org.recipe_processing;
 
 public class Main {
     public static void main(String[] args) {
