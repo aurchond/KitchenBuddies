@@ -42,11 +42,15 @@ public class Step {
     private Integer holdingID; //0 = for vegetables, 1 = for meat, 2 = mixed
     private Integer stepTime; //how much time it takes to complete step
     private Integer timeLeft; //how much time remaining to complete original recipe
+
     private List<String> ingredientList; //names of ingredients (i.e. cup of sugar)
+
     private List<Number> ingredientQuantity; //quantities of ingredients [[8, cups]
     private List<String> resourcesRequired; //kitchen equipment like knife, cheese grater, etc.
 
     private String instructions;
+
+    // TODO: Add amount of time user must actively participate in task
 
 
     @Relationship(type = Connection.TYPE, direction = Relationship.OUTGOING)
