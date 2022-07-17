@@ -4,15 +4,22 @@ import org.neo4j.ogm.config.Configuration;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.transaction.Transaction;
+import org.utilities.database.graph.Step;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.*;
+
+import org.utilities.database.graph.*;
+import org.utilities.database.relational.Main.*;
 
 import static org.utilities.database.graph.Main.createAsparagus;
 import static org.utilities.database.graph.Main.createChicken;
 
-public class Main {
+public class MealCreator {
     public static void main(String[] args) {
         System.out.println("Hello world!");
-        Meal m = new Meal();
-        m.createMeal();
 
         String uri = "neo4j+s://db42e3f1.databases.neo4j.io";
         Configuration configuration = new Configuration.Builder()
@@ -31,6 +38,5 @@ public class Main {
         tx.commit();
         tx.close();
     }
-
 
 }

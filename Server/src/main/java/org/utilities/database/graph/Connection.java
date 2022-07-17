@@ -12,17 +12,39 @@ public class Connection {
 
     @StartNode
     private Step start;
-
     @EndNode
     private Step end;
 
-    private int time;
+    // If time < 0>, it is resource dependent
+    // If time >= 0, it is time dependent
+    private Integer time;
 
-    public Connection(Step start, Step end, int time) {
+    ////CONSTRUCTORS////
+    //most used constructor
+    public Connection(Step start, Step end, Integer time) {
         this.start = start;
         this.end = end;
         this.time = time;
     }
 
-    // hashCode, equals, toString, getter/setter, no-arg constructor omitted..
+    //empty default constructor
+    public Connection() {
+
+    }
+
+    ////GETTER FUNCTIONS////
+    public Long getId() {
+        return id;
+    }
+    public Step getStartNode() {
+        return this.start;
+    }
+    public Step getEndNode() {
+        return this.end;
+    }
+    public Integer getConnectionTime() {
+        return this.time;
+    }
+
+    // hashCode, equals, toString omitted..
 }
