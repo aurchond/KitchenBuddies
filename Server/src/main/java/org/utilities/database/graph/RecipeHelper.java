@@ -97,7 +97,7 @@ public class RecipeHelper {
                 .uri(uri)
                 .credentials("neo4j", "9hCaQ7nmAyf5AAkUwjrk5lY8ejC61PYa2-4-zLBc6hg")
                 .build();
-        SessionFactory sessionFactory = new SessionFactory(configuration, "org.test");
+        SessionFactory sessionFactory = new SessionFactory(configuration, "org.utilities.database.graph");
         final Session session = sessionFactory.openSession();
         return session;
     }
