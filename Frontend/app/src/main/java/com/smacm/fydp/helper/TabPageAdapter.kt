@@ -11,6 +11,7 @@ class TabPageAdapter(activity: FragmentActivity, private val tabCount: Int) : Fr
 {
     override fun getItemCount(): Int = tabCount //  equivalent to just return tabCount in this function
 
+    // depending on which  position we're in, we go that specific tab
     override fun createFragment(position: Int): Fragment {
         return when (position)
         {
@@ -20,4 +21,9 @@ class TabPageAdapter(activity: FragmentActivity, private val tabCount: Int) : Fr
             else -> HomeFragment()
         }
     }
+
+    override fun getItemId(position: Int): Long {
+        return super.getItemId(position)
+    }
 }
+

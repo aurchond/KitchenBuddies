@@ -4,8 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../layout/custom_preview.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.165" />
         <entry key="app/src/main/res/layout/buddy.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_current_meal_session 2.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_current_meal_session.xml" value="0.2765625" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.3307291666666667" />
         <entry key="app/src/main/res/layout/fragment_new_meal_session.xml" value="0.25" />

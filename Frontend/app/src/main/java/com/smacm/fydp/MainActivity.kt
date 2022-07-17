@@ -19,13 +19,10 @@ class MainActivity : AppCompatActivity() {
         setUpTabBar()
     }
 
-    public fun setLayoutManager() {
-        // for the Cooking Buddies recycler view in the New Meal Session fragment
-        rv_cooking_buddies.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-    }
-
+    // bottom tab bar
     private fun setUpTabBar()
     {
+        // we use this class to help us navigate to the proper tab
         val adapter = TabPageAdapter(this, tab_layout.tabCount)
         view_pager.adapter = adapter
 
