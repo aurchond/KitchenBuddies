@@ -10,8 +10,11 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    implementation 'org.neo4j:neo4j:4.4.8'
+    implementation 'org.neo4j:neo4j-ogm-core:3.2.35'
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    runtimeOnly 'org.neo4j:neo4j-ogm-bolt-driver:3.2.35'
 }
 
 test {
