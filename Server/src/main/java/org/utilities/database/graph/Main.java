@@ -230,4 +230,311 @@ public class Main {
 //        return s;
     }
 
+    //https://amindfullmom.com/5-ingredient-baked-rotini/
+    public static void createBakedRotini(Session s) {
+        // Step 1
+        // Boil water
+        List<String> ingredients = new ArrayList<String>();
+        List<Number> quantity = new ArrayList<Number>();
+        List<String> tools = new ArrayList<String>();
+
+        ingredients.add("cups of water");
+        ingredients.add("teaspoon of salt");
+        quantity.add(5);
+        quantity.add(0.5);
+
+        Step s1 = new Step(122L, 1, true, "pot",
+                0, 10, 0, ingredients, quantity, tools);
+
+        ingredients.clear();
+        quantity.clear();
+        tools.clear();
+
+        // Step 2
+        // Cook pasta
+        ingredients.add("ounces of rotini");
+        quantity.add(16);
+        tools.add("spoon");
+
+        Step s2 = new Step(122L, 2, false, "pot",
+                0, 5, 10, ingredients, quantity, tools);
+
+        ingredients.clear();
+        quantity.clear();
+        tools.clear();
+
+        // Step 3
+        // Drain pasta
+        ingredients.add("ounces of rotini");
+        ingredients.add("cups of pasta liquid");
+        quantity.add(16);
+        quantity.add(0.5);
+        tools.add("drainer");
+
+        Step s3 = new Step(122L, 3, false, "pot",
+                0,  1, 15, ingredients, quantity, tools);
+
+        ingredients.clear();
+        quantity.clear();
+        tools.clear();
+
+        // Step 4
+        // Mix in cheese and other ingredients
+        ingredients.add("ounces of rotini");
+        ingredients.add("cups of pasta liquid");
+        ingredients.add("cups of cottage cheese");
+        ingredients.add("cups of spaghetti sauce");
+        ingredients.add("whisked egg");
+        ingredients.add("cups of shredded cheese");
+        quantity.add(16);
+        quantity.add(0.5);
+        quantity.add(2);
+        quantity.add(4);
+        quantity.add(1);
+        quantity.add(1);
+        tools.add("spoon");
+
+        Step s4 = new Step(122L, 4, false, "pot",
+                0, 4, 16, ingredients, quantity, tools);
+
+        ingredients.clear();
+        quantity.clear();
+        tools.clear();
+
+        // Step 5
+        // Preheat oven
+        Step s5 = new Step(122L, 5, false, "oven",
+                2, 5, 0);
+
+        ingredients.clear();
+        quantity.clear();
+        tools.clear();
+
+        // Step 6
+        // Put pasta in pan
+        ingredients.add("casserole"); //NOTE: changed this to represent combined previous steps
+        ingredients.add("cups of shredded cheese");
+        quantity.add(1);
+        quantity.add(1);
+        tools.add("oven");
+
+        Step s6 = new Step(122L, 6, false, "9x13 pan",
+                2, 1, 20, ingredients, quantity, tools);
+
+        ingredients.clear();
+        quantity.clear();
+        tools.clear();
+
+        // Step 7
+        // Bake pasta in oven
+        ingredients.add("casserole");
+        quantity.add(1);
+        tools.add("oven gloves");
+
+        Step s7 = new Step(122L, 7, false, "9x13 pan",
+                2, 1, 50, ingredients, quantity, tools);
+
+        s1.addConnection(s2,10);
+        s2.addConnection(s3, 5);
+        s3.addConnection(s4, 1);
+        s4.addConnection(s6, 4);
+        s5.addConnection(s6, 5);
+        s6.addConnection(s7, 30);
+
+        s.save(s1);
+        s.save(s2);
+        s.save(s3);
+        s.save(s4);
+        s.save(s5);
+        s.save(s6);
+        s.save(s7);
+
+    }
+    // https://aggieskitchen.com/5-ingredient-vegetable-fried-brown-rice/
+    public static void createFriedRice(Session s) {
+        // Step 1
+        // Heat oil in pan
+        List<String> ingredients = new ArrayList<String>();
+        ingredients.add("teaspoon of coconut oil");
+
+        List<Number> quantity = new ArrayList<Number>();
+        quantity.add(1);
+
+        List<String> tools = new ArrayList<String>();
+        Step s1 = new Step(120L, 1, true, "wok",
+                0, 2, 0, ingredients, quantity, tools);
+
+        ingredients.clear();
+        quantity.clear();
+        tools.clear();
+
+        // Step 2
+        // Cook vegetables
+        ingredients.add("cup of frozen mixed vegetables");
+        quantity.add(1);
+        tools.add("spatula");
+
+        // timeleft = prevstepTime + prevTimeLeft
+
+        Step s2 = new Step(120L, 2, false, "wok",
+                0, 2, 2, ingredients, quantity, tools);
+
+        ingredients.clear();
+        quantity.clear();
+        tools.clear();
+
+        // Step 3
+        // Cook brown rice
+        ingredients.add("cups of brown rice");
+        ingredients.add("cups of water");
+        quantity.add(2);
+        quantity.add(4);
+        tools.add("strainer");
+
+        Step s3 = new Step(120L, 3, true, "pot",
+                0, 20, 0, ingredients, quantity, tools);
+
+        ingredients.clear();
+        quantity.clear();
+        tools.clear();
+
+        // Step 4
+        // Add soy sauce and brown rice, cook veggies
+        ingredients.add("cups of soy sauce");
+        ingredients.add("cups of brown rice");
+        quantity.add(0.33);
+        quantity.add(2);
+
+        Step s4 = new Step(120L, 4, false, "wok",
+                0, 5, 20, ingredients, quantity, tools);
+
+        ingredients.clear();
+        quantity.clear();
+        tools.clear();
+
+        // Step 5
+        // Cook eggs
+        ingredients.add("whisked eggs");
+        quantity.add(2);
+        tools.add("spatula");
+
+        Step s5 = new Step(120L, 5, false, "wok",
+                0, 1, 25, ingredients, quantity, tools);
+
+        ingredients.clear();
+        quantity.clear();
+        tools.clear();
+
+        // Step 6
+        // Season and serve
+        ingredients.add("teaspoon of salt");
+        ingredients.add("teaspoon of pepper");
+        ingredients.add("tablespoon of sriracha");
+        quantity.add(0.5);
+        quantity.add(0.5);
+        quantity.add(1);
+
+        Step s6 = new Step(120L, 6, false, "wok",
+                0, 1, 26, ingredients, quantity, tools);
+
+        s1.addConnection(s2, 2);
+        s2.addConnection(s4, 2);
+        s3.addConnection(s4, 20);
+        s4.addConnection(s5, 5);
+        s5.addConnection(s6, 1);
+
+        s.save(s1);
+        s.save(s2);
+        s.save(s3);
+        s.save(s4);
+        s.save(s5);
+        s.save(s6);
+    }
+
+    // https://thestayathomechef.com/easy-5-ingredient-baked-salmon/
+    public static void createSalmon(Session s) {
+        // Step 1
+        // Prepare baking sheet
+        List<String> ingredients = new ArrayList<String>();
+        ingredients.add("aluminum foil");
+
+        List<Number> quantity = new ArrayList<Number>();
+        quantity.add(1);
+
+        List<String> tools = new ArrayList<String>();
+        Step s1 = new Step(124L, 1, true, "baking sheet",
+                0, 2, 0, ingredients, quantity, tools);
+
+        ingredients.clear();
+        quantity.clear();
+        tools.clear();
+
+        // Step 2
+        // Combine Ingredients
+        ingredients.add("cup of melted salted butter");
+        ingredients.add("crushed garlic cloves");
+        ingredients.add("tablespoons finely chopped dill");
+        ingredients.add("tablespoons lemon juice");
+        quantity.add(0.5);
+        quantity.add(8);
+        quantity.add(2);
+        quantity.add(4);
+        tools.add("whisk");
+
+        Step s2 = new Step(124L, 2, false, "glass measuring cup",
+                0, 5, 0, ingredients, quantity, tools);
+
+        ingredients.clear();
+        quantity.clear();
+        tools.clear();
+
+        // Step 3
+        // Combine butter mix and salmon
+        // TODO: How do we refer to something that is mixed?
+        ingredients.add("butter mixture");
+        ingredients.add("salmon fillet");
+        quantity.add(1);
+        quantity.add(1);
+
+        Step s3 = new Step(124L, 3, false, "baking sheet",
+                0, 3, 5, ingredients, quantity, tools);
+
+        ingredients.clear();
+        quantity.clear();
+        tools.clear();
+
+        // Step 4
+        // Preheat oven //TODO: what is our definition of prep step? cutting + preheating
+        Step s4 = new Step(124L, 4, false, "oven",
+                2, 5, 0);
+
+        ingredients.clear();
+        quantity.clear();
+        tools.clear();
+
+        // Step 5 + 6
+        // Bake fillet in oven TODO: When we have our food in a container which goes into another resource, how do we define this?
+        // (i.e. salmon on baking sheet in oven)
+        ingredients.add("salmon fillet");
+        quantity.add(1);
+
+        Step s5 = new Step(124L, 5, true, "sheet",
+                2, 1, 8, ingredients, quantity, tools);
+
+        Step s6 = new Step(124L, 6, false, "oven",
+                2, 1, 23);
+
+        s1.addConnection(s3, 1);
+        s2.addConnection(s3, 5);
+        s3.addConnection(s5, 3);
+        s4.addConnection(s5, 5);
+        s5.addConnection(s6,  15);
+
+        s.save(s1);
+        s.save(s2);
+        s.save(s3);
+        s.save(s4);
+        s.save(s5);
+        s.save(s6);
+    }
 }
