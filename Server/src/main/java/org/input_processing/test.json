@@ -1,0 +1,63 @@
+[
+	{
+		1: {
+			"prepStep": true,
+			"holdingResource": "cutting board",
+			"holdingID": 1,
+			"stepTime": 15,
+			"userTime": 15,
+			"ingredientList": ["peppers","onions","mushrooms"],
+			"ingredientQuantity": [[1,"pepper"],[2,"onion"],[3,"mushroom"]],
+			"resourcesRequired": ["knife"],
+			"instructions": "prep these ingredients in this step"
+		}
+	},
+  {
+		2: {
+			"prepStep": false,
+			"holdingResource": "pan",
+			"holdingID": 2,
+			"stepTime": 5,
+			"userTime": 5,
+			"ingredientList": ["onions"],
+			"ingredientQuantity": [[2,"onion"]],
+			"resourcesRequired": ["spatula"],
+			"instructions": "cook onions"
+		}
+	},{
+		3: {
+			"prepStep": false,
+			"holdingResource": "pan",
+			"holdingID": 2,
+			"stepTime": 5,
+			"userTime": 5,
+			"ingredientList": ["peppers","mushrooms"],
+			"ingredientQuantity": [[1,"pepper"],[3,"mushroom"]],
+			"resourcesRequired": ["spatula"],
+			"instructions": "add peppers and mushrooms"
+		}
+	}
+]
+
+
+
+
+
+
+private String name;
+
+    @Id
+    private Double nodeID;
+
+    private Long recipeID; //number identifying recipe in database
+    private Integer stepID; //step number from original recipe
+    private Boolean prepStep; //defines if it is a prep step
+    private String holdingResource; //what the ingredients are being kept in
+    private Integer holdingID; //0 = for vegetables, 1 = for meat, 2 = mixed
+    private Integer stepTime; //how much time it takes to complete step
+    private Integer timeLeft; //how much time remaining to complete original recipe
+    private List<String> ingredientList; //names of ingredients
+    private List<Entry<Integer, String>> ingredientQuantity; //quantities of ingredients [[8, cups]
+    private List<String> resourcesRequired; //kitchen equipment like knife, cheese grater, etc.
+
+    private String instructions;

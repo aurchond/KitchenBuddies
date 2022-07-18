@@ -93,6 +93,10 @@ public class Step {
         this.userTime = userTime;
     }
 
+    public Step() {
+
+    }
+
     public void addConnection(Step target, int distance) {
         this.connections.add(new Connection(this, target, distance));
     }

@@ -100,6 +100,9 @@ public class RecipeCreator {
             }
         }
 
+
+        //TODO: add nodes to recipe
+
         //assign the time left for each step
 
         return recipe; //TODO: Replace with proper recipe
