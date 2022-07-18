@@ -41,6 +41,7 @@ public class Step {
     private String holdingResource; //what the ingredients are being kept in
     private Integer holdingID; //0 = for vegetables, 1 = for meat, 2 = mixed
     private Integer stepTime; //how much time it takes to complete step
+    private Integer userTime; // how much of the task time is required for the user to be actively working
     private Integer timeLeft; //how much time remaining to complete original recipe
 
     private List<String> ingredientList; //names of ingredients (i.e. cup of sugar)
@@ -59,7 +60,7 @@ public class Step {
     //most used constructor
     public Step(Long recipeID, Integer stepID, Boolean prepStep, String holdingResource,
                 Integer holdingID, Integer stepTime, Integer timeLeft, List<String> ingredientList,
-                List<Number> ingredientQuantity, List<String> resourcesRequired) {
+                List<Number> ingredientQuantity, List<String> resourcesRequired, Integer userTime) {
         this.recipeID = recipeID;
         this.stepID = stepID;
         this.prepStep = prepStep;
@@ -73,11 +74,12 @@ public class Step {
         Double step = Double.valueOf(stepID);
         this.nodeID = recipeID.doubleValue() + Double.valueOf(step/10);
         this.name = this.nodeID.toString();
+        this.userTime = userTime;
     }
 
     //for steps like: "preheat oven to 350 degrees", there are no ingredients or resources required
     public Step(Long recipeID, Integer stepID, Boolean prepStep, String holdingResource,
-                Integer holdingID, Integer stepTime, Integer timeLeft) {
+                Integer holdingID, Integer stepTime, Integer timeLeft, Integer userTime) {
         this.recipeID = recipeID;
         this.stepID = stepID;
         this.prepStep = prepStep;
@@ -88,6 +90,7 @@ public class Step {
         Double step = Double.valueOf(stepID);
         this.nodeID = recipeID.doubleValue() + Double.valueOf(step/10);
         this.name = this.nodeID.toString();
+        this.userTime = userTime;
     }
 
     public void addConnection(Step target, int distance) {
@@ -143,6 +146,14 @@ public class Step {
     public void setIngredientList(List<String> ingredientList) { this.ingredientList = ingredientList; }
     public void setIngredientQuantity(List<Number> ingredientQuantity) { this.ingredientQuantity = ingredientQuantity; }
     public void setResourcesRequired(List<String> resourcesRequired) { this.resourcesRequired = resourcesRequired; }
+
+    public Integer getUserTime() {
+        return userTime;
+    }
+
+    public void setUserTime(Integer userTime) {
+        this.userTime = userTime;
+    }
 
 // hashCode, equals, toString, no-arg constructor ommitted..
 }
