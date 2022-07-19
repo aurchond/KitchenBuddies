@@ -28,16 +28,16 @@ public class Main {
                 HashMap<String, List<Integer>> resourcesRequired = new HashMap<String, List<Integer>>();//<tool, List<StepId>>
                 HashMap<String, List<Integer>> holdingResource_Id = new HashMap<String, List<Integer>>();//<holdingResource, List<StepId>>
                 parseJson("test.json", Steps, ingredients, resourcesRequired, holdingResource_Id);
-                //TODO: get file that was passed in and parse it - look at java json lib to help with this
-                // - make sure to create the below hashmaps needed for createRecipe
-                // - make sure hashmaps have the stepIDs in order of smallest to largest
+                //TODO: make sure hashmaps have the stepIDs in order of smallest to largest
 
                 //Recipe Processing - Dependency creation + Saves Steps to DB
-                //TODO: convert nulls to actual values
 
                 Recipe recipe = createRecipe(Steps, ingredients, resourcesRequired, holdingResource_Id);// String will be formatted as "holdingResource_holdingId"
+                recipe.setRecipeName(recipeName);
+                addToRecipeNameToID(recipeName, recipe.getRecipeID());
                 saveRecipe(recipe);
                 recipes.add(recipe);
+
 
             }
         }

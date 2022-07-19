@@ -71,6 +71,11 @@ public class RecipeHelper {
         return recipeNameToID.containsKey(recipeName);
     }
 
+    public static void addToRecipeNameToID(String recipeName, Long recipeID){
+        // TODO: Change to relational database
+        recipeNameToID.put(recipeName, recipeID);
+    }
+
     public static Recipe getRecipeFromDatabase(String recipeName){
         /**
          * two helper function getHeadNode(the head step), getAllNodes(iterable step list)
