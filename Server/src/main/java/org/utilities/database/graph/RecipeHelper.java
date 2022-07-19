@@ -15,12 +15,10 @@ public class RecipeHelper {
     private static HashMap<String, Long> recipeNameToID;
 
     /* TODO:
-    - Add Step to Recipe (or should we just add all the steps in one session?)
     - Update Recipe (add, delete, or modify properties)
     - Add measurement scales i.e. cups, tablespoons, etc.
 
-    New TODO add the recipe id to the hashmap everytime a recipe is created/saved to the db
-    - Save Recipe
+    TODO: add the recipe id to the hashmap everytime a recipe is created/saved to the db
      */
 
     //search for all nodes with a specific recipe ID and delete them
@@ -60,12 +58,6 @@ public class RecipeHelper {
         return s.query(Step.class, getHeadNodeQuery, params);
     }
 
-
-    // TODO: Add additional properties for a recipe
-    /*
-    - Add action (what is the step actually doing?) i.e. frying, baking, chopping, dicing, etc.
-    - Add measurement scales i.e. cups, tablespoons, etc.
-     */
     public static Boolean isRecipeInDatabase(String recipeName){
         // TODO: Change to relational database
         return recipeNameToID.containsKey(recipeName);
@@ -102,7 +94,7 @@ public class RecipeHelper {
         return session;
     }
 
-    public static void saveRecipe(Recipe recipe){
+    public static void saveRecipe(Recipe recipe, Session s) {
         Long recipeID = Long.valueOf(0);//generate a recipe ID
         recipeNameToID.put(recipe.getRecipeName(), recipeID);
         /**Save recipe to db
@@ -110,6 +102,19 @@ public class RecipeHelper {
          *  - create official node id
          *  - save each node with connections to the db
          */
+
+        // Looping through the HashMap
+        for (Map.Entry<Integer, Step> mapElement : recipe.getSteps().entrySet()) {
+            Integer stepID = mapElement.getKey();
+            Step step = mapElement.getValue();
+
+            step.setRecipeID(recipeID);
+            step.setStepID(stepID);
+            Double nodeID = recipeID.doubleValue() + Double.valueOf(Double.valueOf(stepID) / 10);
+            step.setNodeID(nodeID);
+
+            s.save(step);
+        }
 
     }
 }

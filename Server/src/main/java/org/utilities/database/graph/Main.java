@@ -249,7 +249,7 @@ public class Main {
         quantity.add(0.5f);
 
         Step s1 = new Step(122L, 1, true, "pot",
-                0, 10, 0, ingredients, quantity, tools, 1);
+                0, 10, 0, ingredients, quantity, tools, 1, "boil");
 
         ingredients.clear();
         quantity.clear();
@@ -262,7 +262,7 @@ public class Main {
         tools.add("spoon");
 
         Step s2 = new Step(122L, 2, false, "pot",
-                0, 5, 10, ingredients, quantity, tools, 5);
+                0, 5, 10, ingredients, quantity, tools, 5, "cook");
 
         ingredients.clear();
         quantity.clear();
@@ -277,7 +277,7 @@ public class Main {
         tools.add("drainer");
 
         Step s3 = new Step(122L, 3, false, "pot",
-                0,  1, 15, ingredients, quantity, tools, 1);
+                0,  1, 15, ingredients, quantity, tools, 1, "drain");
 
         ingredients.clear();
         quantity.clear();
@@ -300,7 +300,7 @@ public class Main {
         tools.add("spoon");
 
         Step s4 = new Step(122L, 4, false, "pot",
-                0, 4, 16, ingredients, quantity, tools, 4);
+                0, 4, 16, ingredients, quantity, tools, 4, "mix");
 
         ingredients.clear();
         quantity.clear();
@@ -324,7 +324,7 @@ public class Main {
         tools.add("oven");
 
         Step s6 = new Step(122L, 6, false, "9x13 pan",
-                2, 30, 20, ingredients, quantity, tools, 1);
+                2, 30, 20, ingredients, quantity, tools, 1, "transfer");
 
         ingredients.clear();
         quantity.clear();
@@ -337,7 +337,7 @@ public class Main {
         tools.add("oven gloves");
 
         Step s7 = new Step(122L, 7, false, "9x13 pan",
-                2, 1, 50, ingredients, quantity, tools, 1);
+                2, 1, 50, ingredients, quantity, tools, 1, "bake");
 
 //        s1.addConnection(s2,10);
 //        s2.addConnection(s3, 5);
@@ -375,7 +375,7 @@ public class Main {
 
         List<String> tools = new ArrayList<String>();
         Step s1 = new Step(120L, 1, true, "wok",
-                0, 2, 0, ingredients, quantity, tools, 2);
+                0, 2, 0, ingredients, quantity, tools, 2, "heat");
 
         ingredients.clear();
         quantity.clear();
@@ -390,7 +390,7 @@ public class Main {
         // timeleft = prevstepTime + prevTimeLeft
 
         Step s2 = new Step(120L, 2, false, "wok",
-                0, 2, 2, ingredients, quantity, tools, 2);
+                0, 2, 2, ingredients, quantity, tools, 2, "cook");
 
         ingredients.clear();
         quantity.clear();
@@ -405,7 +405,7 @@ public class Main {
         tools.add("strainer");
 
         Step s3 = new Step(120L, 3, true, "pot",
-                0, 20, 0, ingredients, quantity, tools, 2);
+                0, 20, 0, ingredients, quantity, tools, 2, "cook");
 
         ingredients.clear();
         quantity.clear();
@@ -419,7 +419,7 @@ public class Main {
         quantity.add(2f);
 
         Step s4 = new Step(120L, 4, false, "wok",
-                0, 5, 20, ingredients, quantity, tools, 5);
+                0, 5, 20, ingredients, quantity, tools, 5, "cook");
 
         ingredients.clear();
         quantity.clear();
@@ -432,7 +432,7 @@ public class Main {
         tools.add("spatula");
 
         Step s5 = new Step(120L, 5, false, "wok",
-                0, 1, 25, ingredients, quantity, tools, 1);
+                0, 1, 25, ingredients, quantity, tools, 1, "cook");
 
         ingredients.clear();
         quantity.clear();
@@ -448,7 +448,7 @@ public class Main {
         quantity.add(1f);
 
         Step s6 = new Step(120L, 6, false, "wok",
-                0, 1, 26, ingredients, quantity, tools, 1);
+                0, 1, 26, ingredients, quantity, tools, 1, "season");
 
         s1.addConnection(s2, -1);
         s2.addConnection(s4, -1);
@@ -482,7 +482,7 @@ public class Main {
 
         List<String> tools = new ArrayList<String>();
         Step s1 = new Step(124L, 1, true, "baking sheet",
-                0, 2, 0, ingredients, quantity, tools, 1);
+                0, 2, 0, ingredients, quantity, tools, 1, "prepare");
 
         ingredients.clear();
         quantity.clear();
@@ -501,7 +501,7 @@ public class Main {
         tools.add("whisk");
 
         Step s2 = new Step(124L, 2, false, "glass measuring cup",
-                0, 5, 0, ingredients, quantity, tools, 5);
+                0, 5, 0, ingredients, quantity, tools, 5, "mix");
 
         ingredients.clear();
         quantity.clear();
@@ -516,7 +516,7 @@ public class Main {
         quantity.add(1f);
 
         Step s3 = new Step(124L, 3, false, "baking sheet",
-                0, 3, 5, ingredients, quantity, tools, 3);
+                0, 3, 5, ingredients, quantity, tools, 3, "combine");
 
         ingredients.clear();
         quantity.clear();
@@ -538,7 +538,7 @@ public class Main {
         quantity.add(1f);
 
         Step s5 = new Step(124L, 5, true, "sheet",
-                2, 15, 8, ingredients, quantity, tools, 1);
+                2, 15, 8, ingredients, quantity, tools, 1, "bake");
 
         Step s6 = new Step(124L, 6, false, "oven",
                 2, 1, 23, 1);

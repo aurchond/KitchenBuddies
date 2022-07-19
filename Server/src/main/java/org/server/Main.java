@@ -1,5 +1,7 @@
 package org.server;
 
+import org.neo4j.ogm.session.Session;
+import org.neo4j.ogm.transaction.Transaction;
 import org.optimization.Meal;
 import org.optimization.User;
 import org.recipe_processing.Recipe;
@@ -36,7 +38,14 @@ public class Main {
                 //TODO: convert nulls to actual values
 
                 Recipe recipe = createRecipe(Steps, ingredients, resourcesRequired, holdingResource_Id);// String will be formatted as "holdingResource_holdingId"
-                saveRecipe(recipe);
+
+                //access graph DB so we can save the recipe
+                Session s = createSession();
+                Transaction tx = s.beginTransaction();
+                saveRecipe(recipe, s);
+                tx.commit();
+                tx.close();
+
                 recipes.add(recipe);
 
             }

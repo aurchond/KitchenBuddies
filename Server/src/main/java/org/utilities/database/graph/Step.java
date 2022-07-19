@@ -50,7 +50,7 @@ public class Step {
 
     private String instructions;
 
-    // TODO: Add amount of time user must actively participate in task
+    private String action; // what is the step actually doing? i.e. frying, baking, chopping, dicing, etc.
 
 
     @Relationship(type = Connection.TYPE, direction = Relationship.OUTGOING)
@@ -59,7 +59,7 @@ public class Step {
     //most used constructor
     public Step(Long recipeID, Integer stepID, Boolean prepStep, String holdingResource,
                 Integer holdingID, Integer stepTime, Integer timeLeft, List<String> ingredientList,
-                List<Float> ingredientQuantity, List<String> resourcesRequired, Integer userTime) {
+                List<Float> ingredientQuantity, List<String> resourcesRequired, Integer userTime, String action) {
         this.recipeID = recipeID;
         this.stepID = stepID;
         this.prepStep = prepStep;
@@ -74,6 +74,7 @@ public class Step {
         this.nodeID = recipeID.doubleValue() + Double.valueOf(step/10);
         this.name = this.nodeID.toString();
         this.userTime = userTime;
+        this.action = action;
     }
 
     //for steps like: "preheat oven to 350 degrees", there are no ingredients or resources required
