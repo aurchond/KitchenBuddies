@@ -1,6 +1,0 @@
-<resources>
-    <string name="app_name">Kitchen Buddies</string>
-    <string name="title_home">Home</string>
-    <string name="title_new_meal_session">New Meal Session</string>
-    <string name="title_past_recipes">Past Recipes</string>
-</resources>

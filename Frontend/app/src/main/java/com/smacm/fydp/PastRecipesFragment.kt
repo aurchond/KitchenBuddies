@@ -35,14 +35,14 @@ class PastRecipesFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // allows us to subscribe to notifications from the TOPIC
-        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // allows us to subscribe to notifications from the TOPIC
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
 
         _binding = FragmentPastRecipesBinding.inflate(inflater, container, false)
         val view = binding.root

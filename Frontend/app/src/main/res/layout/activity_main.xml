@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/tab_layout" />
 
-<!--provides a horizontal layout to display tabs -->
+<!--provides a horizontal layout to display tabs at the bottom-->
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
@@ -30,6 +30,7 @@
         app:tabMaxWidth="0dp"
         app:tabMode="fixed">
 
+
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +39,7 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New meal Session" />
+            android:text="New Meal Session" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
