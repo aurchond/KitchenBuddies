@@ -4,6 +4,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_HIGH
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.app.PendingIntent.FLAG_ONE_SHOT
 import android.content.Context
 import android.content.Intent
@@ -35,7 +36,7 @@ class FirebaseService : FirebaseMessagingService() {
         // all activities that are not the calling activity are cleared from the top of the call stack
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
-        val pendingIntent = PendingIntent.getActivity(this, 0, intent, FLAG_ONE_SHOT)
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, FLAG_ONE_SHOT or FLAG_IMMUTABLE)
 
         // create actual notification
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
@@ -43,6 +44,7 @@ class FirebaseService : FirebaseMessagingService() {
             .setContentText(message.data["message"]) // same thing as above but get actual message
             .setSmallIcon(R.drawable.ic_baseline_notifications_24) // set icon from the drawable folder
             .setAutoCancel(true) // notification is deleted when clicked
+            .setOnlyAlertOnce(true)
             .setContentIntent(pendingIntent)
             .build()
 

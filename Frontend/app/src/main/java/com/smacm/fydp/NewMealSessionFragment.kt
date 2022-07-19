@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.smacm.fydp.helper.BuddyAdapter
 import com.smacm.fydp.helper.Recipe
@@ -25,7 +26,14 @@ class NewMealSessionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_new_meal_session, container, false)
+        val inflate = inflater.inflate(R.layout.fragment_new_meal_session, container, false)
+
+//        bttn_begin_session.setOnClickListener {
+//            val currentMealSessionFragment = CurrentMealSessionFragment()
+//            val transaction: FragmentTransaction = fram
+//        }
+
+        return inflate
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
