@@ -6,13 +6,15 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.utilities.database.graph.Step;
 
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map.*;
+import java.util.Map.Entry;
 import java.util.Set;
 
 public class Main {
@@ -22,8 +24,24 @@ public class Main {
          *                      we have made for a Step
          * 2. Look for all the dependencies in the steps - This can be done efficiently if we do it alongside step creation
      */
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
+    public static void main(String[] args) throws IOException {
+        List<Step> steps = new ArrayList<Step>();
+        HashMap<String, List<Integer>> ingredients = new HashMap<String, List<Integer>>();//<ingredient, List<StepId>>
+        HashMap<String, List<Integer>> resourcesRequired = new HashMap<String, List<Integer>>();//<tool, List<StepId>>
+        HashMap<String, List<Integer>> holdingResource_Id = new HashMap<String, List<Integer>>();//<holdingResource, List<StepId>>
+        String name = new File(".").getCanonicalPath();
+        System.out.println("Test "+ name);
+        parseJson(
+                "res/test.json",
+                steps,
+                ingredients,
+                resourcesRequired,
+                holdingResource_Id
+        );
+        System.out.println(steps);
+        System.out.println(ingredients);
+        System.out.println(resourcesRequired);
+        System.out.println(holdingResource_Id);
     }
     public static void parseJson(
             String filePath,
@@ -33,11 +51,14 @@ public class Main {
             HashMap<String, List<Integer>> holdingResource_Id
     ){
         JSONParser jsonParser = new JSONParser();
+        Path path = Path.of(filePath);
 
-        try (FileReader reader = new FileReader(filePath))
+
+        try
         {
+            String json = Files.readString(path);
             //Read JSON file
-            Object obj = jsonParser.parse(reader);
+            Object obj = jsonParser.parse(json);
 
             JSONArray stepList = (JSONArray) obj;
             System.out.println(stepList);
@@ -66,16 +87,17 @@ public class Main {
             HashMap<String, List<Integer>> resourcesRequired,
             HashMap<String, List<Integer>> holdingResource_Id
     ) throws Exception {
-        Set<Integer> stepNumber = step.keySet();
+        Set<String> stepNumber = step.keySet();
         if(stepNumber.size() != 1){
             throw new Exception("there are more than one step to process");
         }
         Step s = new Step();
         //Get employee object within list
-        Integer stepId = stepNumber.iterator().next();
+        String key = stepNumber.iterator().next();
+        Integer stepId = Integer.parseInt(key);
         System.out.println(stepId);
         s.setStepID(stepId);
-        JSONObject stepObject = (JSONObject) step.get(stepId);
+        JSONObject stepObject = (JSONObject) step.get(key);
 
         //Get employee first name
         Boolean prepStep = (Boolean) stepObject.get("prepStep");
@@ -89,6 +111,8 @@ public class Main {
         Integer holdingID = (Integer) stepObject.get("holdingID");
         System.out.println(holdingID);
         s.setHoldingID(holdingID);
+
+        //TODO: Something is casting from an int to a long?
 
         if(holdingResource_Id.containsKey(holdingResource+"_"+holdingID)){
             holdingResource_Id.get(holdingResource+"_"+holdingID).add(stepId);
