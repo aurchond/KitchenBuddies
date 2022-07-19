@@ -350,5 +350,6 @@ public class Meal {
             user.setAllottedTime(user.getAllottedTime() + userTime);
             user.setCurrentTime(taskStart + userTime);
         }
+        return true;
     }
 }

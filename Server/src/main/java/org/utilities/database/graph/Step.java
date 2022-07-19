@@ -4,10 +4,7 @@ import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @NodeEntity(label="Step")
 //this defines our step node and all its attributes
@@ -46,7 +43,7 @@ public class Step {
 
     private List<String> ingredientList; //names of ingredients (i.e. cup of sugar)
 
-    private List<Number> ingredientQuantity; //quantities of ingredients [[8, cups]
+    private List<Map.Entry<Integer, String>> ingredientQuantity; //quantities of ingredients [[8, cups]
     private List<String> resourcesRequired; //kitchen equipment like knife, cheese grater, etc.
 
     private String instructions;
@@ -60,7 +57,7 @@ public class Step {
     //most used constructor
     public Step(Long recipeID, Integer stepID, Boolean prepStep, String holdingResource,
                 Integer holdingID, Integer stepTime, Integer timeLeft, List<String> ingredientList,
-                List<Number> ingredientQuantity, List<String> resourcesRequired, Integer userTime) {
+                List<Map.Entry<Integer, String>> ingredientQuantity, List<String> resourcesRequired, Integer userTime) {
         this.recipeID = recipeID;
         this.stepID = stepID;
         this.prepStep = prepStep;
@@ -115,7 +112,7 @@ public class Step {
     public Integer getStepTime() { return this.stepTime; }
     public Integer getTimeLeft() { return this.timeLeft; }
     public List<String> getIngredientList() { return this.ingredientList; }
-    public List<Number> getIngredientQuantity() { return this.ingredientQuantity; }
+    public List<Map.Entry<Integer, String>> getIngredientQuantity() { return this.ingredientQuantity; }
     public List<String> getResourcesRequired() { return resourcesRequired; }
     public Set<Connection> getConnections() { return connections; }
     public List<Connection> getTimeDependencies() {
@@ -153,7 +150,7 @@ public class Step {
     public void setStepTime(Integer stepTime) { this.stepTime = stepTime; }
     public void setTimeLeft(Integer timeLeft) { this.timeLeft = timeLeft; }
     public void setIngredientList(List<String> ingredientList) { this.ingredientList = ingredientList; }
-    public void setIngredientQuantity(List<Number> ingredientQuantity) { this.ingredientQuantity = ingredientQuantity; }
+    public void setIngredientQuantity(List<Map.Entry<Integer, String>> ingredientQuantity) { this.ingredientQuantity = ingredientQuantity; }
     public void setResourcesRequired(List<String> resourcesRequired) { this.resourcesRequired = resourcesRequired; }
     public void addConnection(Step end) {
         Connection c = new Connection(this, end);
@@ -187,6 +184,8 @@ public class Step {
     public void setUserTime(Integer userTime) {
         this.userTime = userTime;
     }
+
+    public void setInstructions(String instructions) { this.instructions = instructions;}
 
 // hashCode, equals, toString, no-arg constructor ommitted..
 }

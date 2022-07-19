@@ -108,7 +108,7 @@ public class RecipeCreator {
         return recipe; //TODO: Replace with proper recipe
     }
 
-    private boolean isFindsPath(Step startNode, Step endNode, Integer depth) {
+    private static boolean isFindsPath(Step startNode, Step endNode, Integer depth) {
         // DFS Implementation to check if path between two nodes exist
         if (startNode.getNodeID() == endNode.getNodeID() && depth != 1) {
             // Only return true if this is not a direct connection between original node and end node
@@ -125,7 +125,7 @@ public class RecipeCreator {
         return false;
     }
 
-    private void createConnections(HashMap<Integer, Step> steps, List<Integer> stepIds) {
+    private static void createConnections(HashMap<Integer, Step> steps, List<Integer> stepIds) {
         for (Integer i = 0; i < stepIds.size() - 1 ; i++) {
             Integer stepId1 = stepIds.get(i);
             Integer stepId2 = stepIds.get(i+1);
