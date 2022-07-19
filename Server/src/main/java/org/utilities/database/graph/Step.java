@@ -48,9 +48,6 @@ public class Step {
 
     private String instructions;
 
-    // TODO: Add amount of time user must actively participate in task
-
-
     @Relationship(type = Connection.TYPE, direction = Relationship.OUTGOING)
     private Set<Connection> connections = new HashSet<>();
 
@@ -127,8 +124,6 @@ public class Step {
         return stepConnections;
     }
     public List<Connection> getResourceDependencies() {
-        //TODO: find all Resource dependencies
-        // return connections;
         List<Connection> stepConnections = new ArrayList<Connection>();
 
         for (Connection c: connections) {
@@ -173,8 +168,21 @@ public class Step {
         return false;
     }
 
+    public List<Connection> getResourceConnection(Step step) {
+        List<Connection> stepConnections = new ArrayList<Connection>();
+        for (Connection c: this.connections) {
+            if(c.getEndNode() == step) {
+                stepConnections.add(c);
+            }
+        }
+        return stepConnections;
+    }
     public void deleteConnection(Step endNode) {
-        //TODO: Fill in
+        //TODO: Check if we need to do anything to enforce this in the DB
+        List<Connection> stepConnections = getResourceConnection(endNode);
+        for (Connection c:stepConnections) {
+            connections.remove(c);
+        }
     }
 
     public Integer getUserTime() {
