@@ -27,6 +27,29 @@ public class User {
         this.currentTime = 0;
     }
 
+    public UserTask getHead() {
+        return head;
+    }
+
+    public UserTask getTail() {
+        return tail;
+    }
+
+    public UserTask getRecent() {
+        return recent;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getCurrentTime(){
+        return currentTime;
+    }
+
+    public UserTask getRecentTask(){
+        return recent;
+    }
 
     // make function check if user is free
     //
@@ -54,13 +77,6 @@ public class User {
         return allottedTime;
     }
 
-    public Integer getCurrentTime(){
-        return currentTime;
-    }
-
-    public UserTask getRecentTask(){
-        return recent;
-    }
 
     // make function to update tail ptr to be head at the end of optimization
 }

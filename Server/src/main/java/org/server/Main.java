@@ -48,6 +48,7 @@ public class Main {
         /**
          * Send off to users using the buddies listed and the result of create Meal
          */
+        //Iterate through users to make steps into a list
         //
 
         //

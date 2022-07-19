@@ -4,19 +4,18 @@ package org.optimization;
 import org.recipe_processing.Recipe;
 import org.utilities.database.graph.Connection;
 import org.utilities.database.graph.Step;
-import scala.Int;
 
-import java.util.Collections;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.lang.Math;
 
 import static org.utilities.database.relational.Main.relationDbFunctionGetConstraints;
 
 public class Meal {
     // Hashmap of Kitchen Constraints (key=string, value=list<int>(each element is time the resource is next available))
     // List of Task Stacks (each element is a Task Class)
+    HashMap<String, HashMap<Integer, Integer>> resourceMap = new HashMap<String, HashMap<Integer, Integer>>();
 
     public Meal () {
 
@@ -35,7 +34,7 @@ public class Meal {
 
         // Get User kitchen constraints from database (Helper Method within Optimization?)
         // TODO: For prototype- Hardcode Constraints
-        HashMap<String, List<Integer>> constraints = relationDbFunctionGetConstraints(p_bud);
+        HashMap<String, List<Resource>> constraints = relationDbFunctionGetConstraints(p_bud);
 
         /* Initialize local variables
             - maxTimeLeft = 0 (Used to identify task from recipe with largest TimeLeft)
@@ -54,7 +53,7 @@ public class Meal {
 
         // Initialize evalSteps list - get the last step in each recipe
         for (Recipe recipe: recipes) {
-            evalSteps.add(recipe.getFinalStep()); //TODO: This assumes the first node is the final node in the recipe (MAKE SURE IT IS)
+            evalSteps.add(recipe.getFinalStep());
         }
 
         // What if we store the last node of each recipe and have a hashmap for the rest of the nodes
@@ -114,13 +113,14 @@ public class Meal {
 
         // tail -> prev -> prev -> ... -> head
 
+
     }
 
     private void mapTimeStepToUser(
             Step s,
             Integer prioBuddyIdx,
             List<User> buddies,
-            HashMap<String, List<Integer>> constraints
+            HashMap<String, List<Resource>> constraints
     ) {
         // we could give more priority to the same user that just did the resource task that this task relies on
         // check if prioritized buddy can take this process first
@@ -156,18 +156,18 @@ public class Meal {
 
         // TODO: Booking resources in advance breaks our constraint implementation
         // We might need to use a different data structure to represent each resource
-        Integer taskStart = findTimeToGetConstraints(taskStartTime, s, resources, constraints);
+        List<Object> taskResources = findTimeToGetConstraints(taskStartTime, s, resources, constraints);
 
-        if (taskStartTime < taskStart) {
+        if (taskStartTime < (Integer) taskResources.get(0)) {
             // TODO: what do we do in this situation?
             // we have to wait for resources to become available.
             // we want to have our time dependent task scheduled immediately before the current task
-            // if the resources need more time then do we want to push our time dependent task back?
+            // if the resoures need more time then do we want to push our time dependent task back?
         }
 
         // Insert into user stack
         // TODO: Change last parameter to userTime for a task
-        UserTask newTask = new UserTask(s, taskStart, taskStart);
+        UserTask newTask = new UserTask(s, (Integer)taskResources.get(0), (Integer)taskResources.get(0));
 
         // traverse task will always be before newTask
         if (traverse.getNext() != null) {
@@ -193,7 +193,7 @@ public class Meal {
     private Integer mapResourceStepToUser(
             Step s,
             List<User> buddies,
-            HashMap<String, List<Integer>> constraints
+            HashMap<String, List<Resource>> constraints
     ) {
         // Check which user has the least amount of work so far
         Integer leastUserTime = buddies.get(0).getCurrentTime();
@@ -215,11 +215,11 @@ public class Meal {
         List<String> resources = s.getResourcesRequired();
         resources.add(s.getHoldingResource());
 
-        Integer taskStart = findTimeToGetConstraints(leastUserTime, s, resources, constraints);
+        List<Object> taskResources = findTimeToGetConstraints(leastUserTime, s, resources, constraints);
 
-        // TODO: Change last parameter to userTime for a task
-        appendTaskToUser(user, s, taskStart, taskStart);
-
+        if(appendResourceTaskToUser(user, s, (Integer) taskResources.get(0), s.getUserTime())) {
+            updateResourceTimes(s, resources, constraints, (List<Integer>) taskResources.get(1), (Integer) taskResources.get(0));
+        }
         // Return user so that we may be able to prioritize this user to work on time dependent tasks
         return userIdx;
     }
@@ -229,97 +229,126 @@ public class Meal {
         return 0;
     }
 
-    private Integer findTimeToGetConstraints(
+    private List<Object> findTimeToGetConstraints(
             Integer leastUserTime,
             Step s,
             List<String> resources,
-            HashMap<String, List<Integer>> constraints) {
+            HashMap<String, List<Resource>> constraints) {
         List<Integer> resourceIds = new ArrayList<Integer>();
         List<Integer> earliestTimes = new ArrayList<Integer>();
 
-        // Option 1: Find user with least amount of work then find the constraints that satisfy
-
-        // this data structure will probably not work?
-        // if we have a time dependency that we are planning to use a resource in the future, how do we identify when the resource is free beforehand?
-        // if we assume time dependent constraints do not require resources than it's fine...but this is a bad assumption
         for(String resource: resources) {
             // Check list of elements for a resource and see if any are less than leastUserTime
             // If not, store index of resource with lowest time
-            Integer optimalIdx = 0;
+            Integer holdingResource = resourceMap.get(resource).get(s.getHoldingID());
+            if(holdingResource != null) {
+                Resource holdResource = constraints.get(resource).get(holdingResource);
+                earliestTimes.add(holdResource.getTimeAvailable());
+                resourceIds.add(holdingResource);
+            } else {
 
-            // TODO: Change value of earliestAvailResource
-            Integer earliestAvailResource = 100000;
-            Integer closestDiff = 10000;
-            Boolean foundResource = false;
+                Integer optimalIdx = 0;
 
-            Integer i = 0;
-            for (Integer rTime: constraints.get(resource)) {
-                Integer diff = leastUserTime - rTime;
-                if (0 < diff && Math.abs(diff) < closestDiff) {
-                    closestDiff = Math.abs(diff);
-                    optimalIdx = i;
-                    // Update constraint time and exit
-                    foundResource = true;
-                } else if (!foundResource && Math.abs(diff) < closestDiff){
-                    closestDiff = Math.abs(diff);
-                    optimalIdx = i;
+                Integer earliestAvailResource = Integer.MAX_VALUE;
+                Integer closestDiff = Integer.MAX_VALUE;
+                Boolean foundResource = false;
+
+                Integer i = 0;
+                for (Resource holdResource : constraints.get(resource)) {
+                    Integer rTime = holdResource.getTimeAvailable();
+                    Integer diff = leastUserTime - rTime;
+                    if (0 < diff && Math.abs(diff) < closestDiff) {
+                        closestDiff = Math.abs(diff);
+                        optimalIdx = i;
+                        // Update constraint time and exit
+                        foundResource = true;
+                    } else if (!foundResource && Math.abs(diff) < closestDiff) {
+                        closestDiff = Math.abs(diff);
+                        optimalIdx = i;
+                    }
+                    i++;
                 }
-                i++;
+
+                resourceIds.add(optimalIdx);
+                HashMap<Integer, Integer> resourceIdMapping = new HashMap<Integer, Integer>();
+                resourceIdMapping.put(s.getHoldingID(), optimalIdx);
+                resourceMap.put(resource, resourceIdMapping);
+
+                Resource holdResource = constraints.get(resource).get(optimalIdx);
+                earliestTimes.add(holdResource.getTimeAvailable());
             }
-
-            resourceIds.add(optimalIdx);
-            Integer earlyTime = constraints.get(resource).get(optimalIdx);
-            earliestTimes.add(earlyTime);
         }
 
-        Integer taskStart = Collections.min(earliestTimes);
-        // Update the earliest accessible time for each resource used
-        for(Integer i = 0; i < resources.size(); i++) {
-            constraints.get(resources.get(i)).set(resourceIds.get(i), taskStart + s.getStepTime());
-        }
+        Integer taskStart = Collections.max(earliestTimes);
 
         // Find earliest time
-        return taskStart;
+        List<Object> returnStuff = new ArrayList<Object>();
+        returnStuff.add(taskStart);
+        returnStuff.add(resourceIds);
+
+        return returnStuff;
     }
 
-    private void appendTaskToUser(User user, Step s, Integer taskStart, Integer userTime) {
+    private void updateResourceTimes(Step s, List<String> resources, HashMap<String, List<Resource>> constraints, List<Integer> resourceIds, Integer taskStart) {
+        // Update the earliest accessible time for each resource used
+        for(Integer i = 0; i < resources.size(); i++) {
+            Resource holdResource = constraints.get(resources.get(i))//get the resource id list for that type
+                    .get(resourceIds.get(i));//get the resource of a sepecifc id
+
+            holdResource.setTimeAvailable(taskStart + s.getStepTime());//update the time at that id to the amount of time it takes for the step to occur
+        }
+    }
+
+    private Boolean appendResourceTaskToUser(User user, Step s, Integer taskStart, Integer userTime) {
         // TODO: Change second parameter to userTime for a task
+        //Check it has enough time
+        //add it to the user -> via link list
+        // return true if everything works so you can update counters
+
+        //c
+        // Check if there's enough space to add task
+
+        UserTask recent = user.getRecentTask();
+        if (recent.getNext() != null && (taskStart + userTime > recent.getNext().startTime)) {
+            return false;
+        }
+
         UserTask newTask = new UserTask(s, taskStart, userTime);
 
         // if resources are needed and found then Insert task into user
-        if (user.getAllottedTime() == 0) {
+        if (user.getHead() == null) {
             user.setHead(newTask);
             user.setRecentTask(newTask);
-            // TODO: Update the tail
+            user.setTail(newTask);
 
-            // TODO: Add user time instead of step time
             user.setAllottedTime(user.getAllottedTime() + userTime);
-            user.setCurrentTime(user.getCurrentTime() + s.getStepTime());
+            user.setCurrentTime(taskStart + userTime);
+            //TODO in the fall: can we fill in gaps created by waiting for a resource effectively
 
-        } else {
-            UserTask recent = user.getRecentTask();
+        } else if(recent.getNext() == null){
+            newTask.setPrev(recent);
+            recent.setNext(newTask);
+            // Append to end of list
+            user.setRecentTask(newTask);
+            user.setTail(newTask);
 
-            // TODO: Add current time math
+            user.setAllottedTime(user.getAllottedTime() + userTime);
+            user.setCurrentTime(taskStart + userTime);
 
-            // Check if there's enough space to add task
-            if (recent.getNext() != null && (user.getCurrentTime() + taskStart > recent.getNext().startTime)) {
-                // if no space, find other users at that time??
-            }
-
+        }else {
             // there's enough space to insert
             // Insert newTask between recent and its old next task
-            UserTask temp = recent.getNext();
-            temp.setPrev(newTask);
-            newTask.setNext(temp);
+            UserTask nextNode = recent.getNext();
+            nextNode.setPrev(newTask);
+            newTask.setNext(nextNode);
             newTask.setPrev(recent);
             recent.setNext(newTask);
 
             user.setRecentTask(newTask);
 
             // Update counters
-            // TODO: Add user time instead of step time
-            user.setAllottedTime(user.getAllottedTime() + s.getStepTime());
-            user.setCurrentTime(user.getCurrentTime() + s.getStepTime());
+            user.setAllottedTime(user.getAllottedTime() + userTime);
+            user.setCurrentTime(taskStart + userTime);
         }
     }
 }

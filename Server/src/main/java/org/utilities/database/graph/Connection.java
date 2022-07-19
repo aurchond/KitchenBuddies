@@ -19,6 +19,8 @@ public class Connection {
     // If time >= 0, it is time dependent
     private Integer time;
 
+    // TODO: Add a boolean value is we're using the same resourceId
+
     ////CONSTRUCTORS////
     //most used constructor
     public Connection(Step start, Step end, Integer time) {
