@@ -93,7 +93,7 @@ public class RecipeCreator {
                     }
                 });
                 for(Connection c: connections){
-                    if(isFindsPath(c.getStartNode(), c.getEndNode())){
+                    if(isFindsPath(c.getStartNode(), c.getEndNode(), 0)){
                         step.deleteConnection(c.getEndNode());
                     }
                 }
@@ -108,8 +108,21 @@ public class RecipeCreator {
         return recipe; //TODO: Replace with proper recipe
     }
 
-    private boolean isFindsPath(Step startNode, Step endNode) {
-        //TODO implement DFS if you find a path than you return true
+    private boolean isFindsPath(Step startNode, Step endNode, Integer depth) {
+        // DFS Implementation to check if path between two nodes exist
+        if (startNode.getNodeID() == endNode.getNodeID() && depth != 1) {
+            // Only return true if this is not a direct connection between original node and end node
+            return true;
+        }
+
+        Set<Connection> connections = startNode.getConnections();
+        for (Connection c: connections) {
+            Boolean isPath = isFindsPath(c.getEndNode(), endNode, depth+1);
+
+            if (isPath) {return true;}
+        }
+
+        return false;
     }
 
     private void createConnections(HashMap<Integer, Step> steps, List<Integer> stepIds) {

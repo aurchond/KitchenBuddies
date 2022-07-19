@@ -106,6 +106,9 @@ public class Step {
     public Integer getStepID() {
         return this.stepID;
     }
+    public Double getNodeID() {
+        return this.nodeID;
+    }
     public Boolean checkIfPrep() { return this.prepStep; }
     public String getHoldingResource() { return this.holdingResource; }
     public Integer getHoldingID() { return this.holdingID; }
@@ -143,6 +146,7 @@ public class Step {
     //setter functions
     public void setRecipeID(Long ID) { this.recipeID = ID; }
     public void setStepID(Integer ID) { this.stepID = ID; }
+    public void setNodeID(Double ID) { this.nodeID = ID; }
     public void setPrepStep(Boolean prep) { this.prepStep = prep; }
     public void setHoldingResource(String holdingResource) { this.holdingResource = holdingResource; }
     public void setHoldingID(Integer holdingID) { this.holdingID = holdingID; }
