@@ -20,7 +20,7 @@ public class Recipe {
     private String recipeName;
 
     public Recipe() {
-        private HashMap<Integer, Step> steps = new HashMap<Integer, Step>();
+        this.steps = new HashMap<>();
     }
 
     public Recipe(HashMap<Integer, Step> steps, Step finalStep) {

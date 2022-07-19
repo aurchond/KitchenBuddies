@@ -3,8 +3,10 @@ package org.utilities.database.graph;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.transaction.Transaction;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
@@ -38,8 +40,8 @@ public class Main {
         List<String> r1_ingredients = new ArrayList<String>();
         r1_ingredients.add("salted water");
 
-        List<Number> r1_quantity = new ArrayList<Number>();
-        r1_quantity.add(0.5);
+        List<Map.Entry<Integer, String>> r1_quantity = new ArrayList<Map.Entry<Integer, String>>();
+        r1_quantity.add(new AbstractMap.SimpleEntry<>(0.5, "cups"));
 
         List<String> r1_tools = new ArrayList<String>();
         Step s1 = new Step(25L, 1, true, "saucepan",
@@ -52,7 +54,7 @@ public class Main {
         //Cut the spears into 1- to 2-inch sections, slicing the asparagus at a slight diagonal.
         List<String> r2_ingredients = new ArrayList<String>();
         r2_ingredients.add("asparagus");
-        List<Number> r2_quantity = new ArrayList<Number>();
+        List<Map.Entry<Integer, String>> r2_quantity = new ArrayList<Map.Entry<Integer, String>>();
         r2_quantity.add(1);
 
         List<String> r2_tools = new ArrayList<String>();
@@ -65,7 +67,7 @@ public class Main {
         // Boil asparagus and lower heat
         List<String> r3_ingredients = new ArrayList<String>();
         r2_ingredients.add("asparagus");
-        List<Number> r3_quantity = new ArrayList<Number>();
+        List<Map.Entry<Integer, String>> r3_quantity = new ArrayList<Map.Entry<Integer, String>>();
         r2_quantity.add(1);
 
         Step s3 = new Step(25L, 3, false, "saucepan",
@@ -81,17 +83,17 @@ public class Main {
         r2_ingredients.add("olive oil");
         r2_ingredients.add("parmesan");
         r2_ingredients.add("lemon zest");
-        List<Number> r4_quantity = new ArrayList<Number>();
-        r2_quantity.add(1);
-        r2_quantity.add(2);
-        r2_quantity.add(2);
-        r2_quantity.add(1);
+        List<Map.Entry<Integer, String>> r4_quantity = new ArrayList<Map.Entry<Integer, String>>();
+        r2_quantity.add(new AbstractMap.SimpleEntry<>(1, "stalk"));
+        r2_quantity.add(new AbstractMap.SimpleEntry<>(2, "tbs"));
+        r2_quantity.add(new AbstractMap.SimpleEntry<>(2, "tbs"));
+        r2_quantity.add(new AbstractMap.SimpleEntry<>(1, "tbs"));
 
         List<String> r4_tools = new ArrayList<String>();
         r2_tools.add("spoon");
 
-        Step s4 = new Step(25L, 4, false, "bowl",
-                0, 5, 25, r4_ingredients, r4_quantity, r4_tools);
+        Step s4 = new Step((Long) 25L, (Integer) 4, (Boolean) false, "bowl",
+                (Integer) 0, (Integer) 5, (Integer) 25, r4_ingredients, r4_quantity, r4_tools);
 
         // Step 1 -> Step 3 with 10 timeleft
         s1.addConnection(s3, 10);

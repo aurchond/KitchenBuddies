@@ -11,6 +11,6 @@ public class Main {
         System.out.println("Hello world!");
     }
     public static HashMap<String, List<Resource>> relationDbFunctionGetConstraints(User p_bud){
-        return new HashMap<String, List<Integer>>();
+        return new HashMap<String, List<Resource>>();
     }
 }
