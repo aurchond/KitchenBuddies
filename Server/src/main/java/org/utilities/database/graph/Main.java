@@ -28,6 +28,7 @@ public class Main {
 
         tx.commit();
         tx.close();
+        //Do you have to close the session?
     }
 
     //https://www.simplyrecipes.com/recipes/asparagus/

@@ -93,6 +93,10 @@ public class Step {
         this.userTime = userTime;
     }
 
+    public Step() {
+
+    }
+
     public void addConnection(Step target, int distance) {
         this.connections.add(new Connection(this, target, distance));
     }
@@ -102,6 +106,9 @@ public class Step {
     public Integer getStepID() {
         return this.stepID;
     }
+    public Double getNodeID() {
+        return this.nodeID;
+    }
     public Boolean checkIfPrep() { return this.prepStep; }
     public String getHoldingResource() { return this.holdingResource; }
     public Integer getHoldingID() { return this.holdingID; }
@@ -110,6 +117,7 @@ public class Step {
     public List<String> getIngredientList() { return this.ingredientList; }
     public List<Number> getIngredientQuantity() { return this.ingredientQuantity; }
     public List<String> getResourcesRequired() { return resourcesRequired; }
+    public Set<Connection> getConnections() { return connections; }
     public List<Connection> getTimeDependencies() {
         List<Connection> stepConnections = new ArrayList<Connection>();
 
@@ -138,6 +146,7 @@ public class Step {
     //setter functions
     public void setRecipeID(Long ID) { this.recipeID = ID; }
     public void setStepID(Integer ID) { this.stepID = ID; }
+    public void setNodeID(Double ID) { this.nodeID = ID; }
     public void setPrepStep(Boolean prep) { this.prepStep = prep; }
     public void setHoldingResource(String holdingResource) { this.holdingResource = holdingResource; }
     public void setHoldingID(Integer holdingID) { this.holdingID = holdingID; }
@@ -146,6 +155,30 @@ public class Step {
     public void setIngredientList(List<String> ingredientList) { this.ingredientList = ingredientList; }
     public void setIngredientQuantity(List<Number> ingredientQuantity) { this.ingredientQuantity = ingredientQuantity; }
     public void setResourcesRequired(List<String> resourcesRequired) { this.resourcesRequired = resourcesRequired; }
+    public void addConnection(Step end) {
+        Connection c = new Connection(this, end);
+        this.connections.add(c);
+    }
+
+    public boolean hasResourceConnection(Step step) {
+        for (Connection c: this.connections) {
+            if(c.getEndNode() == step) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasMultipleConnection() {
+        if(this.connections.size()>1) {
+                return true;
+        }
+        return false;
+    }
+
+    public void deleteConnection(Step endNode) {
+        //TODO: Fill in
+    }
 
     public Integer getUserTime() {
         return userTime;
