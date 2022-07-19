@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.recipe_processing.Main.createRecipe;
+import static org.input_processing.Main.parseJson;
+import static org.recipe_processing.RecipeCreator.createRecipe;
 import static org.utilities.database.graph.RecipeHelper.*;
 
 public class Main {
@@ -22,18 +23,19 @@ public class Main {
                 recipes.add(getRecipeFromDatabase(recipeName));
             } else {
                 //Input processing - parse out the steps from the text - this should output a list of steps
+                List<Step> Steps = new ArrayList<Step>();
+                HashMap<String, List<Integer>> ingredients = new HashMap<String, List<Integer>>();//<ingredient, List<StepId>>
+                HashMap<String, List<Integer>> resourcesRequired = new HashMap<String, List<Integer>>();//<tool, List<StepId>>
+                HashMap<String, List<Integer>> holdingResource_Id = new HashMap<String, List<Integer>>();//<holdingResource, List<StepId>>
+                parseJson("test.json", Steps, ingredients, resourcesRequired, holdingResource_Id);
                 //TODO: get file that was passed in and parse it - look at java json lib to help with this
                 // - make sure to create the below hashmaps needed for createRecipe
                 // - make sure hashmaps have the stepIDs in order of smallest to largest
 
                 //Recipe Processing - Dependency creation + Saves Steps to DB
                 //TODO: convert nulls to actual values
-                List<Step> Steps = null;
-                HashMap<String, List<Integer>> ingredients = null;//<ingredient, List<StepId>>
-                HashMap<String, List<Integer>> toolsRequired = null;//<tool, List<StepId>>
-                HashMap<String, List<Integer>> holdingResource_Id = null;//<holdingResource, List<StepId>>
 
-                Recipe recipe = createRecipe(Steps, ingredients, toolsRequired, holdingResource_Id);// String will be formatted as "holdingResource_holdingId"
+                Recipe recipe = createRecipe(Steps, ingredients, resourcesRequired, holdingResource_Id);// String will be formatted as "holdingResource_holdingId"
                 saveRecipe(recipe);
                 recipes.add(recipe);
 

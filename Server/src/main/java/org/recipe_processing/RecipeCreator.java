@@ -19,10 +19,10 @@ public class RecipeCreator {
      */
     public RecipeCreator() {
     }
-    public Recipe createRecipe(
+    public static Recipe createRecipe(
             List<Step> Steps,
             HashMap<String, List<Integer>> ingredients,
-            HashMap<String, List<Integer>> toolsRequired,
+            HashMap<String, List<Integer>> resourcesRequired,
             HashMap<String, List<Integer>> holdingResource_Id // String will be formatted as "holdingResource_holdingId"
 
             ){
@@ -38,7 +38,7 @@ public class RecipeCreator {
          *  Iterate through keys of each hashmap and create dependencies (between ingredients in order of step id)
          *      - This doing the resource dependencies
          *
-         *      toolsRequired
+         *      resourcesRequired
          *      ingredients
          *      HoldingResource
          *
@@ -60,7 +60,7 @@ public class RecipeCreator {
             createConnections(steps, stepIds);
         }
         // if you go in order for lowest to highest step, each step should only have one connection, than flip the connections at the end
-        for (List<Integer> stepIds : toolsRequired.values()) {
+        for (List<Integer> stepIds : resourcesRequired.values()) {
             createConnections(steps, stepIds);
         }
         for (List<Integer> stepIds : holdingResource_Id.values()) {

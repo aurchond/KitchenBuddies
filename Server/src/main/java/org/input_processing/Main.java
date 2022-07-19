@@ -9,6 +9,8 @@ import org.utilities.database.graph.Step;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map.*;
 import java.util.Set;
@@ -23,7 +25,13 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
     }
-    public static parseJson(String filePath){
+    public static void parseJson(
+            String filePath,
+            List<Step> steps,
+            HashMap<String, List<Integer>> ingredients,
+            HashMap<String, List<Integer>> resourcesRequired,
+            HashMap<String, List<Integer>> holdingResource_Id
+    ){
         JSONParser jsonParser = new JSONParser();
 
         try (FileReader reader = new FileReader(filePath))
@@ -34,8 +42,13 @@ public class Main {
             JSONArray stepList = (JSONArray) obj;
             System.out.println(stepList);
 
-            //Iterate over employee array
-            stepList.forEach( s -> parseStepObject( (JSONObject) s ) );
+            stepList.forEach( s -> {
+                try {
+                    parseStepObject( (JSONObject) s, steps, ingredients, resourcesRequired,holdingResource_Id );
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -43,12 +56,16 @@ public class Main {
             e.printStackTrace();
         } catch (ParseException e) {
             e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
-    private static Step parseStepObject(JSONObject step) throws Exception {
+    private static void parseStepObject(
+            JSONObject step,
+            List<Step> steps,
+            HashMap<String, List<Integer>> ingredients,
+            HashMap<String, List<Integer>> resourcesRequired,
+            HashMap<String, List<Integer>> holdingResource_Id
+    ) throws Exception {
         Set<Integer> stepNumber = step.keySet();
         if(stepNumber.size() != 1){
             throw new Exception("there are more than one step to process");
@@ -67,11 +84,17 @@ public class Main {
 
         String holdingResource = (String) stepObject.get("holdingResource");
         System.out.println(holdingResource);
-        s.setHoldingID(holdingResource);
+        s.setHoldingResource(holdingResource);
 
         Integer holdingID = (Integer) stepObject.get("holdingID");
         System.out.println(holdingID);
         s.setHoldingID(holdingID);
+
+        if(holdingResource_Id.containsKey(holdingResource+"_"+holdingID)){
+            holdingResource_Id.get(holdingResource+"_"+holdingID).add(stepId);
+        }else {
+            holdingResource_Id.put(holdingResource+"_"+holdingID,List.of(stepId));
+        }
 
         Integer stepTime = (Integer) stepObject.get("stepTime");
         System.out.println(stepTime);
@@ -84,19 +107,34 @@ public class Main {
         List<String> ingredientList = (List<String>) stepObject.get("ingredientList");
         System.out.println(ingredientList);
         s.setIngredientList(ingredientList);
+        for (String ingredient: ingredientList) {
+            if(ingredients.containsKey(ingredient)){
+                ingredients.get(ingredient).add(stepId);
+            }else {
+                ingredients.put(ingredient,List.of(stepId));
+            }
+        }
 
         List<Entry<Integer, String>> ingredientQuantity = (List<Entry<Integer, String>>) stepObject.get("ingredientQuantity");
         System.out.println(ingredientQuantity);
         s.setIngredientQuantity(ingredientQuantity);
 
-        List<String> resourcesRequired = (List<String>) stepObject.get("resourcesRequired");
-        System.out.println(resourcesRequired);
-        s.setResourcesRequired(resourcesRequired);
+        List<String> rRequired = (List<String>) stepObject.get("resourcesRequired");
+        System.out.println(rRequired);
+        s.setResourcesRequired(rRequired);
+
+        for (String resource: rRequired) {
+            if(resourcesRequired.containsKey(resource)){
+                resourcesRequired.get(resource).add(stepId);
+            }else {
+                resourcesRequired.put(resource,List.of(stepId));
+            }
+        }
 
         String instructions = (String) stepObject.get("instructions");
         System.out.println(instructions);
         s.setInstructions(instructions);
 
-        return s;
+        steps.add(s);
     }
 }
