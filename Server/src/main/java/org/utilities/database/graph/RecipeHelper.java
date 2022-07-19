@@ -15,12 +15,9 @@ public class RecipeHelper {
     private static HashMap<String, Long> recipeNameToID;
 
     /* TODO:
-    - Add Step to Recipe (or should we just add all the steps in one session?)
-    - Update Recipe (add, delete, or modify properties)
-    - Add measurement scales i.e. cups, tablespoons, etc.
-
-    New TODO add the recipe id to the hashmap everytime a recipe is created/saved to the db
-    - Save Recipe
+        - Update Recipe (add, delete, or modify properties)
+        - Add measurement scales i.e. cups, tablespoons, etc. - currently part of ingredients
+        - Save Recipe
      */
 
     //search for all nodes with a specific recipe ID and delete them

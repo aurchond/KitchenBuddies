@@ -178,7 +178,6 @@ public class Step {
         return stepConnections;
     }
     public void deleteConnection(Step endNode) {
-        //TODO: Check if we need to do anything to enforce this in the DB
         List<Connection> stepConnections = getResourceConnection(endNode);
         for (Connection c:stepConnections) {
             connections.remove(c);
