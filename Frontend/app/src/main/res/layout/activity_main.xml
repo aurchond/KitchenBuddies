@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main_layout"
+    tools:context=".MainActivity">
+
+<!--ViewPager allows the users to swipe left or right through the pages containing data or see an entirely new screen
+    ViewPager2 is an improved version of the ViewPager library that offers
+    enhanced functionality and addresses common difficulties with using ViewPager-->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tab_layout" />
+
+<!--provides a horizontal layout to display tabs at the bottom-->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/tabBackgroundColor"
+        app:layout_constraintBottom_toBottomOf="@+id/view_pager"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="?colorPrimary"
+        app:tabMaxWidth="0dp"
+        app:tabMode="fixed">
+
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Meal Session" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Past Recipes" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

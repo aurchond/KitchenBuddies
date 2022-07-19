@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:background="@color/teal_700"
+        tools:context=".NewMealSessionFragment">
+
+
+        <TextView
+            android:id="@+id/tv_selected_recipes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Selected Recipes"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_selected_recipes"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:scrollbars="vertical"
+            android:textColor="@color/white"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/tv_selected_recipes"
+            tools:layout_editor_absoluteX="8dp" />
+
+        <Button
+            android:id="@+id/bttn_add_recipe"
+            android:layout_width="wrap_content"
+            android:text="Add Recipe"
+            android:textSize="10sp"
+            android:layout_height="40sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_selected_recipes" />
+
+        <Button
+            android:id="@+id/bttn_delete_recipe"
+            android:layout_width="wrap_content"
+            android:layout_height="40sp"
+            android:text="Delete Recipe"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/bttn_add_recipe"
+            app:layout_constraintTop_toBottomOf="@+id/rv_selected_recipes" />
+
+        <TextView
+            android:id="@+id/tv_cooking_buddies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Cooking Buddies"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/bttn_add_recipe"
+            android:layout_marginTop="15dp"/>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_cooking_buddies"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:textColor="@color/white"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/tv_cooking_buddies"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <Button
+            android:id="@+id/bttn_add_buddy"
+            android:layout_width="wrap_content"
+            android:layout_height="40sp"
+            android:text="Add Buddy"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_cooking_buddies" />
+
+        <Button
+            android:id="@+id/bttn_delete_buddy"
+            android:layout_width="wrap_content"
+            android:layout_height="40sp"
+            android:text="Delete Buddy"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/bttn_add_buddy"
+            app:layout_constraintTop_toBottomOf="@+id/rv_cooking_buddies" />
+
+        <Button
+            android:id="@+id/bttn_begin_session"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Begin New Meal Session"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            app:layout_constraintBottom_toTopOf="@+id/bttn_add_resource"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bttn_add_buddy" />
+
+
+        <Button
+            android:id="@+id/bttn_add_resource"
+            android:layout_width="wrap_content"
+            android:layout_height="40sp"
+            android:text="Add resource"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toTopOf="@+id/bttn_begin_session"
+            app:layout_constraintStart_toStartOf="@+id/bttn_add_buddy" />
+
+        <Button
+            android:id="@+id/bttn_delete_resource"
+            android:layout_width="wrap_content"
+            android:layout_height="40sp"
+            android:text="Delete Resource"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toTopOf="@+id/bttn_begin_session"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/bttn_add_resource" />
+
+        <TextView
+            android:id="@+id/tv_Resources_Available"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Resources Available"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
