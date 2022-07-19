@@ -5,6 +5,7 @@ import org.neo4j.ogm.cypher.ComparisonOperator;
 import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
+import org.neo4j.ogm.transaction.Transaction;
 import org.recipe_processing.Recipe;
 
 import java.util.HashMap;
@@ -17,7 +18,6 @@ public class RecipeHelper {
     /* TODO:
         - Update Recipe (add, delete, or modify properties)
         - Add measurement scales i.e. cups, tablespoons, etc. - currently part of ingredients
-        - Save Recipe
      */
 
     //search for all nodes with a specific recipe ID and delete them
@@ -57,12 +57,6 @@ public class RecipeHelper {
         return s.query(Step.class, getHeadNodeQuery, params);
     }
 
-
-    // TODO: Add additional properties for a recipe
-    /*
-    - Add action (what is the step actually doing?) i.e. frying, baking, chopping, dicing, etc.
-    - Add measurement scales i.e. cups, tablespoons, etc.
-     */
     public static Boolean isRecipeInDatabase(String recipeName){
         // TODO: Change to relational database
         return recipeNameToID.containsKey(recipeName);
@@ -104,7 +98,10 @@ public class RecipeHelper {
         return session;
     }
 
-    public static void saveRecipe(Recipe recipe){
+    public static void saveRecipe(Recipe recipe) {
+        Session s = createSession();
+        Transaction tx = s.beginTransaction();
+
         Long recipeID = Long.valueOf(0);//generate a recipe ID
         recipeNameToID.put(recipe.getRecipeName(), recipeID);
         /**Save recipe to db
@@ -113,5 +110,19 @@ public class RecipeHelper {
          *  - save each node with connections to the db
          */
 
+        // Looping through the HashMap
+        for (Map.Entry<Integer, Step> mapElement : recipe.getSteps().entrySet()) {
+            Integer stepID = mapElement.getKey();
+            Step step = mapElement.getValue();
+
+            step.setRecipeID(recipeID);
+            step.setStepID(stepID);
+            Double nodeID = recipeID.doubleValue() + Double.valueOf(Double.valueOf(stepID) / 10);
+            step.setNodeID(nodeID);
+
+            s.save(step);
+        }
+        tx.commit();
+        tx.close();
     }
 }

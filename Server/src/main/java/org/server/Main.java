@@ -35,6 +35,7 @@ public class Main {
                 Recipe recipe = createRecipe(Steps, ingredients, resourcesRequired, holdingResource_Id);// String will be formatted as "holdingResource_holdingId"
                 recipe.setRecipeName(recipeName);
                 addToRecipeNameToID(recipeName, recipe.getRecipeID());
+                //access graph DB so we can save the recipe
                 saveRecipe(recipe);
                 recipes.add(recipe);
 
