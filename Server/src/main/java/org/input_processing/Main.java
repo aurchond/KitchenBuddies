@@ -11,11 +11,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 
 public class Main {
     // Will handle parsing steps apart before the recipe Creator gets called
@@ -38,10 +35,9 @@ public class Main {
                 resourcesRequired,
                 holdingResource_Id
         );
-        System.out.println(steps);
-        System.out.println(ingredients);
-        System.out.println(resourcesRequired);
-        System.out.println(holdingResource_Id);
+        System.out.println(Arrays.asList(ingredients));
+        System.out.println(Arrays.asList(resourcesRequired));
+        System.out.println(Arrays.asList(holdingResource_Id));
     }
     public static void parseJson(
             String filePath,
@@ -108,23 +104,19 @@ public class Main {
         System.out.println(holdingResource);
         s.setHoldingResource(holdingResource);
 
-        Integer holdingID = (Integer) stepObject.get("holdingID");
+        Integer holdingID = ((Long)stepObject.get("holdingID")).intValue();
         System.out.println(holdingID);
         s.setHoldingID(holdingID);
 
         //TODO: Something is casting from an int to a long?
 
-        if(holdingResource_Id.containsKey(holdingResource+"_"+holdingID)){
-            holdingResource_Id.get(holdingResource+"_"+holdingID).add(stepId);
-        }else {
-            holdingResource_Id.put(holdingResource+"_"+holdingID,List.of(stepId));
-        }
+        holdingResource_Id.computeIfAbsent(holdingResource+"_"+holdingID, k -> new ArrayList<>()).add(stepId);
 
-        Integer stepTime = (Integer) stepObject.get("stepTime");
+        Integer stepTime = ((Long)stepObject.get("stepTime")).intValue();
         System.out.println(stepTime);
         s.setStepTime(stepTime);
 
-        Integer userTime = (Integer) stepObject.get("userTime");
+        Integer userTime = ((Long)stepObject.get("userTime")).intValue();
         System.out.println(userTime);
         s.setUserTime(userTime);
 
@@ -132,12 +124,9 @@ public class Main {
         System.out.println(ingredientList);
         s.setIngredientList(ingredientList);
         for (String ingredient: ingredientList) {
-            if(ingredients.containsKey(ingredient)){
-                ingredients.get(ingredient).add(stepId);
-            }else {
-                ingredients.put(ingredient,List.of(stepId));
-            }
+            ingredients.computeIfAbsent(ingredient, k -> new ArrayList<>()).add(stepId);
         }
+        System.out.println(Arrays.asList(ingredients));
 
         List<Entry<Integer, String>> ingredientQuantity = (List<Entry<Integer, String>>) stepObject.get("ingredientQuantity");
         System.out.println(ingredientQuantity);
@@ -148,11 +137,7 @@ public class Main {
         s.setResourcesRequired(rRequired);
 
         for (String resource: rRequired) {
-            if(resourcesRequired.containsKey(resource)){
-                resourcesRequired.get(resource).add(stepId);
-            }else {
-                resourcesRequired.put(resource,List.of(stepId));
-            }
+            resourcesRequired.computeIfAbsent(resource, k -> new ArrayList<>()).add(stepId);
         }
 
         String instructions = (String) stepObject.get("instructions");
