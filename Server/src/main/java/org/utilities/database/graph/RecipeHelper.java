@@ -13,7 +13,11 @@ import java.util.Map;
 
 public class RecipeHelper {
 
-    private static HashMap<String, Long> recipeNameToID;
+    private static HashMap<String, Long> recipeNameToID = new HashMap<>() {{
+        put("fried_rice", 120L);
+        put("rotini", 122L);
+        put("salmon", 124L);
+    }};
 
     /* TODO:
         - Update Recipe (add, delete, or modify properties)

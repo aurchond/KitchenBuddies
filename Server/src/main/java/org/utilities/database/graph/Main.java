@@ -25,9 +25,9 @@ public class Main {
         // These recipes are hard coded for testing purposes
 //        createAsparagus(session);
 //        createChicken(session);
-//        createBakedRotini(session);
-        createFriedRice(session);
-        createSalmon(session);
+        createBakedRotini(session);
+//        createFriedRice(session);
+//        createSalmon(session);
 
         tx.commit();
         tx.close();
@@ -346,12 +346,12 @@ public class Main {
 //        s5.addConnection(s6, 5);
 //        s6.addConnection(s7, 30);
 
-        s1.addConnection(s2,-1);
-        s2.addConnection(s3, -1);
-        s3.addConnection(s4, -1);
-        s4.addConnection(s6, -1);
-        s5.addConnection(s6, -1);
-        s6.addConnection(s7, -1);
+        s2.addConnection(s1,-1);
+        s3.addConnection(s2, -1);
+        s4.addConnection(s3, -1);
+        s6.addConnection(s4, -1);
+        s6.addConnection(s5, -1);
+        s7.addConnection(s6, -1);
 
         s.save(s1);
         s.save(s2);
@@ -450,11 +450,11 @@ public class Main {
         Step s6 = new Step(120L, 6, false, "wok",
                 0, 1, 26, ingredients, quantity, tools, 1, "season");
 
-        s1.addConnection(s2, -1);
-        s2.addConnection(s4, -1);
-        s3.addConnection(s4, -1);
-        s4.addConnection(s5, -1);
-        s5.addConnection(s6, -1);
+        s2.addConnection(s1, -1);
+        s4.addConnection(s2, -1);
+        s4.addConnection(s3, -1);
+        s5.addConnection(s4, -1);
+        s6.addConnection(s5, -1);
 
 //        s1.addConnection(s2, 2);
 //        s2.addConnection(s4, 2);
@@ -543,11 +543,11 @@ public class Main {
         Step s6 = new Step(124L, 6, false, "oven",
                 2, 1, 23, 1);
 
-        s1.addConnection(s3, -1);
-        s2.addConnection(s3, -1);
-        s3.addConnection(s5, -1);
-        s4.addConnection(s5, -1);
-        s5.addConnection(s6,  -1);
+        s3.addConnection(s1, -1);
+        s3.addConnection(s2, -1);
+        s5.addConnection(s3, -1);
+        s5.addConnection(s4, -1);
+        s6.addConnection(s5,  -1);
 //        s1.addConnection(s3, 1);
 //        s2.addConnection(s3, 5);
 //        s3.addConnection(s5, 3);

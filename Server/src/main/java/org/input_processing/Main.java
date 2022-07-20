@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
-import java.util.Map.Entry;
 
 public class Main {
     // Will handle parsing steps apart before the recipe Creator gets called
@@ -128,7 +127,7 @@ public class Main {
         }
         System.out.println(Arrays.asList(ingredients));
 
-        List<Entry<Integer, String>> ingredientQuantity = (List<Entry<Integer, String>>) stepObject.get("ingredientQuantity");
+        List<Float> ingredientQuantity = (List<Float>) stepObject.get("ingredientQuantity");
         System.out.println(ingredientQuantity);
         s.setIngredientQuantity(ingredientQuantity);
 

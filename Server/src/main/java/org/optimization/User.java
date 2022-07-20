@@ -18,13 +18,14 @@ public class User {
 
 
 
-    public User () {
+    public User (String name) {
         this.head = null;
         this.tail = null;
         this.recent = null;
 
         this.allottedTime = 0;
         this.currentTime = 0;
+        this.name = name;
     }
 
     public UserTask getHead() {
@@ -77,6 +78,8 @@ public class User {
         return allottedTime;
     }
 
-
+    public void setName() {
+        this.name = name;
+    }
     // make function to update tail ptr to be head at the end of optimization
 }
