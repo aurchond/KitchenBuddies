@@ -33,7 +33,6 @@ public class Meal {
         User p_bud = buddies.get(0);
 
         // Get User kitchen constraints from database (Helper Method within Optimization?)
-        // TODO: For prototype- Hardcode Constraints
         HashMap<String, List<Resource>> constraints = relationDbFunctionGetConstraints(p_bud);
 
         /* Initialize local variables
@@ -70,7 +69,18 @@ public class Meal {
                 }
             }
 
-            Step currStep = evalSteps.get(currStepId);
+            maxTimeLeft = 0;
+
+            // TODO: Manually pop value
+            Step currStep = null;
+
+            for (Integer i = 0; i < evalSteps.size(); i++) {
+                if (i == currStepId) {
+                    currStep = evalSteps.get(i);
+                    evalSteps.remove(i);
+                    break;
+                }
+            }
 
             /*
                 // LOOP through current node and previous time dependent tasks
@@ -91,16 +101,16 @@ public class Meal {
             List<Step> timeDependSteps = new ArrayList<Step>();
 
             // Iterate through time dependent tasks
-            for(Connection c: currStep.getTimeDependencies()) {
-                // step -> time dependent step before it
-
-                // TODO: Check whether we need to compare this Step's id to get the Step object from the hashmap
-                Step tStep = c.getEndNode();
-                // TODO: Do we need to use stepTime?
-                Integer stepTime = c.getConnectionTime();
-
-                this.mapTimeStepToUser(tStep, priorIdx, buddies, constraints);
-            }
+//            for(Connection c: currStep.getTimeDependencies()) {
+//                // step -> time dependent step before it
+//
+//                // TODO: Check whether we need to compare this Step's id to get the Step object from the hashmap
+//                Step tStep = c.getEndNode();
+//                // TODO: Do we need to use stepTime?
+//                Integer stepTime = c.getConnectionTime();
+//
+//                this.mapTimeStepToUser(tStep, priorIdx, buddies, constraints);
+//            }
 
             // Add all resource dependent previous tasks from the current node to the evalNodes
             for(Connection c: currStep.getResourceDependencies()) {
@@ -236,12 +246,13 @@ public class Meal {
             HashMap<String, List<Resource>> constraints) {
         List<Integer> resourceIds = new ArrayList<Integer>();
         List<Integer> earliestTimes = new ArrayList<Integer>();
+        Integer holdingResource = -1;
 
         for(String resource: resources) {
             // Check list of elements for a resource and see if any are less than leastUserTime
             // If not, store index of resource with lowest time
-            Integer holdingResource = resourceMap.get(resource).get(s.getHoldingID());
-            if(holdingResource != null) {
+            if(resourceMap.get(resource) != null) {
+                holdingResource = resourceMap.get(resource).get(s.getHoldingID());
                 Resource holdResource = constraints.get(resource).get(holdingResource);
                 earliestTimes.add(holdResource.getTimeAvailable());
                 resourceIds.add(holdingResource);
@@ -257,7 +268,7 @@ public class Meal {
                 for (Resource holdResource : constraints.get(resource)) {
                     Integer rTime = holdResource.getTimeAvailable();
                     Integer diff = leastUserTime - rTime;
-                    if (0 < diff && Math.abs(diff) < closestDiff) {
+                    if (0 <= diff && Math.abs(diff) < closestDiff) {
                         closestDiff = Math.abs(diff);
                         optimalIdx = i;
                         // Update constraint time and exit
@@ -309,7 +320,7 @@ public class Meal {
         // Check if there's enough space to add task
 
         UserTask recent = user.getRecentTask();
-        if (recent.getNext() != null && (taskStart + userTime > recent.getNext().startTime)) {
+        if (recent != null && recent.getNext() != null && (taskStart + userTime > recent.getNext().startTime)) {
             return false;
         }
 

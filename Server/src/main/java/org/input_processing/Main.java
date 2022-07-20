@@ -9,10 +9,8 @@ import org.utilities.database.graph.Step;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map.*;
 import java.util.Set;
 
 public class Main {
@@ -115,7 +113,7 @@ public class Main {
             }
         }
 
-        List<Entry<Integer, String>> ingredientQuantity = (List<Entry<Integer, String>>) stepObject.get("ingredientQuantity");
+        List<Float> ingredientQuantity = (List<Float>) stepObject.get("ingredientQuantity");
         System.out.println(ingredientQuantity);
         s.setIngredientQuantity(ingredientQuantity);
 
