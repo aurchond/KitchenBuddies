@@ -7,7 +7,7 @@
 			"stepTime": 15,
 			"userTime": 15,
 			"ingredientList": ["peppers","onions","mushrooms"],
-			"ingredientQuantity": [[1,"pepper"],[2,"onion"],[3,"mushroom"]],
+			"ingredientQuantity": [1,2,3],
 			"resourcesRequired": ["knife"],
 			"instructions": "prep these ingredients in this step"
 		}
@@ -20,7 +20,7 @@
 			"stepTime": 5,
 			"userTime": 5,
 			"ingredientList": ["onions"],
-			"ingredientQuantity": [[2,"onion"]],
+			"ingredientQuantity": [2],
 			"resourcesRequired": ["spatula"],
 			"instructions": "cook onions"
 		}
@@ -32,7 +32,7 @@
 			"stepTime": 5,
 			"userTime": 5,
 			"ingredientList": ["peppers","mushrooms"],
-			"ingredientQuantity": [[1,"pepper"],[3,"mushroom"]],
+			"ingredientQuantity": [1,2],
 			"resourcesRequired": ["spatula"],
 			"instructions": "add peppers and mushrooms"
 		}

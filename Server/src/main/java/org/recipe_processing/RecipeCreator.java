@@ -113,22 +113,20 @@ TODO: how do we want to create recipe ids
                 if(c.getEndNode().getStepID() > step.getStepID()) {
                     c.getEndNode().addConnection(step);
                     step.deleteConnection(c.getEndNode());
-                    connections.remove(c);
+                   // connections.remove(c);
                 }
             }
-            if(connections.size()==0){
+            if(step.getConnections().size()==0){
                 step.setTimeLeft(step.getStepTime());
             }else{
                 Integer maxTimeLeft = 0;
-                for(Connection c: connections){
+                for(Connection c: step.getConnections()){
                     if(c.getEndNode().getTimeLeft() > maxTimeLeft) {
                         maxTimeLeft = c.getEndNode().getTimeLeft();
                     }
                 }
                 step.setTimeLeft(maxTimeLeft+step.getStepTime());
             }
-
-
         }
         recipe.setFinalStep(steps.get(steps.size()-1));
         return recipe;
@@ -136,16 +134,20 @@ TODO: how do we want to create recipe ids
 
     private static boolean isFindsPath(Step startNode, Step endNode, Boolean depthIsOne) {
         // DFS Implementation to check if path between two nodes exist
-        if (startNode.getNodeID() == endNode.getNodeID() && !depthIsOne) {
+        if (startNode.getStepID() == endNode.getStepID() && !depthIsOne) {
             // Only return true if this is not a direct connection between original node and end node
             return true;
         }
 
         Set<Connection> connections = startNode.getConnections();
         for (Connection c: connections) {
-            Boolean isPath = isFindsPath(c.getEndNode(), endNode, false);
+            if (!(depthIsOne && c.getEndNode().getStepID() == endNode.getStepID()) ) {
+                Boolean isPath = isFindsPath(c.getEndNode(), endNode, false);
 
-            if (isPath) {return true;}
+                if (isPath) {
+                    return true;
+                }
+            }
         }
 
         return false;

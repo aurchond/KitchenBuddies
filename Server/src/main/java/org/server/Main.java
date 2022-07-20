@@ -16,6 +16,7 @@ import static org.utilities.database.graph.RecipeHelper.*;
 public class Main {
     public static void main(String[] args) {
         List<String> recipeTitles = new ArrayList<String>(); //probs get recipe titles through arguments/twilio
+        recipeTitles.add("test");
         List<Recipe> recipes = new ArrayList<Recipe>();
 
         for (String recipeName : recipeTitles) {
@@ -27,7 +28,7 @@ public class Main {
                 HashMap<String, List<Integer>> ingredients = new HashMap<String, List<Integer>>();//<ingredient, List<StepId>>
                 HashMap<String, List<Integer>> resourcesRequired = new HashMap<String, List<Integer>>();//<tool, List<StepId>>
                 HashMap<String, List<Integer>> holdingResource_Id = new HashMap<String, List<Integer>>();//<holdingResource, List<StepId>>
-                parseJson("test.json", Steps, ingredients, resourcesRequired, holdingResource_Id);
+                parseJson("res/test.json", Steps, ingredients, resourcesRequired, holdingResource_Id);
                 //TODO: make sure hashmaps have the stepIDs in order of smallest to largest
 
                 //Recipe Processing - Dependency creation + Saves Steps to DB
