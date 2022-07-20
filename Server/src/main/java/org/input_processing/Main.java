@@ -6,14 +6,13 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.utilities.database.graph.Step;
 
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map.*;
-import java.util.Set;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
+import java.util.Map.Entry;
 
 public class Main {
     // Will handle parsing steps apart before the recipe Creator gets called
@@ -22,8 +21,23 @@ public class Main {
          *                      we have made for a Step
          * 2. Look for all the dependencies in the steps - This can be done efficiently if we do it alongside step creation
      */
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
+    public static void main(String[] args) throws IOException {
+        List<Step> steps = new ArrayList<Step>();
+        HashMap<String, List<Integer>> ingredients = new HashMap<String, List<Integer>>();//<ingredient, List<StepId>>
+        HashMap<String, List<Integer>> resourcesRequired = new HashMap<String, List<Integer>>();//<tool, List<StepId>>
+        HashMap<String, List<Integer>> holdingResource_Id = new HashMap<String, List<Integer>>();//<holdingResource, List<StepId>>
+        String name = new File(".").getCanonicalPath();
+        System.out.println("Test "+ name);
+        parseJson(
+                "res/test.json",
+                steps,
+                ingredients,
+                resourcesRequired,
+                holdingResource_Id
+        );
+        System.out.println(Arrays.asList(ingredients));
+        System.out.println(Arrays.asList(resourcesRequired));
+        System.out.println(Arrays.asList(holdingResource_Id));
     }
     public static void parseJson(
             String filePath,
@@ -33,11 +47,14 @@ public class Main {
             HashMap<String, List<Integer>> holdingResource_Id
     ){
         JSONParser jsonParser = new JSONParser();
+        Path path = Path.of(filePath);
 
-        try (FileReader reader = new FileReader(filePath))
+
+        try
         {
+            String json = Files.readString(path);
             //Read JSON file
-            Object obj = jsonParser.parse(reader);
+            Object obj = jsonParser.parse(json);
 
             JSONArray stepList = (JSONArray) obj;
             System.out.println(stepList);
@@ -66,16 +83,17 @@ public class Main {
             HashMap<String, List<Integer>> resourcesRequired,
             HashMap<String, List<Integer>> holdingResource_Id
     ) throws Exception {
-        Set<Integer> stepNumber = step.keySet();
+        Set<String> stepNumber = step.keySet();
         if(stepNumber.size() != 1){
             throw new Exception("there are more than one step to process");
         }
         Step s = new Step();
         //Get employee object within list
-        Integer stepId = stepNumber.iterator().next();
+        String key = stepNumber.iterator().next();
+        Integer stepId = Integer.parseInt(key);
         System.out.println(stepId);
         s.setStepID(stepId);
-        JSONObject stepObject = (JSONObject) step.get(stepId);
+        JSONObject stepObject = (JSONObject) step.get(key);
 
         //Get employee first name
         Boolean prepStep = (Boolean) stepObject.get("prepStep");
@@ -86,21 +104,19 @@ public class Main {
         System.out.println(holdingResource);
         s.setHoldingResource(holdingResource);
 
-        Integer holdingID = (Integer) stepObject.get("holdingID");
+        Integer holdingID = ((Long)stepObject.get("holdingID")).intValue();
         System.out.println(holdingID);
         s.setHoldingID(holdingID);
 
-        if(holdingResource_Id.containsKey(holdingResource+"_"+holdingID)){
-            holdingResource_Id.get(holdingResource+"_"+holdingID).add(stepId);
-        }else {
-            holdingResource_Id.put(holdingResource+"_"+holdingID,List.of(stepId));
-        }
+        //TODO: Something is casting from an int to a long?
 
-        Integer stepTime = (Integer) stepObject.get("stepTime");
+        holdingResource_Id.computeIfAbsent(holdingResource+"_"+holdingID, k -> new ArrayList<>()).add(stepId);
+
+        Integer stepTime = ((Long)stepObject.get("stepTime")).intValue();
         System.out.println(stepTime);
         s.setStepTime(stepTime);
 
-        Integer userTime = (Integer) stepObject.get("userTime");
+        Integer userTime = ((Long)stepObject.get("userTime")).intValue();
         System.out.println(userTime);
         s.setUserTime(userTime);
 
@@ -108,12 +124,9 @@ public class Main {
         System.out.println(ingredientList);
         s.setIngredientList(ingredientList);
         for (String ingredient: ingredientList) {
-            if(ingredients.containsKey(ingredient)){
-                ingredients.get(ingredient).add(stepId);
-            }else {
-                ingredients.put(ingredient,List.of(stepId));
-            }
+            ingredients.computeIfAbsent(ingredient, k -> new ArrayList<>()).add(stepId);
         }
+        System.out.println(Arrays.asList(ingredients));
 
         List<Entry<Integer, String>> ingredientQuantity = (List<Entry<Integer, String>>) stepObject.get("ingredientQuantity");
         System.out.println(ingredientQuantity);
@@ -124,11 +137,7 @@ public class Main {
         s.setResourcesRequired(rRequired);
 
         for (String resource: rRequired) {
-            if(resourcesRequired.containsKey(resource)){
-                resourcesRequired.get(resource).add(stepId);
-            }else {
-                resourcesRequired.put(resource,List.of(stepId));
-            }
+            resourcesRequired.computeIfAbsent(resource, k -> new ArrayList<>()).add(stepId);
         }
 
         String instructions = (String) stepObject.get("instructions");
