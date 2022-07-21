@@ -3,6 +3,7 @@ package org.optimization;
 import org.junit.jupiter.api.Test;
 import org.recipe_processing.Recipe;
 import org.utilities.database.graph.RecipeHelper;
+import org.output_processing.Main;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,6 +48,8 @@ public class test_optimization {
         }
 
         System.out.println("Finished Test!");
+
+        Main.userStepsToJson(buddies);
 
     }
 }

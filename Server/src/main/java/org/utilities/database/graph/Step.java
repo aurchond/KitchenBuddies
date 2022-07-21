@@ -121,6 +121,7 @@ public class Step {
     public List<String> getIngredientList() { return this.ingredientList; }
     public List<Float> getIngredientQuantity() { return this.ingredientQuantity; }
     public List<String> getResourcesRequired() { return resourcesRequired; }
+    public String getInstructions() {return instructions;}
     public Set<Connection> getConnections() { return connections; }
     public List<Connection> getTimeDependencies() {
         List<Connection> stepConnections = new ArrayList<Connection>();
