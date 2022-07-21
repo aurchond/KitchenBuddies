@@ -42,6 +42,10 @@ public class test_optimization {
         Meal m = new Meal();
         m.createMeal(recipes, buddies);
 
+        for (User b: buddies) {
+            b.printStepList();
+        }
+
         System.out.println("Finished Test!");
 
     }

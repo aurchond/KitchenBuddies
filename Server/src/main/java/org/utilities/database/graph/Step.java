@@ -83,6 +83,7 @@ public class Step {
         this.recipeID = recipeID;
         this.stepID = stepID;
         this.prepStep = prepStep;
+        this.resourcesRequired = new ArrayList<String>();
         this.holdingResource = holdingResource;
         this.holdingID = holdingID;
         this.stepTime = stepTime;
