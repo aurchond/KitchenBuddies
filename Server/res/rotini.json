@@ -80,8 +80,20 @@
 			"userTime": 1,
 			"ingredientList": ["casserole"],
 			"ingredientQuantity": [1],
-			"resourcesRequired": ["oven mitts"],
+			"resourcesRequired": ["oven gloves","oven"],
 			"instructions": "bake pasta casserole in oven"
 		}
+	},{
+	"8": {
+		"prepStep": false,
+		"holdingResource": "9x13 pan",
+		"holdingID": 0,
+		"stepTime": 1,
+		"userTime": 1,
+		"ingredientList": ["casserole"],
+		"ingredientQuantity": [1],
+		"resourcesRequired": ["oven gloves","oven"],
+		"instructions": "take pasta casserole out of oven"
 	}
+}
 ]

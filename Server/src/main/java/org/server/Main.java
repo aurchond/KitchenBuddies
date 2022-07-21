@@ -16,6 +16,8 @@ import static org.utilities.database.graph.RecipeHelper.*;
 public class Main {
     public static void main(String[] args) {
         List<String> recipeTitles = new ArrayList<String>(); //probs get recipe titles through arguments/twilio
+        recipeTitles.add("rotini");
+        recipeTitles.add("fried_rice");
         recipeTitles.add("test");
         List<Recipe> recipes = new ArrayList<Recipe>();
         Long lastRecipeID = Long.valueOf(0);
@@ -29,16 +31,15 @@ public class Main {
                 HashMap<String, List<Integer>> ingredients = new HashMap<String, List<Integer>>();//<ingredient, List<StepId>>
                 HashMap<String, List<Integer>> resourcesRequired = new HashMap<String, List<Integer>>();//<tool, List<StepId>>
                 HashMap<String, List<Integer>> holdingResource_Id = new HashMap<String, List<Integer>>();//<holdingResource, List<StepId>>
-                parseJson("res/test.json", Steps, ingredients, resourcesRequired, holdingResource_Id);
+                parseJson(String.format("res/%s.json", recipeName), Steps, ingredients, resourcesRequired, holdingResource_Id);
                 //TODO: make sure hashmaps have the stepIDs in order of smallest to largest
 
                 //Recipe Processing - Dependency creation + Saves Steps to DB
 
                 Recipe recipe = createRecipe(Steps, ingredients, resourcesRequired, holdingResource_Id, lastRecipeID++);// String will be formatted as "holdingResource_holdingId"
                 recipe.setRecipeName(recipeName);
-                addToRecipeNameToID(recipeName, recipe.getRecipeID());
                 //access graph DB so we can save the recipe
-                saveRecipe(recipe);
+                //saveRecipe(recipe, recipeName);
                 recipes.add(recipe);
 
 

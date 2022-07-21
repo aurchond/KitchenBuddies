@@ -107,9 +107,8 @@ public class Main {
         System.out.println(holdingID);
         s.setHoldingID(holdingID);
 
-        //TODO: Something is casting from an int to a long?
-
         holdingResource_Id.computeIfAbsent(holdingResource+"_"+holdingID, k -> new ArrayList<>()).add(stepId);
+        resourcesRequired.computeIfAbsent(holdingResource, k -> new ArrayList<>()).add(stepId);
 
         Integer stepTime = ((Long)stepObject.get("stepTime")).intValue();
         System.out.println(stepTime);

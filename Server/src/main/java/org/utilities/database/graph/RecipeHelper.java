@@ -14,8 +14,6 @@ import java.util.Map;
 public class RecipeHelper {
 
     private static HashMap<String, Long> recipeNameToID = new HashMap<>() {{
-        put("fried_rice", 120L);
-        put("rotini", 122L);
         put("salmon", 124L);
     }};
 
@@ -102,7 +100,8 @@ public class RecipeHelper {
         return session;
     }
 
-    public static void saveRecipe(Recipe recipe) {
+    public static void saveRecipe(Recipe recipe, String recipeName) {
+        addToRecipeNameToID(recipeName, recipe.getRecipeID());
         Session s = createSession();
         Transaction tx = s.beginTransaction();
 
