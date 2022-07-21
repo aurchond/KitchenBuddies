@@ -25,7 +25,7 @@ public class Main {
         // These recipes are hard coded for testing purposes
 //        createAsparagus(session);
 //        createChicken(session);
-        createBakedRotini(session);
+        // createBakedRotini(session);
 //        createFriedRice(session);
 //        createSalmon(session);
 
@@ -482,7 +482,7 @@ public class Main {
 
         List<String> tools = new ArrayList<String>();
         Step s1 = new Step(124L, 1, true, "baking sheet",
-                0, 2, 0, ingredients, quantity, tools, 1, "prepare");
+                0, 2, 0, ingredients, quantity, tools, 2, "prepare");
 
         ingredients.clear();
         quantity.clear();

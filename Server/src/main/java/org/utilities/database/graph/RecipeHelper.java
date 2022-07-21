@@ -18,8 +18,10 @@ public class RecipeHelper {
     }};
 
     /* TODO:
-        - Update Recipe (add, delete, or modify properties)
-        - Add measurement scales i.e. cups, tablespoons, etc. - currently part of ingredients
+    - Update Recipe (add, delete, or modify properties)
+    - Add measurement scales i.e. cups, tablespoons, etc.
+
+    TODO: add the recipe id to the hashmap everytime a recipe is created/saved to the db
      */
 
     //search for all nodes with a specific recipe ID and delete them
