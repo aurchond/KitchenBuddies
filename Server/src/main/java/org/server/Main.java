@@ -18,6 +18,7 @@ public class Main {
         List<String> recipeTitles = new ArrayList<String>(); //probs get recipe titles through arguments/twilio
         recipeTitles.add("test");
         List<Recipe> recipes = new ArrayList<Recipe>();
+        Long lastRecipeID = Long.valueOf(0);
 
         for (String recipeName : recipeTitles) {
             if (isRecipeInDatabase(recipeName)) {
@@ -33,7 +34,7 @@ public class Main {
 
                 //Recipe Processing - Dependency creation + Saves Steps to DB
 
-                Recipe recipe = createRecipe(Steps, ingredients, resourcesRequired, holdingResource_Id);// String will be formatted as "holdingResource_holdingId"
+                Recipe recipe = createRecipe(Steps, ingredients, resourcesRequired, holdingResource_Id, lastRecipeID++);// String will be formatted as "holdingResource_holdingId"
                 recipe.setRecipeName(recipeName);
                 addToRecipeNameToID(recipeName, recipe.getRecipeID());
                 //access graph DB so we can save the recipe

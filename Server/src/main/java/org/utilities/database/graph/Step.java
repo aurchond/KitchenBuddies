@@ -102,6 +102,9 @@ public class Step {
     }
 
     //getter functions
+    public String getName() {
+        return name;
+    }
     public Long getRecipeID() { return this.recipeID; }
     public Integer getStepID() {
         return this.stepID;
@@ -142,6 +145,9 @@ public class Step {
     }
 
     //setter functions
+     public void setName(String name) {
+            this.name = name;
+        }
     public void setRecipeID(Long ID) { this.recipeID = ID; }
     public void setStepID(Integer ID) { this.stepID = ID; }
     public void setNodeID(Double ID) { this.nodeID = ID; }
