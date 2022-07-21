@@ -82,4 +82,29 @@ public class User {
         this.name = name;
     }
     // make function to update tail ptr to be head at the end of optimization
+
+    public void printStepList() {
+        UserTask traverse = this.tail;
+        String stepList = this.name + ": ";
+        String detailedList = "";
+
+        System.out.println(this.name + " Steps");
+
+        while (traverse != null) {
+            stepList += traverse.step.getNodeID();
+            detailedList = "NodeID: " + traverse.step.getNodeID() + " Start Time: "
+                    + traverse.startTime + " Step Time: " + traverse.step.getStepTime()
+                    + " User Time: " + traverse.getUserTime();
+
+            System.out.println(detailedList);
+            traverse = traverse.getPrev();
+            if (traverse != null) {
+                stepList += " -> ";
+            }
+        }
+
+        stepList += " total allotted time: " + this.allottedTime.toString();
+
+        System.out.println(stepList);
+    }
 }

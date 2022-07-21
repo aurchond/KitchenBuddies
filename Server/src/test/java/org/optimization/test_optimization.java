@@ -3,6 +3,7 @@ package org.optimization;
 import org.junit.jupiter.api.Test;
 import org.recipe_processing.Recipe;
 import org.utilities.database.graph.RecipeHelper;
+import org.output_processing.Main;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,7 +43,13 @@ public class test_optimization {
         Meal m = new Meal();
         m.createMeal(recipes, buddies);
 
+        for (User b: buddies) {
+            b.printStepList();
+        }
+
         System.out.println("Finished Test!");
+
+        Main.userStepsToJson(buddies);
 
     }
 }

@@ -9,6 +9,9 @@ import org.utilities.database.graph.Step;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -107,9 +110,8 @@ public class Main {
         System.out.println(holdingID);
         s.setHoldingID(holdingID);
 
-        //TODO: Something is casting from an int to a long?
-
         holdingResource_Id.computeIfAbsent(holdingResource+"_"+holdingID, k -> new ArrayList<>()).add(stepId);
+        resourcesRequired.computeIfAbsent(holdingResource, k -> new ArrayList<>()).add(stepId);
 
         Integer stepTime = ((Long)stepObject.get("stepTime")).intValue();
         System.out.println(stepTime);

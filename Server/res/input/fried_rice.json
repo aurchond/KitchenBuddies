@@ -21,7 +21,7 @@
 			"ingredientList": ["cup frozen mixed vegetables"],
 			"ingredientQuantity": [1],
 			"resourcesRequired": ["spatula"],
-			"instructions": "cook vegetables"
+			"instructions": "cook vegetables in wok"
 		}
 	},{
 		"3": {
@@ -45,7 +45,7 @@
 			"ingredientList": ["cups brown rice","cups soy sauce"],
 			"ingredientQuantity": [2, 0.33],
 			"resourcesRequired": ["spatula"],
-			"instructions": "add soy sauce and brown rice to veggies, cook longer"
+			"instructions": "add soy sauce and brown rice to veggies, cook for 5 more min"
 		}
 	},{
 		"5": {

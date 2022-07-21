@@ -14,14 +14,14 @@ import java.util.Map;
 public class RecipeHelper {
 
     private static HashMap<String, Long> recipeNameToID = new HashMap<>() {{
-        put("fried_rice", 120L);
-        put("rotini", 122L);
         put("salmon", 124L);
     }};
 
     /* TODO:
-        - Update Recipe (add, delete, or modify properties)
-        - Add measurement scales i.e. cups, tablespoons, etc. - currently part of ingredients
+    - Update Recipe (add, delete, or modify properties)
+    - Add measurement scales i.e. cups, tablespoons, etc.
+
+    TODO: add the recipe id to the hashmap everytime a recipe is created/saved to the db
      */
 
     //search for all nodes with a specific recipe ID and delete them
@@ -102,31 +102,19 @@ public class RecipeHelper {
         return session;
     }
 
-    public static void saveRecipe(Recipe recipe) {
+    public static void saveRecipe(Recipe recipe, String recipeName) {
+        addToRecipeNameToID(recipeName, recipe.getRecipeID());
         Session s = createSession();
         Transaction tx = s.beginTransaction();
 
-        Long recipeID = Long.valueOf(0);//generate a recipe ID
-        recipeNameToID.put(recipe.getRecipeName(), recipeID);
-        /**Save recipe to db
-         *  - make all step nodes have recipe id
-         *  - create official node id
-         *  - save each node with connections to the db
-         */
-
         // Looping through the HashMap
         for (Map.Entry<Integer, Step> mapElement : recipe.getSteps().entrySet()) {
-            Integer stepID = mapElement.getKey();
             Step step = mapElement.getValue();
-
-            step.setRecipeID(recipeID);
-            step.setStepID(stepID);
-            Double nodeID = recipeID.doubleValue() + Double.valueOf(Double.valueOf(stepID) / 10);
-            step.setNodeID(nodeID);
 
             s.save(step);
         }
         tx.commit();
         tx.close();
+        s.clear();
     }
 }
