@@ -96,6 +96,23 @@ public class Main {
         }};
         constraints.put("sheet", r13);
 
+        // knife x1
+        List<Resource> r14 = new ArrayList<Resource>() {{
+            add(new Resource("knife", 1, 0));
+        }};
+        constraints.put("knife", r14);
+
+        // cutting board x1
+        List<Resource> r15 = new ArrayList<Resource>() {{
+            add(new Resource("cutting board", 1, 0));
+        }};
+        constraints.put("cutting board", r15);
+
+        // pan x1
+        List<Resource> r16 = new ArrayList<Resource>() {{
+            add(new Resource("pan", 1, 0));
+        }};
+        constraints.put("pan", r16);
         return constraints;
 
     }

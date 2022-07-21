@@ -229,7 +229,7 @@ public class Meal {
             if (recentEndTime < leastUserTime) {
                 leastUserTime = recentEndTime;
                 user = u;
-                userIdx = 0;
+                userIdx = 0;//TODO: this should be set to an index
             }
         }
 
@@ -240,7 +240,7 @@ public class Meal {
 
         List<Object> taskResources = findTimeToGetConstraints(leastUserTime, s, holdingResource, resources, constraints);
 
-        if (s.getHoldingResource() != null) {resources.add(holdingResource); }
+        if (s.getHoldingResource() != null) {resources.add(0, holdingResource); }
 
         if(appendResourceTaskToUser(user, s, (Integer) taskResources.get(0), s.getUserTime())) {
             updateResourceTimes(s, resources, constraints, (List<Integer>) taskResources.get(1), (Integer) taskResources.get(0));

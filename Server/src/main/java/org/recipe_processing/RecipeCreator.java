@@ -132,6 +132,7 @@ TODO: how do we want to create recipe ids
             }
         }
         recipe.setFinalStep(steps.get(steps.size()-1));
+        recipe.setRecipeID(lastRecipeID+1);
         return recipe;
     }
 

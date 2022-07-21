@@ -107,27 +107,14 @@ public class RecipeHelper {
         Session s = createSession();
         Transaction tx = s.beginTransaction();
 
-        Long recipeID = Long.valueOf(0);//generate a recipe ID
-        recipeNameToID.put(recipe.getRecipeName(), recipeID);
-        /**Save recipe to db
-         *  - make all step nodes have recipe id
-         *  - create official node id
-         *  - save each node with connections to the db
-         */
-
         // Looping through the HashMap
         for (Map.Entry<Integer, Step> mapElement : recipe.getSteps().entrySet()) {
-            Integer stepID = mapElement.getKey();
             Step step = mapElement.getValue();
-
-            step.setRecipeID(recipeID);
-            step.setStepID(stepID);
-            Double nodeID = recipeID.doubleValue() + Double.valueOf(Double.valueOf(stepID) / 10);
-            step.setNodeID(nodeID);
 
             s.save(step);
         }
         tx.commit();
         tx.close();
+        s.clear();
     }
 }
