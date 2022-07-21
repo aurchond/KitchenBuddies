@@ -1,0 +1,39 @@
+{
+    "project_info": {
+      "project_number": "62597239962",
+      "project_id": "kitchen-buddies",
+      "storage_bucket": "kitchen-buddies.appspot.com"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:62597239962:android:3d4f9705bccc3592bffb23",
+          "android_client_info": {
+            "package_name": "com.smacm.fydp"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "62597239962-4re751donjp18v307djbel6ngg1e0tqg.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyB0jxymGVVvWpHs0poKIDlIeyl0T9Vx17E"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "62597239962-4re751donjp18v307djbel6ngg1e0tqg.apps.googleusercontent.com",
+                "client_type": 3
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "configuration_version": "1"
+  }

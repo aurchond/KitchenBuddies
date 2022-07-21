@@ -19,6 +19,8 @@ public class Recipe {
 
     private String recipeName;
 
+    private Long recipeID;
+
     public Recipe() {
         this.steps = new HashMap<>();
     }
@@ -55,4 +57,8 @@ public class Recipe {
     public void setRecipeName(String recipeName) {
         this.recipeName = recipeName;
     }
+
+    public Long getRecipeID() { return this.recipeID;}
+
+    public void setRecipeID( Long recipeID ) { this.recipeID = recipeID;}
 }

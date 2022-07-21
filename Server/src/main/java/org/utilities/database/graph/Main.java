@@ -25,9 +25,9 @@ public class Main {
         // These recipes are hard coded for testing purposes
 //        createAsparagus(session);
 //        createChicken(session);
-        createBakedRotini(session);
-        createFriedRice(session);
-        createSalmon(session);
+        // createBakedRotini(session);
+//        createFriedRice(session);
+//        createSalmon(session);
 
         tx.commit();
         tx.close();

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_root_new_meal_session"
+    app:startDestination="@+id/fragmentNewMealSession">
+
+    <fragment
+        android:id="@+id/fragmentNewMealSession"
+        android:name="com.smacm.capstone.features.root.first.NewMealSessionFragment" />
+
+    <fragment
+        android:id="@+id/fragmentCurrentMealSession"
+        android:name="com.smacm.capstone.features.root.first.CurrentMealSessionFragment" />
+
+    <action android:id="@+id/first1_to_first2"
+        app:enterAnim="@anim/slide_in_from_right"
+        app:exitAnim="@anim/slide_out_to_left"
+        app:popEnterAnim="@anim/slide_in_from_left"
+        app:popExitAnim="@anim/slide_out_to_right"
+        app:destination="@+id/fragmentCurrentMealSession"/>
+
+</navigation>

@@ -5,6 +5,7 @@ import org.neo4j.ogm.cypher.ComparisonOperator;
 import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
+import org.neo4j.ogm.transaction.Transaction;
 import org.recipe_processing.Recipe;
 
 import java.util.HashMap;
@@ -67,6 +68,11 @@ public class RecipeHelper {
         return recipeNameToID.containsKey(recipeName);
     }
 
+    public static void addToRecipeNameToID(String recipeName, Long recipeID){
+        // TODO: Change to relational database
+        recipeNameToID.put(recipeName, recipeID);
+    }
+
     public static Recipe getRecipeFromDatabase(String recipeName){
         /**
          * two helper function getHeadNode(the head step), getAllNodes(iterable step list)
@@ -98,7 +104,10 @@ public class RecipeHelper {
         return session;
     }
 
-    public static void saveRecipe(Recipe recipe, Session s) {
+    public static void saveRecipe(Recipe recipe) {
+        Session s = createSession();
+        Transaction tx = s.beginTransaction();
+
         Long recipeID = Long.valueOf(0);//generate a recipe ID
         recipeNameToID.put(recipe.getRecipeName(), recipeID);
         /**Save recipe to db
@@ -119,6 +128,7 @@ public class RecipeHelper {
 
             s.save(step);
         }
-
+        tx.commit();
+        tx.close();
     }
 }

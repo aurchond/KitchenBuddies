@@ -1,0 +1,75 @@
+[
+	{
+		"1": {
+			"prepStep": true,
+			"holdingResource": "wok",
+			"holdingID": 0,
+			"stepTime": 2,
+			"userTime": 2,
+			"ingredientList": ["teaspoon coconut oil"],
+			"ingredientQuantity": [1],
+			"resourcesRequired": [],
+			"instructions": "heat oil in a wok"
+		}
+	},{
+		"2": {
+			"prepStep": false,
+			"holdingResource": "wok",
+			"holdingID": 0,
+			"stepTime": 2,
+			"userTime": 2,
+			"ingredientList": ["cup frozen mixed vegetables"],
+			"ingredientQuantity": [1],
+			"resourcesRequired": ["spatula"],
+			"instructions": "cook vegetables"
+		}
+	},{
+		"3": {
+			"prepStep": false,
+			"holdingResource": "pot",
+			"holdingID": 0,
+			"stepTime": 20,
+			"userTime": 5,
+			"ingredientList": ["cups brown rice","cups water"],
+			"ingredientQuantity": [2, 4],
+			"resourcesRequired": ["strainer"],
+			"instructions": "wash and cook brown rice"
+		}
+	},{
+		"4": {
+			"prepStep": false,
+			"holdingResource": "wok",
+			"holdingID": 0,
+			"stepTime": 5,
+			"userTime": 5,
+			"ingredientList": ["cups brown rice","cups soy sauce"],
+			"ingredientQuantity": [2, 0.33],
+			"resourcesRequired": ["spatula"],
+			"instructions": "add soy sauce and brown rice to veggies, cook longer"
+		}
+	},{
+		"5": {
+			"prepStep": false,
+			"holdingResource": "wok",
+			"holdingID": 0,
+			"stepTime": 1,
+			"userTime": 1,
+			"ingredientList": ["whisked eggs"],
+			"ingredientQuantity": [2],
+			"resourcesRequired": ["spatula"],
+			"instructions": "cook eggs"
+		}
+	},{
+		"6": {
+			"prepStep": false,
+			"holdingResource": "wok",
+			"holdingID": 0,
+			"stepTime": 1,
+			"userTime": 1,
+			"ingredientList": ["teaspoon salt","teaspoon pepper", "tablespoon sriracha"],
+			"ingredientQuantity": [0.5, 0.5, 1],
+			"resourcesRequired": ["spatula"],
+			"instructions": "season rice and serve"
+		}
+	}
+]

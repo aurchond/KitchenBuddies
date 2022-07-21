@@ -18,7 +18,9 @@ import static org.utilities.database.graph.RecipeHelper.*;
 public class Main {
     public static void main(String[] args) {
         List<String> recipeTitles = new ArrayList<String>(); //probs get recipe titles through arguments/twilio
+        recipeTitles.add("test");
         List<Recipe> recipes = new ArrayList<Recipe>();
+        Long lastRecipeID = Long.valueOf(0);
 
         for (String recipeName : recipeTitles) {
             if (isRecipeInDatabase(recipeName)) {
@@ -29,24 +31,18 @@ public class Main {
                 HashMap<String, List<Integer>> ingredients = new HashMap<String, List<Integer>>();//<ingredient, List<StepId>>
                 HashMap<String, List<Integer>> resourcesRequired = new HashMap<String, List<Integer>>();//<tool, List<StepId>>
                 HashMap<String, List<Integer>> holdingResource_Id = new HashMap<String, List<Integer>>();//<holdingResource, List<StepId>>
-                parseJson("test.json", Steps, ingredients, resourcesRequired, holdingResource_Id);
-                //TODO: get file that was passed in and parse it - look at java json lib to help with this
-                // - make sure to create the below hashmaps needed for createRecipe
-                // - make sure hashmaps have the stepIDs in order of smallest to largest
+                parseJson("res/test.json", Steps, ingredients, resourcesRequired, holdingResource_Id);
+                //TODO: make sure hashmaps have the stepIDs in order of smallest to largest
 
                 //Recipe Processing - Dependency creation + Saves Steps to DB
-                //TODO: convert nulls to actual values
 
-                Recipe recipe = createRecipe(Steps, ingredients, resourcesRequired, holdingResource_Id);// String will be formatted as "holdingResource_holdingId"
-
+                Recipe recipe = createRecipe(Steps, ingredients, resourcesRequired, holdingResource_Id, lastRecipeID++);// String will be formatted as "holdingResource_holdingId"
+                recipe.setRecipeName(recipeName);
+                addToRecipeNameToID(recipeName, recipe.getRecipeID());
                 //access graph DB so we can save the recipe
-                Session s = createSession();
-                Transaction tx = s.beginTransaction();
-                saveRecipe(recipe, s);
-                tx.commit();
-                tx.close();
-
+                saveRecipe(recipe);
                 recipes.add(recipe);
+
 
             }
         }

@@ -1,0 +1,87 @@
+[
+	{
+		"1": {
+			"prepStep": true,
+			"holdingResource": "pot",
+			"holdingID": 0,
+			"stepTime": 10,
+			"userTime": 2,
+			"ingredientList": ["cups water", "teaspoon salt"],
+			"ingredientQuantity": [5, 0.5],
+			"resourcesRequired": [],
+			"instructions": "boil water"
+		}
+	},{
+		"2": {
+			"prepStep": false,
+			"holdingResource": "pot",
+			"holdingID": 0,
+			"stepTime": 5,
+			"userTime": 5,
+			"ingredientList": ["ounces rotini"],
+			"ingredientQuantity": [16],
+			"resourcesRequired": ["spoon"],
+			"instructions": "cook pasta"
+		}
+	},{
+		"3": {
+			"prepStep": false,
+			"holdingResource": "pot",
+			"holdingID": 0,
+			"stepTime": 1,
+			"userTime": 1,
+			"ingredientList": ["ounces rotini","cups pasta liquid"],
+			"ingredientQuantity": [16, 0.5],
+			"resourcesRequired": ["strainer"],
+			"instructions": "drain pasta and save some of the liquid"
+		}
+	},{
+		"4": {
+			"prepStep": false,
+			"holdingResource": "pot",
+			"holdingID": 0,
+			"stepTime": 4,
+			"userTime": 4,
+			"ingredientList": ["ounces rotini","cups pasta liquid", "cups cottage cheese", "cups spaghetti sauce", "whisked egg", "cups shredded cheese"],
+			"ingredientQuantity": [16, 0.5, 2, 4, 1, 1],
+			"resourcesRequired": ["spoon"],
+			"instructions": "mix in cheese and other ingredients"
+		}
+	},{
+		"5": {
+			"prepStep": true,
+			"holdingResource": "oven",
+			"holdingID": 2,
+			"stepTime": 10,
+			"userTime": 2,
+			"ingredientList": [],
+			"ingredientQuantity": [],
+			"resourcesRequired": [],
+			"instructions": "preheat oven to 400F"
+		}
+	},{
+		"6": {
+			"prepStep": false,
+			"holdingResource": "9x13 pan",
+			"holdingID": 0,
+			"stepTime": 2,
+			"userTime": 2,
+			"ingredientList": ["casserole", "cups shredded cheese"],
+			"ingredientQuantity": [1, 1],
+			"resourcesRequired": ["spoon"],
+			"instructions": "put pasta casserole in pan and cover with cheese"
+		}
+	},{
+		"7": {
+			"prepStep": false,
+			"holdingResource": "9x13 pan",
+			"holdingID": 0,
+			"stepTime": 20,
+			"userTime": 1,
+			"ingredientList": ["casserole"],
+			"ingredientQuantity": [1],
+			"resourcesRequired": ["oven mitts"],
+			"instructions": "bake pasta casserole in oven"
+		}
+	}
+]

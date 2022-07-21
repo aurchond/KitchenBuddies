@@ -20,11 +20,11 @@ public class RecipeCreator {
     public RecipeCreator() {
     }
     public static Recipe createRecipe(
-            List<Step> Steps,
+            List<Step> steps,//TODO: ENFORCE ASSUMPTION THAT STEPS IS IN ORDER OF STEPID
             HashMap<String, List<Integer>> ingredients,
             HashMap<String, List<Integer>> resourcesRequired,
-            HashMap<String, List<Integer>> holdingResource_Id // String will be formatted as "holdingResource_holdingId"
-
+            HashMap<String, List<Integer>> holdingResource_Id, // String will be formatted as "holdingResource_holdingId"
+            Long lastRecipeID //TODO: THIS WILL COME FROM RELATIONAL DB IN FALL
             ){
         /**
          * 1. Step Creation - This should be done in Input Processing since the NLP should put it in the Data Structure
@@ -46,25 +46,23 @@ public class RecipeCreator {
          *      - will depend on how we get this info
          *
          *
-         *  TODO: how to let a dependency replace another dependency
          */
 
-        //TODO: Check if we want to set the recipe ID in here
         Recipe recipe = new Recipe();
-        HashMap<Integer, Step> steps = new HashMap<Integer, Step>();
-        for (Step step : Steps) {
-            steps.put(step.getStepID(), step);
+        HashMap<Integer, Step> stepsMap = new HashMap<Integer, Step>();
+        for (Step step : steps) {
+            stepsMap.put(step.getStepID(), step);
         }
-        recipe.setSteps(steps);
+        recipe.setSteps(stepsMap);
         for (List<Integer> stepIds : ingredients.values()) {
-            createConnections(steps, stepIds);
+            createConnections(stepsMap, stepIds);
         }
         // if you go in order for lowest to highest step, each step should only have one connection, than flip the connections at the end
         for (List<Integer> stepIds : resourcesRequired.values()) {
-            createConnections(steps, stepIds);
+            createConnections(stepsMap, stepIds);
         }
         for (List<Integer> stepIds : holdingResource_Id.values()) {
-            createConnections(steps, stepIds);
+            createConnections(stepsMap, stepIds);
         }
 
         //collapse dependancies
@@ -82,7 +80,7 @@ public class RecipeCreator {
 
 
          **/
-        for (Step step : Steps) {
+        for (Step step : steps) {
             if (step.hasMultipleConnection()){
                 List<Connection> connections = new ArrayList<>();
                 connections.addAll(step.getConnections());
@@ -93,33 +91,66 @@ public class RecipeCreator {
                     }
                 });
                 for(Connection c: connections){
-                    if(isFindsPath(c.getStartNode(), c.getEndNode(), 0)){
+                    if(isFindsPath(c.getStartNode(), c.getEndNode(), true)){
                         step.deleteConnection(c.getEndNode());
                     }
                 }
             }
         }
 
+/**
+ *
+TODO: how do we want to create recipe ids
+ private Integer recipeID;
+ */
 
-        //TODO: add nodes to recipe
-
+//TODO: ENFORCE ASSUMPTION THAT LARGEST STEP IS FINAL STEP BECAUSE IT SHOULD USE EVERYTHING/COMBINE EVERYTHING
         //assign the time left for each step
-
-        return recipe; //TODO: Replace with proper recipe
+        for (Step step : steps) {
+            step.setRecipeID(lastRecipeID+1);
+            step.setNodeID(Double.valueOf((lastRecipeID+1)+"."+step.getStepID()));
+            step.setName(step.getNodeID().toString());
+            List<Connection> connections = new ArrayList<>();
+            connections.addAll(step.getConnections());
+            for(Connection c: connections){
+                if(c.getEndNode().getStepID() > step.getStepID()) {
+                    c.getEndNode().addConnection(step);
+                    step.deleteConnection(c.getEndNode());
+                   // connections.remove(c);
+                }
+            }
+            if(step.getConnections().size()==0){
+                step.setTimeLeft(step.getStepTime());
+            }else{
+                Integer maxTimeLeft = 0;
+                for(Connection c: step.getConnections()){
+                    if(c.getEndNode().getTimeLeft() > maxTimeLeft) {
+                        maxTimeLeft = c.getEndNode().getTimeLeft();
+                    }
+                }
+                step.setTimeLeft(maxTimeLeft+step.getStepTime());
+            }
+        }
+        recipe.setFinalStep(steps.get(steps.size()-1));
+        return recipe;
     }
 
-    private static boolean isFindsPath(Step startNode, Step endNode, Integer depth) {
+    private static boolean isFindsPath(Step startNode, Step endNode, Boolean depthIsOne) {
         // DFS Implementation to check if path between two nodes exist
-        if (startNode.getNodeID() == endNode.getNodeID() && depth != 1) {
+        if (startNode.getStepID() == endNode.getStepID() && !depthIsOne) {
             // Only return true if this is not a direct connection between original node and end node
             return true;
         }
 
         Set<Connection> connections = startNode.getConnections();
         for (Connection c: connections) {
-            Boolean isPath = isFindsPath(c.getEndNode(), endNode, depth+1);
+            if (!(depthIsOne && c.getEndNode().getStepID() == endNode.getStepID()) ) {
+                Boolean isPath = isFindsPath(c.getEndNode(), endNode, false);
 
-            if (isPath) {return true;}
+                if (isPath) {
+                    return true;
+                }
+            }
         }
 
         return false;

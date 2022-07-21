@@ -103,6 +103,9 @@ public class Step {
     }
 
     //getter functions
+    public String getName() {
+        return name;
+    }
     public Long getRecipeID() { return this.recipeID; }
     public Integer getStepID() {
         return this.stepID;
@@ -131,8 +134,6 @@ public class Step {
         return stepConnections;
     }
     public List<Connection> getResourceDependencies() {
-        //TODO: find all Resource dependencies
-        // return connections;
         List<Connection> stepConnections = new ArrayList<Connection>();
 
         for (Connection c: connections) {
@@ -145,6 +146,9 @@ public class Step {
     }
 
     //setter functions
+     public void setName(String name) {
+            this.name = name;
+        }
     public void setRecipeID(Long ID) { this.recipeID = ID; }
     public void setStepID(Integer ID) { this.stepID = ID; }
     public void setNodeID(Double ID) { this.nodeID = ID; }
@@ -177,8 +181,20 @@ public class Step {
         return false;
     }
 
+    public List<Connection> getResourceConnection(Step step) {
+        List<Connection> stepConnections = new ArrayList<Connection>();
+        for (Connection c: this.connections) {
+            if(c.getEndNode() == step) {
+                stepConnections.add(c);
+            }
+        }
+        return stepConnections;
+    }
     public void deleteConnection(Step endNode) {
-        //TODO: Fill in
+        List<Connection> stepConnections = getResourceConnection(endNode);
+        for (Connection c:stepConnections) {
+            connections.remove(c);
+        }
     }
 
     public Integer getUserTime() {
