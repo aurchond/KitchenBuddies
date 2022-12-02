@@ -31,7 +31,7 @@ public class Main {
         String name = new File(".").getCanonicalPath();
         System.out.println("Test "+ name);
         parseJson(
-                "res/test.json",
+                "res/input/fried_rice.json",
                 steps,
                 ingredients,
                 resourcesRequired,
