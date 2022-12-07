@@ -14,6 +14,7 @@ public class MySqlConnection {
     private static final String sqlUrl = "jdbc:mysql://localhost";
     private static final String sqlUser = "shadi";
     private static final String sqlPassword = "password";
+    private static final String useKB = "USE KitchenBuddies";
     public static void main(String args[]) {
         //TODO: MOVE CONNECTION INTO EVERY FUNCTION
         int customer = 3;
@@ -36,7 +37,6 @@ public class MySqlConnection {
     //TODO: RENAME CUSTOMER TO USER
     private static void addCustomer(int customerId, String username, String password, int skill) {
         String addCustomer = "INSERT INTO CustomerInfo(CustomerId, User, Password, Skill) VALUES(?, ?, ?, ?);";
-        String useKB = "USE KitchenBuddies";
         try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
             PreparedStatement preprep = con.prepareStatement(useKB);
             PreparedStatement prep = con.prepareStatement(addCustomer);) {
@@ -55,9 +55,30 @@ public class MySqlConnection {
         }
     }
 
+    private static void addKitchen(int customerId, int burners, int pans, int pots, int cuttingBoards, int knives) {
+        String addKitchen = "INSERT INTO KitchenConstraints(CustomerId, Burners, Pans, Pots, CuttingBoards, Knives) VALUES(?, ?, ?, ?, ?, ?);";
+        try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
+            PreparedStatement preprep = con.prepareStatement(useKB);
+            PreparedStatement prep = con.prepareStatement(addKitchen);) {
+            
+            preprep.executeUpdate();
+
+            //fill in parametrized query
+            prep.setInt(1, customerId); //autonumber customers?
+            prep.setInt(2, burners);
+            prep.setInt(3, pans);
+            prep.setInt(4, pots);
+            prep.setInt(5, cuttingBoards);
+            prep.setInt(6, knives);
+            prep.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private static void addToAllRecipes(String recipeName, String recipeUrl, int recipeId) {
         String addRecipe = "INSERT INTO AllRecipes(RecipeId, Name, Url) VALUES(?, ?, ?);";
-        String useKB = "USE KitchenBuddies";
         try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
             PreparedStatement preprep = con.prepareStatement(useKB);
             PreparedStatement prep = con.prepareStatement(addRecipe);) {
@@ -73,9 +94,9 @@ public class MySqlConnection {
         }
     }
 
+    //TODO: enforce unique recipe / user pairs?
     private static void addToFavRecipes(int customerId, int recipeId) {
         String addFav = "INSERT INTO FavRecipes(CustomerId, RecipeId) VALUES(?, ?);";
-        String useKB = "USE KitchenBuddies";
         try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
             PreparedStatement preprep = con.prepareStatement(useKB);
             PreparedStatement prep = con.prepareStatement(addFav);) {
@@ -92,9 +113,9 @@ public class MySqlConnection {
 
     //should we avoid duplicates? i.e. if there is a link already between friend 1 and 2, avoid friend 2 and 1?
     //consider performance .... then we need to change findFriend function too
+    //TODO: insert distinct pairs? should we check before insertion?
     private static void addToFriendsList(int customerId, int friendId, String friendName) {
         String addFriend = "INSERT INTO FriendsList(CustomerId, FriendId, FriendName) VALUES(?, ?, ?);";
-        String useKB = "USE KitchenBuddies";
         try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
             PreparedStatement preprep = con.prepareStatement(useKB);
             PreparedStatement prep = con.prepareStatement(addFriend);) {
@@ -117,7 +138,6 @@ public class MySqlConnection {
     private static List<String> findFriends(int customerId) {
         List<String> friends = new ArrayList<String>();
         String findFriend = "SELECT FriendName FROM FriendsList WHERE CustomerId= ?";
-        String useKB = "USE KitchenBuddies";
         try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
             PreparedStatement preprep = con.prepareStatement(useKB);
             PreparedStatement prep = con.prepareStatement(findFriend);) {
@@ -136,13 +156,11 @@ public class MySqlConnection {
         return friends;
     }
 
-    //call this from front page of app to show your saved recipes
-    //TODO: USE NEW RECIPE STRUCT?
+    //call this from front page of app to show the names of your saved recipes
     private static List<String> findYourRecipes(int customerId) {
         String joinRecipeTables = "SELECT FavRecipes.RecipeId, AllRecipes.Name FROM AllRecipes INNER JOIN FavRecipes on AllRecipes.RecipeID=FavRecipes.RecipeId WHERE FavRecipes.CustomerId = ?;";
         List<String> recipeNames = new ArrayList<String>();
 
-        String useKB = "USE KitchenBuddies";
         try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
             PreparedStatement preprep = con.prepareStatement(useKB);
             PreparedStatement prep = con.prepareStatement(joinRecipeTables);) {
@@ -160,40 +178,5 @@ public class MySqlConnection {
 
         Console.print(recipeNames + "\n");
         return recipeNames;
-        // String findRecipeIds = "SELECT RecipeId FROM FavRecipes WHERE CustomerId= ?";
-        // String useKB = "USE KitchenBuddies";
-        // try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
-        //     PreparedStatement preprep = con.prepareStatement(useKB);
-        //     PreparedStatement prep = con.prepareStatement(findRecipeIds)) {
-        //     prep.setInt(1, customerId);
-        //     try (ResultSet rs = prep.executeQuery()) {
-        //         while(rs.next()) {
-        //             recipeIds.add(rs.getInt("RecipeId"));
-        //         }
-        //     }
-        // } catch (SQLException e) {
-        //     e.printStackTrace();
-        // }
-
-        // //is this longer to process? do we just log recipe name in fav recipes?
-        // List<String> cookbook = new ArrayList<String>();
-        // String findRecipeNames = "SELECT Name FROM AllRecipes WHERE RecipeId= ?";
-
-        // //using each recipe id, query table to get its name
-        // for (Integer recipe : recipeIds) {
-        //     try (PreparedStatement prep = con.prepareStatement(findRecipeNames)) {
-        //         prep.setInt(1, customerId);
-        //         try (ResultSet rs = prep.executeQuery()) {
-        //             while(rs.next()) {
-        //                 cookbook.add(rs.getString("Name"));
-        //             }
-        //         }
-        //     } catch (SQLException e) {
-        //         e.printStackTrace();
-        //     }
-        // }
-
-        // Console.print(cookbook + "\n");
-        // return cookbook;
     }
 }
