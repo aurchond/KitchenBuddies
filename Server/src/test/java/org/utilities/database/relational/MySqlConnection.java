@@ -26,7 +26,8 @@ public class MySqlConnection {
         //findYourRecipes(6);
         //addKitchen(4, 4, 2, 2, 1, 4);
         //getNumBurners(4);
-        addToFavRecipes(6, 1);
+        //addToFavRecipes(6, 1);
+        findFriends(4);
     }
 
     //TODO: RENAME CUSTOMER TO USER
@@ -40,10 +41,15 @@ public class MySqlConnection {
             preprep.executeUpdate();
 
             //fill in parametrized query
+            //customers are autonumbered
             prep.setString(1, username);
             prep.setString(2, password);
             prep.setInt(3, skill);
             prep.executeUpdate();
+        }
+        catch (SQLIntegrityConstraintViolationException e) {
+            Console.print("Duplicate entry was ignored");
+            return;
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -59,7 +65,7 @@ public class MySqlConnection {
             preprep.executeUpdate();
 
             //fill in parametrized query
-            prep.setInt(1, customerId); //autonumber customers?
+            prep.setInt(1, customerId);
             prep.setInt(2, burners);
             prep.setInt(3, pans);
             prep.setInt(4, pots);
@@ -88,7 +94,6 @@ public class MySqlConnection {
         }
     }
 
-    //TODO: check that pair is unique or handle sql exception
     private static void addToFavRecipes(int customerId, int recipeId) {
         String addFav = "INSERT INTO FavRecipes(CustomerId, RecipeId) VALUES(?, ?);";
         try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
@@ -113,7 +118,6 @@ public class MySqlConnection {
 
     //should we avoid duplicates? i.e. if there is a link already between friend 1 and 2, avoid friend 2 and 1?
     //consider performance .... then we need to change findFriend function too
-    //TODO: insert distinct pairs? should we check before insertion?
     private static void addToFriendsList(int customerId, int friendId, String friendName) {
         String addFriend = "INSERT INTO FriendsList(CustomerId, FriendId, FriendName) VALUES(?, ?, ?);";
         try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
@@ -141,15 +145,16 @@ public class MySqlConnection {
     //TODO: make structs for User?
     private static List<String> findFriends(int customerId) {
         List<String> friends = new ArrayList<String>();
-        String findFriend = "SELECT FriendName FROM FriendsList WHERE CustomerId= ?";
+        String findFriend = "SELECT FriendsList.CustomerId, CustomerInfo.User FROM CustomerInfo INNER JOIN FriendsList on CustomerInfo.CustomerId=FriendsList.FriendId WHERE FriendsList.CustomerId = ?;";
         try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
             PreparedStatement preprep = con.prepareStatement(useKB);
             PreparedStatement prep = con.prepareStatement(findFriend);) {
-
+            
+            preprep.executeUpdate();
             prep.setInt(1, customerId);
             try (ResultSet rs = prep.executeQuery()) {
                 while(rs.next()) {
-                    friends.add(rs.getString("FriendName"));
+                    friends.add(rs.getString("User"));
                 }
             }
         } catch (SQLException e) {
@@ -162,7 +167,7 @@ public class MySqlConnection {
 
     //call this from front page of app to show the names of your saved recipes
     private static List<String> findYourRecipes(int customerId) {
-        String joinRecipeTables = "SELECT FavRecipes.RecipeId, AllRecipes.Name FROM AllRecipes INNER JOIN FavRecipes on AllRecipes.RecipeID=FavRecipes.RecipeId WHERE FavRecipes.CustomerId = ?;";
+        String joinRecipeTables = "SELECT FavRecipes.RecipeId, AllRecipes.Name FROM AllRecipes INNER JOIN FavRecipes on AllRecipes.RecipeId=FavRecipes.RecipeId WHERE FavRecipes.CustomerId = ?;";
         List<String> recipeNames = new ArrayList<String>();
 
         try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
