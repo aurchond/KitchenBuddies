@@ -1,0 +1,72 @@
+ssh -i ~/.ssh/kb-reborn shadi@178.128.227.93
+password -> kb-reborn
+
+sudo mysql
+password -> M4yaIsS0Cool
+
+
+MYSQL STARTUP:
+
+CREATE DATABASE KitchenBuddies;
+USE KitchenBuddies;
+CREATE TABLE CustomerInfo (
+	CustomerId int NOT NULL AUTO_INCREMENT, #number to represent customer account
+	User varchar(255) UNIQUE,
+	Password varchar(255),
+	Skill int,
+	PRIMARY KEY (CustomerId)
+
+	#need join tables on allergies
+	#need join tables on fave recipes	
+);
+	
+CREATE TABLE AllRecipes (
+	RecipeId int NOT NULL AUTO_INCREMENT,
+	Name varchar(255),
+	Url varchar(255), #this might need to be increased
+	PRIMARY KEY (RecipeId)
+);
+
+CREATE TABLE FavRecipes (
+	CustomerId int NOT NULL,
+	RecipeId int NOT NULL,
+	FOREIGN KEY (CustomerId) REFERENCES CustomerInfo(CustomerId),
+	FOREIGN KEY (RecipeId) REFERENCES AllRecipes(RecipeId),
+	CONSTRAINT Relationship UNIQUE (CustomerId, FriendId)
+);
+
+CREATE TABLE KitchenConstraints (
+	CustomerId int NOT NULL,
+	Burners int, #number of stovetop burners
+	Pans int,
+	Pots int,
+	CuttingBoards int,
+	Knives int,
+	PRIMARY KEY (CustomerId),
+	FOREIGN KEY (CustomerId) REFERENCES CustomerInfo(CustomerId)
+);
+
+CREATE TABLE FriendsList (
+	CustomerId int NOT NULL,
+	FriendId int NOT NULL,
+	FOREIGN KEY (CustomerId) REFERENCES CustomerInfo(CustomerId),
+	FOREIGN KEY (FriendId) REFERENCES CustomerInfo(CustomerId), # both ids should be found in customer list
+	CONSTRAINT Relationship UNIQUE (CustomerId, FriendId)
+);
+
+### useful commands ###
+SHOW TABLES; # get list of tables in database
+SELECT * FROM _tables_; # show everything in that table
+DELETE FROM _tables_ WHERE .... ;
+
+CREATE TABLE Friends; #join table on customer id?
+
+
+////experimenting with join queries/////
+SELECT FavRecipes.RecipeId, FavRecipes.CustomerId, AllRecipes.Name FROM AllRecipes INNER JOIN FavRecipes on AllRecipes.RecipeID=FavRecipes.RecipeId WHERE FavRecipes.CustomerId = 1;
+
+SELECT FavRecipes.RecipeId, FavRecipes.CustomerId, AllRecipes.Name FROM AllRecipes INNER JOIN FavRecipes on AllRe
+cipes.RecipeID=FavRecipes.RecipeId;
+
+SELECT FavRecipes.RecipeId, AllRecipes.Name FROM AllRecipes INNER JOIN FavRecipes on AllRecipes.RecipeID=FavRecip
+es.RecipeId WHERE FavRecipes.CustomerId = 1;
