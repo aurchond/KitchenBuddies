@@ -3,6 +3,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import scala.Console;
@@ -16,27 +17,22 @@ public class MySqlConnection {
     private static final String sqlPassword = "password";
     private static final String useKB = "USE KitchenBuddies";
     public static void main(String args[]) {
-        //TODO: MOVE CONNECTION INTO EVERY FUNCTION
-        int customer = 3;
-        String username = "Caleb";
-        String password = "passwd";
-        int skill = 1;
-        int recipe = 2;
-
-        int friend = 1;
-        String friendName = "Shadi";
-
-        //addCustomer(customer, username, password, skill);
-        //addToAllRecipes(con, "fish", "www.allrecipes.com/fish", recipe); 
-        //addToFavRecipes(con, customer, recipe);
-        //addToFriendsList(con, customer, friend, friendName);
-        //findFriends(con, 2);
-        findYourRecipes(2);
+        //addCustomer("Marley", "passwordpassword", 1);
+        // addToFavRecipes(4, 2);
+        // addToFavRecipes(5, 4);
+        // addToFavRecipes(6, 1);
+        // addToFavRecipes(6, 2);
+        // addToFavRecipes(7, 3);
+        //findYourRecipes(6);
+        //addKitchen(4, 4, 2, 2, 1, 4);
+        //getNumBurners(4);
+        addToFavRecipes(6, 1);
     }
 
     //TODO: RENAME CUSTOMER TO USER
-    private static void addCustomer(int customerId, String username, String password, int skill) {
-        String addCustomer = "INSERT INTO CustomerInfo(CustomerId, User, Password, Skill) VALUES(?, ?, ?, ?);";
+    private static void addCustomer(String username, String password, int skill) {
+        //customers are autonumbered
+        String addCustomer = "INSERT INTO CustomerInfo(User, Password, Skill) VALUES(?, ?, ?);";
         try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
             PreparedStatement preprep = con.prepareStatement(useKB);
             PreparedStatement prep = con.prepareStatement(addCustomer);) {
@@ -44,10 +40,9 @@ public class MySqlConnection {
             preprep.executeUpdate();
 
             //fill in parametrized query
-            prep.setInt(1, customerId); //autonumber customers?
-            prep.setString(2, username);
-            prep.setString(3, password);
-            prep.setInt(4, skill);
+            prep.setString(1, username);
+            prep.setString(2, password);
+            prep.setInt(3, skill);
             prep.executeUpdate();
         }
         catch (SQLException e) {
@@ -77,16 +72,15 @@ public class MySqlConnection {
         }
     }
 
-    private static void addToAllRecipes(String recipeName, String recipeUrl, int recipeId) {
-        String addRecipe = "INSERT INTO AllRecipes(RecipeId, Name, Url) VALUES(?, ?, ?);";
+    private static void addToAllRecipes(String recipeName, String recipeUrl) {
+        String addRecipe = "INSERT INTO AllRecipes(RecipeId, Name, Url) VALUES(?, ?);";
         try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
             PreparedStatement preprep = con.prepareStatement(useKB);
             PreparedStatement prep = con.prepareStatement(addRecipe);) {
             
             //fill in parametrized query
-            prep.setInt(1, recipeId);
-            prep.setString(2, recipeName);
-            prep.setString(3, recipeUrl);
+            prep.setString(1, recipeName);
+            prep.setString(2, recipeUrl);
             prep.executeUpdate();
         }
         catch (SQLException e) {
@@ -94,17 +88,23 @@ public class MySqlConnection {
         }
     }
 
-    //TODO: enforce unique recipe / user pairs?
+    //TODO: check that pair is unique or handle sql exception
     private static void addToFavRecipes(int customerId, int recipeId) {
         String addFav = "INSERT INTO FavRecipes(CustomerId, RecipeId) VALUES(?, ?);";
         try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
             PreparedStatement preprep = con.prepareStatement(useKB);
             PreparedStatement prep = con.prepareStatement(addFav);) {
             
+            preprep.executeUpdate();
+
             //fill in parametrized query
             prep.setInt(1, customerId); //autonumber customers?
             prep.setInt(2, recipeId);
             prep.executeUpdate();
+        }
+        catch (SQLIntegrityConstraintViolationException e) {
+            Console.print("Duplicate entry was ignored");
+            return;
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -125,6 +125,10 @@ public class MySqlConnection {
             prep.setInt(2, friendId);
             prep.setString(3, friendName);
             prep.executeUpdate();
+        }
+        catch (SQLIntegrityConstraintViolationException e) {
+            Console.print("Duplicate entry was ignored");
+            return;
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -178,5 +182,30 @@ public class MySqlConnection {
 
         Console.print(recipeNames + "\n");
         return recipeNames;
+    }
+
+    //TODO: make a kitchen struct?
+    private static Integer getNumBurners(int customerId) {
+        int numBurners = -1;
+
+        String joinKitchenTables = "SELECT KitchenConstraints.Burners, CustomerInfo.CustomerId, CustomerInfo.User FROM CustomerInfo INNER JOIN KitchenConstraints on CustomerInfo.CustomerId=KitchenConstraints.CustomerId WHERE KitchenConstraints.CustomerId=?;";
+
+        try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
+            PreparedStatement preprep = con.prepareStatement(useKB);
+            PreparedStatement prep = con.prepareStatement(joinKitchenTables);) {
+            
+            preprep.executeUpdate();
+            prep.setInt(1, customerId);
+            try (ResultSet rs = prep.executeQuery()) {
+                while(rs.next()) {
+                    numBurners = rs.getInt("Burners");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        Console.print(numBurners + "\n");
+        return numBurners; //should do error checking if -1 is received
     }
 }
