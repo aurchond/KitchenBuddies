@@ -2,23 +2,9 @@ import spacy
 from spacy import displacy
 nlp = spacy.load("en_core_web_sm")
 
+from utilities import extract_recipe_text
+
 output_steps = []
-def extract_recipe_text(filename):
-    instr_steps = []
-    # Parse recipe text into array
-    count = 0
-    with open (filename, 'rt') as recipe:
-        for instr_line in recipe:
-            mini_steps = instr_line.split('.')
-            # print(mini_steps)
-            for sent in mini_steps:
-                if sent == '' or sent == '\n':
-                    continue
-                instr_steps.append(sent)
-            instr_steps.append('BREAK' + str(count))
-            count += 1
-            
-    return instr_steps
 
 def extract_text_from_steps(instr_steps):
     not_verb_dict = {"advcl": '', # might need this one
@@ -44,11 +30,11 @@ def extract_text_from_steps(instr_steps):
             # print(token.text, token.lemma_, token.pos_, token.tag_, token.dep_,[child for child in token.children])
 
             # might need to include adv, adj at beginning, propn at beginning of sentence, noun (beginning of sentence and middle of sentence)
-            if token.text == ''
+            
             if token.pos_ == 'VERB' and token.dep_ not in not_verb_dict:
                 print(token.text, " ", token.tag_, token.dep_,[child for child in token.children])
 
-            if token.pos == 'NOUN' and #in ingredients database 
+            # if token.pos == 'NOUN' and #in ingredients database 
                 #define string to add to ingredients array
                 #check if there is a conjunction (Ex. soy sauce)
                     #while the children of the conjunction has a another conjunction, keep looping and adding to ingredient list 
@@ -69,7 +55,7 @@ def extract_text_from_steps(instr_steps):
 
     
 
-i_steps = extract_recipe_text('input/bibimbap.txt')
+i_steps = extract_recipe_text('input/schnitzel.txt')
 extract_text_from_steps(i_steps)
 
 # doc = nlp("Apple is looking at buying U.K. startup for $1 billion")
