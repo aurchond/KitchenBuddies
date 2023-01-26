@@ -5,8 +5,8 @@ from spacy import displacy
 from utilities import extract_recipe_text
 
 # ----- USER: Set file name from input folder -----
-input_file = "time_checker.txt"
-image_file_name = "time_checker"
+input_file = "test.txt"
+image_file_name = "test"
 # -------------------------------------------------
 
 def generate_sentence_visualizer(filename, image_file):
