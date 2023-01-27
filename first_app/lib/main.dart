@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:first_app/provider/auth_provider.dart';
+import 'package:first_app/screens/email_pass_screen.dart';
 import 'package:first_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -34,11 +35,11 @@ class MyApp extends StatelessWidget {
           home: StreamBuilder(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
-              if (snapshot.hasData == false) {
+              if (snapshot.hasData) {
                 return const HomeScreen();
               }
               else {
-                return const AuthScreen();
+                return const EmailPassScreen();
               }
             }
           ),
