@@ -28,13 +28,13 @@ class MyApp extends StatelessWidget {
           title: 'FlutterChat',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            primarySwatch: Colors.blue,
+            primarySwatch: Colors.green,
           ),
           //home: ChatScreen(),
           home: StreamBuilder(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
-              if (snapshot.hasData) {
+              if (snapshot.hasData == false) {
                 return const HomeScreen();
               }
               else {
