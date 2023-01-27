@@ -55,7 +55,7 @@ class EmailPassScreen extends StatelessWidget {
                         if (model.authType == AuthType.signIn)
                           TextButton(
                               onPressed: () {
-                                //model.resetPassword(context);
+                                model.resetPassword(context);
                               },
                               child: const Text("Reset password")),
                       ],

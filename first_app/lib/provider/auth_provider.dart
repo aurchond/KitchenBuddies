@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:first_app/widgets/custom_text_field.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -54,6 +55,45 @@ class AuthProvider extends ChangeNotifier {
       Keys.scaffoldMessengerKey.currentState!.showSnackBar(SnackBar(
           content: Text(error.toString()), backgroundColor: Colors.red));
     }
+  }
+
+  TextEditingController resetEmailController = TextEditingController();
+  resetPassword(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            title: const Text("Enter your email"),
+            content: CustomTextField(
+                iconData: Icons.email,
+                hintText: "Enter email",
+                controller: resetEmailController),
+            actions: [
+              TextButton(
+                  onPressed: () async {
+                    final navigator = Navigator.of(context).pop();
+                    try {
+                      await firebaseAuth.sendPasswordResetEmail(
+                          email: resetEmailController.text);
+                      Keys.scaffoldMessengerKey.currentState!
+                          .showSnackBar(const SnackBar(
+                        content: Text("Email sent successfully"),
+                        backgroundColor: Colors.green,
+                      ));
+                      navigator;
+                    } catch (e) {
+                      Keys.scaffoldMessengerKey.currentState!
+                          .showSnackBar(SnackBar(
+                        content: Text(e.toString()),
+                        backgroundColor: Colors.red,
+                      ));
+                      navigator;
+                    }
+                  },
+                  child: const Text("Submit"))
+            ],
+          );
+        });
   }
 
   logOut() async {
