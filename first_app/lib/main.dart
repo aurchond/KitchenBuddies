@@ -5,9 +5,6 @@ import 'package:first_app/provider/notification_provider.dart';
 import 'package:first_app/screens/email_pass_screen.dart';
 import 'package:first_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:first_app/screens/chat_screens.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
 import 'keys.dart';
@@ -32,7 +29,7 @@ class MyApp extends StatelessWidget {
           title: 'FlutterChat',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            primarySwatch: Colors.green,
+            primarySwatch: Colors.deepOrange, //TODO: fix deep orange colour
           ),
           home: StreamBuilder(
             stream: FirebaseAuth.instance.authStateChanges(),
