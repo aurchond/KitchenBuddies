@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:first_app/local_notification_service.dart';
 import 'package:first_app/provider/auth_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
 
 import 'package:first_app/provider/notification_provider.dart';
@@ -23,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // }
 
   @override
-  void initState () {
+  void initState() {
     //in terminated state
     FirebaseMessaging.instance.getInitialMessage().then((value) {});
 
@@ -47,6 +48,29 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Consumer<AuthProvider>(builder: (context, model, _) {
       return Scaffold(
+          bottomNavigationBar: Container(
+            color: Colors.black,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+              child: GNav(
+                  gap: 10,
+                  backgroundColor: Colors.black,
+                  color: Colors.white,
+                  activeColor: Colors.white,
+                  tabBackgroundColor: Colors.green.shade800,
+                  padding: EdgeInsets.all(16),
+                  onTabChange: (index){
+                    print(index);
+                  },
+                  tabs: const [
+                    GButton(icon: Icons.home, text: "Home"),
+                    GButton(
+                        icon: Icons.favorite_outline_rounded, text: "Meal Session"),
+                    GButton(icon: Icons.search, text: "Past Recipes"),
+                    GButton(icon: Icons.settings, text: "Settings"),
+                  ]),
+            ),
+          ),
           appBar: AppBar(
             actions: [
               IconButton(
@@ -66,10 +90,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: ListTile(
                                 onTap: () {
                                   fcmProvider.sendNotification(
-                                      token: snapshot.data!
-                                          .docs[index]["token"],
+                                      token: snapshot.data!.docs[index]
+                                          ["token"],
                                       title: snapshot.data!.docs[index]
-                                      ["user_name"],
+                                          ["user_name"],
                                       body: "Notification Test");
                                 },
                                 // indexing user from the db

@@ -65,15 +65,15 @@ class AuthProvider extends ChangeNotifier {
         String token = await getDeviceToken();
 
         // update the device token if the user signs in on another device so that the most recent one is saved
-        await firebaseFirestore
+        // TODO: pass username from usernameController somehow so that field doesn't go blank on sign in
+        /*await firebaseFirestore
             .collection("users")
             .doc(userCredential.user!.uid)
             .update({
-          "email": userCredential.user!.email,
           "uid": userCredential.user!.uid,
           "user_name": usernameController.text,
           "token": token,
-        });
+        });*/
       }
     } on FirebaseAuthException catch (error) {
       Keys.scaffoldMessengerKey.currentState!.showSnackBar(
