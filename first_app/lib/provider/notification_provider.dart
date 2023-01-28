@@ -21,6 +21,7 @@ class NotificationProvider extends ChangeNotifier {
         'data': {
           "title": title,
           "body": body,
+          "_id": "this is the payload",
         },
       };
 

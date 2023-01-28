@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:first_app/local_notification_service.dart';
 import 'package:first_app/provider/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +21,25 @@ class _HomeScreenState extends State<HomeScreen> {
   //   if (mounted) authProvider.updateEmailVerificationState();
   //   super.didChangeDependencies();
   // }
+
+  @override
+  void initState () {
+    //in terminated state
+    FirebaseMessaging.instance.getInitialMessage().then((value) {});
+
+    //in foreground listener
+    FirebaseMessaging.onMessage.listen((event) {
+      LocalNotificationService.init();
+      LocalNotificationService.displayNotification(event);
+    });
+
+    //in background state but not terminated
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {});
+
+    // TODO: implement initstate
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
