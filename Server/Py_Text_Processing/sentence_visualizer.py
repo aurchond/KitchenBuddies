@@ -5,8 +5,8 @@ from spacy import displacy
 from utilities import extract_recipe_text
 
 # ----- USER: Set file name from input folder -----
-input_file = "test.txt"
-image_file_name = "test"
+input_file = "schnitzel.txt"
+image_file_name = "schnitzel"
 # -------------------------------------------------
 
 def generate_sentence_visualizer(filename, image_file):
@@ -16,8 +16,8 @@ def generate_sentence_visualizer(filename, image_file):
 
     count = 0
     for i in instr_steps:
-        if count > 1:
-            break
+        # if count > 1:
+        #     break
         doc = nlp(i)
 
         for token in doc:

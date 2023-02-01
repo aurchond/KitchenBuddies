@@ -1,11 +1,11 @@
 whisk
 
-Put,cover,season
+Put,cover,season,bring
 Simmer
 
 Drain,slice
 
-Add
+Add,toss
 Discard
 
 Put
