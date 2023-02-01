@@ -10,21 +10,24 @@ import 'package:provider/provider.dart';
 
 import 'package:first_app/provider/notification_provider.dart';
 
-import 'current_meal_session.dart';
+import 'screens/current_meal_session.dart';
+import 'screens/home_page_screen.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+// This class is the "master" class which controls everything after the user logs in
+class Master extends StatefulWidget {
+  const Master({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<Master> createState() => _MasterState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _MasterState extends State<Master> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
   TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   static const List<Widget> _widgetOptions = <Widget>[ //TODO: is this safe?
-    CurrentMealSession(),
+    HomePageScreen(),
+    //CurrentMealSession(),
     NewMealSession(),
     PastRecipes(),
   ];

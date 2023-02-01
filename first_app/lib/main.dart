@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:first_app/provider/auth_provider.dart';
 import 'package:first_app/provider/notification_provider.dart';
 import 'package:first_app/screens/email_pass_screen.dart';
-import 'package:first_app/screens/home_screen.dart';
+import 'package:first_app/master.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return const HomeScreen();
+                return const Master();
               }
               else {
                 return const EmailPassScreen();
