@@ -44,12 +44,14 @@ def extract_labels(label_file):
     labels = []
     with open ("./data/"+label_file, 'rt') as recipe:
         for label_line in recipe:
-            label = label_line.split(',')
-            labels.append(label)
+            l_dict = {}
+            parsed_labels = label_line.split(',')
+            for word in parsed_labels:
+                key = word.lower().strip()
+                l_dict[key] = ''
+            labels.append(l_dict)
 
     return labels
-
-
 
 # fn test verb goodness
 def test_verb_goodness():
@@ -63,37 +65,38 @@ def test_verb_goodness():
     labels = extract_labels('verb_labels.txt')
     print(labels)
 
-    for i in range(len(verbs)):
-        line_accuracy = []
-        # print("Line ", i+2, ": ",verbs[i], " ", labels[i])
+    if len(labels) != len(verbs):
+        print('Either the labels or raw data are missing. Line length do not equal')
+        return 1
 
+    line_accuracy = []
+    for i in range(len(verbs)):
+        if '/n' in labels[i] and len(labels) == 1:
+            continue
         correct = 0
-        total = 0
-        includes_verb = True
-        for j in range(len(labels[i])):
-            if labels[i][j] == '/n' and len(labels[i]) == 1:
-                includes_verb = False
-                break
-            total += 1
-            print(len(verbs[i]), " ", len(labels[1]))
-            if j > len(labels[i]) or j > len(verbs[i]) or \
-                len(labels[i]) == 0 or len(verbs[i]) == 0:
+        total = len(labels[i])
+        for j in range(len(verbs[i])):
+            if len(labels[i]) == 0 or len(verbs[i]) == 0:
                 print("Line ", i+2, ": ",verbs[i], " ", labels[i])
                 # account for number of errors
                 break
-
-            if verbs[i][j] in labels[i][j]:
-                correct += 1
+            elif len(verbs[i]) > len(labels[i]):
+                print("Extra verbs found - Line ", i+2, ": ",verbs[i], " ", labels[i])
         
-        if includes_verb:
-            line_accuracy.append(correct/total)
-    
-    print('Prediction Accuracy', mean(line_accuracy))
+            if 'BREAK' in verbs[i][j]:
+                break
+            
+            # print(verbs[i][j], " compared to ", labels[i])
+            if verbs[i][j].lower() in labels[i]:
+                correct += 1
 
-        #     print()
-        #     if verbs[i][j] in labels[i][j]:
-        #         continue
-        #     else:
+        # print('Correct: ', correct, ' Total: ', total)
+        acc = correct/total
+        if acc < 1:
+            print("Line ", i+2, ' Comparing ', verbs[i], ' with ', labels[i])
+        line_accuracy.append(acc)
+    print(line_accuracy)
+    print('Prediction Accuracy', mean(line_accuracy))
 
 
 test_verb_goodness()
