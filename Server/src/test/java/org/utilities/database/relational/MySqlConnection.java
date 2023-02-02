@@ -153,7 +153,7 @@ public class MySqlConnection {
             prep.setString(1, email);
             try (ResultSet rs = prep.executeQuery()) {
                 while(rs.next()) {
-                    friends.add(rs.getString("Email"));
+                    friends.add(rs.getString("FriendEmail"));
                 }
             }
         } catch (SQLException e) {
