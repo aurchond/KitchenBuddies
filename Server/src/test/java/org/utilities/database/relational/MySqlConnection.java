@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
-// import scala.Console;
+import scala.Console;
 
 import java.util.ArrayList;
 import java.sql.ResultSet;
@@ -44,7 +44,7 @@ public class MySqlConnection {
             prep.executeUpdate();
         }
         catch (SQLIntegrityConstraintViolationException e) {
-            //Console.print("Duplicate entry was ignored");
+            Console.print("Duplicate entry was ignored");
             return;
         }
         catch (SQLException e) {
@@ -106,7 +106,7 @@ public class MySqlConnection {
             prep.executeUpdate();
         }
         catch (SQLIntegrityConstraintViolationException e) {
-            //Console.print("Duplicate entry was ignored");
+            Console.print("Duplicate entry was ignored");
             return;
         }
         catch (SQLException e) {
@@ -116,11 +116,13 @@ public class MySqlConnection {
 
     //should we avoid duplicates? i.e. if there is a link already between friend 1 and 2, avoid friend 2 and 1?
     //consider performance .... then we need to change findFriend function too
-    private static void addToFriendsList(String email, String friendEmail, String friendName) {
+    private static void addToFriendsList(String email, String friendEmail) {
         String addFriend = "INSERT INTO FriendsList(Email, FriendEmail) VALUES(?, ?);";
         try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
             PreparedStatement preprep = con.prepareStatement(useKB);
             PreparedStatement prep = con.prepareStatement(addFriend);) {
+
+            preprep.executeUpdate();
             
             //fill in parametrized query
             prep.setString(1, email);
@@ -128,7 +130,7 @@ public class MySqlConnection {
             prep.executeUpdate();
         }
         catch (SQLIntegrityConstraintViolationException e) {
-            //Console.print("Duplicate entry was ignored");
+            Console.print("Duplicate entry was ignored");
             return;
         }
         catch (SQLException e) {
@@ -151,14 +153,14 @@ public class MySqlConnection {
             prep.setString(1, email);
             try (ResultSet rs = prep.executeQuery()) {
                 while(rs.next()) {
-                    friends.add(rs.getString("User"));
+                    friends.add(rs.getString("Email"));
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        //Console.print(friends + "\n");
+        Console.print(friends + "\n");
         return friends;
     }
 
@@ -182,7 +184,7 @@ public class MySqlConnection {
             e.printStackTrace();
         }
 
-        //Console.print(recipeNames + "\n");
+        Console.print(recipeNames + "\n");
         return recipeNames;
     }
 
@@ -207,7 +209,7 @@ public class MySqlConnection {
             e.printStackTrace();
         }
 
-        //Console.print(numBurners + "\n");
+        Console.print(numBurners + "\n");
         return numBurners; //should do error checking if -1 is received
     }
 }
