@@ -24,7 +24,7 @@ public class MySqlConnection {
         //findYourRecipes("shadi@gmail.com");
         //addKitchen("shadi@gmail.com", 4, 2, 2, 1, 4);
         //getNumBurners("shadi@gmail.com");
-        addToFriendsList("shadi@gmail.com", "marley@gmail.com");
+        //addToFriendsList("shadi@gmail.com", "marley@gmail.com");
         findFriends("shadi@gmail.com");
     }
 
@@ -144,7 +144,7 @@ public class MySqlConnection {
     //TODO: make structs for User?
     private static List<String> findFriends(String email) {
         List<String> friends = new ArrayList<String>();
-        String findFriend = "SELECT FriendsList.Email, UserInfo.Email FROM UserInfo INNER JOIN FriendsList on UserInfo.Email=FriendsList.FriendEmail WHERE FriendsList.Email = ?;";
+        String findFriend = "SELECT FriendsList.FriendEmail FROM UserInfo INNER JOIN FriendsList on UserInfo.Email=FriendsList.FriendEmail WHERE FriendsList.Email = ?;";
         try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
             PreparedStatement preprep = con.prepareStatement(useKB);
             PreparedStatement prep = con.prepareStatement(findFriend);) {
