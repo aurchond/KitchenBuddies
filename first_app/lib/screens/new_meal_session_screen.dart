@@ -11,8 +11,12 @@ class _NewMealSessionState extends State<NewMealSession> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const Center(
-        child: Text("New Meal Session"),
+      appBar: AppBar(title: Text('New Meal Session')),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () => Navigator.pushNamed(context, 'CurrentMealSession'),
+          child: Text('Welcome to New Session'),
+        ),
       ),
     );
   }
