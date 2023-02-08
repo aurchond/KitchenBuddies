@@ -36,6 +36,7 @@ dependencies:
   firebase_messaging:
   http:
   flutter_local_notifications:
+  flutter_spinkit:
 
 dev_dependencies:
   flutter_test:
