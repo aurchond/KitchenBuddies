@@ -38,7 +38,8 @@ class _CurrentMealSessionState extends State<CurrentMealSession> {
                     },
                     itemCount: snapshot.data!.docs.length);
               } else {
-                return const Center(child: CircularProgressIndicator());
+                return Text("nice try");
+                //return const Center(child: CircularProgressIndicator());
               }
             },
             stream:

@@ -59,8 +59,6 @@ class _MasterState extends State<Master> {
 
   @override
   Widget build(BuildContext context) {
-    // final fcmProvider = Provider.of<NotificationProvider>(context);
-
     return Consumer<AuthProvider>(builder: (context, model, _) {
       return Scaffold(
         body: Navigator(
@@ -132,33 +130,6 @@ class _MasterState extends State<Master> {
         //   child: _widgetOptions.elementAt(_selectedIndex),
         // )
 
-        /// THIS IS FROM PUSH NOTIFICATION TESTING! ///
-        /*body: StreamBuilder<QuerySnapshot>(
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return ListView.builder(
-                      itemBuilder: (context, index) {
-                        return Card(
-                            child: ListTile(
-                                onTap: () {
-                                  fcmProvider.sendNotification(
-                                      token: snapshot.data!.docs[index]
-                                          ["token"],
-                                      title: snapshot.data!.docs[index]
-                                          ["user_name"],
-                                      body: "Notification Test");
-                                },
-                                // indexing user from the db
-                                title: Text(
-                                    snapshot.data!.docs[index]["user_name"])));
-                      },
-                      itemCount: snapshot.data!.docs.length);
-                } else {
-                  return const Center(child: CircularProgressIndicator());
-                }
-              },
-              stream:
-                  FirebaseFirestore.instance.collection("users").snapshots())*/
       );
     });
   }
