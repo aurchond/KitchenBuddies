@@ -6,11 +6,11 @@ import 'package:provider/provider.dart';
 import 'data_class.dart';
 import 'data_model.dart';
 
-Future<UserDetails?> getSinglePostData() async {
-  UserDetails? result;
+Future<UserRecipeDetails?> getSinglePostData() async {
+  UserRecipeDetails? result;
   try {
     final response = await http.get(
-      Uri.parse("https://mocki.io/v1/29261a25-09fb-4421-86f2-8cc623975f29"),
+      Uri.parse("https://mocki.io/v1/041c7ac2-1d75-453a-82ec-be5637f4cb16"),
       headers: {
         HttpHeaders.contentTypeHeader: "application/json",
       },);
@@ -18,7 +18,8 @@ Future<UserDetails?> getSinglePostData() async {
     // status code is fine
     if (response.statusCode == 200) {
       final item = json.decode(response.body);
-      result = UserDetails.fromJson(item);
+      result = UserRecipeDetails.fromJson(item);
+      print(response.body);
     } else {
       print("error");
     }

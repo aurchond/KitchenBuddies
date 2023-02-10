@@ -23,11 +23,11 @@ import 'keys.dart';
 
 void main() async {
   //logged in
-  String url = "https://mocki.io/v1/29261a25-09fb-4421-86f2-8cc623975f29";
+/*  String url = "https://mocki.io/v1/041c7ac2-1d75-453a-82ec-be5637f4cb16";
   final response = await http.get(Uri.parse(url));
-  print(response.body);
+  print(response.body);*/
 
-  UserDetails  userDetails = UserDetails.fromJson(jsonDecode(response.body));
+  //UserRecipeDetails  userDetails = UserRecipeDetails.fromJson(jsonDecode(response.body));
   //print(userDetails.users?.user)
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -112,13 +112,13 @@ class _ProviderDemoScreenState extends State<ProviderDemoScreen> {
               Container(
                 margin: EdgeInsets.only(top: 40, bottom: 20),
                 child: Text(
-                  postModel.post?.users?.name ?? "",
+                  postModel.post?.userEmail ?? "",
                   style:
                   TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
               Container(
-                child: Text(postModel.post?.body ?? ""),
+                child: Text(postModel.post?.recipeStep?.length.toString() ?? ""),
               )
             ],
           ),

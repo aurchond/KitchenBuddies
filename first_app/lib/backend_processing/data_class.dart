@@ -4,12 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'data_model.dart';
 
 class DataClass extends ChangeNotifier {
-  UserDetails? post;
+  UserRecipeDetails? post;
   bool loading = false;
 
   getPostData() async {
     loading = true;
-    post = (await getSinglePostData())!;
+    post = (await getSinglePostData());
     loading = false;
 
     notifyListeners();
