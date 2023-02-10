@@ -1,3 +1,25 @@
+/*class UsersList {
+  List<UserRecipeDetails>? _users;
+
+  UserList({List<UserRecipeDetails>? users}) {
+    if (users != null) {
+      this._users = users;
+    }
+  }
+
+  List<UserRecipeDetails>? get users => _users;
+  set users(List<UserRecipeDetails>? users) => _users = users;
+
+  UsersList.fromJson(List<dynamic> json) {
+    _users = <UserRecipeDetails>[];
+    json['recipeStep'].forEach((v) {
+      _recipeStep!.add(new RecipeStep.fromJson(v));
+    });
+    _users.add(new UserRecipeDetails.fromJson(i));
+
+  }
+}*/
+
 class UserRecipeDetails {
   String? _userEmail;
   List<RecipeStep>? _recipeStep;

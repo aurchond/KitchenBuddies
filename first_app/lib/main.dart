@@ -86,6 +86,7 @@ class _ProviderDemoScreenState extends State<ProviderDemoScreen> {
   @override
   Widget build(BuildContext context) {
     final postModel = Provider.of<DataClass>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Provider Demo"),
@@ -118,7 +119,7 @@ class _ProviderDemoScreenState extends State<ProviderDemoScreen> {
                 ),
               ),
               Container(
-                child: Text(postModel.post?.recipeStep?.length.toString() ?? ""),
+                child: Text((postModel.post?.recipeStep)?[0].instructions ?? ""),
               )
             ],
           ),

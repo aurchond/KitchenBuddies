@@ -10,7 +10,7 @@ Future<UserRecipeDetails?> getSinglePostData() async {
   UserRecipeDetails? result;
   try {
     final response = await http.get(
-      Uri.parse("https://mocki.io/v1/041c7ac2-1d75-453a-82ec-be5637f4cb16"),
+      Uri.parse("https://mocki.io/v1/cf23d25e-1a8f-4c34-94c0-363815d7a3fc"),
       headers: {
         HttpHeaders.contentTypeHeader: "application/json",
       },);
@@ -18,8 +18,9 @@ Future<UserRecipeDetails?> getSinglePostData() async {
     // status code is fine
     if (response.statusCode == 200) {
       final item = json.decode(response.body);
-      result = UserRecipeDetails.fromJson(item);
-      print(response.body);
+      print(item);
+      result = UserRecipeDetails.fromJson(item[0]);
+      //print(response.body);
     } else {
       print("error");
     }
