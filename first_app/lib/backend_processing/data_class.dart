@@ -7,9 +7,9 @@ class DataClass extends ChangeNotifier {
   UserRecipeDetails? post;
   bool loading = false;
 
-  getPostData() async {
+  getPostData(int jsonIndex) async {
     loading = true;
-    post = (await getSinglePostData());
+    post = (await getSinglePostData(jsonIndex));
     loading = false;
 
     notifyListeners();

@@ -16,7 +16,6 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-
 import 'backend_processing/data_class.dart';
 import 'backend_processing/data_model.dart';
 import 'keys.dart';
@@ -46,25 +45,25 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => DataClass()),
         ],
         child: MaterialApp(
-          scaffoldMessengerKey: Keys.scaffoldMessengerKey,
-          title: 'FlutterChat',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: Colors.green,
-          ),
-          home: ProviderDemoScreen()
-          // StreamBuilder(
-          //   stream: FirebaseAuth.instance.authStateChanges(),
-          //   builder: (context, snapshot) {
-          //     if (snapshot.hasData) {
-          //       return const HomeScreen();
-          //     }
-          //     else {
-          //       return const EmailPassScreen();
-          //     }
-          //   }
-          // ),
-        ));
+            scaffoldMessengerKey: Keys.scaffoldMessengerKey,
+            title: 'FlutterChat',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              primarySwatch: Colors.green,
+            ),
+            home: ProviderDemoScreen()
+            // StreamBuilder(
+            //   stream: FirebaseAuth.instance.authStateChanges(),
+            //   builder: (context, snapshot) {
+            //     if (snapshot.hasData) {
+            //       return const HomeScreen();
+            //     }
+            //     else {
+            //       return const EmailPassScreen();
+            //     }
+            //   }
+            // ),
+            ));
   }
 }
 
@@ -80,7 +79,7 @@ class _ProviderDemoScreenState extends State<ProviderDemoScreen> {
   void initState() {
     super.initState();
     final postModel = Provider.of<DataClass>(context, listen: false);
-    postModel.getPostData();
+    postModel.getPostData(0);
   }
 
   @override
@@ -93,39 +92,57 @@ class _ProviderDemoScreenState extends State<ProviderDemoScreen> {
       ),
       body: Container(
         padding: EdgeInsets.all(20),
-        child: postModel.loading?Center(
-          child: Container(
-            child: SpinKitThreeBounce(
-              itemBuilder: (BuildContext context, int index) {
-                return DecoratedBox(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: index.isEven ? Colors.red : Colors.green,
+        child: postModel.loading
+            ? Center(
+                child: Container(
+                  child: SpinKitThreeBounce(
+                    itemBuilder: (BuildContext context, int index) {
+                      return DecoratedBox(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: index.isEven ? Colors.red : Colors.green,
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
-          ),
-        ):Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 40, bottom: 20),
-                child: Text(
-                  postModel.post?.userEmail ?? "",
-                  style:
-                  TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+              )
+            : Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 40, bottom: 20),
+                      child: Text(
+                        postModel.post?.userEmail ?? "",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                    ),
+                    Container(
+                      child: ListView(
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.all(8),
+                        children: <Widget>[
+                          Container(
+                              height: 50,
+                              color: Colors.green,
+                              child: Text((postModel.post?.recipeStep)?[0]
+                                      .instructions ??
+                                  "")),
+                          Container(
+                              height: 50,
+                              color: Colors.green,
+                              child: Text((postModel.post?.recipeStep)?[1]
+                                  .instructions ??
+                                  "")),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Container(
-                child: Text((postModel.post?.recipeStep)?[0].ingredientQuantity?[0].toString() ?? ""),
-              )
-            ],
-          ),
-        ),
       ),
     );
   }
 }
-

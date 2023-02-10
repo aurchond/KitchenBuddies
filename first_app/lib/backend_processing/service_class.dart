@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'data_class.dart';
 import 'data_model.dart';
 
-Future<UserRecipeDetails?> getSinglePostData() async {
+Future<UserRecipeDetails?> getSinglePostData(int jsonIndex) async {
   UserRecipeDetails? result;
   try {
     final response = await http.get(
@@ -19,7 +19,7 @@ Future<UserRecipeDetails?> getSinglePostData() async {
     if (response.statusCode == 200) {
       final item = json.decode(response.body);
       print(item);
-      result = UserRecipeDetails.fromJson(item[0]); //iterate thru list
+      result = UserRecipeDetails.fromJson(item[jsonIndex]); //iterate thru list
       //print(response.body);
     } else {
       print("error");
