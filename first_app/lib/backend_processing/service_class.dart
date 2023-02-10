@@ -19,7 +19,7 @@ Future<UserRecipeDetails?> getSinglePostData() async {
     if (response.statusCode == 200) {
       final item = json.decode(response.body);
       print(item);
-      result = UserRecipeDetails.fromJson(item[0]);
+      result = UserRecipeDetails.fromJson(item[0]); //iterate thru list
       //print(response.body);
     } else {
       print("error");

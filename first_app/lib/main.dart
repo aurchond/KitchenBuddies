@@ -119,7 +119,7 @@ class _ProviderDemoScreenState extends State<ProviderDemoScreen> {
                 ),
               ),
               Container(
-                child: Text((postModel.post?.recipeStep)?[0].instructions ?? ""),
+                child: Text((postModel.post?.recipeStep)?[0].ingredientQuantity?[0].toString() ?? ""),
               )
             ],
           ),
