@@ -79,7 +79,7 @@ class _ProviderDemoScreenState extends State<ProviderDemoScreen> {
   void initState() {
     super.initState();
     final postModel = Provider.of<DataClass>(context, listen: false);
-    postModel.getPostData(0);
+    postModel.getPostData(0); //call with index
   }
 
   @override
@@ -119,26 +119,38 @@ class _ProviderDemoScreenState extends State<ProviderDemoScreen> {
                             fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                     ),
-                    Container(
-                      child: ListView(
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.all(8),
-                        children: <Widget>[
-                          Container(
-                              height: 50,
-                              color: Colors.green,
-                              child: Text((postModel.post?.recipeStep)?[0]
-                                      .instructions ??
-                                  "")),
-                          Container(
-                              height: 50,
-                              color: Colors.green,
-                              child: Text((postModel.post?.recipeStep)?[1]
-                                  .instructions ??
-                                  "")),
-                        ],
-                      ),
-                    ),
+                    new Expanded(
+                        child: new ListView.builder
+                          (
+                            itemCount: postModel.post?.recipeStep?.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return new Text(postModel.post?.recipeStep?[index].instructions ?? "",
+                              style: TextStyle(
+                                fontSize: 14
+                              ));
+                            }
+                        )
+                    )
+                    // Container(
+                    //   child: ListView(
+                    //     shrinkWrap: true,
+                    //     padding: const EdgeInsets.all(8),
+                    //     children: <Widget>[
+                    //       Container(
+                    //           height: 50,
+                    //           color: Colors.green,
+                    //           child: Text((postModel.post?.recipeStep)?[0]
+                    //                   .instructions ??
+                    //               "")),
+                    //       Container(
+                    //           height: 50,
+                    //           color: Colors.green,
+                    //           child: Text((postModel.post?.recipeStep)?[1]
+                    //               .instructions ??
+                    //               "")),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
