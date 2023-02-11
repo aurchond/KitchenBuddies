@@ -5,6 +5,7 @@ import 'package:first_app/provider/auth_provider.dart';
 import 'package:first_app/provider/notification_provider.dart';
 import 'package:first_app/screens/email_pass_screen.dart';
 import 'package:first_app/screens/home_screen.dart';
+import 'package:first_app/screens/instructions_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:first_app/screens/chat_screens.dart';
@@ -49,9 +50,9 @@ class MyApp extends StatelessWidget {
             title: 'FlutterChat',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
-              primarySwatch: Colors.green,
+              primarySwatch: Colors.deepOrange,
             ),
-            home: ProviderDemoScreen()
+            home: InstructionsScreen()
             // StreamBuilder(
             //   stream: FirebaseAuth.instance.authStateChanges(),
             //   builder: (context, snapshot) {
@@ -67,94 +68,3 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class ProviderDemoScreen extends StatefulWidget {
-  const ProviderDemoScreen({Key? key}) : super(key: key);
-
-  @override
-  _ProviderDemoScreenState createState() => _ProviderDemoScreenState();
-}
-
-class _ProviderDemoScreenState extends State<ProviderDemoScreen> {
-  @override
-  void initState() {
-    super.initState();
-    final postModel = Provider.of<DataClass>(context, listen: false);
-    postModel.getPostData(0); //call with index
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final postModel = Provider.of<DataClass>(context);
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Provider Demo"),
-      ),
-      body: Container(
-        padding: EdgeInsets.all(20),
-        child: postModel.loading
-            ? Center(
-                child: Container(
-                  child: SpinKitThreeBounce(
-                    itemBuilder: (BuildContext context, int index) {
-                      return DecoratedBox(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: index.isEven ? Colors.red : Colors.green,
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              )
-            : Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(top: 40, bottom: 20),
-                      child: Text(
-                        postModel.post?.userEmail ?? "",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
-                      ),
-                    ),
-                    new Expanded(
-                        child: new ListView.builder
-                          (
-                            itemCount: postModel.post?.recipeStep?.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return new Text(postModel.post?.recipeStep?[index].instructions ?? "",
-                              style: TextStyle(
-                                fontSize: 14
-                              ));
-                            }
-                        )
-                    )
-                    // Container(
-                    //   child: ListView(
-                    //     shrinkWrap: true,
-                    //     padding: const EdgeInsets.all(8),
-                    //     children: <Widget>[
-                    //       Container(
-                    //           height: 50,
-                    //           color: Colors.green,
-                    //           child: Text((postModel.post?.recipeStep)?[0]
-                    //                   .instructions ??
-                    //               "")),
-                    //       Container(
-                    //           height: 50,
-                    //           color: Colors.green,
-                    //           child: Text((postModel.post?.recipeStep)?[1]
-                    //               .instructions ??
-                    //               "")),
-                    //     ],
-                    //   ),
-                    // ),
-                  ],
-                ),
-              ),
-      ),
-    );
-  }
-}
