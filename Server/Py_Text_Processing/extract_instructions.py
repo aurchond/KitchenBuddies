@@ -25,6 +25,7 @@ recipe_ingredients= [
             "Canola",
             "1 cup flat-leaf parsley, patted thoroughly dry"
         ]
+time_key_words = ['seconds','minute','minutes','hours','hour']
 
 def extract_verb_from_steps(instr_steps):
     verb_list = []
