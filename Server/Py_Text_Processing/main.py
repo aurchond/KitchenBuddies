@@ -5,6 +5,7 @@ from extract_instructions import extract_text_from_steps
 from step import Step
 
 def parse_recipe():
+    print("In parse_recipe!")
     # TODO: convert text file as cmd line parameter
     text_steps = extract_recipe_text('test.txt')
 
