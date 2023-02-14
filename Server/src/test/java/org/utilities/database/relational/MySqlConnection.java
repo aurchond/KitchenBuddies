@@ -1,10 +1,16 @@
 package org.utilities.database.relational;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
+
+import com.mysql.cj.xdevapi.Statement;
 
 import scala.Console;
 
@@ -25,7 +31,83 @@ public class MySqlConnection {
         //addKitchen("shadi@gmail.com", 4, 2, 2, 1, 4);
         //getNumBurners("shadi@gmail.com");
         //addToFriendsList("shadi@gmail.com", "marley@gmail.com");
-        findFriends("shadi@gmail.com");
+        // findFriends("shadi@gmail.com");
+        // createSupplyTable();
+        createFoodTable();
+    }
+
+    private static void createSupplyTable() {
+        try {
+            // Establish a connection to the database
+            Connection conn = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
+
+            PreparedStatement preprep = conn.prepareStatement(useKB);
+            preprep.executeUpdate();
+            ResultSet result = conn.getMetaData().getTables(null, null, "KitchenSupplies", null);
+            if (!result.next()) {
+              // If the table does not exist, create it
+              Statement createTable = conn.createStatement();
+              createTable.executeUpdate("CREATE TABLE KitchenSupplies (Name VARCHAR(255))");
+            }
+        
+            // Prepare a SQL statement to insert data into the table
+            String sql = "INSERT INTO KitchenSupplies (Name) VALUES (?)";
+            PreparedStatement statement = conn.prepareStatement(sql);
+        
+            // Read the text file containing the list of food
+            System.out.println(System.getProperty("user.dir"));
+            BufferedReader reader = new BufferedReader(new FileReader("./Server/Py_Text_Processing/data/supplies.txt"));
+            String supply;
+            while ((supply = reader.readLine()) != null) {
+                // Set the value to be inserted into the table
+                statement.setString(1, supply);
+        
+                // Execute the statement
+                statement.executeUpdate();
+            }
+        
+            // Close the connection to the database
+            conn.close();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    private static void createFoodTable() {
+        try {
+            // Establish a connection to the database
+            Connection conn = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
+
+            PreparedStatement preprep = conn.prepareStatement(useKB);
+            preprep.executeUpdate();
+            ResultSet result = conn.getMetaData().getTables(null, null, "Food", null);
+            if (!result.next()) {
+              // If the table does not exist, create it
+              Statement createTable = conn.createStatement();
+              createTable.executeUpdate("CREATE TABLE Food (Name VARCHAR(255))");
+            }
+        
+            // Prepare a SQL statement to insert data into the table
+            String sql = "INSERT INTO Food (Name) VALUES (?)";
+            PreparedStatement statement = conn.prepareStatement(sql);
+        
+            // Read the text file containing the list of food
+            System.out.println(System.getProperty("user.dir"));
+            BufferedReader reader = new BufferedReader(new FileReader("./Server/Py_Text_Processing/data/unique_foods.txt"));
+            String food;
+            while ((food = reader.readLine()) != null) {
+                // Set the value to be inserted into the table
+                statement.setString(1, food);
+        
+                // Execute the statement
+                statement.executeUpdate();
+            }
+        
+            // Close the connection to the database
+            conn.close();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     private static void addUser(String email, int skill) {
