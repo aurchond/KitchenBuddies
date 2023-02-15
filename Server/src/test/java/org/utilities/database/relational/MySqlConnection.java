@@ -9,13 +9,14 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
+import java.sql.Date;
+import java.time.LocalDate;
 
 import com.mysql.cj.xdevapi.Statement;
 
 import scala.Console;
 
 import java.util.ArrayList;
-import java.sql.ResultSet;
 
 public class MySqlConnection {
     private static final String sqlUrl = "jdbc:mysql://localhost";
@@ -23,9 +24,12 @@ public class MySqlConnection {
     private static final String sqlPassword = "password";
     private static final String useKB = "USE KitchenBuddies";
     public static void main(String args[]) {
+        Date date = Date.valueOf(LocalDate.now());
+
         //addUser("shadi@gmail.com", 1);
-        //addToAllRecipes("chicken noodle soup", "recipes.com/chicken%20noodle%20soup");
-        //addToFavRecipes("marley@gmail.com", 2); //should we add based on username?
+        addToAllRecipes("chicken noodle soup", "recipes.com/chicken%20noodle%20soup", "1 chicken, 1 pack of noodles, 3 cloves garlic", 45);
+        addToAllRecipes("chicken noodle soup", "recipes.com/chicken%20noodle%20soup", "1 chicken, 1 pack of noodles, 3 cloves garlic", 45);
+        addToUserRecipes("marley@gmail.com", 1, date); //should we add based on username?
         //addToFavRecipes("shadi@gmail.com", 1);
         //findYourRecipes("shadi@gmail.com");
         //addKitchen("shadi@gmail.com", 4, 2, 2, 1, 4);
@@ -33,7 +37,7 @@ public class MySqlConnection {
         //addToFriendsList("shadi@gmail.com", "marley@gmail.com");
         // findFriends("shadi@gmail.com");
         // createSupplyTable();
-        createFoodTable();
+        //createFoodTable();
     }
 
     private static void createSupplyTable() {
@@ -156,8 +160,8 @@ public class MySqlConnection {
         }
     }
 
-    private static void addToAllRecipes(String recipeName, String recipeUrl) {
-        String addRecipe = "INSERT INTO AllRecipes(Name, Url) VALUES(?, ?);";
+    private static void addToAllRecipes(String recipeName, String recipeUrl, String ingredients, int totalTime) {
+        String addRecipe = "INSERT INTO AllRecipes(Name, Url, Ingredients, TotalTime) VALUES(?, ?, ?, ?);";
         try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
             PreparedStatement preprep = con.prepareStatement(useKB);
             PreparedStatement prep = con.prepareStatement(addRecipe);) {
@@ -167,6 +171,8 @@ public class MySqlConnection {
             //fill in parametrized query
             prep.setString(1, recipeName);
             prep.setString(2, recipeUrl);
+            prep.setString(3, ingredients);
+            prep.setInt(4, totalTime);
             prep.executeUpdate();
         }
         catch (SQLException e) {
@@ -174,8 +180,8 @@ public class MySqlConnection {
         }
     }
 
-    private static void addToFavRecipes(String email, int recipeId) {
-        String addFav = "INSERT INTO FavRecipes(Email, RecipeId) VALUES(?, ?);";
+    private static void addToUserRecipes(String email, int recipeId, Date date) {
+        String addFav = "INSERT INTO UserLinkedRecipes(Email, RecipeId, LastDateMade) VALUES(?, ?, ?);";
         try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
             PreparedStatement preprep = con.prepareStatement(useKB);
             PreparedStatement prep = con.prepareStatement(addFav);) {
@@ -185,6 +191,7 @@ public class MySqlConnection {
             //fill in parametrized query
             prep.setString(1, email); //autonumber users?
             prep.setInt(2, recipeId);
+            prep.setDate(3, date); //this will be the last date made
             prep.executeUpdate();
         }
         catch (SQLIntegrityConstraintViolationException e) {

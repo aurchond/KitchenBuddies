@@ -6,12 +6,10 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.utilities.database.graph.Step;
 
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -24,23 +22,72 @@ public class Main {
          * 2. Look for all the dependencies in the steps - This can be done efficiently if we do it alongside step creation
      */
     public static void main(String[] args) throws IOException {
-        List<Step> steps = new ArrayList<Step>();
-        HashMap<String, List<Integer>> ingredients = new HashMap<String, List<Integer>>();//<ingredient, List<StepId>>
-        HashMap<String, List<Integer>> resourcesRequired = new HashMap<String, List<Integer>>();//<tool, List<StepId>>
-        HashMap<String, List<Integer>> holdingResource_Id = new HashMap<String, List<Integer>>();//<holdingResource, List<StepId>>
-        String name = new File(".").getCanonicalPath();
-        System.out.println("Test "+ name);
-        parseJson(
-                "res/input/fried_rice.json",
-                steps,
-                ingredients,
-                resourcesRequired,
-                holdingResource_Id
-        );
-        System.out.println(Arrays.asList(ingredients));
-        System.out.println(Arrays.asList(resourcesRequired));
-        System.out.println(Arrays.asList(holdingResource_Id));
+        //
+
+//        Webscrape test_w = new Webscrape();
+
+        parseInstructionsPython();
+
+
+//        OCR test = new OCR();
+//        test.TestOCR();
+//        List<Step> steps = new ArrayList<Step>();
+//        HashMap<String, List<Integer>> ingredients = new HashMap<String, List<Integer>>();//<ingredient, List<StepId>>
+//        HashMap<String, List<Integer>> resourcesRequired = new HashMap<String, List<Integer>>();//<tool, List<StepId>>
+//        HashMap<String, List<Integer>> holdingResource_Id = new HashMap<String, List<Integer>>();//<holdingResource, List<StepId>>
+//        String name = new File(".").getCanonicalPath();
+//        System.out.println("Test "+ name);
+//        parseJson(
+//                "res/input/fried_rice.json",
+//                steps,
+//                ingredients,
+//                resourcesRequired,
+//                holdingResource_Id
+//        );
+//        System.out.println(Arrays.asList(ingredients));
+//        System.out.println(Arrays.asList(resourcesRequired));
+//        System.out.println(Arrays.asList(holdingResource_Id));
     }
+
+    public static void parseInstructionsPython(){
+        try {
+            long startTime = System.nanoTime();
+            String currentDirectory = System.getProperty("user.dir");
+            System.out.println("Current directory: " + currentDirectory);
+            String os = System.getProperty("os.name");
+            String activateEnv = "";
+            String command = "";
+            String parameter = "";
+            String script = "";
+            if (os.toLowerCase().startsWith("windows")) {
+                // for PC users (local development)
+                script = ".\\Py_Text_Processing\\main.py";
+                activateEnv = ".\\Py_Text_Processing\\kb_text\\Scripts\\activate.bat";
+                command = "cmd /c \"" + activateEnv + " & python " + script + "\"";
+            } else {
+                // for Server
+                script = "./Py_Text_Processing/main.py";
+                command = "python3 " + script + " " + parameter;
+            }
+
+            System.out.println("Running python process");
+            Process process = Runtime.getRuntime().exec(command);
+            BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = in.readLine()) != null) {
+                System.out.println(line);
+            }
+            in.close();
+
+            process.waitFor();
+            long endTime = System.nanoTime();
+            long duration = (endTime - startTime) / 1000000;
+            System.out.println("Duration: " + duration + " milliseconds");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void parseJson(
             String filePath,
             List<Step> steps,
