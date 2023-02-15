@@ -1,7 +1,7 @@
 import 'package:first_app/backend_processing/service_class.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'data_model.dart';
+import '../data_models/user_recipe_details.dart';
 
 class DataClass extends ChangeNotifier {
   UserRecipeDetails? post;

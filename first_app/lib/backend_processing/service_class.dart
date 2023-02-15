@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'data_class.dart';
-import 'data_model.dart';
+import '../data_models/user_recipe_details.dart';
 
 Future<UserRecipeDetails?> getSinglePostData(int jsonIndex) async {
   UserRecipeDetails? result;

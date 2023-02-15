@@ -1,19 +1,21 @@
 [{
+    "recipeID": 6,
     "recipeName": "sugar carrots",
     "ingredientList": [
         "1 cup of sugar",
         "2 carrots"
     ],
-    "completionTime": 1.5,
-    "lastTimeMade": "22-3-14"
+    "totalTimeMinutes": 90,
+    "lastDateMade": "2022-3-14"
 },
 {
+    "recipeID": 7,
     "recipeName": "chicken parm",
     "ingredientList": [
         "1 chicken",
-        "cup of parmesan"
+        "1 cup of parmesan"
     ],
-    "completionTime": 1,
-    "lastTimeMade": "22-2-10"
+    "totalTimeMinutes": 1,
+    "lastDateMade": "2022-2-10"
 }
 ]
