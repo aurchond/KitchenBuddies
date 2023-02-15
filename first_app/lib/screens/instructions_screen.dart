@@ -23,20 +23,16 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
   Widget build(BuildContext context) {
     final postModel = Provider.of<DataClass>(context);
 
-    //add a number in front of instructions
-    List<String> instructions = <String>[];
     //stitch ingredient quantity and list together
     List<List<String>> ingredients = new List.generate(postModel.post?.recipeStep?.length ?? 0, (i) => []);
     if (postModel.post?.recipeStep?.length != null && postModel.post?.recipeStep?[0].ingredientQuantity?.length != null) {
       for (int i = 0; i < (postModel.post?.recipeStep?.length ?? 0); i++) { //should include error case for missing length
-        instructions.add((i+1).toString() + ". " + (postModel.post?.recipeStep?[i].instructions ?? ""));
         for (int j = 0; j < (postModel.post?.recipeStep?[i].ingredientQuantity?.length ?? 0); j++) {
           ingredients[i].add((postModel.post?.recipeStep?[i].ingredientQuantity?[j].toString() ?? "") + " " + (postModel.post?.recipeStep?[i].ingredientList?[j] ?? ""));
         }
       }
     }
 
-    print(instructions);
     print(ingredients);
 
     return Scaffold(
@@ -77,7 +73,9 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                     (
                       itemCount: postModel.post?.recipeStep?.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return new Text(instructions[index] + " (" + ingredients[index].join(', ') + ") ",
+                        return new Text(
+                            (index+1).toString() + ". " + (postModel.post?.recipeStep?[index].instructions ?? "")
+                                + " (" + ingredients[index].join(', ') + ")",
                             style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.deepOrange.shade300
