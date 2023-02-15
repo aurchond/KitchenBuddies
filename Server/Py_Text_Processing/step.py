@@ -29,19 +29,21 @@ class Step:
 
         ingredient += str(token)
 
-        if step_words.index(token) < (len(step_words)-1): children_check = [child for child in step_words[step_words.index(token)+1].children]
-        else: children_check = []; #end of sentence so nothing is after 
+        #if step_words.index(token) < (len(step_words)-1): children_check = [child for child in step_words[step_words.index(token)+1].children]
+        #else: children_check = []; #end of sentence so nothing is after 
 
         skip_words = 0
         token_check = token
-        while token_check.dep_ == 'compound' and token_check in children_check: #checking to see if ingredients have multiple words
+        while token_check.dep_ == 'compound': # and token_check in children_check: #checking to see if ingredients have multiple words
             ingredient += " "
-            ingredient += str(step_words[step_words.index(token_check)+1])
-            token_check = step_words[step_words.index(token_check)+1]
-            children_check = [child for child in step_words[step_words.index(token_check)+1].children]
+            ingredient += " "
+            ingredient += str(token_check.head)
+            token_check = token_check.head
+            
+           # ingredient += str(step_words[step_words.index(token_check)+1])
+           # token_check = step_words[step_words.index(token_check)+1]
+           # children_check = [child for child in step_words[step_words.index(token_check)+1].children]
             skip_words += 1
-            #print(children_check)
-        # print(ingredient)
         
         is_in_ingredients = False #need to check if the potential ingredient is in the list of ingredients from the json
         for check_ingredient in recipe_ingredients:
