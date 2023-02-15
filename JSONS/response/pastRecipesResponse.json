@@ -1,0 +1,19 @@
+[{
+    "recipeName": "sugar carrots",
+    "ingredientList": [
+        "1 cup of sugar",
+        "2 carrots"
+    ],
+    "completionTime": 1.5,
+    "lastTimeMade": "22-3-14"
+},
+{
+    "recipeName": "chicken parm",
+    "ingredientList": [
+        "1 chicken",
+        "cup of parmesan"
+    ],
+    "completionTime": 1,
+    "lastTimeMade": "22-2-10"
+}
+]

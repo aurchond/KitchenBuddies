@@ -1,0 +1,5 @@
+{
+    "userEmail": "shadisz@yahoo.ca"
+}
+
+//for generic cases: e.g. to retrieve all friends or all recipes, you need the user email to call SQL helper functions

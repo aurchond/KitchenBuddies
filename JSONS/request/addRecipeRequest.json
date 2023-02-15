@@ -1,0 +1,11 @@
+{
+    "userEmail": "shadisz@yahoo.ca",
+    "recipeUrl": "www.allrecipes.com/fish"
+}
+
+//once received in backend
+a) backend checks url in AllRecipes database
+ i) if recipe does not exist, add to AllRecipes database to get auto ID
+  i.i) parse recipe (input processing)
+  i.ii) add to graph database with id from AllRecipes
+b) add to FaveRecipes database for that user
