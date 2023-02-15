@@ -9,6 +9,7 @@ import java.util.StringJoiner;
 
 public class InputRecipe {
     String recipeTitle;
+    String recipeFile;
     // Time in minutes
     Integer totalTime;
     Integer cookTime;
@@ -23,6 +24,7 @@ public class InputRecipe {
         this.prepTime = 0;
         this.ingredients = new ArrayList<>();
         this.instructions = new ArrayList<>();
+        this.recipeFile = "";
     }
 
     public String getRecipeTitle() { return this.recipeTitle; }
@@ -38,6 +40,8 @@ public class InputRecipe {
     public List<String> getInstructions() { return instructions; }
 
     public void setRecipeTitle(String recipeTitle) { this.recipeTitle = recipeTitle; }
+
+    public void setRecipeFile(String recipeFile) { this.recipeFile = recipeFile; }
 
     public void setTotalTime(String isoTotalTime) {
         Integer totalTime = this.convertISOMinute(isoTotalTime);
@@ -66,8 +70,12 @@ public class InputRecipe {
     }
 
     public void writeTextFile() {
+        // TODO: Create global directory path
+        this.setRecipeFile(this.recipeTitle.replaceAll(" ", "_"));
+        String fileName = this.recipeFile + ".txt";
+        String path = "Py_Text_Processing/input/" + fileName;
         try {
-            File recipeObj = new File("test_recipe.txt");
+            File recipeObj = new File(path);
             if (recipeObj.createNewFile()) {
                 System.out.println("File created: " + recipeObj.getName());
             } else {
@@ -96,14 +104,12 @@ public class InputRecipe {
         fileText.add("\n");
 
         try {
-            FileWriter recipeWrite = new FileWriter("test_recipe.txt");
+            FileWriter recipeWrite = new FileWriter(path);
             recipeWrite.write(fileText.toString());
             recipeWrite.close();
         } catch (IOException e) {
             System.out.println("Could not write to recipe file");
             e.printStackTrace();
         }
-
-
     }
 }

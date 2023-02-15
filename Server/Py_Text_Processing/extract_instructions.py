@@ -5,26 +5,24 @@ nlp = spacy.load("en_core_web_sm")
 from utilities import extract_recipe_text
 from step import Step
 
-output_steps = []
-
-recipe_ingredients= [
-            "0.5 cup white wine vinegar",
-            "1.5 tablespoons sugar",
-            "1 teaspoon thyme leaves",
-            "0.25 cup canola oil (plus more for frying)",
-            "Salt and freshly ground pepper",
-            "and freshly ground pepper",
-            "1 pound small fingerling potatoes",
-            "3 garlic cloves",
-            "1 cup all-purpose flour",
-            "2 large eggs beaten with 2 tablespoons water",
-            "2 cups panko breadcrumbs",
-            "Four 4-ounce boneless pork chops, butterflied and pounded 1\/3-inch thick, or eight 2-ounce pork cutlets, lightly pounded",
-            "Kosher salt",
-            "pepper",
-            "Canola",
-            "1 cup flat-leaf parsley, patted thoroughly dry"
-        ]
+# recipe_ingredients= [
+#             "0.5 cup white wine vinegar",
+#             "1.5 tablespoons sugar",
+#             "1 teaspoon thyme leaves",
+#             "0.25 cup canola oil (plus more for frying)",
+#             "Salt and freshly ground pepper",
+#             "and freshly ground pepper",
+#             "1 pound small fingerling potatoes",
+#             "3 garlic cloves",
+#             "1 cup all-purpose flour",
+#             "2 large eggs beaten with 2 tablespoons water",
+#             "2 cups panko breadcrumbs",
+#             "Four 4-ounce boneless pork chops, butterflied and pounded 1\/3-inch thick, or eight 2-ounce pork cutlets, lightly pounded",
+#             "Kosher salt",
+#             "pepper",
+#             "Canola",
+#             "1 cup flat-leaf parsley, patted thoroughly dry"
+#         ]
 
 def extract_verb_from_steps(instr_steps):
     verb_list = []
@@ -56,7 +54,7 @@ def extract_verb_from_steps(instr_steps):
 
     return verb_list
 
-def extract_text_from_steps(instr_steps):
+def extract_text_from_steps(recipe_ingredients, instr_steps):
     '''
     Input a list of steps and extract important components
 
@@ -66,9 +64,9 @@ def extract_text_from_steps(instr_steps):
     time_key_words = ['seconds','minute','minutes','hours','hour']
 
     for instr in instr_steps: 
-        if 'BREAK' in instr:
-            # used to help understand dependencies, should we make this a step for the time being?
-            print('STEP:', instr)
+        # if 'BREAK' in instr:
+        #     # used to help understand dependencies, should we make this a step for the time being?
+        #     print('STEP:', instr)
         #     break
         # print('STEP:', step)
 
@@ -111,12 +109,12 @@ def extract_text_from_steps(instr_steps):
         
         
         steps_out.append(step)
-        print("PARSED STEP:")
-        print(step.instructions)
-        print(step.ingredients)
-        print(step.ingredientsQuantity)
-        print(step.verbs)
-        print(step.stepTime)
+        # print("PARSED STEP:")
+        # print(step.instructions)
+        # print(step.ingredients)
+        # print(step.ingredientsQuantity)
+        # print(step.verbs)
+        # print(step.stepTime)
     return steps_out
 
 
@@ -150,7 +148,7 @@ def time_condition(token, time_key_words):
 
     return False
 
-text_steps = extract_recipe_text('test.txt')
+# text_steps = extract_recipe_text('test.txt')
 
-parsed_steps = extract_text_from_steps(text_steps)
-print(parsed_steps)
+# parsed_steps = extract_text_from_steps(text_steps)
+# print(parsed_steps)

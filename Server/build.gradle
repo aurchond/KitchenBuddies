@@ -18,9 +18,8 @@ dependencies {
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
     implementation 'org.jsoup:jsoup:1.15.3'
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.4.0'
-    implementation 'org.openpnp:opencv:4.5.1-2'
-    implementation 'net.sourceforge.tess4j:tess4j:4.0.2'
     implementation "mysql:mysql-connector-java:8.0.31"
+    implementation 'org.json:json:20211205'
 }
 
 test {

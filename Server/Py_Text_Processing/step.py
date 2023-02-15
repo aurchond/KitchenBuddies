@@ -7,7 +7,7 @@ class Step:
         self.resourcesRequired = []
         self.prepStep = False
         self.verbs = []
-        self.stepTime = ''
+        self.stepTime = -1
         self.userTime = 0
         self.holdingResource = ''
         self.holdingID = -1
@@ -50,28 +50,57 @@ class Step:
         #if is_in_ingredients: 
         self.ingredients.append(ingredient) #add ingredient to array of ingredients for the step
 
-        quantity = "given"
+        quantity = -1
+        edge_case = False
         for quantity_test in token_check.children:
             if quantity_test.dep_ == 'nummod' and quantity_test.pos_ == 'NUM':
-                quantity = str(quantity_test)
+                quantity = int(str(quantity_test))
                 for misc in quantity_test.children: 
-                    quantity += " "
-                    quantity += str(misc)  #this is to account for quantities like "2 or 3" or "5-7"
+                    print(f" {str(misc)}")
+                    edge_case = True
+                    # quantity += " "
+                    # quantity += str(misc)  #this is to account for quantities like "2 or 3" or "5-7"
+        # TODO: Convert this to an int in minutes
+        if edge_case:
+            print("Ingredients Quantity Edge Case Detected!!")
+
         self.ingredientsQuantity.append(quantity)
 
         return skip_words
 
     def extract_time_from_step(self, token, children):
-        time_for_step = ''
+        '''
+        Take the max time from step 
+        Place in stepTime as time in minutes
+        '''
+
+        time_for_step = -1
         #calculating time dependencies
         for time_check in children:
             if time_check.pos_ == 'NUM': 
                 grandchildren = [grandchild for grandchild in time_check.children]
+                gc_time = -1
                 for grandchild in grandchildren:
                     if (grandchild.pos_ == 'NUM' or str(grandchild) == 'to') and grandchild.dep_ == 'quantmod':
-                        time_for_step += str(grandchild)
-                
-                time_for_step += str(time_check)
-                time_for_step += str(token)
-        self.stepTime = time_for_step
-    
+                        # print(f'Grandchild {grandchild}')
+                        gc_time = int(str(grandchild))
+                        # time_for_step += str(grandchild)
+                # print(f'time_check {time_check}')
+                # print(f'token {token}')
+                time = int(str(time_check))
+                if time > gc_time:
+                    time_for_step = time
+                else:
+                    time_for_step = gc_time
+
+                if str(token) in 'seconds':
+                    time /= 60
+                elif str(token) in 'hours':
+                    time *= 60
+
+                time_for_step = time
+                # time_for_step += str(time_check)
+                # time_for_step += str(token)
+        if time_for_step != -1:
+            # print(f'Time is {time_for_step}')
+            self.stepTime = time_for_step
