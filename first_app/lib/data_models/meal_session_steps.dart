@@ -105,9 +105,9 @@ class RecipeStep {
     _number = json['number'];
     _instructions = json['instructions'];
     var ingredientsListLength = json['ingredientQuantity'].length;
+
+    // manually concat quantity and list of ingredients
     _ingredientsCompleteList = List<String>.filled(ingredientsListLength, '');
-    //(json['ingredientQuantity'].cast<int>().toString() + json['ingredientList'].cast<String>()) as List<String>?;
-    int l = ingredientsListLength;
     for (int i = 0; i < ingredientsListLength; i++) {
       _ingredientsCompleteList?[i] = json['ingredientQuantity'][i].toString() + " " + json['ingredientList'][i];
     }
