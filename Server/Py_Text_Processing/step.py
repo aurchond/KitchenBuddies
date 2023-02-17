@@ -1,3 +1,56 @@
+from mysql_db import verify_ingredients_supplies
+
+# key = verb, value = time it takes to finish per ingredient in minutes
+time_per_ingr_dict = {'chop': 1,
+                      'simmer': 2,
+                      'stir': 1,
+                      'mix': 2,
+                      'blend': 2,
+                      'whisk': 2,
+                      'beat': 2,
+                      'fold': 3,
+                      'dice': 2,
+                      'mince': 3,
+                      'grate': 4,
+                      'slice': 3,
+                      'peel': 4,
+                      'mash': 2,
+                      'puree': 3,
+                      'crush': 3,
+                      'season': 1,
+                      'sprinkle': 1,
+                      'coat': 3,
+                      'dip': 1,
+                      'baste': 5,
+                      'glaze': 3,
+                      'brush': 3,
+                      'fry': 2,
+                      'saute': 3,
+                      'sear': 2,
+                      'squeeze': 3,
+                      'add': 1,
+                      'combine': 1,
+                      'arrange': 1,
+                      }
+
+time_total_dict = {'preheat': 1,
+                   'spray': 2,
+                   'boil': 5,
+                   'grill': 10,
+                   'bake': 20,
+                   'roast': 30,
+                   'broil': 10,
+                   'poach': 10,
+                   'steam': 6,
+                   'blanch': 10,
+                   'drain': 3,
+                   'rinse': 2,
+                   'marinate': 60,
+                   'garnish': 1,
+                   'serve': 1,
+                   'set': 1,
+                   'pour': 2,
+                   'snip': 2}
 
 class Step:
     def __init__(self, instructions):
@@ -17,7 +70,7 @@ class Step:
 
         # compare to verb database to check if prep step
 
-    def extract_ingredient_from_step(self, token, step_words, children, recipe_ingredients):
+    def extract_full_noun_from_step(self, token, children):
         ingredient = ""
         for check_for_mods in children:      #consider ingredients modified by amod 
             if check_for_mods.dep_ == 'amod' or check_for_mods.dep_ =='nmod':
@@ -29,29 +82,14 @@ class Step:
 
         ingredient += str(token)
 
-        #if step_words.index(token) < (len(step_words)-1): children_check = [child for child in step_words[step_words.index(token)+1].children]
-        #else: children_check = []; #end of sentence so nothing is after 
-
         skip_words = 0
         token_check = token
         while token_check.dep_ == 'compound': # and token_check in children_check: #checking to see if ingredients have multiple words
             ingredient += " "
-            ingredient += " "
             ingredient += str(token_check.head)
             token_check = token_check.head
-            
-           # ingredient += str(step_words[step_words.index(token_check)+1])
-           # token_check = step_words[step_words.index(token_check)+1]
-           # children_check = [child for child in step_words[step_words.index(token_check)+1].children]
             skip_words += 1
         
-        is_in_ingredients = False #need to check if the potential ingredient is in the list of ingredients from the json
-        for check_ingredient in recipe_ingredients:
-            if ingredient in check_ingredient: is_in_ingredients = True
-        
-        #if is_in_ingredients: 
-        self.ingredients.append(ingredient) #add ingredient to array of ingredients for the step
-
         quantity = -1
         edge_case = False
         for quantity_test in token_check.children:
@@ -66,9 +104,22 @@ class Step:
         if edge_case:
             print("Ingredients Quantity Edge Case Detected!!")
 
-        self.ingredientsQuantity.append(quantity)
+        # self.ingredientsQuantity.append(quantity)
 
-        return skip_words
+        return skip_words, ingredient, quantity
+
+    def extract_supply_from_step(self, token):
+        supply += str(token)
+
+        skip_words = 0
+        token_check = token
+        while token_check.dep_ == 'compound': # and token_check in children_check: #checking to see if ingredients have multiple words
+            supply += " "
+            supply += str(token_check.head)
+            token_check = token_check.head
+            skip_words += 1
+        
+        return skip_words, supply
 
     def extract_time_from_step(self, token, children):
         '''
@@ -100,9 +151,104 @@ class Step:
                 elif str(token) in 'hours':
                     time *= 60
 
+                
                 time_for_step = time
                 # time_for_step += str(time_check)
                 # time_for_step += str(token)
-        if time_for_step != -1:
+        if self.stepTime != -1:
+            # multiple times defined within the same step
             # print(f'Time is {time_for_step}')
+            self.stepTime += time_for_step
+        else: 
             self.stepTime = time_for_step
+
+    def approximate_step_time(self):
+        # setup local variables
+        s_time = 0
+        len_ingredients = len(self.ingredients)
+        prep_step_time = 2
+        non_prep_step_time = 1
+
+        is_total = False
+
+        # add time based on number of verbs (more verbs = longer time)
+        for verb in self.verbs:
+            # TODO: Refine step time approach
+            if verb in time_total_dict:
+                is_total = True
+                s_time += time_total_dict[verb]
+                continue
+
+            if verb in time_per_ingr_dict:
+                s_time += time_per_ingr_dict[verb]*len_ingredients
+            else:
+                if self.prepStep:
+                    s_time += prep_step_time*len_ingredients
+                else:
+                    s_time += non_prep_step_time*len_ingredients
+        self.stepTime = s_time
+        if is_total:
+            self.approx_user_time()
+        else:
+            self.userTime = s_time
+
+    def approx_user_time(self):
+        # only used if step_time is explicitly defined within the instruction
+        if 0 < self.stepTime <= 5:
+            self.userTime = self.stepTime
+        elif 5 < self.stepTime <= 10:
+            self.userTime = 5
+        elif 10 < self.stepTime <= 30:
+            self.userTime = 2
+        elif 30 < self.stepTime:
+            self.userTime = 2
+        
+        # TODO: Add edge cases here
+
+    def verify_key_words(self, key_words, verbose_ingr, verbose_supply, recipe_ingr):
+        '''
+        Verify which nouns in instructions are either ingredients or supplies
+        '''
+        ingr_out = []
+        supplies_out = []
+        db_ingr = []
+
+        # iterate through key words and check ingredients
+        # print("Key words: ", key_words)
+        for key in key_words:
+            for ingr in recipe_ingr:
+                if key in ingr: 
+                    ingr_out.append(key)
+                    # print(key)
+                    key_words.pop(key_words.index(key))
+                    break
+            
+        # call database with:
+        # - ingredients not in recipe ingredients
+        # - supplies
+        # - garbage that will be sifted
+        if len(key_words) != 0:
+            db_ingr, supplies_out = verify_ingredients_supplies(key_words)
+            ingr_out = ingr_out + db_ingr
+
+        for ingr in ingr_out:
+            if ingr.lower() not in verbose_ingr:
+                print(f"{ingr} was considered as an ingr??")
+                continue
+            values = verbose_ingr[ingr.lower()]
+            self.ingredients.append(values[0])
+            self.ingredientsQuantity.append(values[1])
+        
+        for supply in supplies_out:
+            if supply.lower() not in verbose_ingr:
+                print(f"{supply} was considered as supply??")
+                continue
+            self.resourcesRequired.append(verbose_ingr[supply.lower()][0])
+        
+        # print(self.ingredients)
+        # print(self.resourcesRequired)
+        
+
+
+
+

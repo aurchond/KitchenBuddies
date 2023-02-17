@@ -17,8 +17,6 @@ def verify_ingredients_supplies(istr_nouns):
         else:
             where_clause += ');'
         query += where_clause
-    
-    print(query)
 
     # connect to database
     mydb = mysql.connector.connect(
@@ -34,37 +32,37 @@ def verify_ingredients_supplies(istr_nouns):
     mycursor.execute(query)
 
     results = mycursor.fetchall()
-    print(results)
+    # print(results)
 
-    items = []
+    ingredients = []
 
     for row in results:
-        items.append(row[0])
+        ingredients.append(row[0])
 
-    print(items)
+    # print(ingredients)
 
     # Change table to extract supplies
     supply_query = query.replace('Food', 'KitchenSupplies')
-    print(supply_query)
+    # print(supply_query)
     mycursor.execute(supply_query)
 
     results = mycursor.fetchall()
-    print(results)
+    # print(results)
 
     supplies = []
 
     for row in results:
         supplies.append(row[0])
 
-    print(supplies)
+    # print(supplies)
 
     mycursor.close()
     mydb.close()
 
     # run supply query - return only supplies
 
-    # return (ingredients, supplies)
+    return ingredients, supplies
 
-verify_ingredients_supplies(['pan', 'parsley', 'zucchini'])
+# verify_ingredients_supplies(['pan', 'parsley', 'zucchini'])
 
 

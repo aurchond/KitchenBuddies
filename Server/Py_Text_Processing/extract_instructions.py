@@ -84,6 +84,11 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
         # track the index in the sentence
         idx = 0
         skip_words = 0
+
+        verbose_ingr = {}
+        verbose_supply = {}
+        key_words = []
+
         for token in doc:
             # print(token.text, token.lemma_, token.pos_, token.tag_, token.dep_,[child for child in token.children])
             children =  [child for child in token.children]
@@ -94,20 +99,38 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
                 step.extract_verb_from_step(token)
 
             if skip_words == 0:
-                if ingredient_condition(token, time_key_words, step.ingredients):
-                    skip_words += step.extract_ingredient_from_step(token, step_words, children, recipe_ingredients)
+                if noun_condition(token, time_key_words, step.ingredients):
+                    potential_ingr = str(token)
+                    key_words.append(potential_ingr)
+
+                    num_words, full_ingr, quantity = step.extract_full_noun_from_step(token, children)
+                    skip_words += num_words
+                    # apples, bananas, and cherries
+                    # apple, (lushish apples, quantity)
+
+                    verbose_ingr[potential_ingr] = (full_ingr, quantity)
             else:
                 skip_words -= 1
             
             if time_condition(token, time_key_words):
                 step.extract_time_from_step(token, children)
-            # elif supplies_condition
-            #   supply = supplies_fn
-            #   append to supply list
 
             idx += 1
+
+        # Verify ingredients and supplies
+        step.verify_key_words(key_words, verbose_ingr, verbose_supply, recipe_ingredients)
+
+        # Approximate Step Time
+        if step.stepTime == -1:
+            # userTime also equals stepTime
+            step.approximate_step_time()
+        else:
+            # userTime will most likely be less than stepTime
+            step.approx_user_time()
         
-        
+        # Approximate User Time
+
+
         steps_out.append(step)
         # print("PARSED STEP:")
         # print(step.instructions)
@@ -134,7 +157,7 @@ def verb_condition(token, pos) -> bool:
 
     return False
 
-def ingredient_condition(token, time_key_words, ingredients_in_step):
+def noun_condition(token, time_key_words, ingredients_in_step):
     #checking for ingredients, making sure the noun is not a duplicate of a previously found ingredient or a time
     if token.pos_ == 'NOUN' and str(token) not in time_key_words \
         and str(token) not in ingredients_in_step:
@@ -148,6 +171,10 @@ def time_condition(token, time_key_words):
 
     return False
 
+def supply_condition(token, time_key_words):
+    if token.pos_ == 'NOUN' and str(token) not in time_key_words:
+        return True
+    return False
 # text_steps = extract_recipe_text('test.txt')
 
 # parsed_steps = extract_text_from_steps(text_steps)
