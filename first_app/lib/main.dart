@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:first_app/data_models/user_recipe_details.dart';
 import 'package:first_app/provider/auth_provider.dart';
 import 'package:first_app/provider/notification_provider.dart';
 import 'package:first_app/screens/all_recipes_screen.dart';
@@ -11,6 +13,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:first_app/local_notification_service.dart';
 
 import 'dart:convert';
 
@@ -19,6 +22,10 @@ import 'package:http/http.dart' as http;
 import 'backend_processing/data_class.dart';
 import 'data_models/past_recipes.dart';
 import 'keys.dart';
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print("Handling a background message: ${message.messageId}");
+}
 
 void main() async {
   //logged in
@@ -31,6 +38,8 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  await LocalNotificationService.init();
   runApp(MyApp());
 }
 
@@ -51,18 +60,17 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.deepOrange,
             ),
-            home: AllRecipes()
-            // StreamBuilder(
-            //   stream: FirebaseAuth.instance.authStateChanges(),
-            //   builder: (context, snapshot) {
-            //     if (snapshot.hasData) {
-            //       return const HomeScreen();
-            //     }
-            //     else {
-            //       return const EmailPassScreen();
-            //     }
-            //   }
-            // ),
+            home: StreamBuilder(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return HomeScreen();
+                }
+                else {
+                  return const EmailPassScreen();
+                }
+              }
+            ),
             ));
   }
 }
