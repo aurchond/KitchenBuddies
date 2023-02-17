@@ -28,7 +28,7 @@ def extract_recipe_text(filename):
     # Parse recipe text into array
     ingr_section = False
     instr_section = False
-    instr_line_count = 0
+    # instr_line_count = 0
     with open (data_path + 'input/'+filename, 'rt') as recipe:
         for instr_line in recipe:
             if 'Ingredients:' in instr_line:
@@ -50,8 +50,8 @@ def extract_recipe_text(filename):
                     if sent == '' or sent == '\n':
                         continue
                     instr_steps.append(sent)
-                instr_steps.append('BREAK' + str(instr_line_count))
-                instr_line_count += 1
+                instr_steps.append('BREAK')
+                # instr_line_count += 1
     
     return ingredients, instr_steps
 

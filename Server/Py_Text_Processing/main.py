@@ -24,7 +24,11 @@ def parse_recipe():
     json_steps = []
     count = 1
     for step in parsed_steps:
-        step_dict = {count: step.__dict__}
+        step_details = step.__dict__
+        if 'BREAK' in step_details['instructions']:
+            continue
+
+        step_dict = {count: step_details}
         json_steps.append(step_dict)
         count += 1
 
