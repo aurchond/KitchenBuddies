@@ -14,6 +14,7 @@ class NotificationProvider extends ChangeNotifier {
       data = {
         "registration_ids": [token],
         "collapse_key": "type_a",
+        //TODO: change this structure to match optimized steps?
         "notification": {
           "title": title,
           "body": body,

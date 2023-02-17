@@ -2,13 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:first_app/local_notification_service.dart';
 import 'package:first_app/provider/auth_provider.dart';
+import 'package:first_app/screens/received_instructions_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:first_app/provider/notification_provider.dart';
 
 import 'package:http/http.dart' as http;
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -28,16 +28,28 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState () {
     //in terminated state
-    FirebaseMessaging.instance.getInitialMessage().then((value) {});
+    FirebaseMessaging.instance.getInitialMessage().then((value) {
+     if (value != null) {
+        Navigator.of(context).push(new MaterialPageRoute(
+            builder: (context) => ReceivedInstructionScreen(message: value)));
+        print(value.toString());
+      }
+      });
 
     //in foreground listener
+    // if you have app open?
     FirebaseMessaging.onMessage.listen((event) {
       LocalNotificationService.init();
       LocalNotificationService.displayNotification(event);
+
+      Navigator.of(context).push(new MaterialPageRoute(
+            builder: (context) => ReceivedInstructionScreen(message: event)));
+        print(event.toString());
     });
 
     //in background state but not terminated
-    FirebaseMessaging.onMessageOpenedApp.listen((event) {});
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {
+    });
 
     // TODO: implement initstate
 
@@ -63,8 +75,6 @@ class _HomeScreenState extends State<HomeScreen> {
           body: StreamBuilder<QuerySnapshot>(
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-
-
 
                   return ListView.builder(
                       itemBuilder: (context, index) {
