@@ -55,6 +55,30 @@ def extract_recipe_text(filename):
     
     return ingredients, instr_steps
 
+# Used for Debugging
+def extract_instructions(file):
+    instr_steps = []
+    instr_section = False
+    instr_line_count = 0
+    with open (data_path + 'input/'+file, 'rt') as recipe:
+        for instr_line in recipe:
+
+            if 'Instructions:' in instr_line:
+                instr_section = True
+                continue
+
+            if instr_section:
+                mini_steps = instr_line.split('.')
+                # print(mini_steps)
+                for sent in mini_steps:
+                    if sent == '' or sent == '\n':
+                        continue
+                    instr_steps.append(sent)
+                instr_steps.append('BREAK' + str(instr_line_count))
+                instr_line_count += 1
+    
+    return instr_steps
+
 def write_step_json(out_file, json_steps):
     with open(data_path + '/output/' + out_file + ".json", "w") as json_file:
         json.dump(json_steps, json_file)

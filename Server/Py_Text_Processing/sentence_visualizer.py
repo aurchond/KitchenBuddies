@@ -2,7 +2,7 @@ from pathlib import Path
 import spacy 
 from spacy import displacy
 
-from utilities import extract_recipe_text
+from utilities import extract_instructions
 
 # ----- USER: Set file name from input folder -----
 input_file = "schnitzel.txt"
@@ -10,7 +10,7 @@ image_file_name = "schnitzel"
 # -------------------------------------------------
 
 def generate_sentence_visualizer(filename, image_file):
-    instr_steps = extract_recipe_text(filename)
+    instr_steps = extract_instructions(filename)
 
     nlp = spacy.load("en_core_web_sm")
 
