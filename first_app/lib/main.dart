@@ -4,12 +4,12 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:first_app/data_models/user_recipe_details.dart';
 import 'package:first_app/provider/auth_provider.dart';
 import 'package:first_app/provider/notification_provider.dart';
+import 'package:first_app/screens/all_recipes_screen.dart';
 import 'package:first_app/screens/email_pass_screen.dart';
 import 'package:first_app/screens/home_screen.dart';
 import 'package:first_app/screens/instructions_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
-import 'package:first_app/screens/chat_screens.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +20,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'backend_processing/data_class.dart';
-import 'data_models/user_recipe_details.dart';
+import 'data_models/past_recipes.dart';
 import 'keys.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {

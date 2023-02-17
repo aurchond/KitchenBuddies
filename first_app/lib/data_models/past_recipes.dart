@@ -1,25 +1,25 @@
 class PastRecipes {
   String? _recipeName;
   List<String>? _ingredientList;
-  double? _completionTime;
-  String? _lastTimeMade;
+  double? _totalTime;
+  String? _lastDateMade;
 
   PastRecipes(
       {String? recipeName,
         List<String>? ingredientList,
-        double? completionTime,
-        String? lastTimeMade}) {
+        double? totalTime,
+        String? lastDateMade}) {
     if (recipeName != null) {
       this._recipeName = recipeName;
     }
     if (ingredientList != null) {
       this._ingredientList = ingredientList;
     }
-    if (completionTime != null) {
-      this._completionTime = completionTime;
+    if (totalTime != null) {
+      this._totalTime = totalTime;
     }
-    if (lastTimeMade != null) {
-      this._lastTimeMade = lastTimeMade;
+    if (lastDateMade != null) {
+      this._lastDateMade = lastDateMade;
     }
   }
 
@@ -28,25 +28,25 @@ class PastRecipes {
   List<String>? get ingredientList => _ingredientList;
   set ingredientList(List<String>? ingredientList) =>
       _ingredientList = ingredientList;
-  double? get completionTime => _completionTime;
+  double? get completionTime => _totalTime;
   set completionTime(double? completionTime) =>
-      _completionTime = completionTime;
-  String? get lastTimeMade => _lastTimeMade;
-  set lastTimeMade(String? lastTimeMade) => _lastTimeMade = lastTimeMade;
+      _totalTime = completionTime;
+  String? get lastTimeMade => _lastDateMade;
+  set lastTimeMade(String? lastTimeMade) => _lastDateMade = lastTimeMade;
 
   PastRecipes.fromJson(Map<String, dynamic> json) {
     _recipeName = json['recipeName'];
     _ingredientList = json['ingredientList'].cast<String>();
-    _completionTime = json['completionTime'];
-    _lastTimeMade = json['lastTimeMade'];
+    _totalTime = json['completionTime'];
+    _lastDateMade = json['lastTimeMade'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['recipeName'] = this._recipeName;
     data['ingredientList'] = this._ingredientList;
-    data['completionTime'] = this._completionTime;
-    data['lastTimeMade'] = this._lastTimeMade;
+    data['completionTime'] = this._totalTime;
+    data['lastTimeMade'] = this._lastDateMade;
     return data;
   }
 }

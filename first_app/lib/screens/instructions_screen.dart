@@ -25,10 +25,12 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
 
     //stitch ingredient quantity and list together
     List<List<String>> ingredients = new List.generate(postModel.post?.recipeStep?.length ?? 0, (i) => []);
-    if (postModel.post?.recipeStep?.length != null && postModel.post?.recipeStep?[0].ingredientQuantity?.length != null) {
+    if (postModel.post?.recipeStep?.length != null && postModel.post?.recipeStep?[0].ingredientsCompleteList?.length != null) {
       for (int i = 0; i < (postModel.post?.recipeStep?.length ?? 0); i++) { //should include error case for missing length
-        for (int j = 0; j < (postModel.post?.recipeStep?[i].ingredientQuantity?.length ?? 0); j++) {
-          ingredients[i].add((postModel.post?.recipeStep?[i].ingredientQuantity?[j].toString() ?? "") + " " + (postModel.post?.recipeStep?[i].ingredientList?[j] ?? ""));
+        for (int j = 0; j < (postModel.post?.recipeStep?[i].ingredientsCompleteList?.length ?? 0); j++) {
+          ingredients[i].add((postModel.post?.recipeStep?[i].ingredientsCompleteList?[j].toString() ?? "")
+              // + " " + (postModel.post?.recipeStep?[i].ingredientList?[j] ?? "")
+          );
         }
       }
     }
@@ -62,11 +64,11 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
             children: [
               Container(
                 margin: EdgeInsets.only(top: 40, bottom: 20),
-                child: Text(
-                  postModel.post?.userEmail ?? "",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 18),
-                ),
+                // child: Text(
+                //   postModel.post?.userEmail ?? "",
+                //   style: TextStyle(
+                //       fontWeight: FontWeight.bold, fontSize: 18),
+                // ),
               ),
               new Expanded(
                   child: new ListView.builder
@@ -75,7 +77,7 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                       itemBuilder: (BuildContext context, int index) {
                         return new Text(
                             (index+1).toString() + ". " + (postModel.post?.recipeStep?[index].instructions ?? "")
-                                + " (" + ingredients[index].join(', ') + ")",
+                                + " (" + (postModel.post?.recipeStep?[index].ingredientsCompleteList?.join(', ') ?? "" )+ ")",
                             style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.deepOrange.shade300
