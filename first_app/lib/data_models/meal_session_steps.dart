@@ -20,11 +20,11 @@
   }
 }*/
 
-class CombinedUserRecipeDetails {
+class MealSessionSteps {
   String? _userEmail;
   List<RecipeStep>? _recipeStep;
 
-  UserRecipeDetails({String? userEmail, List<RecipeStep>? recipeStep}) {
+  MealSessionSteps({String? userEmail, List<RecipeStep>? recipeStep}) {
     if (userEmail != null) {
       this._userEmail = userEmail;
     }
@@ -38,7 +38,7 @@ class CombinedUserRecipeDetails {
   List<RecipeStep>? get recipeStep => _recipeStep;
   set recipeStep(List<RecipeStep>? recipeStep) => _recipeStep = recipeStep;
 
-  CombinedUserRecipeDetails.fromJson(Map<String, dynamic> json) {
+  MealSessionSteps.fromJson(Map<String, dynamic> json) {
     _userEmail = json['userEmail'];
     if (json['recipeStep'] != null) {
       _recipeStep = <RecipeStep>[];
@@ -104,7 +104,13 @@ class RecipeStep {
   RecipeStep.fromJson(Map<String, dynamic> json) {
     _number = json['number'];
     _instructions = json['instructions'];
-    _ingredientsCompleteList = (json['ingredientQuantity'].cast<int>().toString() + json['ingredientList'].cast<String>()) as List<String>?;
+    var ingredientsListLength = json['ingredientQuantity'].length;
+    _ingredientsCompleteList = List<String>.filled(ingredientsListLength, '');
+    //(json['ingredientQuantity'].cast<int>().toString() + json['ingredientList'].cast<String>()) as List<String>?;
+    int l = ingredientsListLength;
+    for (int i = 0; i < ingredientsListLength; i++) {
+      _ingredientsCompleteList?[i] = json['ingredientQuantity'][i].toString() + " " + json['ingredientList'][i];
+    }
     _nextUserEmail = json['nextUserEmail'];
   }
 

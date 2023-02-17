@@ -4,10 +4,10 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'data_class.dart';
-import '../data_models/user_recipe_details.dart';
+import '../data_models/meal_session_steps.dart';
 
-Future<UserRecipeDetails?> getSinglePostData(int jsonIndex) async {
-  UserRecipeDetails? result;
+Future<MealSessionSteps?> getSinglePostData(int jsonIndex) async {
+  MealSessionSteps? result;
   try {
     final response = await http.get(
       Uri.parse("https://mocki.io/v1/cf23d25e-1a8f-4c34-94c0-363815d7a3fc"),
@@ -19,7 +19,7 @@ Future<UserRecipeDetails?> getSinglePostData(int jsonIndex) async {
     if (response.statusCode == 200) {
       final item = json.decode(response.body);
       print(item);
-      result = UserRecipeDetails.fromJson(item[jsonIndex]); //iterate thru list
+      result = MealSessionSteps.fromJson(item[jsonIndex]); //iterate thru list
       //print(response.body);
     } else {
       print("error");

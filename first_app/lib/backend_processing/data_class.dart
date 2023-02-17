@@ -1,10 +1,10 @@
 import 'package:first_app/backend_processing/service_class.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../data_models/user_recipe_details.dart';
+import '../data_models/meal_session_steps.dart';
 
 class DataClass extends ChangeNotifier {
-  UserRecipeDetails? post;
+  MealSessionSteps? post;
   bool loading = false;
 
   getPostData(int jsonIndex) async {

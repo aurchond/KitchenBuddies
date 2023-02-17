@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:first_app/data_models/user_recipe_details.dart';
 import 'package:first_app/provider/auth_provider.dart';
 import 'package:first_app/provider/notification_provider.dart';
 import 'package:first_app/screens/email_pass_screen.dart';
@@ -18,7 +17,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'backend_processing/data_class.dart';
-import 'data_models/user_recipe_details.dart';
 import 'keys.dart';
 
 void main() async {
