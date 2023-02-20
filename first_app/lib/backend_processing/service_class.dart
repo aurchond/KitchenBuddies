@@ -13,7 +13,8 @@ Future<MealSessionSteps?> getSinglePostData(int jsonIndex) async {
       Uri.parse("https://mocki.io/v1/cf23d25e-1a8f-4c34-94c0-363815d7a3fc"),
       headers: {
         HttpHeaders.contentTypeHeader: "application/json",
-      },);
+      },
+    );
 
     // status code is fine
     if (response.statusCode == 200) {
