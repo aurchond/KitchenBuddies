@@ -29,31 +29,45 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState () {
     //in terminated state
     FirebaseMessaging.instance.getInitialMessage().then((value) {
-     if (value != null) {
+/*     if (value != null) {
         Navigator.of(context).push(new MaterialPageRoute(
             builder: (context) => ReceivedInstructionScreen(message: value)));
-        print(value.toString());
-      }
+      }*/
       });
 
     //in foreground listener
-    // if you have app open?
+    // if you have app open
     FirebaseMessaging.onMessage.listen((event) {
       LocalNotificationService.init();
       LocalNotificationService.displayNotification(event);
 
-      Navigator.of(context).push(new MaterialPageRoute(
-            builder: (context) => ReceivedInstructionScreen(message: event)));
-        print(event.toString());
+      //getting problem about widget being unmounted
+        if (mounted) {
+          final splitMessage = (event.data.toString().split('title: '))[1].split('}'); //TODO: do this in regex
+          //we will categorize our notifications based on title
+          //notifications to send to other users about completing a step
+          //notification that redirects user to instruction page
+          if (splitMessage[0] != "Step Completed") {
+            Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                builder: (context) =>
+                    ReceivedInstructionScreen(message: event)));
+          }
+        }
     });
 
     //in background state but not terminated
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
+/*      Navigator.of(context).push(new MaterialPageRoute(
+          builder: (context) => ReceivedInstructionScreen(message: event)));*/
     });
 
     // TODO: implement initstate
-
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override

@@ -1,10 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:first_app/data_models/user_recipe_details.dart';
 import 'package:first_app/provider/auth_provider.dart';
 import 'package:first_app/provider/notification_provider.dart';
-import 'package:first_app/screens/all_recipes_screen.dart';
 import 'package:first_app/screens/email_pass_screen.dart';
 import 'package:first_app/screens/home_screen.dart';
 import 'package:first_app/screens/instructions_screen.dart';
@@ -14,6 +12,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:first_app/local_notification_service.dart';
+import 'package:first_app/screens/bottom_navigation.dart';
 
 import 'dart:convert';
 
@@ -64,7 +63,7 @@ class MyApp extends StatelessWidget {
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return HomeScreen();
+                  return BottomNavigation();
                 }
                 else {
                   return const EmailPassScreen();
