@@ -1,6 +1,7 @@
 import 'package:first_app/screens/all_recipes_screen.dart';
 import 'package:first_app/screens/home_screen.dart';
 import 'package:first_app/screens/instructions_screen.dart';
+import 'package:first_app/screens/new_meal_session.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -17,8 +18,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack (
-          children: [
+      body: Stack(children: [ //for some reason this won't work with 3 tabs??
         /// List of tab page widgets
         Offstage(
           offstage: currentIndex != 0,
@@ -28,9 +28,13 @@ class _BottomNavigationState extends State<BottomNavigation> {
           offstage: currentIndex != 1,
           child: const AllRecipes(),
         ),
+        // Offstage(
+        //   offstage: currentIndex != 2,
+        //   child: const InstructionsScreen(),
+        // ),
         Offstage(
           offstage: currentIndex != 2,
-          child: const InstructionsScreen(),
+          child: const NewMealSession(),
         ),
       ]),
       bottomNavigationBar: BottomNavigationBar(
@@ -46,8 +50,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
               icon: Icon(Icons.fastfood), label: "All Recipes"),
+          // BottomNavigationBarItem(
+          //     icon: Icon(Icons.fork_left), label: "Instructions"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.fork_left), label: "Instructions"),
+              icon: Icon(Icons.set_meal), label: "New Meal Session"),
         ],
       ),
     );
