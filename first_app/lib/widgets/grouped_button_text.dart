@@ -17,27 +17,31 @@ Widget groupedButtonText(
               ),
               padding: const EdgeInsets.all(20),
               child: Column(mainAxisSize: MainAxisSize.min, children: [
-                Wrap(children: [
-                  Text(
-                    text,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        textStyle: const TextStyle(fontSize: 20),
-                        padding: const EdgeInsets.all(10)),
-                    onPressed: () {
-                      fcmProvider.sendNotification(
-                          token: token,
-                          title: "Step Completed",
-                          body: "I'm finished with my step!");
-                    },
-                    child: Text(buttonText),
-                  ),
-                ]),
+                Wrap(
+                    alignment: WrapAlignment.spaceBetween,
+                    runAlignment: WrapAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        text,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            textStyle: const TextStyle(fontSize: 20),
+                            padding: const EdgeInsets.all(10),
+                            backgroundColor: Color.fromARGB(255, 221, 86, 62)),
+                        onPressed: () {
+                          fcmProvider.sendNotification(
+                              token: token,
+                              title: "Step Completed",
+                              body: "I'm finished with my step!");
+                        },
+                        child: Text(buttonText),
+                      ),
+                    ]),
               ])),
         ),
       ],

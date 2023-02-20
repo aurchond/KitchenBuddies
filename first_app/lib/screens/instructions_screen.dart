@@ -85,52 +85,10 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                                                 ?.join(', ') ??
                                             "") +
                                         ")",
-                                    "Tell your friend you're done your step!",
+                                    "I'm done this step!",
                                     token,
                                     fcmProvider);
                               })),
-                      //   return new Text(
-                      //       (index + 1).toString() +
-                      //           ". " +
-                      //           (postModel.post?.recipeStep?[index]
-                      //                   .instructions ??
-                      //               "") +
-                      //           " (" +
-                      //           (postModel.post?.recipeStep?[index]
-                      //                   .ingredientsCompleteList
-                      //                   ?.join(', ') ??
-                      //               "") +
-                      //           ")",
-                      //       style: TextStyle(
-                      //           fontSize: 14,
-                      //           color: Colors.deepOrange.shade300));
-                      // })),
-                      // new Expanded(
-                      //   /// BORROWED THIS FROM HOME_SCREEN ///
-                      //   child: StreamBuilder<QuerySnapshot>(
-                      //       builder: (context, snapshot) {
-                      //         if (snapshot.hasData) {
-                      //           return ElevatedButton(
-                      //               onPressed: () {
-                      //                 fcmProvider.sendNotification(
-                      //                     token: snapshot.data!.docs[0][
-                      //                         "token"], //TODO: use token belonging to blocked person
-                      //                     title: "Step Completed",
-                      //                     body:
-                      //                         "I'm finished with my step!"); //TODO: write down resource being passed off
-                      //               },
-                      //               child: Text("Tell " +
-                      //                   snapshot.data!.docs[0]["user_name"] +
-                      //                   " you're done with your step!"));
-                      //         } else {
-                      //           return const Center(
-                      //               child: CircularProgressIndicator());
-                      //         }
-                      //       },
-                      //       stream: FirebaseFirestore.instance
-                      //           .collection("users")
-                      //           .snapshots()),
-                      // )
                     ],
                   ),
                 ),

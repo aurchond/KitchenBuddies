@@ -10,7 +10,7 @@ Future<MealSessionSteps?> getSinglePostData(int jsonIndex) async {
   MealSessionSteps? result;
   try {
     final response = await http.get(
-      Uri.parse("https://mocki.io/v1/cf23d25e-1a8f-4c34-94c0-363815d7a3fc"),
+      Uri.parse("https://mocki.io/v1/d4f1a7b6-52d2-49a1-86ef-eba719006078"),
       headers: {
         HttpHeaders.contentTypeHeader: "application/json",
       },
