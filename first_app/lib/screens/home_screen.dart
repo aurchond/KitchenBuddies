@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
           //notifications to send to other users about completing a step
           //notification that redirects user to instruction page
           if (splitMessage[0] != "Step Completed") {
-            Navigator.of(context).pushReplacement(new MaterialPageRoute(
+            Navigator.of(context).push(MaterialPageRoute( //if this starts bugging out again, use pushReplacement
                 builder: (context) =>
                     ReceivedInstructionScreen(message: event)));
           }
@@ -113,11 +113,6 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               stream:
                   FirebaseFirestore.instance.collection("users").snapshots())
-          // body: Center(
-          //   child: model.emailVerified ?? false
-          //       ? const Text("Email verified")
-          //       : const Text("Email is not verified"),
-          // ),
           );
     });
   }

@@ -124,7 +124,7 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                                           body: "I'm finished with my step!"); //TODO: write down resource being passed off
                                     },
                                     child: Text(
-                                        snapshot.data!.docs[0]["user_name"]));
+                                        "Tell " + snapshot.data!.docs[0]["user_name"] + " you're done with your step!"));
                               }
                               else {
                                 return const Center(child: CircularProgressIndicator());
