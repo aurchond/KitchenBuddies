@@ -15,7 +15,7 @@ Widget groupedButtonText(
                 border: Border.all(
                     width: 5, color: Color.fromARGB(255, 228, 122, 112)),
               ),
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(15),
               child: Column(mainAxisSize: MainAxisSize.min, children: [
                 Wrap(
                     alignment: WrapAlignment.spaceBetween,
@@ -24,22 +24,25 @@ Widget groupedButtonText(
                       Text(
                         text,
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 18,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            textStyle: const TextStyle(fontSize: 20),
-                            padding: const EdgeInsets.all(10),
-                            backgroundColor: Color.fromARGB(255, 221, 86, 62)),
-                        onPressed: () {
-                          fcmProvider.sendNotification(
-                              token: token,
-                              title: "Step Completed",
-                              body: "I'm finished with my step!");
-                        },
-                        child: Text(buttonText),
+                      Padding(
+                        padding: const EdgeInsets.only(top:10),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              textStyle: const TextStyle(fontSize: 18),
+                              padding: const EdgeInsets.all(10),
+                              backgroundColor: Color.fromARGB(255, 221, 86, 62)),
+                          onPressed: () {
+                            fcmProvider.sendNotification(
+                                token: token,
+                                title: "Step Completed",
+                                body: "I'm finished with my step!");
+                          },
+                          child: Text(buttonText),
+                        ),
                       ),
                     ]),
               ])),
