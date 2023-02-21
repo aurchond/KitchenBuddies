@@ -7,9 +7,9 @@ class DataClass extends ChangeNotifier {
   MealSessionSteps? post;
   bool loading = false;
 
-  getPostData(int jsonIndex) async {
+  getPostData(String emailToFind) async {
     loading = true;
-    post = (await getSinglePostData(jsonIndex));
+    post = (await getSinglePostData(emailToFind));
     loading = false;
 
     notifyListeners();

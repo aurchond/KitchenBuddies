@@ -21,7 +21,7 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
   void initState() {
     super.initState();
     final postModel = Provider.of<DataClass>(context, listen: false);
-    postModel.getPostData(0); //call with index
+    postModel.getPostData("shadiz@gmail.com"); //call with index
   }
 
   @override
