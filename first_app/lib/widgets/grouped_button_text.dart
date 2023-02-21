@@ -10,7 +10,7 @@ Widget groupedButtonText(
         Flexible(
           child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(20),
                 color: Color.fromARGB(255, 255, 173, 135),
                 border: Border.all(
                     width: 5, color: Color.fromARGB(255, 228, 122, 112)),
@@ -29,12 +29,13 @@ Widget groupedButtonText(
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top:10),
+                        padding: const EdgeInsets.only(top: 10),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               textStyle: const TextStyle(fontSize: 18),
                               padding: const EdgeInsets.all(10),
-                              backgroundColor: Color.fromARGB(255, 221, 86, 62)),
+                              backgroundColor:
+                                  Color.fromARGB(255, 221, 86, 62)),
                           onPressed: () {
                             fcmProvider.sendNotification(
                                 token: token,

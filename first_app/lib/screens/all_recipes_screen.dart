@@ -11,41 +11,29 @@ class AllRecipes extends StatefulWidget {
   State<AllRecipes> createState() => _AllRecipesState();
 }
 
-class Data {
-  final String? title, subTitle;
-  bool? isSelected;
+//no field for isSelected
+class recipeTile {
+  final String? title;
+  final String? ingredients; //we will join list of ingredients with .join(", ")
+  final int? totalTime;
+  final DateTime? lastDateMade;
 
-  Data({this.isSelected, this.title, this.subTitle});
+  recipeTile({this.title, this.ingredients, this.totalTime, this.lastDateMade});
 }
 
 class _AllRecipesState extends State<AllRecipes> {
   @override
   Widget build(BuildContext context) {
-    //final postModel = Provider.of<DataClass>(context); //TODO: data and service classs for past recipes
-    List<Data> _data = [
-      Data(title: "Option ", subTitle: "Description", isSelected: false),
-      Data(title: "Option ", subTitle: "Description", isSelected: false),
-      Data(title: "Option ", subTitle: "Description", isSelected: false),
-      Data(title: "Option ", subTitle: "Description", isSelected: false),
-      Data(title: "Option ", subTitle: "Description", isSelected: false),
+    List<recipeTile> _data = [
+      recipeTile(title: "Option ", ingredients: "Ingredients", totalTime: 60),
+      recipeTile(title: "Option ", ingredients: "Ingredients", totalTime: 60),
+      recipeTile(title: "Option ", ingredients: "Ingredients", totalTime: 60),
+      recipeTile(title: "Option ", ingredients: "Ingredients", totalTime: 60),
+      recipeTile(title: "Option ", ingredients: "Ingredients", totalTime: 60),
     ];
 
     return Scaffold(
       appBar: AppBar(title: const Text("All Recipes")),
-      // body: CheckboxListTile(
-      //   title: const Text('GeeksforGeeks'),
-      //   subtitle: const Text('A computer science portal for geeks.'),
-      //   secondary: const Icon(Icons.code),
-      //   autofocus: false,
-      //   activeColor: Colors.green,
-      //   checkColor: Colors.white,
-      //   value: isChecked,
-      //   onChanged: (bool? value) {
-      //     setState(() {
-      //       isChecked = value!;
-      //     });
-      //   },
-      // ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -56,73 +44,45 @@ class _AllRecipesState extends State<AllRecipes> {
                   "Welcome to your kitchen!",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 )),
-            StatefulBuilder(
-              builder: (BuildContext context, StateSetter setState) {
-                return Expanded(
-                  child: new ListView.builder(
-                    itemCount: _data.length,
-                    itemBuilder: (context, index) {
-                      return CheckboxListTile(
-                        secondary: Icon(Icons.person),
-                        title: Text(
-                          _data[index].title! + " " + (index + 1).toString(),
-                        ),
-                        subtitle: Text(
-                          _data[index].subTitle! + " " + (index + 1).toString(),
-                        ),
-                        value: _data[index].isSelected,
-                        onChanged: (val) {
-                          setState(
-                            () {
-                              _data[index].isSelected = val!;
-                            },
-                          );
-                        },
-                      );
-                    },
-                  ),
-                );
-              },
-            )
-            // child: new ListView.builder(
-            //     itemCount:
-            //         10, //will be something like postModel.post?.recipes?.length
-            //     itemBuilder: (BuildContext context, int index) {
-            //       return SizedBox(
-            //         width: 400,
-            //         height: 400,
-            //         child: Center(
-            //           child: Padding(
-            //             padding: const EdgeInsets.all(8.0),
-            //             child: Container(
-            //               decoration: BoxDecoration(
-            //                 border: Border.all(
-            //                     width: 3,
-            //                     color: Colors.deepOrange.shade300),
-            //                 borderRadius: BorderRadius.circular(20),
-            //               ), //BoxDecoration
+            Expanded(
+              child: new ListView.builder(
+                  itemCount: _data.length,
+                  itemBuilder: (context, index) {
+                    return SizedBox(
+                      width: 100,
+                      height: 100,
+                      child: Center(
+                        child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    width: 3,
+                                    color: Colors.deepOrange.shade300),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: ListTile(
+                                leading: Icon(Icons.fastfood),
+                                title: Text(
+                                  _data[index].title! +
+                                      " " +
+                                      (index + 1).toString(),
+                                ),
+                                subtitle: Text(
+                                  _data[index].ingredients! +
+                                      " " +
+                                      (index + 1).toString() +
+                                      "\nTotal time: " +
+                                      _data[index].totalTime.toString() +
+                                      " minutes",
 
-            //               /** CheckboxListTile Widget **/
-            //               child: CheckboxListTile(
-            //                 title: const Text('GeeksforGeeks'),
-            //                 subtitle: const Text(
-            //                     'A computer science portal for geeks.'),
-            //                 secondary: const Icon(Icons.code),
-            //                 autofocus: false,
-            //                 activeColor: Colors.green,
-            //                 checkColor: Colors.white,
-            //                 value: isChecked,
-            //                 onChanged: (bool? value) {
-            //                   setState(() {
-            //                     isChecked = value!;
-            //                   });
-            //                 },
-            //               ),
-            //             ),
-            //           ),
-            //         ),
-            //       );
-            //     })),
+                                ), isThreeLine: true,
+                              ),
+                            )),
+                      ),
+                    );
+                  }),
+            )
           ],
         ),
       ),
