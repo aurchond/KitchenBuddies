@@ -4,19 +4,18 @@ import 'package:flutter/material.dart';
 Widget groupedButtonText(
     String text, String buttonText, String token, final fcmProvider) {
   return Padding(
-    padding: const EdgeInsets.all(20.0),
+    padding: const EdgeInsets.only(bottom: 15),
     child: Row(
       children: [
         Flexible(
           child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Color.fromARGB(255, 255, 173, 135),
-                border: Border.all(
-                    width: 5, color: Color.fromARGB(255, 228, 122, 112)),
+                borderRadius: BorderRadius.circular(15),
+                color: Colors.deepOrange.shade200,
+                border: Border.all(width: 3, color: Colors.deepOrange.shade300),
               ),
               padding: const EdgeInsets.all(15),
-              child: Column(mainAxisSize: MainAxisSize.min, children: [
+              child: Column(children: [
                 Wrap(
                     alignment: WrapAlignment.spaceBetween,
                     runAlignment: WrapAlignment.spaceBetween,
@@ -30,19 +29,20 @@ Widget groupedButtonText(
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              textStyle: const TextStyle(fontSize: 18),
-                              padding: const EdgeInsets.all(10),
-                              backgroundColor:
-                                  Color.fromARGB(255, 221, 86, 62)),
-                          onPressed: () {
-                            fcmProvider.sendNotification(
-                                token: token,
-                                title: "Step Completed",
-                                body: "I'm finished with my step!");
-                          },
-                          child: Text(buttonText),
+                        child: Center(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                textStyle: const TextStyle(fontSize: 18),
+                                padding: const EdgeInsets.all(10),
+                                backgroundColor: Colors.deepOrange),
+                            onPressed: () {
+                              fcmProvider.sendNotification(
+                                  token: token,
+                                  title: "Step Completed",
+                                  body: "I'm finished with my step!");
+                            },
+                            child: Text(buttonText),
+                          ),
                         ),
                       ),
                     ]),
