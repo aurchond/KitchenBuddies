@@ -27,6 +27,93 @@
                 ],
                 "dependencyItem": "",
                 "nextUserEmail": "shadi@gmail.com"
+            },
+            {
+                "number": "2.3",
+                "instructions": "add spices onto veggies",
+                "ingredientList": [
+                    "teaspoon paprika",
+                    "tablespoon garama masala"
+                ],
+                "ingredientQuantity": [
+                    1,
+                    2
+                ],
+                "dependencyItem": "",
+                "nextUserEmail": "shadi@gmail.com"
+            },
+            {
+                "number": "2.4",
+                "instructions": "add sauces onto veggies",
+                "ingredientList": [
+                    "teaspoon soy sauce",
+                    "tablespoon oyster sauce"
+                ],
+                "ingredientQuantity": [
+                    1,
+                    2
+                ],
+                "dependencyItem": "",
+                "nextUserEmail": "shadi@gmail.com"
+            }
+        ]
+    },
+    {
+        "userEmail": "shadiz@gmail.com",
+        "recipeStep": [
+            {
+                "number": "2.1",
+                "instructions": "heat oil in a wok",
+                "ingredientList": [
+                    "teaspoon coconut oil"
+                ],
+                "ingredientQuantity": [
+                    1
+                ],
+                "dependencyItem": "",
+                "nextUserEmail": "aurchond@gmail.com"
+            },
+            {
+                "number": "2.2",
+                "instructions": "cook veggies in wok",
+                "ingredientList": [
+                    "teaspoon salt",
+                    "shredded carrots"
+                ],
+                "ingredientQuantity": [
+                    1,
+                    2
+                ],
+                "dependencyItem": "",
+                "nextUserEmail": "shadi@gmail.com"
+            },
+            {
+                "number": "2.3",
+                "instructions": "add spices onto veggies",
+                "ingredientList": [
+                    "teaspoon paprika",
+                    "tablespoon garama masala"
+                ],
+                "ingredientQuantity": [
+                    1,
+                    2
+                ],
+                "dependencyItem": "",
+                "nextUserEmail": "shadi@gmail.com"
+            },
+            {
+                "number": "2.4",
+                "instructions": "add sauces onto veggies",
+                "ingredientList": [
+                    "teaspoon soy sauce",
+                    "tablespoon oyster sauce"
+                ],
+                "ingredientQuantity": [
+                    1,
+                    2
+                ],
+                "dependencyItem": "",
+                "nextUserEmail": "shadi@gmail.com"
             }
         ]
     }

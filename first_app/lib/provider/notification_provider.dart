@@ -15,8 +15,8 @@ class NotificationProvider extends ChangeNotifier {
         "registration_ids": [token],
         "collapse_key": "type_a",
         "notification": {
-          "title": title,
-          "body": body,
+          "title": title, //
+          "body": body, // currently sending as string
         },
         'data': {
           "title": title,
