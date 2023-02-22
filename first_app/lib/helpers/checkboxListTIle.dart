@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../recipe_tile.dart';
+import 'recipe_tile.dart';
 
 Widget PastRecipeBox(bool isMealSession, List<recipeTile> _data, final void Function(List<recipeTile> _data, bool? val, int index) _onChanged) {
   if (isMealSession) {

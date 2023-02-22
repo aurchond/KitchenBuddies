@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-import 'package:first_app/screens/new_meal_session.dart';
+import 'package:first_app/screens/meal_session_screens/new_meal_session_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'data_class.dart';
 import '../data_models/meal_session_steps.dart';
 
+// called from data class to get actual data from the URL
 Future<MealSessionSteps?> getSinglePostData(String emailToFind) async {
   MealSessionSteps dummy = new MealSessionSteps();
   try {

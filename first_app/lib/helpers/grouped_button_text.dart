@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// Widget to group together texts and buttons, such that after clicking the button
+// a notification can be sent
 Widget groupedButtonText(
     String text, String buttonText, String token, final fcmProvider) {
   return Padding(

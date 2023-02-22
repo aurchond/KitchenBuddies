@@ -15,7 +15,7 @@ class AllRecipes extends StatefulWidget {
 //no field for isSelected
 class recipeTile {
   final String? title;
-  final String? ingredients; //we will join list of ingredients with .join(", ")
+  final String? ingredients; //todo: we will join list of ingredients with .join(", ")
   final int? totalTime;
   final DateTime? lastDateMade;
 
