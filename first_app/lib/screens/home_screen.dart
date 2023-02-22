@@ -21,8 +21,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  //initialize controllers and nodes for input text buttons
   final textController = TextEditingController();
   late FocusNode myFocusNode = FocusNode();
+
+  final burnerController = TextEditingController();
+  late FocusNode burnerFocusNode = FocusNode();
+
+  final potController = TextEditingController();
+  late FocusNode potFocusNode = FocusNode();
+
+  final panController = TextEditingController();
+  late FocusNode panFocusNode = FocusNode();
+
+  final knifeController = TextEditingController();
+  late FocusNode knifeFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -67,8 +80,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
+    // dispose of resources for input text buttons
     textController.dispose();
     myFocusNode.dispose();
+
+    burnerController.dispose();
+    burnerFocusNode.dispose();
+
+    potController.dispose();
+    potFocusNode.dispose();
+
+    panController.dispose();
+    panFocusNode.dispose();
+
+    knifeController.dispose();
+    knifeFocusNode.dispose();
     super.dispose();
   }
 
@@ -96,6 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: Column(
           children: [
+            /// friend setup ///
             Container(
                 margin: EdgeInsets.only(top: 20, bottom: 15),
                 child: Text(
@@ -134,6 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
             )),
             inputTextButton(textController, "Enter your friend's email",
                 "Add friend!", myFocusNode),
+            /// old push notif stuff ///
             Expanded(
                 child: Padding(
               padding: const EdgeInsets.all(10),
@@ -171,40 +199,58 @@ class _HomeScreenState extends State<HomeScreen> {
                         .snapshots()),
               ),
             )),
-            Row(
+            /// set skill level ///
+            StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+              return Row(
+                children: [
+                  Container(
+                      margin: EdgeInsets.all(25),
+                      child: Text(
+                        "Select your skill level:",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
+                      )),
+                  DropdownButton<String>(
+                    value: dropdownValue,
+                    icon: const Icon(Icons.arrow_downward),
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.deepOrange),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepOrangeAccent,
+                    ),
+                    onChanged: (String? value) {
+                      // This is called when the user selects an item.
+                      setState(() {
+                        dropdownValue = value!;
+                        //TODO: handle API call
+                      });
+                    },
+                    items: list.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value, style: TextStyle(fontSize: 18)),
+                      );
+                    }).toList(),
+                  )
+                ],
+              );
+            }),
+            /// set kitchen constraints
+            Container(
+                margin: EdgeInsets.only(top: 5, bottom: 20),
+                child: Text(
+                  "Customize your kitchen:",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                )),
+           Flexible(child:ListView(
               children: [
-                Container(
-                  margin: EdgeInsets.all(15),
-                  child: Text(
-                    "Select your skill level:",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                  )),
-                DropdownButton<String>(
-                  value: dropdownValue,
-                  icon: const Icon(Icons.arrow_downward),
-                  elevation: 16,
-                  style: const TextStyle(color: Colors.deepOrange),
-                  underline: Container(
-                    height: 2,
-                    color: Colors.deepOrangeAccent,
-                  ),
-                  onChanged: (String? value) {
-                    // This is called when the user selects an item.
-                    setState(() {
-                      dropdownValue = value!;
-                      //TODO: handle API call
-                    });
-                  },
-                  items: list.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value, style: TextStyle(fontSize: 18)),
-                    );
-                  }).toList(),
-                )
-              ],
-            )
-          ],
+                inputTextButton(burnerController, "Enter # of burners", "Add kitchen constraint!", burnerFocusNode),
+                inputTextButton(potController, "Enter # of pots", "Add kitchen constraint!", potFocusNode),
+                inputTextButton(panController, "Enter # of pans", "Add kitchen constraint!", panFocusNode),
+                inputTextButton(knifeController, "Enter # of knives", "Add kitchen constraint!", knifeFocusNode),],)
+            )],
         ),
       );
     });
