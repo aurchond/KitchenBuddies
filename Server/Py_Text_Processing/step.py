@@ -1,4 +1,4 @@
-from mysql_db import verify_ingredients_supplies
+from mysql_db import verify_ingredients_supplies, debug_verify_ingr_supplies
 
 # key = verb, value = time it takes to finish per ingredient in minutes
 time_per_ingr_dict = {'chop': 1,
@@ -228,7 +228,8 @@ class Step:
         # - supplies
         # - garbage that will be sifted
         if len(key_words) != 0:
-            db_ingr, supplies_out = verify_ingredients_supplies(key_words)
+            db_ingr, supplies_out = debug_verify_ingr_supplies(key_words)
+            # db_ingr, supplies_out = verify_ingredients_supplies(key_words)
             ingr_out = ingr_out + db_ingr
 
         for ingr in ingr_out:
@@ -247,8 +248,14 @@ class Step:
         
         # print(self.ingredients)
         # print(self.resourcesRequired)
-        
-
-
-
-
+            
+    def extract_holdingres_from_step(self, token, step_words):
+        head_word = token.head 
+        #print(token, head_word.lemma_)
+        if token.dep_ == "pobj" and (str(head_word.lemma_) == "in" or str(head_word.lemma_) == "on" or str(head_word.lemma_) == "to" ) :
+            #print('I FOUND A RESOURCE:' + str(token)) 
+            self.holdingResource = str(token)
+            return True
+        else:
+            return False 
+            #need to access resources (supplies.txt) from data
