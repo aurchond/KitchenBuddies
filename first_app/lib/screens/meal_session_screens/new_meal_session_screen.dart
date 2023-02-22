@@ -58,6 +58,14 @@ class _NewMealSessionState extends State<NewMealSession> {
           isSelected: false),
     ];
 
+    final List<Map> myFriends = List.generate(
+        6,
+        (index) => {
+              "id": index,
+              "name": "Friend $index",
+              "isSelected": false
+            }).toList();
+
     return Scaffold(
       appBar: AppBar(title: const Text("New Meal Session")),
       body: Padding(
@@ -120,6 +128,60 @@ class _NewMealSessionState extends State<NewMealSession> {
                     },
                   ),
                 );
+              },
+            ),
+            Container(
+                margin: EdgeInsets.only(top: 20, bottom: 20),
+                child: Text(
+                  "Add your friends below:",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                )),
+            StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+                return Expanded(
+                    child: Container(
+                  padding: const EdgeInsets.all(10),
+                  child: GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 300,
+                              childAspectRatio: 5 / 2,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10),
+                      itemCount: myFriends.length,
+                      itemBuilder: (BuildContext context, index) {
+                        return Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: Colors.deepOrange.shade200,
+                                border: Border.all(
+                                    width: 3,
+                                    color: Colors.deepOrange.shade300),
+                                borderRadius: BorderRadius.circular(20)),
+                            child: CheckboxListTile(
+                              secondary: Icon(
+                                Icons.person,
+                                color: Colors.deepOrange.shade700,
+                              ),
+                              title: Text(
+                                myFriends[index]["name"],
+                                style: TextStyle(
+                                    fontSize: 12),
+                              ),
+                              contentPadding: EdgeInsets.only(left:10, right:10),
+                              visualDensity: VisualDensity.compact,
+                              value: myFriends[index]["isSelected"],
+                              onChanged: (val) {
+                                setState(
+                                  () {
+                                    myFriends[index]["isSelected"] = val!;
+                                  },
+                                  //TODO: if isSelected, add to json request
+                                );
+                              },
+                            ));
+                      }),
+                ));
               },
             ),
             ElevatedButton(

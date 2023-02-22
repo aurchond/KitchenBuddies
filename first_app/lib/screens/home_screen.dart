@@ -11,6 +11,8 @@ import 'package:first_app/provider/notification_provider.dart';
 
 import 'package:http/http.dart' as http;
 
+const List<String> list = <String>['Beginner', 'Intermediate', 'Skilled'];
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -73,9 +75,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final fcmProvider = Provider.of<NotificationProvider>(context);
+
+    /// dummy data ///
     final List<Map> myFriends =
         List.generate(6, (index) => {"id": index, "name": "Friend $index"})
             .toList();
+    String dropdownValue = list.first;
 
     return Consumer<AuthProvider>(builder: (context, model, _) {
       return Scaffold(
@@ -98,8 +103,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 )),
             Expanded(
-              child: Container (padding: const EdgeInsets.all(10), child:
-              GridView.builder(
+                child: Container(
+              padding: const EdgeInsets.all(10),
+              child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: 300,
                       childAspectRatio: 5 / 2,
@@ -108,28 +114,26 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemCount: myFriends.length,
                   itemBuilder: (BuildContext context, index) {
                     return Container(
-                      padding: const EdgeInsets.all(10),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: Colors.deepOrange.shade200,
-                                border: Border.all(
-                                    width: 3,
-                                    color: Colors.deepOrange.shade300),
-                                borderRadius: BorderRadius.circular(20)),
-                            child: ListTile(
-                                leading: Icon(
-                                  Icons.person,
-                                  color: Colors.deepOrange.shade700,
-                                ),
-                                title: Text(
-                                  myFriends[index]["name"],
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400),
-                                )));
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: Colors.deepOrange.shade200,
+                            border: Border.all(
+                                width: 3, color: Colors.deepOrange.shade300),
+                            borderRadius: BorderRadius.circular(20)),
+                        child: ListTile(
+                            leading: Icon(
+                              Icons.person,
+                              color: Colors.deepOrange.shade700,
+                            ),
+                            title: Text(
+                              myFriends[index]["name"],
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w400),
+                            )));
                   }),
             )),
-            inputTextButton(textController, "Enter your friend's email", "Add friend!", myFocusNode),
+            inputTextButton(textController, "Enter your friend's email",
+                "Add friend!", myFocusNode),
             Expanded(
                 child: Padding(
               padding: const EdgeInsets.all(10),
@@ -166,7 +170,40 @@ class _HomeScreenState extends State<HomeScreen> {
                         .collection("users")
                         .snapshots()),
               ),
-            ))
+            )),
+            Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.all(15),
+                  child: Text(
+                    "Select your skill level:",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  )),
+                DropdownButton<String>(
+                  value: dropdownValue,
+                  icon: const Icon(Icons.arrow_downward),
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.deepOrange),
+                  underline: Container(
+                    height: 2,
+                    color: Colors.deepOrangeAccent,
+                  ),
+                  onChanged: (String? value) {
+                    // This is called when the user selects an item.
+                    setState(() {
+                      dropdownValue = value!;
+                      //TODO: handle API call
+                    });
+                  },
+                  items: list.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value, style: TextStyle(fontSize: 18)),
+                    );
+                  }).toList(),
+                )
+              ],
+            )
           ],
         ),
       );

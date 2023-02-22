@@ -17,7 +17,7 @@ Widget groupedButtonText(
                 border: Border.all(width: 3, color: Colors.deepOrange.shade300),
               ),
               padding: const EdgeInsets.all(15),
-              child: Column(children: [
+              child:
                 Wrap(
                     alignment: WrapAlignment.spaceBetween,
                     runAlignment: WrapAlignment.spaceBetween,
@@ -48,7 +48,7 @@ Widget groupedButtonText(
                         ),
                       ),
                     ]),
-              ])),
+              ),
         ),
       ],
     ),
