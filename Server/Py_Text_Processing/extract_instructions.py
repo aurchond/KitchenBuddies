@@ -115,6 +115,8 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
         # Verify ingredients and supplies
         step.verify_key_words(key_words, verbose_ingr, verbose_supply, recipe_ingredients)
 
+        step.define_prep_step()
+
         # Approximate Step Time
         if step.stepTime == -1:
             # userTime also equals stepTime
