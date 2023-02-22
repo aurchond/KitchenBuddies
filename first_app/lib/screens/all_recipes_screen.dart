@@ -1,4 +1,4 @@
-import 'package:first_app/widgets/input_text_button.dart';
+import 'package:first_app/helpers/input_text_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
