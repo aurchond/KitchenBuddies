@@ -75,8 +75,8 @@ class _AllRecipesState extends State<AllRecipes> {
                                       "\nTotal time: " +
                                       _data[index].totalTime.toString() +
                                       " minutes",
-
-                                ), isThreeLine: true,
+                                ),
+                                isThreeLine: true,
                               ),
                             )),
                       ),
