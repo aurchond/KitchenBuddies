@@ -1,7 +1,7 @@
 import 'package:first_app/screens/all_recipes_screen.dart';
 import 'package:first_app/screens/home_screen.dart';
-import 'package:first_app/screens/instructions_screen.dart';
-import 'package:first_app/screens/new_meal_session.dart';
+import 'package:first_app/screens/meal_session_screens/instructions_screen.dart';
+import 'package:first_app/screens/meal_session_screens/new_meal_session_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -27,15 +27,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
         ), //these may not be final pages in bottom nav bar
         Offstage(
           offstage: currentIndex != 1,
-          child: const AllRecipes(),
+          child: const NewMealSession(),
         ),
-        // Offstage(
-        //   offstage: currentIndex != 2,
-        //   child: const InstructionsScreen(),
-        // ),
         Offstage(
           offstage: currentIndex != 2,
-          child: const NewMealSession(),
+          child: const AllRecipes(),
         ),
       ]),
       bottomNavigationBar: BottomNavigationBar(
@@ -50,9 +46,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.fastfood), label: "All Recipes"),
-          BottomNavigationBarItem(
               icon: Icon(Icons.food_bank_rounded), label: "New Meal Session"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.fastfood), label: "All Recipes"),
         ],
       ),
     );

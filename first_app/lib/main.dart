@@ -5,7 +5,7 @@ import 'package:first_app/provider/auth_provider.dart';
 import 'package:first_app/provider/notification_provider.dart';
 import 'package:first_app/screens/email_pass_screen.dart';
 import 'package:first_app/screens/home_screen.dart';
-import 'package:first_app/screens/instructions_screen.dart';
+import 'package:first_app/screens/meal_session_screens/instructions_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,7 +20,7 @@ import 'package:http/http.dart' as http;
 
 import 'backend_processing/data_class.dart';
 import 'data_models/past_recipes.dart';
-import 'keys.dart';
+import 'helpers/keys.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("Handling a background message: ${message.messageId}");

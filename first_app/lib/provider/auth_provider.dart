@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:first_app/widgets/custom_text_field.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../keys.dart';
+import '../helpers/custom_text_field.dart';
+import '../helpers/keys.dart';
 
 class AuthProvider extends ChangeNotifier {
   TextEditingController emailController = TextEditingController();
@@ -36,7 +36,6 @@ class AuthProvider extends ChangeNotifier {
   }
 
   // saving emails/passwords within firebase
-  // TODO: copy UserCredential to actual database later
   authenticate() async {
     UserCredential userCredential;
 

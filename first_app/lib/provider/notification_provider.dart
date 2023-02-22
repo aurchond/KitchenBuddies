@@ -15,7 +15,7 @@ class NotificationProvider extends ChangeNotifier {
         "registration_ids": [token],
         "collapse_key": "type_a",
         "notification": {
-          "title": title, //
+          "title": title, // todo: use a different title for the two types of notifs (send instructions and notify done step)
           "body": body, // currently sending as string
         },
         'data': {

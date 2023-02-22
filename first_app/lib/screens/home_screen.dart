@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:first_app/local_notification_service.dart';
 import 'package:first_app/provider/auth_provider.dart';
-import 'package:first_app/screens/received_instructions_screen.dart';
+import 'package:first_app/screens/meal_session_screens/received_instructions_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

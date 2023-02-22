@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:first_app/provider/auth_provider.dart';
 import 'package:first_app/screens/home_screen.dart';
-import 'package:first_app/widgets/custom_text_field.dart';
+import 'package:first_app/helpers/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

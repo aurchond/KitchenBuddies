@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../recipe_tile.dart';
-import '../widgets/checkboxListTIle.dart';
+import '../../helpers/recipe_tile.dart';
+import '../../helpers/checkboxListTIle.dart';
 import 'instructions_screen.dart';
 
 class NewMealSession extends StatefulWidget {
