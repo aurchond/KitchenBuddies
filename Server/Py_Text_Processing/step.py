@@ -1,4 +1,5 @@
 from mysql_db import verify_ingredients_supplies
+import math
 
 # key = verb, value = time it takes to finish per ingredient in minutes
 time_per_ingr_dict = {'chop': 1,
@@ -51,6 +52,35 @@ time_total_dict = {'preheat': 1,
                    'set': 1,
                    'pour': 2,
                    'snip': 2}
+
+prep_dict = {'preheat':'',
+             'spray':'',
+             'chop':'',
+             'dice':'',
+             'mince':'',
+             'grate':'',
+             'slice':'',
+             'mix':'',
+             'peel':'',
+             'combine':'',
+             'whisk':'',
+             'beat':'',
+             'brush':''}
+
+# Verbs that are CLEARLY non for preparation
+non_prep_dict = {'simmer':'',
+                 'mash':'',
+                 'fry':'',
+                 'cook':'',
+                 'saute':'',
+                 'boil':'',
+                 'grill':'',
+                 'bake':'',
+                 'roast':'',
+                 'broil':'',
+                 'poach':'',
+                 'blanch':'',
+                 'toast':''}
 
 class Step:
     def __init__(self, instructions):
@@ -120,6 +150,22 @@ class Step:
             skip_words += 1
         
         return skip_words, supply
+    
+    def define_prep_step(self):
+        '''
+        Determine if the task is used for cooking preparation (i.e. cutting veggies)
+        Ensure that the verbs have been extracted before using this
+        '''
+        is_prep = False
+        for verb in self.verbs:
+            if verb in non_prep_dict:
+                self.prepStep = False
+                return
+            if verb in prep_dict:
+                is_prep = True
+        # if one verb is a prep_step and no non_prep
+        if is_prep:
+            self.prepStep = True
 
     def extract_time_from_step(self, token, children):
         '''
@@ -150,9 +196,8 @@ class Step:
                     time /= 60
                 elif str(token) in 'hours':
                     time *= 60
-
                 
-                time_for_step = time
+                time_for_step = math.ceil(time)
                 # time_for_step += str(time_check)
                 # time_for_step += str(token)
         if self.stepTime != -1:
