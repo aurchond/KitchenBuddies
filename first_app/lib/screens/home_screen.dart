@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:first_app/local_notification_service.dart';
 import 'package:first_app/provider/auth_provider.dart';
 import 'package:first_app/screens/received_instructions_screen.dart';
+import 'package:first_app/widgets/input_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,12 +19,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // @override
-  // void didChangeDependencies() {
-  //   final authProvider = Provider.of<AuthProvider>(context,listen: false);
-  //   if (mounted) authProvider.updateEmailVerificationState();
-  //   super.didChangeDependencies();
-  // }
+  final textController = TextEditingController();
+  late FocusNode myFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -68,6 +65,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
+    textController.dispose();
+    myFocusNode.dispose();
     super.dispose();
   }
 
@@ -93,24 +92,23 @@ class _HomeScreenState extends State<HomeScreen> {
         body: Column(
           children: [
             Container(
-                margin: EdgeInsets.only(top: 20, bottom: 20),
+                margin: EdgeInsets.only(top: 20, bottom: 15),
                 child: Text(
-                  "Your Friends:",
+                  "Your friends:",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 )),
             Expanded(
-              child: GridView.builder(
+              child: Container (padding: const EdgeInsets.all(10), child:
+              GridView.builder(
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 200,
-                      childAspectRatio: 3 / 2,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 20),
+                      maxCrossAxisExtent: 300,
+                      childAspectRatio: 5 / 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10),
                   itemCount: myFriends.length,
                   itemBuilder: (BuildContext context, index) {
-                    return Padding(
-                        padding:
-                            const EdgeInsets.only(top: 10, left: 10, right: 10),
-                        child: Container(
+                    return Container(
+                      padding: const EdgeInsets.all(10),
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                                 color: Colors.deepOrange.shade200,
@@ -128,10 +126,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400),
-                                ))));
+                                )));
                   }),
-            ),
-            SizedBox(width: 10, height: 10),
+            )),
+            inputTextButton(textController, "Enter your friend's email", "Add friend!", myFocusNode),
             Expanded(
                 child: Padding(
               padding: const EdgeInsets.all(10),

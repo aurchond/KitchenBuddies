@@ -1,3 +1,4 @@
+import 'package:first_app/widgets/input_text_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,16 @@ class recipeTile {
 }
 
 class _AllRecipesState extends State<AllRecipes> {
+  final textController = TextEditingController();
+  late FocusNode myFocusNode = FocusNode();
+
+  @override
+  void dispose() {
+    textController.dispose();
+    myFocusNode.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     List<recipeTile> _data = [
@@ -41,7 +52,7 @@ class _AllRecipesState extends State<AllRecipes> {
             Container(
                 margin: EdgeInsets.only(top: 20, bottom: 20),
                 child: Text(
-                  "Welcome to your kitchen!",
+                  "Welcome to your pantry!",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 )),
             Expanded(
@@ -82,7 +93,9 @@ class _AllRecipesState extends State<AllRecipes> {
                       ),
                     );
                   }),
-            )
+            ),
+            SizedBox(width: 10, height: 10),
+            inputTextButton(textController, "Input your recipe URL", "Add recipe!", myFocusNode),
           ],
         ),
       ),
