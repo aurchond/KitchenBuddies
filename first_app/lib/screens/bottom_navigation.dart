@@ -51,8 +51,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
               icon: Icon(Icons.fastfood), label: "All Recipes"),
-          // BottomNavigationBarItem(
-          //     icon: Icon(Icons.fork_left), label: "Instructions"),
           BottomNavigationBarItem(
               icon: Icon(Icons.food_bank_rounded), label: "New Meal Session"),
         ],
