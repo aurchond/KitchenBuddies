@@ -5,6 +5,8 @@ nlp = spacy.load("en_core_web_sm")
 from utilities import extract_recipe_text
 from step import Step
 
+data_path = "./Py_Text_Processing/"
+
 def extract_verb_from_steps(instr_steps):
     verb_list = []
 
@@ -48,7 +50,7 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
     hold_res_dic = {}
     hold_res_count = 0
 
-    with open(".\data\supplies.txt", 'r') as file:
+    with open(data_path + "/data/supplies.txt", 'r') as file:
         for words in file: 
             resource_dataset.append(words.rstrip().lower())
         
@@ -110,9 +112,14 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
             
             if holding_resource_condition(token, resource_dataset, step_words) and holding_res_found == False:
                 #print('yes')
+                # put some in bag and then pour onto pan
+                # NOTE: assume the last supply is the holding resource
+                # bag or pan
+                
                 holding_res_found, hold_res_dic, hold_res_count = step.extract_holdingres_from_step(token, step_words, hold_res_dic, hold_res_count)
-                #print(step.holdingResource)
-                #print(holding_res_found)
+
+
+                # NOTE: maybe add hold_res_count and dic to the step property
 
             idx += 1
 
@@ -131,51 +138,59 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
             # userTime will most likely be less than stepTime
             step.approx_user_time()
         
+
         if holding_res_found == False:
-            print(step_words)
-            check_oven_keywords = ['Bake', 'bake', 'broil', 'Broil', 'Roast', 'roast']
-            #need to check for the oven being a holding resource (look for words like 'bake' or 'broil' or 'oven')
-            string_words = [str(i) for i in step_words]
-            if len(set(check_oven_keywords).intersection(set(string_words))) != 0:
-                step.holdingResource = 'oven'
-                step.holdingID = hold_res_count
-                hold_res_count += 1      
+            step.holdingres_edge_case(hold_res_count, hold_res_dic, step_words, steps_out, resource_dataset, ingr_base_words, all_ingr_base_words)
+            # print(step_words)
+        
+        steps_out.append(step)
+        all_ingr_base_words.append(ingr_base_words)
+            # check_oven_keywords = ['Bake', 'bake', 'broil', 'Broil', 'Roast', 'roast']
+            # #need to check for the oven being a holding resource (look for words like 'bake' or 'broil' or 'oven')
+            # string_words = [str(i) for i in step_words]
+            # if len(set(check_oven_keywords).intersection(set(string_words))) != 0:
+            #     # Set oven to holding resource
+            #     # NOTE: Change this to the resource holding the food
+            #     step.holdingResource = 'oven'
+            #     step.holdingID = hold_res_count
+            #     hold_res_count += 1      
 
-            elif len(steps_out) == 0: #if it is the first step
-                for words in step_words: 
-                    if str(words) in resource_dataset and str(words) != "cup":
-                        step.holdingResource = str(words)
-                        step.holdingID = hold_res_count
-                        hold_res_count += 1      
-                if step.holdingResource == '': step.holdingResource = 'N/A'
+            # elif len(steps_out) == 0: #if it is the first step
+            #     for word in step_words: 
+            #         if str(word) in resource_dataset and str(word) != "cup":
+            #             step.holdingResource = str(word)
+            #             step.holdingID = hold_res_count
+            #             hold_res_count += 1      
+            #     if step.holdingResource == '': step.holdingResource = 'N/A'
 
-            elif 'BREAK' not in steps_out[-1].instructions:
-                step.holdingResource = steps_out[-1].holdingResource
-                step.holdingID = steps_out[-1].holdingID
+            # elif 'BREAK' not in steps_out[-1].instructions:
+            #     step.holdingResource = steps_out[-1].holdingResource
+            #     step.holdingID = steps_out[-1].holdingID
 
-            elif 'BREAK' in steps_out[-1].instructions:   #if the instruction string does contain BREAK
-                set1 = set(ingr_base_words)
-                for test_index in range(len(all_ingr_base_words)):
-                    max_count = 0
-                    set2 = set(all_ingr_base_words[test_index]) 
-                    #print(set1)
-                    #print(set2)
-                    common_ingredients = set1.intersection(set2)
-                    if len(common_ingredients) > max_count: 
-                        step.holdingResource = steps_out[test_index].holdingResource
-                        step.holdingID = steps_out[test_index].holdingID
-                        max_count = len(common_ingredients)
-                if len(common_ingredients) == 0:
-                    step.holdingResource = steps_out[-2].holdingResource #just a holder for now, need to consider this edge case 
-                    step.holdingID = steps_out[-2].holdingID
+            # elif 'BREAK' in steps_out[-1].instructions:   #if the instruction string does contain BREAK
+            #     # NOTE: Assumes that ingredients are labelled the same across steps (i.e. milk, dough -> batter)
+            #     set1 = set(ingr_base_words)
+            #     for test_index in range(len(all_ingr_base_words)):
+            #         max_count = 0
+            #         set2 = set(all_ingr_base_words[test_index]) 
+            #         #print(set1)
+            #         #print(set2)
+            #         common_ingredients = set1.intersection(set2)
+            #         if len(common_ingredients) > max_count: 
+            #             step.holdingResource = steps_out[test_index].holdingResource
+            #             step.holdingID = steps_out[test_index].holdingID
+            #             max_count = len(common_ingredients)
+            #     if len(common_ingredients) == 0:
+            #         step.holdingResource = steps_out[-2].holdingResource #just a holder for now, need to consider this edge case 
+            #         step.holdingID = steps_out[-2].holdingID
+
             #make the previous holding resource also the current one
             #else: check to see if there is overlap with ingredients in the current step with any of the previous steps
             #if nothing has been found, then make the previous holding resource current one
 
         
         
-        steps_out.append(step)
-        all_ingr_base_words.append(ingr_base_words)
+
     
 
 
@@ -223,7 +238,6 @@ def time_condition(token, time_key_words):
 
 def holding_resource_condition(token, dataset, step_words):
     if token.pos_ == "NOUN" and str(token) in dataset:
-        #print('heres the loop!!')
         return True
 
     return False 

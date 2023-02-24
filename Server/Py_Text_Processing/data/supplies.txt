@@ -11,7 +11,7 @@ Basket
 Banneton
 Grilling Basket
 Punnet
-Salad Spinner
+Salad Spinnerf
 Batterie de Cuisine
 Biscuit Brake
 Board
@@ -158,6 +158,8 @@ Kitchen Tong
 Asparagus Tong
 Canning Tong
 Ice Tongs
+Tongs
+Tong
 Pickle Grabber
 Salad Tong
 Knife
@@ -205,6 +207,7 @@ Scale
 Meat Cooking Tool
 Attelets
 Meat mallet
+mallet
 Meat Tenderizer
 Meatballer
 Rotisserie
@@ -254,6 +257,7 @@ Rosette Iron
 Timbale Mould
 Oxo Good Grips
 Pan
+Skillet
 Aebleskiver Pan
 Appachatti Pan
 Baking Pan
@@ -408,3 +412,5 @@ Danish Bread Whisk
 Flat Whisk
 Molinillo Chocolatero
 Sauce Whisk
+Plate
+Blender

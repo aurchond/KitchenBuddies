@@ -5,8 +5,8 @@ from spacy import displacy
 from utilities import extract_instructions
 
 # ----- USER: Set file name from input folder -----
-input_file = "schnitzel.txt"
-image_file_name = "schnitzel"
+input_file = "test.txt"
+image_file_name = "SKILLET"
 # -------------------------------------------------
 
 def generate_sentence_visualizer(filename, image_file):
@@ -24,8 +24,8 @@ def generate_sentence_visualizer(filename, image_file):
             print(token.text, token.lemma_, token.pos_, token.dep_, [child for child in token.children])
                     
         svg = displacy.render(doc, style="dep")
-        f = open(f"./images/{image_file}_{count}.svg", "x")
-        output_path = Path(f"./images/{image_file}_{count}.svg")
+        f = open(f"./Py_Text_Processing/images/{image_file}_{count}.svg", "x")
+        output_path = Path(f"./Py_Text_Processing/images/{image_file}_{count}.svg")
         output_path.open("w", encoding="utf-8").write(svg)
         count += 1
 

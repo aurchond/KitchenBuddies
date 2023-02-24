@@ -1,5 +1,7 @@
 import mysql.connector
 
+data_path = "./Py_Text_Processing/"
+
 def verify_ingredients_supplies(istr_nouns):
     '''
     Check which nouns within the sentence are ingredients
@@ -66,11 +68,11 @@ def verify_ingredients_supplies(istr_nouns):
 def debug_verify_ingr_supplies(nouns):
     resource_dataset = []
     food_dataset = []
-    with open(r".\data\supplies.txt", 'r') as file:
+    with open(r"./Py_Text_Processing/data/supplies.txt", 'r') as file:
         for words in file: 
             resource_dataset.append(words.rstrip().lower())
     
-    with open(r".\data\unique_foods.txt", 'r', encoding='utf-8') as file:
+    with open(r"./Py_Text_Processing/data/unique_foods.txt", 'r', encoding='utf-8') as file:
         for words in file: 
             food_dataset.append(words.rstrip().lower())
     

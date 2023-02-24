@@ -2137,7 +2137,6 @@ Panicum
 Rou jia mo
 Carrigbyrne cheese
 Egg
-Pot
 Sabich salad
 Orchard Cottage Dairy
 Dunlop
@@ -2380,6 +2379,7 @@ Caldo verde
 Fried mushrooms
 Memil-guksu
 Bombay potatoes
+potatoes
 Fried rice
 Pasteis de nata
 Kamaboko
@@ -3601,3 +3601,5 @@ Sri Lankan spices
 South Asian spices
 Thai herbs and spices
 Vietnamese herbs and spices
+Chicken Broth
+Broth

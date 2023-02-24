@@ -28,6 +28,7 @@ def parse_recipe():
         if 'BREAK' in step_details['instructions']:
             continue
 
+        # TODO: Remove holding_res_count and holding_dic from step
         step_dict = {count: step_details}
         json_steps.append(step_dict)
         count += 1

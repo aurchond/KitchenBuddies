@@ -66,7 +66,8 @@ prep_dict = {'preheat':'',
              'whisk':'',
              'beat':'',
              'brush':'',
-             'cut': ''}
+             'cut': '', 
+             'prepare': ''}
 
 # Verbs that are CLEARLY non for preparation
 non_prep_dict = {'simmer':'',
@@ -132,6 +133,9 @@ class Step:
         edge_case = False
         for quantity_test in token_check.children:
             if quantity_test.dep_ == 'nummod' and quantity_test.pos_ == 'NUM':
+                if not str(quantity_test).isnumeric():
+                    break
+                # NOTE: It can be a string (i.e. 'one')
                 quantity = int(str(quantity_test))
                 for misc in quantity_test.children: 
                     print(f" {str(misc)}")
@@ -194,6 +198,8 @@ class Step:
                         # time_for_step += str(grandchild)
                 # print(f'time_check {time_check}')
                 # print(f'token {token}')
+                if not str(time_check).isnumeric():
+                    break
                 time = int(str(time_check))
                 if time > gc_time:
                     time_for_step = time
@@ -244,6 +250,9 @@ class Step:
             self.approx_user_time()
         else:
             self.userTime = s_time
+        
+        if self.stepTime == -1:
+            self.stepTime = 2
 
     def approx_user_time(self):
         # only used if step_time is explicitly defined within the instruction
@@ -308,13 +317,84 @@ class Step:
         head_word = token.head 
         #print(token, head_word.lemma_)
         if token.dep_ == "pobj" and (str(head_word.lemma_) == "in" or str(head_word.lemma_) == "on" or str(head_word.lemma_) == "to" or str(head_word.lemma_) == "into"  ) :
+            # assume new holding resource
             #print('I FOUND A RESOURCE:' + str(token)) 
             self.holdingResource = str(token)
             hold_res_dic[self.holdingResource] = hold_res_count
             self.holdingID = hold_res_count
             print(self.holdingResource, hold_res_count)
-            hold_res_count += 1
+            hold_res_dic[self.holdingResource] = hold_res_count
+
+            hold_res_count += 1          
             return True, hold_res_dic, hold_res_count
         else:
             return False, hold_res_dic, hold_res_count
             #need to access resources (supplies.txt) from data
+    
+    def holdingres_edge_case(self, hold_res_count, hold_res_dic, step_words, steps_out, resource_dataset, ingr_base_words, all_ingr_base_words):
+        '''
+        Any edge case we encounter for holding resources is added here. 
+        This function is used if the holding resource isn't already defined.
+
+        List of edge cases
+        - Holding resource is in oven
+        - make instructions with 'cut' have a holding resource of cutting board
+        - Add hold_res_dic
+        - First step of recipe
+        - If step isn't the first step in the line (BREAK wasn't before this step), use the holding resource from previous step
+        - If first step after break, look at intersection of ingredients
+        - change so that the algorithm does not break when a holding resource is found
+        '''
+        #print(step_words)
+            
+        check_oven_keywords = ['Bake', 'bake', 'broil', 'Broil', 'Roast', 'roast']
+        #need to check for the oven being a holding resource (look for words like 'bake' or 'broil' or 'oven')
+        string_words = [str(i) for i in step_words]
+        if len(set(check_oven_keywords).intersection(set(string_words))) != 0:
+            # Set oven to holding resource
+            # NOTE: Change this to the resource holding the food
+            self.holdingResource = 'oven'
+            self.holdingID = hold_res_count
+            hold_res_dic[self.holdingResource] = hold_res_count
+            hold_res_count += 1      
+
+        elif len(steps_out) == 0: #if it is the first step
+            for word in step_words: 
+                if str(word) in resource_dataset and str(word) != "cup":
+                    self.holdingResource = str(word)
+                    self.holdingID = hold_res_count
+                    hold_res_count += 1      
+            if self.holdingResource == '': self.holdingResource = 'N/A'
+
+        elif 'BREAK' not in steps_out[-1].instructions:
+            self.holdingResource = steps_out[-1].holdingResource
+            self.holdingID = steps_out[-1].holdingID
+
+        elif 'BREAK' in steps_out[-1].instructions:   #if the instruction string does contain BREAK
+            # NOTE: Assumes that ingredients are labelled the same across steps (i.e. milk, dough -> batter)
+            set1 = set(ingr_base_words)
+            for test_index in range(len(all_ingr_base_words)):
+                max_count = 0
+                set2 = set(all_ingr_base_words[test_index]) 
+                #print(set1)
+                #print(set2)
+                common_ingredients = set1.intersection(set2)
+                if len(common_ingredients) > max_count: 
+                    self.holdingResource = steps_out[test_index].holdingResource
+                    self.holdingID = steps_out[test_index].holdingID
+                    
+
+                    max_count = len(common_ingredients)
+            if len(common_ingredients) == 0:
+                for resource in self.resourcesRequired: 
+                    if resource != "cup":
+                        self.holdingResource = resource
+                        self.holdingID = hold_res_count
+                        hold_res_count += 1 
+                if self.holdingResource == '':
+                    self.holdingResource = steps_out[-2].holdingResource #just a holder for now, need to consider this edge case 
+                    self.holdingID = steps_out[-2].holdingID
+
+        return hold_res_count, hold_res_dic
+
+        
