@@ -1,10 +1,7 @@
-import 'dart:math';
-
+import 'package:first_app/helpers/checkbox_decorated.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../helpers/recipe_tile.dart';
-import '../../helpers/checkboxListTIle.dart';
 import 'instructions_screen.dart';
 
 class NewMealSession extends StatefulWidget {
@@ -15,48 +12,19 @@ class NewMealSession extends StatefulWidget {
 }
 
 class _NewMealSessionState extends State<NewMealSession> {
-  // didn't work :(
-  // void onCheckedBox(List<recipeTile> _data, bool? val, int index) {
-  //   setState(
-  //     () {
-  //       _data[index].isSelected = val!;
-  //     },
-  //     //TODO: if isSelected, add to json request
-  //   );
-  // }
+
+  checkboxCallback(
+      bool? val, List<Map> _data, int index, StateSetter setState) {
+    setState(() {
+      _data[index]["isSelected"] = val!;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     //final postModel = Provider.of<DataClass>(context);
     //TODO: data and service classs for past recipes
     //TODO: read recipes and create list below
-    List<recipeTile> _data = [
-      recipeTile(
-          title: "Option ",
-          ingredients: "Ingredients",
-          totalTime: 60,
-          isSelected: false),
-      recipeTile(
-          title: "Option ",
-          ingredients: "Ingredients",
-          totalTime: 60,
-          isSelected: false),
-      recipeTile(
-          title: "Option ",
-          ingredients: "Ingredients",
-          totalTime: 60,
-          isSelected: false),
-      recipeTile(
-          title: "Option ",
-          ingredients: "Ingredients",
-          totalTime: 60,
-          isSelected: false),
-      recipeTile(
-          title: "Option ",
-          ingredients: "Ingredients",
-          totalTime: 60,
-          isSelected: false),
-    ];
 
     final List<Map> myFriends = List.generate(
         6,
@@ -65,6 +33,15 @@ class _NewMealSessionState extends State<NewMealSession> {
               "name": "Friend $index",
               "isSelected": false
             }).toList();
+
+    final List<Map> myRecipes = List.generate(
+        6,
+            (index) => {
+          "id": index,
+          "title": "Recipe $index","ingredients": "Ingredients $index",
+              "totalTime": "Total time: $index minutes",
+          "isSelected": false
+        }).toList();
 
     return Scaffold(
       appBar: AppBar(title: const Text("New Meal Session")),
@@ -81,7 +58,7 @@ class _NewMealSessionState extends State<NewMealSession> {
               builder: (BuildContext context, StateSetter setState) {
                 return Expanded(
                   child: new ListView.builder(
-                    itemCount: _data.length,
+                    itemCount: myRecipes.length,
                     itemBuilder: (context, index) {
                       return SizedBox(
                         width: 100,
@@ -89,39 +66,13 @@ class _NewMealSessionState extends State<NewMealSession> {
                         child: Center(
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 3,
-                                      color: Colors.deepOrange.shade300),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: CheckboxListTile(
-                                  secondary: Icon(Icons.fastfood),
-                                  title: Text(
-                                    _data[index].title! +
-                                        " " +
-                                        (index + 1).toString(),
-                                  ),
-                                  subtitle: Text(
-                                    _data[index].ingredients! +
-                                        " " +
-                                        (index + 1).toString() +
-                                        "\nTotal time: " +
-                                        _data[index].totalTime.toString() +
-                                        " minutes",
-                                  ),
-                                  value: _data[index].isSelected,
-                                  onChanged: (val) {
-                                    setState(
-                                      () {
-                                        _data[index].isSelected = val!;
-                                      },
-                                      //TODO: if isSelected, add to json request
-                                    );
-                                  },
-                                  isThreeLine: true,
-                                )),
+                            child: checkBoxDecorated(myRecipes, Colors.white,  Icon(Icons.fastfood), index,
+                      Text(
+                             myRecipes[index]["title"],
+                          ), Text(
+                          myRecipes[index]["ingredients"] + "\n" +
+                               myRecipes[index]["totalTime"]
+                          ), true, checkboxCallback, setState)
                           ),
                         ),
                       );
@@ -150,36 +101,19 @@ class _NewMealSessionState extends State<NewMealSession> {
                               mainAxisSpacing: 10),
                       itemCount: myFriends.length,
                       itemBuilder: (BuildContext context, index) {
-                        return Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: Colors.deepOrange.shade200,
-                                border: Border.all(
-                                    width: 3,
-                                    color: Colors.deepOrange.shade300),
-                                borderRadius: BorderRadius.circular(20)),
-                            child: CheckboxListTile(
-                              secondary: Icon(
-                                Icons.person,
-                                color: Colors.deepOrange.shade700,
-                              ),
-                              title: Text(
-                                myFriends[index]["name"],
-                                style: TextStyle(
-                                    fontSize: 12),
-                              ),
-                              contentPadding: EdgeInsets.only(left:10, right:10),
-                              visualDensity: VisualDensity.compact,
-                              value: myFriends[index]["isSelected"],
-                              onChanged: (val) {
-                                setState(
-                                  () {
-                                    myFriends[index]["isSelected"] = val!;
-                                  },
-                                  //TODO: if isSelected, add to json request
-                                );
-                              },
-                            ));
+                        return checkBoxDecorated(
+                            myFriends,
+                            Colors.deepOrange.shade200,
+                            Icon(
+                              Icons.person,
+                              color: Colors.deepOrange.shade700,
+                            ),
+                            index,
+                            Text(myFriends[index]["name"],
+                                style: TextStyle(fontSize: 12)),
+                            Text(""), false,
+                            checkboxCallback,
+                            setState);
                       }),
                 ));
               },

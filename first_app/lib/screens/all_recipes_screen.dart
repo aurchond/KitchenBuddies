@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../backend_processing/data_class.dart';
+import '../helpers/alert_dialog.dart';
 
 class AllRecipes extends StatefulWidget {
   const AllRecipes({Key? key}) : super(key: key);
@@ -23,12 +24,30 @@ class recipeTile {
 }
 
 class _AllRecipesState extends State<AllRecipes> {
-  final textController = TextEditingController();
+  final recipeByUrlController = TextEditingController();
   late FocusNode myFocusNode = FocusNode();
 
+  // code for inputting recipes as text
+  late String valueText;
+  final recipeByTextController = TextEditingController();
+
+  // callback functions for alert dialog
+  buttonCallback() {
+    setState(() {
+      Navigator.pop(context);
+    });
+  }
+
+  textCallback(String value) {
+    setState(() {
+      valueText = value;
+    });
+  }
+  
   @override
   void dispose() {
-    textController.dispose();
+    recipeByTextController.dispose();
+    recipeByUrlController.dispose();
     myFocusNode.dispose();
     super.dispose();
   }
@@ -95,7 +114,14 @@ class _AllRecipesState extends State<AllRecipes> {
                   }),
             ),
             SizedBox(width: 10, height: 10),
-            inputTextButton(textController, "Input your recipe URL", "Add recipe!", myFocusNode),
+            inputTextButton(recipeByUrlController, "Input your recipe URL", "Add recipe!", myFocusNode),
+            SizedBox(width: 10, height: 10),
+      SizedBox(
+        width: 360, height: 60, child: ElevatedButton(
+        onPressed: () {
+          alertDialog(context, buttonCallback, textCallback, recipeByTextController, "Add Recipe By Text", "Enter your recipe text");
+        },
+        child: Text('Add recipe by text!'),))
           ],
         ),
       ),
