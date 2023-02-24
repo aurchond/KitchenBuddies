@@ -56,11 +56,14 @@ class _AllRecipesState extends State<AllRecipes> {
     String totalTime = valueText.substring(timeIndex+12, ingredientIndex);
     print(totalTime);
 
-    String ingredients = valueText.substring(ingredientIndex+12, instructionsIndex);
-    print(ingredients);
+    //add or subtract 1 to index to account for newline character we don't want
+    String ingredients = valueText.substring(ingredientIndex+13, instructionsIndex-1);
+    List<String> ingredientList = ingredients.split('\n');
+    print(ingredientList);
 
-    String instructions = valueText.substring(instructionsIndex+13);
-    print(instructions);
+    String instructions = valueText.substring(instructionsIndex+14);
+    List<String> instructionList = instructions.split('\n');
+    print(instructionList);
 
     Map<String, dynamic> data;
 
@@ -69,13 +72,13 @@ class _AllRecipesState extends State<AllRecipes> {
       "title": recipeTitle,
       "total_time": totalTime,
       "ingredients": {
-        ingredients,
+        ingredientList,
       },
       "instructions": {
-       instructions,
+       instructionList,
       },
     };
-    print(data);
+    //print(data);
   }
 
   textCallback(String value) {
