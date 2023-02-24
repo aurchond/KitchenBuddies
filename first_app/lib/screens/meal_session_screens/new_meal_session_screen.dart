@@ -66,7 +66,7 @@ class _NewMealSessionState extends State<NewMealSession> {
                         child: Center(
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: checkBoxDecorated(myRecipes, Colors.white,  Icon(Icons.fastfood), index,
+                            child: CheckboxDecorated(myRecipes, Colors.white,  Icon(Icons.fastfood), index,
                       Text(
                              myRecipes[index]["title"],
                           ), Text(
@@ -101,7 +101,7 @@ class _NewMealSessionState extends State<NewMealSession> {
                               mainAxisSpacing: 10),
                       itemCount: myFriends.length,
                       itemBuilder: (BuildContext context, index) {
-                        return checkBoxDecorated(
+                        return CheckboxDecorated(
                             myFriends,
                             Colors.deepOrange.shade200,
                             Icon(

@@ -11,6 +11,8 @@ import 'package:first_app/provider/notification_provider.dart';
 
 import 'package:http/http.dart' as http;
 
+import '../helpers/tile_decorated.dart';
+
 const List<String> list = <String>['Beginner', 'Intermediate', 'Skilled'];
 
 class HomeScreen extends StatefulWidget {
@@ -140,27 +142,22 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisSpacing: 10),
                   itemCount: myFriends.length,
                   itemBuilder: (BuildContext context, index) {
-                    return Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            color: Colors.deepOrange.shade200,
-                            border: Border.all(
-                                width: 3, color: Colors.deepOrange.shade300),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: ListTile(
-                            leading: Icon(
-                              Icons.person,
-                              color: Colors.deepOrange.shade700,
-                            ),
-                            title: Text(
-                              myFriends[index]["name"],
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w400),
-                            )));
+                    return TileDecorated(
+                        Colors.deepOrange.shade200,
+                        Icon(
+                          Icons.person,
+                          color: Colors.deepOrange.shade700,
+                        ),
+                        Text(myFriends[index]["name"],
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w400)),
+                        Text(""),
+                        false);
                   }),
             )),
             inputTextButton(textController, "Enter your friend's email",
                 "Add friend!", myFocusNode),
+
             /// old push notif stuff ///
             Expanded(
                 child: Padding(
@@ -199,6 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         .snapshots()),
               ),
             )),
+
             /// set skill level ///
             StatefulBuilder(
                 builder: (BuildContext context, StateSetter setState) {
@@ -237,6 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               );
             }),
+
             /// set kitchen constraints
             Container(
                 margin: EdgeInsets.only(top: 5, bottom: 20),
@@ -244,13 +243,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   "Customize your kitchen:",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 )),
-           Flexible(child:ListView(
+            Flexible(
+                child: ListView(
               children: [
-                inputTextButton(burnerController, "Enter # of burners", "Add kitchen constraint!", burnerFocusNode),
-                inputTextButton(potController, "Enter # of pots", "Add kitchen constraint!", potFocusNode),
-                inputTextButton(panController, "Enter # of pans", "Add kitchen constraint!", panFocusNode),
-                inputTextButton(knifeController, "Enter # of knives", "Add kitchen constraint!", knifeFocusNode),],)
-            )],
+                inputTextButton(burnerController, "Enter # of burners",
+                    "Add kitchen constraint!", burnerFocusNode),
+                inputTextButton(potController, "Enter # of pots",
+                    "Add kitchen constraint!", potFocusNode),
+                inputTextButton(panController, "Enter # of pans",
+                    "Add kitchen constraint!", panFocusNode),
+                inputTextButton(knifeController, "Enter # of knives",
+                    "Add kitchen constraint!", knifeFocusNode),
+              ],
+            ))
+          ],
         ),
       );
     });

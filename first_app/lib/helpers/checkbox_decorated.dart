@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Widget checkBoxDecorated(
+Widget CheckboxDecorated(
     List<Map> _data,
     Color fill,
     Icon icon,
