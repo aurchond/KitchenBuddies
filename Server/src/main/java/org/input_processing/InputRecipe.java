@@ -69,6 +69,14 @@ public class InputRecipe {
         return Integer.parseInt(minute);
     }
 
+    public String convertIngredientsToString() {
+        if (this.ingredients.size() == 0) {
+            return "";
+        }
+        String ingrString = String.join(",", this.ingredients);
+        return ingrString;
+    }
+
     public void writeTextFile() {
         // TODO: Create global directory path
         this.setRecipeFile(this.recipeTitle.replaceAll(" ", "_"));
