@@ -1,13 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Future<void> alertDialog(BuildContext context, Function() buttonCallback, Function(String value) callback, TextEditingController _controller, String title, String hint) async {
+Future<void> alertDialog(BuildContext context, Function() buttonCallback, Function() parseCallback, Function(String value) callback, TextEditingController _controller, String title, String hint) async {
   return showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10.0))
+          ),
+          insetPadding: EdgeInsets.all(10),
           title: Text(title),
-          content: TextField(
+          content: Center(child: SizedBox(width: MediaQuery.of(context).size.width,
+        child: TextField(
             minLines:20,
             maxLines: null,
             keyboardType: TextInputType.multiline,
@@ -17,7 +22,7 @@ Future<void> alertDialog(BuildContext context, Function() buttonCallback, Functi
               controller: _controller,
               decoration: InputDecoration(hintText:
              hint),
-          ),
+          ))),
           actions: <Widget>[
             ElevatedButton(
               child: Text('CANCEL'),
@@ -25,7 +30,7 @@ Future<void> alertDialog(BuildContext context, Function() buttonCallback, Functi
             ),
             ElevatedButton(
               child: Text('OK'),
-              onPressed: buttonCallback,
+              onPressed: parseCallback,
             ),
           ],
         );

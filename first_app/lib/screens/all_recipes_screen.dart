@@ -40,6 +40,44 @@ class _AllRecipesState extends State<AllRecipes> {
     });
   }
 
+  parseCallback() {
+    setState(() {
+      Navigator.pop(context);
+    });
+
+    int timeIndex = valueText.indexOf("Total Time:");
+    int ingredientIndex = valueText.indexOf("Ingredients:");
+    int instructionsIndex = valueText.indexOf("Instructions:");
+
+    String recipeTitle = valueText.substring(0, timeIndex);
+    print(recipeTitle);
+
+    //hardcode length of "total time" string bc im too lazy to declare variables for each pattern
+    String totalTime = valueText.substring(timeIndex+12, ingredientIndex);
+    print(totalTime);
+
+    String ingredients = valueText.substring(ingredientIndex+12, instructionsIndex);
+    print(ingredients);
+
+    String instructions = valueText.substring(instructionsIndex+13);
+    print(instructions);
+
+    Map<String, dynamic> data;
+
+    // populate json with string data??
+    data = {
+      "title": recipeTitle,
+      "total_time": totalTime,
+      "ingredients": {
+        ingredients,
+      },
+      "instructions": {
+       instructions,
+      },
+    };
+    print(data);
+  }
+
   textCallback(String value) {
     setState(() {
       valueText = value;
@@ -116,6 +154,7 @@ class _AllRecipesState extends State<AllRecipes> {
                     alertDialog(
                         context,
                         buttonCallback,
+                        parseCallback,
                         textCallback,
                         recipeByTextController,
                         "Add Recipe By Text",
