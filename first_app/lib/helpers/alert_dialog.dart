@@ -21,7 +21,11 @@ Future<void> alertDialog(BuildContext context, Function() buttonCallback, Functi
               },
               controller: _controller,
               decoration: InputDecoration(hintText:
-             hint),
+             hint, suffixIcon: IconButton(
+        onPressed:
+        _controller.clear,
+        icon: Icon(Icons.
+        clear))),
           ))),
           actions: <Widget>[
             ElevatedButton(
