@@ -63,6 +63,31 @@ def verify_ingredients_supplies(istr_nouns):
 
     return ingredients, supplies
 
+def debug_verify_ingr_supplies(nouns):
+    resource_dataset = []
+    food_dataset = []
+    with open(r".\data\supplies.txt", 'r') as file:
+        for words in file: 
+            resource_dataset.append(words.rstrip().lower())
+    
+    with open(r".\data\unique_foods.txt", 'r', encoding='utf-8') as file:
+        for words in file: 
+            food_dataset.append(words.rstrip().lower())
+    
+    ingredients = []
+    supplies = []
+
+    for word in nouns:
+        if word in food_dataset:
+            ingredients.append(word)
+        
+        if word in resource_dataset:
+            supplies.append(word)
+    
+    return ingredients, supplies
+
+    
+
 # verify_ingredients_supplies(['pan', 'parsley', 'zucchini'])
 
 

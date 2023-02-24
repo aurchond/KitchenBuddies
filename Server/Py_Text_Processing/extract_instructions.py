@@ -11,7 +11,7 @@ def extract_verb_from_steps(instr_steps):
     for instr in instr_steps: 
         if 'BREAK' in instr:
             verb_list.append([])
-            print('STEP:', instr)
+            #print('STEP:', instr)
             continue
         # print('STEP:', step)
 
@@ -28,7 +28,7 @@ def extract_verb_from_steps(instr_steps):
             # might need to include adv, adj at beginning, propn at beginning of sentence, noun (beginning of sentence and middle of sentence)
             if verb_condition(token, idx):
                 verbs.append(token.text)
-                print(token.text, " ", token.tag_, token.dep_,[child for child in token.children])
+                #print(token.text, " ", token.tag_, token.dep_,[child for child in token.children])
 
             idx += 1
         verb_list.append(verbs)
@@ -42,14 +42,17 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
     :return: List of dictionary containing verb, ingredients, kitchen supplies, and time for each step
     '''
     steps_out = []
+    all_ingr_base_words = []
     time_key_words = ['seconds','minute','minutes','hours','hour']
     resource_dataset=[]
+    hold_res_dic = {}
+    hold_res_count = 0
 
     with open(".\data\supplies.txt", 'r') as file:
         for words in file: 
             resource_dataset.append(words.rstrip().lower())
         
-    print(resource_dataset)
+    #print(resource_dataset)
 
     for instr in instr_steps: 
         # if 'BREAK' in instr:
@@ -76,6 +79,7 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
         verbose_ingr = {}
         verbose_supply = {}
         key_words = []
+        ingr_base_words = []
 
         holding_res_found = False 
         for token in doc:
@@ -90,14 +94,14 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
             if skip_words == 0:
                 if noun_condition(token, time_key_words, step.ingredients):
                     potential_ingr = str(token).lower()
-                    key_words.append(potential_ingr)
 
-                    num_words, full_ingr, quantity = step.extract_full_noun_from_step(token, children)
+                    num_words, full_ingr, quantity, validity = step.extract_full_noun_from_step(token, children)
                     skip_words += num_words
                     # apples, bananas, and cherries
                     # apple, (lushish apples, quantity)
-
-                    verbose_ingr[potential_ingr] = (full_ingr, quantity)
+                    if validity == True: 
+                        key_words.append(potential_ingr)
+                        verbose_ingr[potential_ingr] = (full_ingr, quantity)
             else:
                 skip_words -= 1
             
@@ -106,14 +110,16 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
             
             if holding_resource_condition(token, resource_dataset, step_words) and holding_res_found == False:
                 #print('yes')
-                holding_res_found = step.extract_holdingres_from_step(token, step_words)
+                holding_res_found, hold_res_dic, hold_res_count = step.extract_holdingres_from_step(token, step_words, hold_res_dic, hold_res_count)
                 #print(step.holdingResource)
-                print(holding_res_found)
+                #print(holding_res_found)
 
             idx += 1
 
         # Verify ingredients and supplies
-        step.verify_key_words(key_words, verbose_ingr, verbose_supply, recipe_ingredients)
+        ingr_base_words = step.verify_key_words(key_words, verbose_ingr, verbose_supply, recipe_ingredients)
+        #print(ingr_base_words)
+
 
         step.define_prep_step()
 
@@ -126,31 +132,42 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
             step.approx_user_time()
         
         if holding_res_found == False:
-            #Check the most recently appended step in the steps_out list
+            print(step_words)
+            check_oven_keywords = ['Bake', 'bake', 'broil', 'Broil', 'Roast', 'roast']
+            #need to check for the oven being a holding resource (look for words like 'bake' or 'broil' or 'oven')
+            string_words = [str(i) for i in step_words]
+            if len(set(check_oven_keywords).intersection(set(string_words))) != 0:
+                step.holdingResource = 'oven'
+                step.holdingID = hold_res_count
+                hold_res_count += 1      
 
-            if len(steps_out) == 0: #if it is the first step
+            elif len(steps_out) == 0: #if it is the first step
                 for words in step_words: 
                     if str(words) in resource_dataset and str(words) != "cup":
                         step.holdingResource = str(words)
+                        step.holdingID = hold_res_count
+                        hold_res_count += 1      
                 if step.holdingResource == '': step.holdingResource = 'N/A'
 
             elif 'BREAK' not in steps_out[-1].instructions:
                 step.holdingResource = steps_out[-1].holdingResource
+                step.holdingID = steps_out[-1].holdingID
 
             elif 'BREAK' in steps_out[-1].instructions:   #if the instruction string does contain BREAK
-                for test_match in steps_out:
+                set1 = set(ingr_base_words)
+                for test_index in range(len(all_ingr_base_words)):
                     max_count = 0
-                    set1 = set(test_match.ingredients) 
-                    print(set1)
-                    set2 = set(step.ingredients)
-                    print(set2)
+                    set2 = set(all_ingr_base_words[test_index]) 
+                    #print(set1)
+                    #print(set2)
                     common_ingredients = set1.intersection(set2)
                     if len(common_ingredients) > max_count: 
-                        step.holdingResource = test_match.holdingResource
+                        step.holdingResource = steps_out[test_index].holdingResource
+                        step.holdingID = steps_out[test_index].holdingID
                         max_count = len(common_ingredients)
-                    if len(common_ingredients) == 0:
-                        step.holdingResource = steps_out[-2].holdingResource
-
+                if len(common_ingredients) == 0:
+                    step.holdingResource = steps_out[-2].holdingResource #just a holder for now, need to consider this edge case 
+                    step.holdingID = steps_out[-2].holdingID
             #make the previous holding resource also the current one
             #else: check to see if there is overlap with ingredients in the current step with any of the previous steps
             #if nothing has been found, then make the previous holding resource current one
@@ -158,10 +175,11 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
         
         
         steps_out.append(step)
-
+        all_ingr_base_words.append(ingr_base_words)
     
-        #***TO DO: CREATE HOLDING RESOURCE ALGORITHM IN HERE****
 
+
+        #***TO DO: CREATE HOLDING RESOURCE ALGORITHM IN HERE****
 
 
         # print("PARSED STEP:")
@@ -215,8 +233,8 @@ def holding_resource_condition(token, dataset, step_words):
 ingredient_cookies, text_steps = extract_recipe_text('test.txt')
 
 parsed_steps = extract_text_from_steps(ingredient_cookies, text_steps)
-for steps in parsed_steps:
+#for steps in parsed_steps:
    # print('FINAL')
-    if 'BREAK' not in steps.instructions: 
-        print(steps.instructions)
-        print(steps.holdingResource)
+    #if 'BREAK' not in steps.instructions: 
+       # print(steps.instructions)
+        #print(steps.holdingResource)

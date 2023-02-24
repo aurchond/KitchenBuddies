@@ -65,7 +65,8 @@ prep_dict = {'preheat':'',
              'combine':'',
              'whisk':'',
              'beat':'',
-             'brush':''}
+             'brush':'',
+             'cut': ''}
 
 # Verbs that are CLEARLY non for preparation
 non_prep_dict = {'simmer':'',
@@ -101,6 +102,7 @@ class Step:
         # compare to verb database to check if prep step
 
     def extract_full_noun_from_step(self, token, children):
+        validity = True
         ingredient = ""
         for check_for_mods in children:      #consider ingredients modified by amod 
             if check_for_mods.dep_ == 'amod' or check_for_mods.dep_ =='nmod':
@@ -116,9 +118,15 @@ class Step:
         token_check = token
         while token_check.dep_ == 'compound': # and token_check in children_check: #checking to see if ingredients have multiple words
             ingredient += " "
-            ingredient += str(token_check.head)
-            token_check = token_check.head
-            skip_words += 1
+            ingr_dummy, supply_dummy = debug_verify_ingr_supplies([str(token_check.head)]) #need to consider cases like "donut pan"
+            if len(supply_dummy) == 0: 
+                ingredient += str(token_check.head)
+                token_check = token_check.head
+                skip_words += 1
+            else: 
+                ingredient = None
+                validity = False 
+                break
         
         quantity = -1
         edge_case = False
@@ -136,7 +144,7 @@ class Step:
 
         # self.ingredientsQuantity.append(quantity)
 
-        return skip_words, ingredient, quantity
+        return skip_words, ingredient, quantity, validity
 
     def extract_supply_from_step(self, token):
         supply += str(token)
@@ -275,7 +283,7 @@ class Step:
         if len(key_words) != 0:
             db_ingr, supplies_out = debug_verify_ingr_supplies(key_words)
             # db_ingr, supplies_out = verify_ingredients_supplies(key_words)
-            ingr_out = ingr_out + db_ingr
+            ingr_out = ingr_out + db_ingr 
 
         for ingr in ingr_out:
             if ingr.lower() not in verbose_ingr:
@@ -291,16 +299,22 @@ class Step:
                 continue
             self.resourcesRequired.append(verbose_ingr[supply.lower()][0])
         
+        return ingr_out
+        
         # print(self.ingredients)
         # print(self.resourcesRequired)
             
-    def extract_holdingres_from_step(self, token, step_words):
+    def extract_holdingres_from_step(self, token, step_words, hold_res_dic, hold_res_count):
         head_word = token.head 
         #print(token, head_word.lemma_)
-        if token.dep_ == "pobj" and (str(head_word.lemma_) == "in" or str(head_word.lemma_) == "on" or str(head_word.lemma_) == "to" ) :
+        if token.dep_ == "pobj" and (str(head_word.lemma_) == "in" or str(head_word.lemma_) == "on" or str(head_word.lemma_) == "to" or str(head_word.lemma_) == "into"  ) :
             #print('I FOUND A RESOURCE:' + str(token)) 
             self.holdingResource = str(token)
-            return True
+            hold_res_dic[self.holdingResource] = hold_res_count
+            self.holdingID = hold_res_count
+            print(self.holdingResource, hold_res_count)
+            hold_res_count += 1
+            return True, hold_res_dic, hold_res_count
         else:
-            return False 
+            return False, hold_res_dic, hold_res_count
             #need to access resources (supplies.txt) from data
