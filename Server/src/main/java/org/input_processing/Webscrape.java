@@ -25,6 +25,9 @@ public class Webscrape {
     // Chili: https://www.thewholesomedish.com/the-best-classic-chili/
     // Baked Cake Donuts: https://amandascookin.com/baked-cake-donuts/
     // Chicken Alfredo Penne: https://tasty.co/recipe/easy-chicken-alfredo-penne
+    // Oven Baked Chicken and Rice: https://www.recipetineats.com/oven-baked-chicken-and-rice/
+    // Corn Chowder: https://www.foodandwine.com/recipes/corn-chowder
+    // Summer Corn Chowder: https://www.cookingclassy.com/summer-corn-chowder/
     public Webscrape(String url) {
         this.url = url;
     }

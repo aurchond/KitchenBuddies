@@ -10,8 +10,6 @@ import java.sql.Statement;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
-import com.mysql.cj.xdevapi.Statement;
-
 import scala.Console;
 
 import java.util.ArrayList;
@@ -33,7 +31,7 @@ public class MySqlConnection {
         //addToFriendsList("shadi@gmail.com", "marley@gmail.com");
         // findFriends("shadi@gmail.com");
         // createSupplyTable();
-        getLastRecipeID();
+        // getLastRecipeID();
         // createFoodTable();
     }
 

@@ -27,74 +27,68 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class Main {
-    // Will handle parsing steps apart before the recipe Creator gets called
-    /**
-     * 1. Step Creation - This should be done in Input Processing since the NLP should put it in the Data Structure
-         *                      we have made for a Step
-         * 2. Look for all the dependencies in the steps - This can be done efficiently if we do it alongside step creation
-     */
-    public static void main(String[] args) throws IOException {
-        // try {
-        //     // Set up the URL and HTTP connection
-        //     URL url = new URL("https://mocki.io/v1/3700c4d7-98a8-4c26-b231-60c677bfc4f5");
-        //     HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        //     con.setRequestMethod("GET");
-        //     con.setRequestProperty("Content-Type", "application/json");
+public class RecipeExtractor {
 
-        //     // Read the JSON response
-        //     BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        //     String inputLine;
-        //     StringBuilder response = new StringBuilder();
-        //     while ((inputLine = in.readLine()) != null) {
-        //         response.append(inputLine);
-        //     }
-        //     in.close();
+    public static void parseUserRecipe() {
+        // Input the json from our app with title, totalTime, ingredients, instructions
+        // Covert data to InputRecipe
 
-        //     // Print the JSON response
-        //     System.out.println(response.toString());
+        // Run RecipeExtractor
 
-        // } catch (IOException e) {
-        //     e.printStackTrace();
-        // }
+        // return Success or Failure
+    }
+
+    public static Boolean parseRecipeUrl(String url) {
+        // Input the url
+        System.out.println(url);
+
+        // Webscrape and place data in InputRecipe
+        // Run RecipeExtractor
         
-        String url = "https://therecipecritic.com/pork-schnitzel/";
+        // String url = "https://amandascookin.com/baked-cake-donuts/";
         // Scrape website and place info in text file within Py_Text_Processing/Input folder
         Webscrape scraper = new Webscrape(url);
-        InputRecipe in_recipe = scraper.extractRecipe();
+        InputRecipe inRecipe = scraper.extractRecipe();
 
+        // return Success or Failure
+        Boolean res = ExtractRecipe(inRecipe, url);
+        return res;
+    }
+
+    private static Boolean ExtractRecipe(InputRecipe inRecipe, String url) {
         // TODO: Place basic multithreading (1 thread for steps, other thread for placing recipe in database)
         // Use Python to process the recipe instructions, step file exported to json file within Py_Text_Processing/Output folder
-        parseInstructionsPython(in_recipe.recipeFile + ".txt");
+        parseInstructionsPython(inRecipe.recipeFile + ".txt");
 
-    //     // Retrieve recipe steps 
+        // Retrieve recipe steps 
         List<Step> steps = new ArrayList<Step>();
         HashMap<String, List<Integer>> ingredients = new HashMap<String, List<Integer>>();//<ingredient, List<StepId>>
         HashMap<String, List<Integer>> resourcesRequired = new HashMap<String, List<Integer>>();//<tool, List<StepId>>
         HashMap<String, List<Integer>> holdingResource_Id = new HashMap<String, List<Integer>>();//<holdingResource, List<StepId>>
         // TODO: Check this works with our json format
         parseJson(
-                "Py_Text_Processing/output/" + in_recipe.recipeFile + ".json",
+                "Py_Text_Processing/output/" + inRecipe.recipeFile + ".json",
                 steps,
                 ingredients,
                 resourcesRequired,
                 holdingResource_Id
         );
 
-        // TODO: Place the metadata (name, ingredients, time, whatever) relational db
         // Metadata = details about a recipe
-        long recipeID = addToAllRecipes(in_recipe.getRecipeTitle(), url, in_recipe.convertIngredientsToString(), in_recipe.getTotalTime());
+        long recipeID = addToAllRecipes(inRecipe.getRecipeTitle(), url, inRecipe.convertIngredientsToString(), inRecipe.getTotalTime());
         
-        Recipe out_recipe = createRecipe(steps, ingredients, resourcesRequired, holdingResource_Id, recipeID);// String will be formatted as "holdingResource_holdingId"
-        out_recipe.setRecipeName(in_recipe.recipeTitle);
-        saveRecipe(out_recipe, out_recipe.getRecipeName());
+        // TODO: Fix Recipe Processing
+    //     Recipe out_recipe = createRecipe(steps, ingredients, resourcesRequired, holdingResource_Id, recipeID);// String will be formatted as "holdingResource_holdingId"
+    //     out_recipe.setRecipeName(inRecipe.recipeTitle);
+    //     saveRecipe(out_recipe, out_recipe.getRecipeName());
 
-       System.out.println(Arrays.asList(ingredients));
-       System.out.println(Arrays.asList(resourcesRequired));
-       System.out.println(Arrays.asList(holdingResource_Id));
+    //    System.out.println(Arrays.asList(ingredients));
+    //    System.out.println(Arrays.asList(resourcesRequired));
+    //    System.out.println(Arrays.asList(holdingResource_Id));
+       return true;
     }
 
-    public static void parseInstructionsPython(String recipeFile){
+    private static void parseInstructionsPython(String recipeFile){
         try {
             long startTime = System.nanoTime();
             String currentDirectory = System.getProperty("user.dir");
