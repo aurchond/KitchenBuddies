@@ -1,7 +1,9 @@
 from mysql_db import verify_ingredients_supplies, debug_verify_ingr_supplies
 import math
+from fractions import Fraction
 
 # key = verb, value = time it takes to finish per ingredient in minutes
+cutting_board_verbs = ['chop', 'dice', 'mince', 'slice', 'julienne', 'peel', 'grate', 'shred', 'cut', 'carve', 'score', 'trim', 'halve', 'quarter', 'pound', 'crush']
 time_per_ingr_dict = {'chop': 1,
                       'simmer': 2,
                       'stir': 1,
@@ -67,7 +69,8 @@ prep_dict = {'preheat':'',
              'beat':'',
              'brush':'',
              'cut': '', 
-             'prepare': ''}
+             'prepare': '',
+             'place': ''}
 
 # Verbs that are CLEARLY non for preparation
 non_prep_dict = {'simmer':'',
@@ -119,8 +122,9 @@ class Step:
         token_check = token
         while token_check.dep_ == 'compound': # and token_check in children_check: #checking to see if ingredients have multiple words
             ingredient += " "
-            ingr_dummy, supply_dummy = debug_verify_ingr_supplies([str(token_check.head)]) #need to consider cases like "donut pan"
-            if len(supply_dummy) == 0: 
+            ingr_dummy, supply_dummy = debug_verify_ingr_supplies([str(token_check)])
+            ingr_head_dummy, supply_head_dummy = debug_verify_ingr_supplies([str(token_check.head)]) #need to consider cases like "donut pan"
+            if len(supply_head_dummy) == 0 and len(ingr_dummy) != 0: 
                 ingredient += str(token_check.head)
                 token_check = token_check.head
                 skip_words += 1
@@ -186,21 +190,28 @@ class Step:
         '''
 
         time_for_step = -1
+       # print(self.instructions, children)
         #calculating time dependencies
         for time_check in children:
             if time_check.pos_ == 'NUM': 
                 grandchildren = [grandchild for grandchild in time_check.children]
                 gc_time = -1
                 for grandchild in grandchildren:
-                    if (grandchild.pos_ == 'NUM' or str(grandchild) == 'to') and grandchild.dep_ == 'quantmod':
+                    if (grandchild.pos_ == 'NUM' or str(grandchild) == 'to') and (grandchild.dep_ == 'quantmod' or grandchild.dep_ == 'compound'):
                         # print(f'Grandchild {grandchild}')
+                        if grandchild.dep_ == 'compound': self.stepTime = float(Fraction(str(time_check)))
                         gc_time = int(str(grandchild))
+                        print(gc_time)
                         # time_for_step += str(grandchild)
                 # print(f'time_check {time_check}')
                 # print(f'token {token}')
-                if not str(time_check).isnumeric():
+                print(str(time_check))
+                if not str(time_check).isnumeric() and not self.is_fraction(str(time_check)):
+                   # print('wait its brekaing oh no')
                     break
-                time = int(str(time_check))
+                if str(time_check).isnumeric(): time = float(str(time_check)) #converted this to float for sake of fractions
+                else: time = Fraction(str(time_check))
+
                 if time > gc_time:
                     time_for_step = time
                 else:
@@ -252,7 +263,7 @@ class Step:
             self.userTime = s_time
         
         if self.stepTime == -1:
-            self.stepTime = 2
+            self.stepTime = 2 
 
     def approx_user_time(self):
         # only used if step_time is explicitly defined within the instruction
@@ -271,9 +282,11 @@ class Step:
         '''
         Verify which nouns in instructions are either ingredients or supplies
         '''
+        
         ingr_out = []
         supplies_out = []
         db_ingr = []
+        
 
         # iterate through key words and check ingredients
         # print("Key words: ", key_words)
@@ -284,7 +297,9 @@ class Step:
                     # print(key)
                     key_words.pop(key_words.index(key))
                     break
-            
+
+        TEMP, not_a_resource = debug_verify_ingr_supplies(ingr_out)
+        for fake_ingr in not_a_resource: ingr_out.pop(ingr_out.index(fake_ingr)) #just an extra filtering step so it doesn't read a resource like 'pan' as an ingredient
         # call database with:
         # - ingredients not in recipe ingredients
         # - supplies
@@ -293,6 +308,7 @@ class Step:
             db_ingr, supplies_out = debug_verify_ingr_supplies(key_words)
             # db_ingr, supplies_out = verify_ingredients_supplies(key_words)
             ingr_out = ingr_out + db_ingr 
+        
 
         for ingr in ingr_out:
             if ingr.lower() not in verbose_ingr:
@@ -301,13 +317,14 @@ class Step:
             values = verbose_ingr[ingr.lower()]
             self.ingredients.append(values[0])
             self.ingredientsQuantity.append(values[1])
+        self.ingredients = list(set(self.ingredients)) #removes duplicate entries 
         
         for supply in supplies_out:
             if supply.lower() not in verbose_ingr:
                 print(f"{supply} was considered as supply??")
                 continue
             self.resourcesRequired.append(verbose_ingr[supply.lower()][0])
-        
+        self.resourcesRequired = list(set(self.resourcesRequired))
         return ingr_out
         
         # print(self.ingredients)
@@ -316,16 +333,23 @@ class Step:
     def extract_holdingres_from_step(self, token, step_words, hold_res_dic, hold_res_count):
         head_word = token.head 
         #print(token, head_word.lemma_)
-        if token.dep_ == "pobj" and (str(head_word.lemma_) == "in" or str(head_word.lemma_) == "on" or str(head_word.lemma_) == "to" or str(head_word.lemma_) == "into"  ) :
-            # assume new holding resource
-            #print('I FOUND A RESOURCE:' + str(token)) 
-            self.holdingResource = str(token)
-            hold_res_dic[self.holdingResource] = hold_res_count
-            self.holdingID = hold_res_count
-            print(self.holdingResource, hold_res_count)
-            hold_res_dic[self.holdingResource] = hold_res_count
+        if token.dep_ == "pobj" and (str(head_word.lemma_) == "in" or str(head_word.lemma_) == "on" or str(head_word.lemma_) == "to" or str(head_word.lemma_) == "into"  ):
+            if head_word.dep_ == 'prep' and (str(head_word.head.lemma_) == 'return' or str(head_word.head.lemma_) == 'back'):
+                for key in hold_res_dic:
+                    if str(token) in key: 
+                        self.holdingResource = key
+                        self.holdingID = hold_res_dic[key]
+            else:
+                temp_count = 0
+                for key in hold_res_dic:
+                    if str(token) in key: temp_count += 1
 
-            hold_res_count += 1          
+                self.holdingResource = str(token) + str(temp_count+1)
+                hold_res_dic[self.holdingResource] = hold_res_count
+                self.holdingID = hold_res_count
+                #print(self.holdingResource, hold_res_count)
+            
+                hold_res_count += 1          
             return True, hold_res_dic, hold_res_count
         else:
             return False, hold_res_dic, hold_res_count
@@ -351,50 +375,84 @@ class Step:
         #need to check for the oven being a holding resource (look for words like 'bake' or 'broil' or 'oven')
         string_words = [str(i) for i in step_words]
         if len(set(check_oven_keywords).intersection(set(string_words))) != 0:
-            # Set oven to holding resource
-            # NOTE: Change this to the resource holding the food
-            self.holdingResource = 'oven'
+            self.resourcesRequired.append('oven')  #Lmao I put this here for now, don't know if I should properly move this over later
+
+        if len(set(cutting_board_verbs).intersection(set(self.verbs))) != 0:
+            temp_count = 0
+            for key in hold_res_dic:
+                if 'cutting board' in key: temp_count += 1
+           
+            self.holdingResource = 'cutting board' + str(temp_count+1)
             self.holdingID = hold_res_count
             hold_res_dic[self.holdingResource] = hold_res_count
-            hold_res_count += 1      
+            hold_res_count +=1 
+
 
         elif len(steps_out) == 0: #if it is the first step
             for word in step_words: 
                 if str(word) in resource_dataset and str(word) != "cup":
-                    self.holdingResource = str(word)
-                    self.holdingID = hold_res_count
-                    hold_res_count += 1      
-            if self.holdingResource == '': self.holdingResource = 'N/A'
+                    temp_count = 0
+                    for key in hold_res_dic:
+                        if str(word) in key: temp_count += 1
 
+                    self.holdingResource = str(word) + str(temp_count+1)
+                    self.holdingID = hold_res_count
+                    hold_res_dic[self.holdingResource] = hold_res_count
+                    hold_res_count += 1  
+                    
+                    break    
+            if self.holdingResource == '': self.holdingResource = 'N/A'
+           
         elif 'BREAK' not in steps_out[-1].instructions:
             self.holdingResource = steps_out[-1].holdingResource
             self.holdingID = steps_out[-1].holdingID
+            
+            #if self.holdingResource == 'large skillet1': print('Aha')
 
         elif 'BREAK' in steps_out[-1].instructions:   #if the instruction string does contain BREAK
             # NOTE: Assumes that ingredients are labelled the same across steps (i.e. milk, dough -> batter)
+
             set1 = set(ingr_base_words)
+            max_count = 0
             for test_index in range(len(all_ingr_base_words)):
-                max_count = 0
+
                 set2 = set(all_ingr_base_words[test_index]) 
-                #print(set1)
-                #print(set2)
+
                 common_ingredients = set1.intersection(set2)
+                if len(common_ingredients) == 1 and 'oil' in common_ingredients: continue
+
                 if len(common_ingredients) > max_count: 
                     self.holdingResource = steps_out[test_index].holdingResource
                     self.holdingID = steps_out[test_index].holdingID
                     
-
                     max_count = len(common_ingredients)
-            if len(common_ingredients) == 0:
+                    #print(max_count)
+
+            if max_count == 0:
                 for resource in self.resourcesRequired: 
+                   # print(resource, 'HERE')
                     if resource != "cup":
-                        self.holdingResource = resource
+                        temp_count = 0
+                        for key in hold_res_dic:
+                            if str(resource) in key: temp_count += 1
+
+                        self.holdingResource = resource + str(temp_count +1)
                         self.holdingID = hold_res_count
-                        hold_res_count += 1 
-                if self.holdingResource == '':
+                        hold_res_dic[self.holdingResource] = hold_res_count
+                    
+                if self.holdingResource != '': hold_res_count+=1
+                      
+                else:
                     self.holdingResource = steps_out[-2].holdingResource #just a holder for now, need to consider this edge case 
                     self.holdingID = steps_out[-2].holdingID
+                 
+
 
         return hold_res_count, hold_res_dic
 
-        
+    def is_fraction(self, string):
+        try:
+            Fraction(string)
+            return True
+        except ValueError:
+            return False       
