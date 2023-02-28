@@ -27,15 +27,19 @@ public class Main {
             if (isRecipeInDatabase(recipeName)) {
                 recipes.add(getRecipeFromDatabase(recipeName));
             } else {
-                //Input processing - parse out the steps from the text - this should output a list of steps
+                /**
+                 * Input processing - parse out the steps from the text - this should output a list of steps
+                 */
                 List<Step> Steps = new ArrayList<Step>();
                 HashMap<String, List<Integer>> ingredients = new HashMap<String, List<Integer>>();//<ingredient, List<StepId>>
                 HashMap<String, List<Integer>> resourcesRequired = new HashMap<String, List<Integer>>();//<tool, List<StepId>>
                 HashMap<String, List<Integer>> holdingResource_Id = new HashMap<String, List<Integer>>();//<holdingResource, List<StepId>>
                 parseJson(String.format("res/input/%s.json", recipeName), Steps, ingredients, resourcesRequired, holdingResource_Id);
-                //TODO: make sure hashmaps have the stepIDs in order of smallest to largest
+                // make sure hashmaps have the stepIDs in order of smallest to largest
 
-                //Recipe Processing - Dependency creation + Saves Steps to DB
+                /**
+                 * Recipe Processing - Dependency creation + Saves Steps to DB
+                 */
 
                 Recipe recipe = createRecipe(Steps, ingredients, resourcesRequired, holdingResource_Id, lastRecipeID++);// String will be formatted as "holdingResource_holdingId"
                 recipe.setRecipeName(recipeName);
@@ -61,12 +65,6 @@ public class Main {
          */
         userStepsToJson(buddies);
         System.out.println("Finished");
-        //Iterate through users to make steps into a list
-        //
-
-        //
-
-        //
     }
 
 }
