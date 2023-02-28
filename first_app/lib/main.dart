@@ -12,7 +12,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:first_app/local_notification_service.dart';
-import 'package:first_app/screens/bottom_navigation.dart';
+import 'package:first_app/helpers/bottom_navigation.dart';
 
 import 'dart:convert';
 
