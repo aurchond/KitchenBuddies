@@ -3,6 +3,7 @@ from spacy import displacy
 nlp = spacy.load("en_core_web_sm")
 
 from utilities import extract_recipe_text
+from mysql_db import debug_verify_ingr_supplies
 from step import Step
 
 data_path = "./Py_Text_Processing/"
@@ -50,6 +51,8 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
     hold_res_dic = {}
     hold_res_count = 0
 
+    print(steps_out)
+
     with open(data_path + "/data/supplies.txt", 'r') as file:
         for words in file: 
             resource_dataset.append(words.rstrip().lower())
@@ -95,7 +98,9 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
 
             if skip_words == 0:
                 if noun_condition(token, time_key_words, step.ingredients):
+                   # if str(token) == 'pot': print('yay a pot', step_words)
                     potential_ingr = str(token).lower()
+
 
                     num_words, full_ingr, quantity, validity = step.extract_full_noun_from_step(token, children)
                     skip_words += num_words
@@ -133,6 +138,7 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
         # Approximate Step Time
         if step.stepTime == -1:
             # userTime also equals stepTime
+            print('edge case:', step.instructions)
             step.approximate_step_time()
         else:
             # userTime will most likely be less than stepTime
@@ -140,9 +146,12 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
         
 
         if holding_res_found == False:
-            step.holdingres_edge_case(hold_res_count, hold_res_dic, step_words, steps_out, resource_dataset, ingr_base_words, all_ingr_base_words)
+            hold_res_count, hold_res_dic = step.holdingres_edge_case(hold_res_count, hold_res_dic, step_words, steps_out, resource_dataset, ingr_base_words, all_ingr_base_words)
             # print(step_words)
         
+        if len(step.resourcesRequired) == 0 and step.holdingResource != '':
+            step.resourcesRequired.append(step.holdingResource)
+
         steps_out.append(step)
         all_ingr_base_words.append(ingr_base_words)
             # check_oven_keywords = ['Bake', 'bake', 'broil', 'Broil', 'Roast', 'roast']
@@ -202,6 +211,8 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
         # print(step.ingredients)
         # print(step.ingredientsQuantity)
         # print(step.verbs)
+    #for step in steps_out:
+        #print(step.holdingResource, ' ', step.holdingID, ' ', hold_res_count)
         # print(step.stepTime)
     return steps_out
 
@@ -213,8 +224,9 @@ def verb_condition(token, pos) -> bool:
                      # xcomp
                      # dobj
                      # nmod
-    if (token.pos_ == 'VERB' and token.dep_ not in not_verb_dict) \
-        or (token.pos_ == 'PROPN' and pos == 0):
+    ingr_dummy, supply_dummy = debug_verify_ingr_supplies([str(token)])
+    if ((token.pos_ == 'VERB' and token.dep_ not in not_verb_dict) \
+        or (token.pos_ == 'PROPN' and pos == 0)) and len(ingr_dummy) == 0:
         return True
     
     # might need to include adv, adj at beginning, propn at beginning of sentence, noun (beginning of sentence and middle of sentence)
@@ -223,6 +235,10 @@ def verb_condition(token, pos) -> bool:
     return False
 
 def noun_condition(token, time_key_words, ingredients_in_step):
+    if token.pos_ == 'VERB':        #this is here to consider cases where Spacy reads an ingredient such as 'seasoning' as a VERB accidentally
+        ingr_dummy, supply_dummy = debug_verify_ingr_supplies([str(token)])
+        if len(ingr_dummy) != 0: 
+            return True
     #checking for ingredients, making sure the noun is not a duplicate of a previously found ingredient or a time
     if token.pos_ == 'NOUN' and str(token) not in time_key_words \
         and str(token) not in ingredients_in_step:
@@ -242,11 +258,8 @@ def holding_resource_condition(token, dataset, step_words):
 
     return False 
 
-        
 
-ingredient_cookies, text_steps = extract_recipe_text('test.txt')
-
-parsed_steps = extract_text_from_steps(ingredient_cookies, text_steps)
+#parsed_steps = extract_text_from_steps(ingredient_cookies, text_steps)
 #for steps in parsed_steps:
    # print('FINAL')
     #if 'BREAK' not in steps.instructions: 
