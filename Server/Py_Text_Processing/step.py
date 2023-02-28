@@ -90,8 +90,8 @@ non_prep_dict = {'simmer':'',
 class Step:
     def __init__(self, instructions):
         self.instructions = instructions
-        self.ingredients = []
-        self.ingredientsQuantity = []
+        self.ingredientList = []
+        self.ingredientQuantity = []
         self.resourcesRequired = []
         self.prepStep = False
         self.verbs = []
@@ -108,19 +108,19 @@ class Step:
     def extract_full_noun_from_step(self, token, children):
         validity = True
         ingredient = ""
-        for check_for_mods in children:      #consider ingredients modified by amod 
+        for check_for_mods in children:      #consider ingredientList modified by amod 
             if check_for_mods.dep_ == 'amod' or check_for_mods.dep_ =='nmod':
                 ingredient += str(check_for_mods) 
                 ingredient += " "
-                if str(check_for_mods) in self.ingredients:
-                    self.ingredientsQuantity.pop(self.ingredients.index(str(check_for_mods))) 
-                    self.ingredients.pop(self.ingredients.index(str(check_for_mods)))
+                if str(check_for_mods) in self.ingredientList:
+                    self.ingredientQuantity.pop(self.ingredientList.index(str(check_for_mods))) 
+                    self.ingredientList.pop(self.ingredientList.index(str(check_for_mods)))
 
         ingredient += str(token)
 
         skip_words = 0
         token_check = token
-        while token_check.dep_ == 'compound': # and token_check in children_check: #checking to see if ingredients have multiple words
+        while token_check.dep_ == 'compound': # and token_check in children_check: #checking to see if ingredientList have multiple words
             ingredient += " "
             ingr_dummy, supply_dummy = debug_verify_ingr_supplies([str(token_check)])
             ingr_head_dummy, supply_head_dummy = debug_verify_ingr_supplies([str(token_check.head)]) #need to consider cases like "donut pan"
@@ -148,9 +148,9 @@ class Step:
                     # quantity += str(misc)  #this is to account for quantities like "2 or 3" or "5-7"
         # TODO: Convert this to an int in minutes
         if edge_case:
-            print("Ingredients Quantity Edge Case Detected!!")
+            print("ingredientList Quantity Edge Case Detected!!")
 
-        # self.ingredientsQuantity.append(quantity)
+        # self.ingredientQuantity.append(quantity)
 
         return skip_words, ingredient, quantity, validity
 
@@ -159,7 +159,7 @@ class Step:
 
         skip_words = 0
         token_check = token
-        while token_check.dep_ == 'compound': # and token_check in children_check: #checking to see if ingredients have multiple words
+        while token_check.dep_ == 'compound': # and token_check in children_check: #checking to see if ingredientList have multiple words
             supply += " "
             supply += str(token_check.head)
             token_check = token_check.head
@@ -235,7 +235,7 @@ class Step:
     def approximate_step_time(self):
         # setup local variables
         s_time = 0
-        len_ingredients = len(self.ingredients)
+        len_ingredients = len(self.ingredientList)
         prep_step_time = 2
         non_prep_step_time = 1
 
@@ -280,7 +280,7 @@ class Step:
 
     def verify_key_words(self, key_words, verbose_ingr, verbose_supply, recipe_ingr):
         '''
-        Verify which nouns in instructions are either ingredients or supplies
+        Verify which nouns in instructions are either ingredientList or supplies
         '''
         
         ingr_out = []
@@ -288,7 +288,7 @@ class Step:
         db_ingr = []
         
 
-        # iterate through key words and check ingredients
+        # iterate through key words and check ingredientList
         # print("Key words: ", key_words)
         for key in key_words:
             for ingr in recipe_ingr:
@@ -301,7 +301,7 @@ class Step:
         TEMP, not_a_resource = debug_verify_ingr_supplies(ingr_out)
         for fake_ingr in not_a_resource: ingr_out.pop(ingr_out.index(fake_ingr)) #just an extra filtering step so it doesn't read a resource like 'pan' as an ingredient
         # call database with:
-        # - ingredients not in recipe ingredients
+        # - ingredientList not in recipe ingredientList
         # - supplies
         # - garbage that will be sifted
         if len(key_words) != 0:
@@ -315,9 +315,9 @@ class Step:
                 print(f"{ingr} was considered as an ingr??")
                 continue
             values = verbose_ingr[ingr.lower()]
-            self.ingredients.append(values[0])
-            self.ingredientsQuantity.append(values[1])
-        self.ingredients = list(set(self.ingredients)) #removes duplicate entries 
+            self.ingredientList.append(values[0])
+            self.ingredientQuantity.append(values[1])
+        self.ingredientList = list(set(self.ingredientList)) #removes duplicate entries 
         
         for supply in supplies_out:
             if supply.lower() not in verbose_ingr:
@@ -327,7 +327,7 @@ class Step:
         self.resourcesRequired = list(set(self.resourcesRequired))
         return ingr_out
         
-        # print(self.ingredients)
+        # print(self.ingredientList)
         # print(self.resourcesRequired)
             
     def extract_holdingres_from_step(self, token, step_words, hold_res_dic, hold_res_count):
@@ -366,7 +366,7 @@ class Step:
         - Add hold_res_dic
         - First step of recipe
         - If step isn't the first step in the line (BREAK wasn't before this step), use the holding resource from previous step
-        - If first step after break, look at intersection of ingredients
+        - If first step after break, look at intersection of ingredientList
         - change so that the algorithm does not break when a holding resource is found
         '''
         #print(step_words)
@@ -410,7 +410,7 @@ class Step:
             #if self.holdingResource == 'large skillet1': print('Aha')
 
         elif 'BREAK' in steps_out[-1].instructions:   #if the instruction string does contain BREAK
-            # NOTE: Assumes that ingredients are labelled the same across steps (i.e. milk, dough -> batter)
+            # NOTE: Assumes that ingredientList are labelled the same across steps (i.e. milk, dough -> batter)
 
             set1 = set(ingr_base_words)
             max_count = 0
