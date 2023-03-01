@@ -1,6 +1,9 @@
 package org.server;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.utilities.database.relational.MySqlConnection;
 
 import javax.validation.Valid;
 import java.util.Arrays;
@@ -9,19 +12,56 @@ import java.util.List;
 @RestController
 public class RestApi {
 
+    @PostMapping("/AddUser")
+    public ResponseEntity<Object> AddUser(@Valid @RequestBody User user) {
+        try {
+            Boolean res = MySqlConnection.addUser(user.userEmail, user.skillLevel, user.username);
+
+            if (res) {
+                return ResponseEntity.ok("Success!");
+            } 
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("AddUser Request Failed");
+
+        } catch (Exception e) {
+            // In case another error occurs
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
     @GetMapping("/GetUserSkill")
-    public String GetUserSkill() {
-        //return skill
-        return "Greetings from Spring Boot!";
+    public String GetUserSkill(@Valid @RequestBody User user) {
+        // System.out.println(user.userEmail);
+        int skillLvl = MySqlConnection.getSkillLevel(user.userEmail);
+
+        // TODO: Return proper type
+        // TODO: Add error checking?
+        return "Greetings from Spring Boot! " + Integer.toString(skillLvl);
     }
 
     @PostMapping("/AddSkillLevel")
-    public void AddSkillLevel() {
-        //get value and set
+    public String AddSkillLevel(@Valid @RequestBody User user) {
+        Boolean res = MySqlConnection.addSkillLevel(user.userEmail, user.skillLevel);
+    
+        // TODO: Return proper type Success or failure?
+        String ret_val = "SkillLevel update of " + Integer.toString(user.skillLevel) + " for " + user.userEmail;
+
+        if (res) {
+            ret_val +=  " succeeded!";
+        } else {
+            ret_val +=  " failed";
+        }
+        
+        // TODO: Return proper type
+        return ret_val;
     }
 
     @GetMapping("/GetConstraintsAndFriends")
-    public String GetConstraintsAndFriends() {
+    public String GetConstraintsAndFriends(@Valid @RequestBody User user) {
+        KitchenConstraint userConstraints = MySqlConnection.getKitchen(user.userEmail);
+        List<String> userFriends = MySqlConnection.getFriendsList(user.userEmail);
+
+        // TODO: Combine KitchenConstraint object and friend list into 1 json
+        System.out.println(userConstraints.toString());
         //return constraints and skills
         return "Greetings from Spring Boot!";
         /**THESE ARE 2 SEPARATE JSON ARE THEY GETTING COMBINED?
@@ -53,25 +93,63 @@ public class RestApi {
     }
 
     @PostMapping("/AddKitchenConstraints")
-    public void AddKitchenConstraints() {
-        //get constraint and store
+    public String AddKitchenConstraints(@Valid @RequestBody KitchenConstraint kConstraint) {
+        //TODO: Do we need to confirm if all input values are valid? Is this done on the front end? (i.e. number of ovens isn't defined)
+        Boolean res = MySqlConnection.addKitchen(kConstraint.userEmail, kConstraint.burner, kConstraint.pan, 
+                                 kConstraint.pot, kConstraint.knife, kConstraint.cuttingBoard, kConstraint.oven, kConstraint.microwave);
+
+        // TODO: Return proper type Success or failure?
+        String ret_val = "KitchenConstraints update for " + kConstraint.userEmail;
+
+        if (res) {
+            ret_val +=  " succeeded!";
+        } else {
+            ret_val +=  " failed";
+        }
+
+        return ret_val;
     }
 
     @PostMapping("/AddFriend")
-    public void AddFriend() {
-        // get friend and store
+    public String AddFriend(@Valid @RequestBody User user) {
         /**
          {
          "userEmail": "shadisz@yahoo.ca",
          "newFriend": "aurchond@gmail.com"
          }
-         */
+        */
+        // TODO: Is adding friends bidirectional?
+        Boolean res = MySqlConnection.addToFriendsList(user.userEmail, user.newFriend);
+
+        // TODO: Return proper type Success or failure?
+        String ret_val = "";
+        if (res) {
+            ret_val +=  user.userEmail + " and " + user.newFriend + " are now friends!";
+        } else {
+            ret_val +=  "Friend update for " + user.userEmail + " failed";
+        }
+
+        return ret_val;
     }
 
     @PostMapping(value = "/RequestRecipeByUrl", produces="application/json")
     @ResponseBody
     public String RequestRecipeByUrl(@Valid @RequestBody RecipeInfo recipeInfo) {
         //get url from api call
+        //get recipes and store them to user
+        /**
+         * {
+            "userEmail": "shadisz@yahoo.ca",
+                "recipeUrl": "www.allrecipes.com/fish"
+        }
+
+        //once received in backend
+            a) backend checks url in AllRecipes database
+                i) if recipe does not exist, add to AllRecipes database to get auto ID
+                i.i) parse recipe (input processing)
+                i.ii) add to graph database with id from AllRecipes
+            b) add to FaveRecipes database for that user
+         */
 
 
         //return recipe info
@@ -147,26 +225,8 @@ public class RestApi {
          */
     }
 
-    @PostMapping("/AddRecipes")
-    public void AddRecipes() {
-        //get recipes and store them to user
-        /**
-         * {
-            "userEmail": "shadisz@yahoo.ca",
-                "recipeUrl": "www.allrecipes.com/fish"
-        }
-
-        //once received in backend
-            a) backend checks url in AllRecipes database
-                i) if recipe does not exist, add to AllRecipes database to get auto ID
-                i.i) parse recipe (input processing)
-                i.ii) add to graph database with id from AllRecipes
-            b) add to FaveRecipes database for that user
-         */
-    }
-
     @GetMapping("/GetPastRecipes")
-    public List<PastRecipe> GetPastRecipes(@Valid @RequestBody UserInfo userInfo) {
+    public List<PastRecipe> GetPastRecipes(@Valid @RequestBody User user) {
         //get past recipes for user
         String[] ingredientList1 = {"1 cup of sugar", "2 carrots"};
         String[] ingredientList2 = {"1 chicken", "cup of parmesan"};
