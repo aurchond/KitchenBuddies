@@ -18,7 +18,7 @@ public class RestApi {
     private String failureMsg = "Failure";
 
     @PostMapping("/AddUser")
-    public ResponseEntity<Object> AddUser(@Valid @RequestBody User user) {
+    public ResponseEntity<Object> AddUser(@Valid @RequestBody ApiUser user) {
         try {
             Boolean res = MySqlConnection.addUser(user.userEmail, user.skillLevel, user.username);
 
@@ -34,7 +34,7 @@ public class RestApi {
     }
 
     @GetMapping("/GetUserSkill")
-    public ResponseEntity<Object> GetUserSkill(@Valid @RequestBody User user) {
+    public ResponseEntity<Object> GetUserSkill(@Valid @RequestBody ApiUser user) {
         try {
             int skillLvl = MySqlConnection.getSkillLevel(user.userEmail);
             return ResponseEntity.ok(skillLvl);
@@ -46,7 +46,7 @@ public class RestApi {
     }
 
     @PostMapping("/AddSkillLevel")
-    public ResponseEntity<Object> AddSkillLevel(@Valid @RequestBody User user) {
+    public ResponseEntity<Object> AddSkillLevel(@Valid @RequestBody ApiUser user) {
         try {
             Boolean res = MySqlConnection.addSkillLevel(user.userEmail, user.skillLevel);
             if (res) {
@@ -60,7 +60,7 @@ public class RestApi {
     }
 
     @GetMapping("/GetKitchenConstraints")
-    public ResponseEntity<Object> GetConstraintsAndFriends(@Valid @RequestBody User user) {
+    public ResponseEntity<Object> GetConstraintsAndFriends(@Valid @RequestBody ApiUser user) {
         try {
             KitchenConstraint userConstraints = MySqlConnection.getKitchen(user.userEmail);
             return ResponseEntity.ok(userConstraints);
@@ -86,7 +86,7 @@ public class RestApi {
     }
 
     @GetMapping("/GetFriendsList")
-    public ResponseEntity<Object> GetFriendsList(@Valid @RequestBody User user) {
+    public ResponseEntity<Object> GetFriendsList(@Valid @RequestBody ApiUser user) {
         try {
             List<String> friends = MySqlConnection.getFriendsList(user.userEmail);
             Friends f = new Friends(friends);
@@ -98,7 +98,7 @@ public class RestApi {
     }
 
     @PostMapping("/AddFriend")
-    public ResponseEntity<Object> AddFriend(@Valid @RequestBody User user) {
+    public ResponseEntity<Object> AddFriend(@Valid @RequestBody ApiUser user) {
         try {
             Boolean res = MySqlConnection.addToFriendsList(user.userEmail, user.newFriend);
             if (res) {
@@ -114,7 +114,7 @@ public class RestApi {
     }
 
     @PostMapping(value = "/RequestRecipeByUrl", produces="application/json")
-    public ResponseEntity<Object> RequestRecipeByUrl(@Valid @RequestBody User user) {
+    public ResponseEntity<Object> RequestRecipeByUrl(@Valid @RequestBody ApiUser user) {
         /**
         //once received in backend
             a) backend checks url in AllRecipes database
@@ -143,7 +143,7 @@ public class RestApi {
     }
 
     @GetMapping("/GetPastRecipes")
-    public ResponseEntity<List<PastRecipe>> GetPastRecipes(@Valid @RequestBody User user) {
+    public ResponseEntity<List<PastRecipe>> GetPastRecipes(@Valid @RequestBody ApiUser user) {
         try {
             List<PastRecipe> recipes = MySqlConnection.findUserRecipes(user.userEmail);
             return ResponseEntity.ok(recipes);
@@ -155,33 +155,14 @@ public class RestApi {
         }
     }
 
-    @PostMapping("/RequestMealSessionSteps")
-    public String RequestMealSessionSteps(@Valid @RequestBody MealSessionInfo mealSessionInfo) {
-        // get constraints
-        // get friends
-        // get recipes
-        /**
-         * {
-             "kitchenConstraints": {
-                 "userEmail": "shadisz@yahoo.ca",
-                 "skill": 2,
-                 "burner": 3,
-                 "pot": 4,
-                 "pan": 2,
-                 "knife": 5,
-                 "cuttingBoard": 1,
-                 "oven": 1,
-                 "microwave": 2
-             },
-             "recipeIDs": [
-                 2, 4, 6
-             ],
-             "includedFriends": [
-                 "aditi@gmail.com",
-                 "shadi@gmail.com"
-             ]
-         }
-        */
+    @PostMapping("/RequestStepsByID")
+    public String RequestStepsByID(@Valid @RequestBody MealSessionInfo mealSessionInfo) {
+        // System.out.println(mealSessionInfo.kitchenConstraints);
+        // for (Integer id : mealSessionInfo.recipeIDs) {
+        //     System.out.println(id);
+        // }
+        // TODO: Refactor SetupMealSteps to output a JSONString (or an object in the same structure)
+        GenerateMeal.SetupMealSteps();
 
          //return meal session steps
         return "Greetings from Spring Boot!";

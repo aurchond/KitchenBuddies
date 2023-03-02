@@ -1,6 +1,6 @@
 package org.server;
 
-public class User {
+public class ApiUser {
     public String userEmail;
     public String username;
     public int skillLevel;
