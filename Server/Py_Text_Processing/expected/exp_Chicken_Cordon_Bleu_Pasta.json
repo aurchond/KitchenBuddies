@@ -1,0 +1,196 @@
+[
+    {
+        "1": {
+            "instructions": "Preheat oven to 350&deg;",
+            "ingredientList": [
+                "oven"
+            ],
+            "ingredientQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "oven"
+            ],
+            "prepStep": true,
+            "verbs": [],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "oven1",
+            "holdingID": 0
+        }
+    },
+    {
+        "2": {
+            "instructions": " Cook pasta according to package directions for al dente",
+            "ingredientList": [
+                "pasta"
+            ],
+            "ingredientQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "oven1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "according"
+            ],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "oven1",
+            "holdingID": 0
+        }
+    },
+    {
+        "3": {
+            "instructions": ",    Meanwhile, in a large saucepan, heat cream and cream cheese over medium heat until smooth, stirring occasionally",
+            "ingredientList": [
+                "cream",
+                "cream cheese"
+            ],
+            "ingredientQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "saucepan1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "stirring"
+            ],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "saucepan1",
+            "holdingID": 1
+        }
+    },
+    {
+        "4": {
+            "instructions": " Stir in 1 cup Swiss cheese, onion powder, garlic salt and pepper until blended",
+            "ingredientList": [
+                "cup",
+                "pepper",
+                "garlic salt",
+                "Swiss cheese",
+                "onion powder"
+            ],
+            "ingredientQuantity": [
+                1,
+                -1,
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "saucepan1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "stir"
+            ],
+            "stepTime": 5,
+            "userTime": 5,
+            "holdingResource": "saucepan1",
+            "holdingID": 1
+        }
+    },
+    {
+        "5": {
+            "instructions": ",    Drain pasta; stir in chicken, bacon and ham",
+            "ingredientList": [
+                "pasta",
+                "chicken"
+            ],
+            "ingredientQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "oven1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "stir"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "oven1",
+            "holdingID": 0
+        }
+    },
+    {
+        "6": {
+            "instructions": " Add sauce; toss to coat",
+            "ingredientList": [],
+            "ingredientQuantity": [],
+            "resourcesRequired": [
+                "saucepan1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "toss"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "saucepan1",
+            "holdingID": 1
+        }
+    },
+    {
+        "7": {
+            "instructions": " Transfer to a greased 13x9-in. baking dish",
+            "ingredientList": [],
+            "ingredientQuantity": [],
+            "resourcesRequired": [
+                "baking dish1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "greased"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "baking dish1",
+            "holdingID": 2
+        }
+    },
+    {
+        "8": {
+            "instructions": " Sprinkle with remaining cheese and the bread crumbs",
+            "ingredientList": [
+                "remaining cheese"
+            ],
+            "ingredientQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "oven1"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "baking dish1",
+            "holdingID": 2
+        }
+    },
+    {
+        "10": {
+            "instructions": " Bake, uncovered, 18-22 minutes or until heated through",
+            "ingredientList": [],
+            "ingredientQuantity": [],
+            "resourcesRequired": [
+                "oven"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "heated"
+            ],
+            "stepTime": 22,
+            "userTime": 2,
+            "holdingResource": "oven1",
+            "holdingID": 0
+        }
+    }
+]
