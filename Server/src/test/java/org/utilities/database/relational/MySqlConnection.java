@@ -10,8 +10,6 @@ import java.sql.Statement;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
-import com.mysql.cj.xdevapi.Statement;
-
 import scala.Console;
 
 import java.util.ArrayList;

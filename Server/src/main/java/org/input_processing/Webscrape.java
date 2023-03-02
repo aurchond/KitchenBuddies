@@ -1,28 +1,101 @@
 package org.input_processing;
 
-import org.json.simple.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import java.util.Iterator;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Webscrape {
+    String url;
+    // Previously used URLS
+    // Lemonade: https://www.simplyrecipes.com/recipes/perfect_lemonade/
+    // Turkey: https://www.allrecipes.com/recipe/166160/juicy-thanksgiving-turkey/
+    // Chili: https://www.thewholesomedish.com/the-best-classic-chili/
+    // Baked Cake Donuts: https://amandascookin.com/baked-cake-donuts/
+    // Chicken Alfredo Penne: https://tasty.co/recipe/easy-chicken-alfredo-penne
+    // Oven Baked Chicken and Rice: https://www.recipetineats.com/oven-baked-chicken-and-rice/
+    // Corn Chowder: https://www.foodandwine.com/recipes/corn-chowder
+    // Summer Corn Chowder: https://www.cookingclassy.com/summer-corn-chowder/
+    public Webscrape(String url) {
+        this.url = url;
+    }
 
-    public Webscrape() {
+    public InputRecipe extractRecipe() {
         System.out.println("We're back!!");
-        String jsonData = "";
-        Object recipeJson = new Object();
+        
+        JSONObject recipeJson = getRecipeObject(this.url);
 
+        InputRecipe inRecipe = new InputRecipe();
+        List<String> instructions = new ArrayList<String>();
+        HashMap<String, Object> microData = new HashMap<String, Object>();
+
+        if(recipeJson != JSONObject.NULL) {
+            Map<String, Object> map = recipeJson.toMap();
+            microData.putAll(map);
+        } else {
+            System.out.println("Probably throw an error");
+        }
+
+        // Title - name
+        inRecipe.setRecipeTitle(microData.get("name").toString());
+        Object name = microData.get("name");
+        if (name != null) {
+            inRecipe.setRecipeTitle(name.toString());
+        } else {
+            // TODO: NEED AN ERROR
+        }
+
+        // Total Time - totalTime
+        Object totalTime = microData.get("totalTime");
+        if (totalTime != null) {inRecipe.setTotalTime(totalTime.toString());}
+        
+        // Cook Time - cookTime
+        Object cookTime = microData.get("cookTime");
+        if (cookTime != null) {inRecipe.setCookTime(cookTime.toString());}
+
+        // Prep Time - prepTime
+        Object prepTime = microData.get("prepTime");
+        if (prepTime != null) {inRecipe.setPrepTime(prepTime.toString());}
+
+        // Ingredients
+        Object rIngredients = microData.get("recipeIngredient");
+        if (rIngredients != null) {
+            List<String> ingredients = new ArrayList<String>();
+            for (String ingr: (ArrayList<String>)rIngredients) {
+                ingredients.add(ingr);
+            }
+            inRecipe.setIngredients(ingredients);
+            System.out.println(inRecipe.ingredients);
+        }
+        
+        // Instructions - recipeInstructions
+        inRecipe.findInstructions(microData);
+        System.out.println(inRecipe.instructions.toString());
+
+        inRecipe.writeTextFile();
+        return inRecipe;
+    }
+
+    private JSONObject getRecipeObject(String url) {
+        String jsonData = "";
+        JSONObject recipeJson = new JSONObject();
+
+        // Get Json data as String from URL
         try {
             // TODO: Add error checking
-//            Document doc = Jsoup.connect("https://www.simplyrecipes.com/recipes/perfect_lemonade/").get();
-            Document doc = Jsoup.connect("https://www.allrecipes.com/recipe/166160/juicy-thanksgiving-turkey/").get();
+            Document doc = Jsoup.connect(url).get();
             System.out.println(doc.title());
             Element newsHeadline = doc.select("script[type=application/ld+json]").first();
 
@@ -34,57 +107,89 @@ public class Webscrape {
             System.out.println(e);
         }
 
+        // Parse json data string
+        String recipeString = "";
         try {
             JSONParser parser = new JSONParser();
-            recipeJson = parser.parse(jsonData);
-            System.out.println(recipeJson);
+            recipeString = parser.parse(jsonData).toString();
+
         } catch (ParseException e) {
             System.out.println(e);
         }
 
-        InputRecipe inRecipe = new InputRecipe();
-//        HashMap<String, String> map = (HashMap<String, String>)recipeJson[0];
-        JSONArray test = (JSONArray)recipeJson;
-        HashMap<String, Object> microData = (HashMap<String, Object>)test.get(0);
-
-        // Title - name
-        System.out.println(microData.get("name"));
-        inRecipe.setRecipeTitle(microData.get("name").toString());
-
-        // Total Time - totalTime
-        System.out.println(microData.get("totalTime"));
-        inRecipe.setTotalTime(microData.get("totalTime").toString());
-
-        // Cook Time - cookTime
-        System.out.println(microData.get("cookTime"));
-        inRecipe.setCookTime(microData.get("cookTime").toString());
-
-        // Prep Time - prepTime
-        System.out.println(microData.get("prepTime"));
-        inRecipe.setPrepTime(microData.get("prepTime").toString());
-
-        // Ingredients
-        System.out.println(microData.get("recipeIngredient"));
-        List<String> ingredients = new ArrayList<String>();
-
-        for (String ingr: (ArrayList<String>)microData.get("recipeIngredient")) {
-            ingredients.add(ingr);
+        // Convert the json string into a JSONObject
+        Object json = null;
+        try {
+            json = new JSONObject(recipeString);
+        } catch (JSONException e) {
+            // If it's not a JSON object, try parsing as a JSON array
+            json = new JSONArray(recipeString);
         }
-        inRecipe.setIngredients(ingredients);
-        System.out.println(inRecipe.ingredients);
 
-        // Instructions - recipeInstructions
-        List<String> instructions = new ArrayList<String>();
-        for (HashMap<String, String> step:
-                (ArrayList<HashMap<String, String>>) microData.get("recipeInstructions")) {
-            if (step.get("@type").equals("HowToStep")) {
-                instructions.add(step.get("text"));
+        if (json instanceof JSONObject) {
+            recipeJson = (JSONObject)json;
+
+        } else if (json instanceof JSONArray) {
+            JSONArray jsonArray = (JSONArray) json;
+            recipeJson = jsonArray.getJSONObject(0);
+        }
+
+        if (foundRecipeType(recipeJson)) {
+            System.out.println(recipeJson);
+            return recipeJson;
+        }
+
+
+        // More parsing required to find recipe
+        try {
+            JSONArray graphObj = recipeJson.getJSONArray("@graph");
+            for (int i = 0; i < graphObj.length(); i++) {
+                JSONObject obj = graphObj.getJSONObject(i);
+                // System.out.println(obj);
+                if (foundRecipeType(obj)) {
+                    System.out.println(obj);
+                    return obj;
+                }
             }
-            // Figure out how to parse HowToSection
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        inRecipe.setInstructions(instructions);
-        System.out.println(inRecipe.instructions.toString());
 
-        inRecipe.writeTextFile();
+        System.out.println("ANOTHER JSON EDGE CASE DETECTED");
+        
+        return recipeJson;
+    }
+
+    private Boolean foundRecipeType(JSONObject obj) {
+        try {
+            String type = obj.getString("@type");
+            System.out.println(type);
+            if (type.equals("Recipe")) {
+                return true;
+            }
+        } catch (JSONException e) {}
+
+        // confirm object is recipe type
+        Object types;
+        try {
+            types = obj.getJSONArray("@type");
+        } catch (JSONException e) {
+            // Type not found at all
+            return false;
+        }
+
+        System.out.println(obj);
+        if (types instanceof String && types.equals("Recipe")) {
+            return true;
+        } else if (types instanceof List<?>) {
+            List<String> objectTypes = (List<String>)types;
+            for (String type: objectTypes) {
+                if (type.equals("Recipe")) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
+

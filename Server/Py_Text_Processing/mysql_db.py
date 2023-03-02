@@ -1,5 +1,7 @@
 import mysql.connector
 
+data_path = "./Py_Text_Processing/"
+
 def verify_ingredients_supplies(istr_nouns):
     '''
     Check which nouns within the sentence are ingredients
@@ -17,8 +19,6 @@ def verify_ingredients_supplies(istr_nouns):
         else:
             where_clause += ');'
         query += where_clause
-    
-    print(query)
 
     # connect to database
     mydb = mysql.connector.connect(
@@ -34,37 +34,62 @@ def verify_ingredients_supplies(istr_nouns):
     mycursor.execute(query)
 
     results = mycursor.fetchall()
-    print(results)
+    # print(results)
 
-    items = []
+    ingredients = []
 
     for row in results:
-        items.append(row[0])
+        ingredients.append(row[0])
 
-    print(items)
+    # print(ingredients)
 
     # Change table to extract supplies
     supply_query = query.replace('Food', 'KitchenSupplies')
-    print(supply_query)
+    # print(supply_query)
     mycursor.execute(supply_query)
 
     results = mycursor.fetchall()
-    print(results)
+    # print(results)
 
     supplies = []
 
     for row in results:
         supplies.append(row[0])
 
-    print(supplies)
+    # print(supplies)
 
     mycursor.close()
     mydb.close()
 
     # run supply query - return only supplies
 
-    # return (ingredients, supplies)
+    return ingredients, supplies
 
-verify_ingredients_supplies(['pan', 'parsley', 'zucchini'])
+def debug_verify_ingr_supplies(nouns):
+    resource_dataset = []
+    food_dataset = []
+    with open(r"./Py_Text_Processing/data/supplies.txt", 'r') as file:
+        for words in file: 
+            resource_dataset.append(words.rstrip().lower())
+    
+    with open(r"./Py_Text_Processing/data/unique_foods.txt", 'r', encoding='utf-8') as file:
+        for words in file: 
+            food_dataset.append(words.rstrip().lower())
+    
+    ingredients = []
+    supplies = []
+
+    for word in nouns:
+        if word in food_dataset:
+            ingredients.append(word)
+        
+        if word in resource_dataset:
+            supplies.append(word)
+    
+    return ingredients, supplies
+
+    
+
+# verify_ingredients_supplies(['pan', 'parsley', 'zucchini'])
 
 

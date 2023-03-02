@@ -5,16 +5,27 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.utilities.database.graph.Step;
+import org.recipe_processing.Recipe;
+import static org.recipe_processing.RecipeCreator.createRecipe;
+import static org.utilities.database.graph.RecipeHelper.*;
+import static org.utilities.database.relational.MySqlConnection.*;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class Main {
     // Will handle parsing steps apart before the recipe Creator gets called
@@ -24,23 +35,104 @@ public class Main {
          * 2. Look for all the dependencies in the steps - This can be done efficiently if we do it alongside step creation
      */
     public static void main(String[] args) throws IOException {
-        List<Step> steps = new ArrayList<Step>();
-        HashMap<String, List<Integer>> ingredients = new HashMap<String, List<Integer>>();//<ingredient, List<StepId>>
-        HashMap<String, List<Integer>> resourcesRequired = new HashMap<String, List<Integer>>();//<tool, List<StepId>>
-        HashMap<String, List<Integer>> holdingResource_Id = new HashMap<String, List<Integer>>();//<holdingResource, List<StepId>>
-        String name = new File(".").getCanonicalPath();
-        System.out.println("Test "+ name);
-        parseJson(
-                "res/input/fried_rice.json",
-                steps,
-                ingredients,
-                resourcesRequired,
-                holdingResource_Id
-        );
-        System.out.println(Arrays.asList(ingredients));
-        System.out.println(Arrays.asList(resourcesRequired));
-        System.out.println(Arrays.asList(holdingResource_Id));
+        // try {
+        //     // Set up the URL and HTTP connection
+        //     URL url = new URL("https://mocki.io/v1/3700c4d7-98a8-4c26-b231-60c677bfc4f5");
+        //     HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        //     con.setRequestMethod("GET");
+        //     con.setRequestProperty("Content-Type", "application/json");
+
+        //     // Read the JSON response
+        //     BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        //     String inputLine;
+        //     StringBuilder response = new StringBuilder();
+        //     while ((inputLine = in.readLine()) != null) {
+        //         response.append(inputLine);
+        //     }
+        //     in.close();
+
+        //     // Print the JSON response
+        //     System.out.println(response.toString());
+
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
+        
+        String url = "https://www.justonecookbook.com/homemade-miso-soup/";
+        // Scrape website and place info in text file within Py_Text_Processing/Input folder
+        Webscrape scraper = new Webscrape(url);
+        InputRecipe in_recipe = scraper.extractRecipe();
+
+    //     // TODO: Place basic multithreading (1 thread for steps, other thread for placing recipe in database)
+    //     // Use Python to process the recipe instructions, step file exported to json file within Py_Text_Processing/Output folder
+    //     parseInstructionsPython(in_recipe.recipeFile + ".txt");
+
+    // //     // Retrieve recipe steps 
+    //     List<Step> steps = new ArrayList<Step>();
+    //     HashMap<String, List<Integer>> ingredients = new HashMap<String, List<Integer>>();//<ingredient, List<StepId>>
+    //     HashMap<String, List<Integer>> resourcesRequired = new HashMap<String, List<Integer>>();//<tool, List<StepId>>
+    //     HashMap<String, List<Integer>> holdingResource_Id = new HashMap<String, List<Integer>>();//<holdingResource, List<StepId>>
+    //     // TODO: Check this works with our json format
+    //     parseJson(
+    //             "Py_Text_Processing/output/" + in_recipe.recipeFile + ".json",
+    //             steps,
+    //             ingredients,
+    //             resourcesRequired,
+    //             holdingResource_Id
+    //     );
+
+    //     // TODO: Place the metadata (name, ingredients, time, whatever) relational db
+    //     // Metadata = details about a recipe
+    //     long recipeID = addToAllRecipes(in_recipe.getRecipeTitle(), url, in_recipe.convertIngredientsToString(), in_recipe.getTotalTime());
+        
+    //     Recipe out_recipe = createRecipe(steps, ingredients, resourcesRequired, holdingResource_Id, recipeID);// String will be formatted as "holdingResource_holdingId"
+    //     out_recipe.setRecipeName(in_recipe.recipeTitle);
+    //     saveRecipe(out_recipe, out_recipe.getRecipeName());
+
+    //    System.out.println(Arrays.asList(ingredients));
+    //    System.out.println(Arrays.asList(resourcesRequired));
+    //    System.out.println(Arrays.asList(holdingResource_Id));
     }
+
+    public static void parseInstructionsPython(String recipeFile){
+        try {
+            long startTime = System.nanoTime();
+            String currentDirectory = System.getProperty("user.dir");
+            System.out.println("Current directory: " + currentDirectory);
+            String os = System.getProperty("os.name");
+            String activateEnv = "";
+            String command = "";
+            String parameter = recipeFile;
+            String script = "";
+            if (os.toLowerCase().startsWith("windows")) {
+                // for PC users (local development)
+                script = ".\\Py_Text_Processing\\main.py";
+                activateEnv = ".\\Py_Text_Processing\\kb_text\\Scripts\\activate.bat";
+                command = "cmd /c \"" + activateEnv + " & python " + script + " " + parameter + "\"";
+            } else {
+                // for Server
+                script = "./Py_Text_Processing/main.py";
+                command = "python3 " + script + " " + parameter;
+            }
+
+            System.out.println("Running " + command);
+            Process process = Runtime.getRuntime().exec(command);
+            BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = in.readLine()) != null) {
+                System.out.println(line);
+            }
+            in.close();
+
+            process.waitFor();
+            long endTime = System.nanoTime();
+            long duration = (endTime - startTime) / 1000000;
+            System.out.println("Duration: " + duration + " milliseconds");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void parseJson(
             String filePath,
             List<Step> steps,
@@ -122,8 +214,11 @@ public class Main {
         s.setUserTime(userTime);
 
         List<String> ingredientList = (List<String>) stepObject.get("ingredientList");
-        System.out.println(ingredientList);
+        if (ingredientList == null) {
+            ingredientList = new ArrayList<String>();
+        }
         s.setIngredientList(ingredientList);
+        System.out.println(ingredientList);
         for (String ingredient: ingredientList) {
             ingredients.computeIfAbsent(ingredient, k -> new ArrayList<>()).add(stepId);
         }
