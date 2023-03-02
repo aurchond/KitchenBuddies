@@ -99,6 +99,7 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
             if skip_words == 0:
                 if noun_condition(token, time_key_words, step.ingredients):
                    # if str(token) == 'pot': print('yay a pot', step_words)
+                    #print(str(token))
                     potential_ingr = str(token).lower()
 
 
@@ -128,6 +129,7 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
 
             idx += 1
 
+        print(step.instructions, key_words)
         # Verify ingredients and supplies
         ingr_base_words = step.verify_key_words(key_words, verbose_ingr, verbose_supply, recipe_ingredients)
         #print(ingr_base_words)
@@ -138,7 +140,7 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
         # Approximate Step Time
         if step.stepTime == -1:
             # userTime also equals stepTime
-            print('edge case:', step.instructions)
+            #print('edge case:', step.instructions)
             step.approximate_step_time()
         else:
             # userTime will most likely be less than stepTime

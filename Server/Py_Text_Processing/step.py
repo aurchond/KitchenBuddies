@@ -3,6 +3,7 @@ import math
 from fractions import Fraction
 
 # key = verb, value = time it takes to finish per ingredient in minutes
+measuring_quantities = ['teaspoon', 'teaspoons', 'tablespoon', 'tablespoons', 'fluid ounce', 'fluid ounces', 'cup', 'cups', 'pint', 'pints', 'quart', 'quarts', 'gallon', 'gallons', 'milliliter', 'milliliters', 'liter', 'liters', 'ounce', 'ounces', 'pound', 'pounds']
 cutting_board_verbs = ['chop', 'dice', 'mince', 'slice', 'julienne', 'peel', 'grate', 'shred', 'cut', 'carve', 'score', 'trim', 'halve', 'quarter', 'pound', 'crush']
 time_per_ingr_dict = {'chop': 1,
                       'simmer': 2,
@@ -106,6 +107,8 @@ class Step:
         # compare to verb database to check if prep step
 
     def extract_full_noun_from_step(self, token, children):
+        #print('the tested word:', token, 'the children:', children)
+       # print('it enters this function', token)
         validity = True
         ingredient = ""
         for check_for_mods in children:      #consider ingredients modified by amod 
@@ -120,11 +123,14 @@ class Step:
 
         skip_words = 0
         token_check = token
-        while token_check.dep_ == 'compound': # and token_check in children_check: #checking to see if ingredients have multiple words
+        while token_check.dep_ == 'compound':
+            # print('it enters this function', token_check)
+             # and token_check in children_check: #checking to see if ingredients have multiple words
             ingredient += " "
             ingr_dummy, supply_dummy = debug_verify_ingr_supplies([str(token_check)])
             ingr_head_dummy, supply_head_dummy = debug_verify_ingr_supplies([str(token_check.head)]) #need to consider cases like "donut pan"
-            if len(supply_head_dummy) == 0 and len(ingr_dummy) != 0: 
+            
+            if len(supply_head_dummy) == 0 and (len(ingr_dummy) != 0 or str(token_check) in measuring_quantities) : 
                 ingredient += str(token_check.head)
                 token_check = token_check.head
                 skip_words += 1
@@ -134,13 +140,16 @@ class Step:
                 break
         
         quantity = -1
+        #if (str(token) == 'tablespoons'): print(token_check.children)
         edge_case = False
-        for quantity_test in token_check.children:
+        for quantity_test in token.children:
+            #print('Children', quantity_test)
             if quantity_test.dep_ == 'nummod' and quantity_test.pos_ == 'NUM':
                 if not str(quantity_test).isnumeric():
                     break
                 # NOTE: It can be a string (i.e. 'one')
                 quantity = int(str(quantity_test))
+                #self.ingredientsQuantity.append(quantity)
                 for misc in quantity_test.children: 
                     print(f" {str(misc)}")
                     edge_case = True
@@ -199,18 +208,23 @@ class Step:
                 for grandchild in grandchildren:
                     if (grandchild.pos_ == 'NUM' or str(grandchild) == 'to') and (grandchild.dep_ == 'quantmod' or grandchild.dep_ == 'compound'):
                         # print(f'Grandchild {grandchild}')
-                        if grandchild.dep_ == 'compound': self.stepTime = float(Fraction(str(time_check)))
+                        if grandchild.dep_ == 'compound': 
+                            if str(token) in ['hour', 'hours']:
+                                self.stepTime = int(float(Fraction(str(time_check)))*60)
+                            elif str(token) in ['minute', 'minutes']:
+                                self.stepTime = int(math.ceil(float(Fraction(str(time_check)))))
                         gc_time = int(str(grandchild))
-                        print(gc_time)
+                       # print(gc_time)
                         # time_for_step += str(grandchild)
                 # print(f'time_check {time_check}')
                 # print(f'token {token}')
-                print(str(time_check))
-                if not str(time_check).isnumeric() and not self.is_fraction(str(time_check)):
-                   # print('wait its brekaing oh no')
+                #print(str(time_check))
+                if not str(time_check).isnumeric() and not self.is_fraction(str(time_check)): 
+                    print('break!')#check that the string read in is actually a number
                     break
-                if str(time_check).isnumeric(): time = float(str(time_check)) #converted this to float for sake of fractions
-                else: time = Fraction(str(time_check))
+
+                if str(time_check).isnumeric(): time = int(str(time_check)) #converted this to float for sake of fractions
+                else: time = float(Fraction(str(time_check)))
 
                 if time > gc_time:
                     time_for_step = time
@@ -218,19 +232,19 @@ class Step:
                     time_for_step = gc_time
 
                 if str(token) in 'seconds':
-                    time /= 60
+                    time_for_step /= 60
                 elif str(token) in 'hours':
-                    time *= 60
+                    time_for_step *= 60
                 
-                time_for_step = math.ceil(time)
+                #time_for_step = math.ceil(time)
                 # time_for_step += str(time_check)
                 # time_for_step += str(token)
         if self.stepTime != -1:
             # multiple times defined within the same step
             # print(f'Time is {time_for_step}')
-            self.stepTime += time_for_step
+            self.stepTime += int(math.ceil(time_for_step))
         else: 
-            self.stepTime = time_for_step
+            self.stepTime = int(math.ceil(time_for_step))
 
     def approximate_step_time(self):
         # setup local variables
