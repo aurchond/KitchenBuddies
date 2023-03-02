@@ -24,7 +24,7 @@ public class RestApi {
 
             if (res) {
                 return ResponseEntity.ok(successMsg);
-            } 
+            }
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("AddUser Request Failed");
 
         } catch (Exception e) {
@@ -34,7 +34,7 @@ public class RestApi {
     }
 
     @GetMapping("/GetUserSkill")
-    public ResponseEntity<Object> GetUserSkill(@Valid @RequestBody ApiUser user) {
+    public ResponseEntity<Integer> GetUserSkill(@Valid @RequestBody ApiUser user) {
         try {
             int skillLvl = MySqlConnection.getSkillLevel(user.userEmail);
             return ResponseEntity.ok(skillLvl);
@@ -51,7 +51,7 @@ public class RestApi {
             Boolean res = MySqlConnection.addSkillLevel(user.userEmail, user.skillLevel);
             if (res) {
                 return ResponseEntity.ok(successMsg);
-            } 
+            }
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("AddSkillLevel Request Failed");
         } catch (Exception e) {
             // In case another error occurs
@@ -73,11 +73,11 @@ public class RestApi {
     @PostMapping("/AddKitchenConstraints")
     public ResponseEntity<Object> AddKitchenConstraints(@Valid @RequestBody KitchenConstraint kConstraint) {
         try {
-            Boolean res = MySqlConnection.addKitchen(kConstraint.userEmail, kConstraint.burner, kConstraint.pan, 
+            Boolean res = MySqlConnection.addKitchen(kConstraint.userEmail, kConstraint.burner, kConstraint.pan,
                                     kConstraint.pot, kConstraint.knife, kConstraint.cuttingBoard, kConstraint.oven, kConstraint.microwave);
             if (res) {
                 return ResponseEntity.ok(successMsg);
-            } 
+            }
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("AddKitchenConstraints Request Failed");
         } catch (Exception e) {
             // In case another error occurs
@@ -104,7 +104,7 @@ public class RestApi {
             if (res) {
                 String ret_val =  user.userEmail + " and " + user.newFriend + " are now friends!";
                 return ResponseEntity.ok(ret_val);
-            } 
+            }
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("AddKitchenConstraints Request Failed");
 
         } catch (Exception e) {
