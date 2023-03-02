@@ -1,15 +1,13 @@
 package org.server;
 
+import org.input_processing.RecipeExtractor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.utilities.database.relational.MySqlConnection;
-import org.input_processing.RecipeExtractor;
 
 import javax.validation.Valid;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -34,9 +32,9 @@ public class RestApi {
     }
 
     @GetMapping("/GetUserSkill")
-    public ResponseEntity<Integer> GetUserSkill(@Valid @RequestBody ApiUser user) {
+    public ResponseEntity<Object> GetUserSkill(@Valid @RequestParam String userEmail) {
         try {
-            int skillLvl = MySqlConnection.getSkillLevel(user.userEmail);
+            int skillLvl = MySqlConnection.getSkillLevel(userEmail);
             return ResponseEntity.ok(skillLvl);
 
         } catch (Exception e) {
@@ -60,9 +58,9 @@ public class RestApi {
     }
 
     @GetMapping("/GetKitchenConstraints")
-    public ResponseEntity<Object> GetConstraintsAndFriends(@Valid @RequestBody ApiUser user) {
+    public ResponseEntity<Object> GetKitchenConstraints(@Valid @RequestParam String userEmail) {
         try {
-            KitchenConstraint userConstraints = MySqlConnection.getKitchen(user.userEmail);
+            KitchenConstraint userConstraints = MySqlConnection.getKitchen(userEmail);
             return ResponseEntity.ok(userConstraints);
         } catch (Exception e) {
             // In case another error occurs
@@ -86,9 +84,9 @@ public class RestApi {
     }
 
     @GetMapping("/GetFriendsList")
-    public ResponseEntity<Object> GetFriendsList(@Valid @RequestBody ApiUser user) {
+    public ResponseEntity<Object> GetFriendsList(@Valid @RequestParam String userEmail) {
         try {
-            List<String> friends = MySqlConnection.getFriendsList(user.userEmail);
+            List<String> friends = MySqlConnection.getFriendsList(userEmail);
             Friends f = new Friends(friends);
             return ResponseEntity.ok(f);
         } catch (Exception e) {
@@ -143,9 +141,9 @@ public class RestApi {
     }
 
     @GetMapping("/GetPastRecipes")
-    public ResponseEntity<List<PastRecipe>> GetPastRecipes(@Valid @RequestBody ApiUser user) {
+    public ResponseEntity<List<PastRecipe>> GetPastRecipes(@Valid @RequestParam String userEmail) {
         try {
-            List<PastRecipe> recipes = MySqlConnection.findUserRecipes(user.userEmail);
+            List<PastRecipe> recipes = MySqlConnection.findUserRecipes(userEmail);
             return ResponseEntity.ok(recipes);
 
         } catch (Exception e) {
