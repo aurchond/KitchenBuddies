@@ -58,40 +58,40 @@ public class Main {
         //     e.printStackTrace();
         // }
         
-        String url = "https://therecipecritic.com/pork-schnitzel/";
+        String url = "https://www.justonecookbook.com/homemade-miso-soup/";
         // Scrape website and place info in text file within Py_Text_Processing/Input folder
         Webscrape scraper = new Webscrape(url);
         InputRecipe in_recipe = scraper.extractRecipe();
 
-        // TODO: Place basic multithreading (1 thread for steps, other thread for placing recipe in database)
-        // Use Python to process the recipe instructions, step file exported to json file within Py_Text_Processing/Output folder
-        parseInstructionsPython(in_recipe.recipeFile + ".txt");
+    //     // TODO: Place basic multithreading (1 thread for steps, other thread for placing recipe in database)
+    //     // Use Python to process the recipe instructions, step file exported to json file within Py_Text_Processing/Output folder
+    //     parseInstructionsPython(in_recipe.recipeFile + ".txt");
 
-    //     // Retrieve recipe steps 
-        List<Step> steps = new ArrayList<Step>();
-        HashMap<String, List<Integer>> ingredients = new HashMap<String, List<Integer>>();//<ingredient, List<StepId>>
-        HashMap<String, List<Integer>> resourcesRequired = new HashMap<String, List<Integer>>();//<tool, List<StepId>>
-        HashMap<String, List<Integer>> holdingResource_Id = new HashMap<String, List<Integer>>();//<holdingResource, List<StepId>>
-        // TODO: Check this works with our json format
-        parseJson(
-                "Py_Text_Processing/output/" + in_recipe.recipeFile + ".json",
-                steps,
-                ingredients,
-                resourcesRequired,
-                holdingResource_Id
-        );
+    // //     // Retrieve recipe steps 
+    //     List<Step> steps = new ArrayList<Step>();
+    //     HashMap<String, List<Integer>> ingredients = new HashMap<String, List<Integer>>();//<ingredient, List<StepId>>
+    //     HashMap<String, List<Integer>> resourcesRequired = new HashMap<String, List<Integer>>();//<tool, List<StepId>>
+    //     HashMap<String, List<Integer>> holdingResource_Id = new HashMap<String, List<Integer>>();//<holdingResource, List<StepId>>
+    //     // TODO: Check this works with our json format
+    //     parseJson(
+    //             "Py_Text_Processing/output/" + in_recipe.recipeFile + ".json",
+    //             steps,
+    //             ingredients,
+    //             resourcesRequired,
+    //             holdingResource_Id
+    //     );
 
-        // TODO: Place the metadata (name, ingredients, time, whatever) relational db
-        // Metadata = details about a recipe
-        long recipeID = addToAllRecipes(in_recipe.getRecipeTitle(), url, in_recipe.convertIngredientsToString(), in_recipe.getTotalTime());
+    //     // TODO: Place the metadata (name, ingredients, time, whatever) relational db
+    //     // Metadata = details about a recipe
+    //     long recipeID = addToAllRecipes(in_recipe.getRecipeTitle(), url, in_recipe.convertIngredientsToString(), in_recipe.getTotalTime());
         
-        Recipe out_recipe = createRecipe(steps, ingredients, resourcesRequired, holdingResource_Id, recipeID);// String will be formatted as "holdingResource_holdingId"
-        out_recipe.setRecipeName(in_recipe.recipeTitle);
-        saveRecipe(out_recipe, out_recipe.getRecipeName());
+    //     Recipe out_recipe = createRecipe(steps, ingredients, resourcesRequired, holdingResource_Id, recipeID);// String will be formatted as "holdingResource_holdingId"
+    //     out_recipe.setRecipeName(in_recipe.recipeTitle);
+    //     saveRecipe(out_recipe, out_recipe.getRecipeName());
 
-       System.out.println(Arrays.asList(ingredients));
-       System.out.println(Arrays.asList(resourcesRequired));
-       System.out.println(Arrays.asList(holdingResource_Id));
+    //    System.out.println(Arrays.asList(ingredients));
+    //    System.out.println(Arrays.asList(resourcesRequired));
+    //    System.out.println(Arrays.asList(holdingResource_Id));
     }
 
     public static void parseInstructionsPython(String recipeFile){

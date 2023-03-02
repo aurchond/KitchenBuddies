@@ -97,7 +97,7 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
                 step.extract_verb_from_step(token)
 
             if skip_words == 0:
-                if noun_condition(token, time_key_words, step.ingredients):
+                if noun_condition(token, time_key_words, step.ingredientList):
                    # if str(token) == 'pot': print('yay a pot', step_words)
                     #print(str(token))
                     potential_ingr = str(token).lower()
@@ -211,7 +211,7 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
         # print("PARSED STEP:")
         # print(step.instructions)
         # print(step.ingredients)
-        # print(step.ingredientsQuantity)
+        # print(step.ingredientQuantity)
         # print(step.verbs)
     #for step in steps_out:
         #print(step.holdingResource, ' ', step.holdingID, ' ', hold_res_count)
