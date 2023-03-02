@@ -11,9 +11,13 @@ import 'package:first_app/provider/notification_provider.dart';
 
 import 'package:http/http.dart' as http;
 
+import '../backend_processing/data_class.dart';
+import '../backend_processing/get_requests.dart';
 import '../helpers/tile_decorated.dart';
 
-const List<String> list = <String>['Beginner', 'Intermediate', 'Skilled'];
+const List<String> skillList = <String>['Beginner', 'Intermediate', 'Advanced'];
+String savedSkillValue = "Intermediate";
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -41,6 +45,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+
+    final postModel = Provider.of<DataClass>(context, listen: false);
+    postModel.loadHomePage(); //todo: save string value
+
     //in terminated state
     FirebaseMessaging.instance.getInitialMessage().then((value) {
 /*     if (value != null) {
@@ -103,12 +111,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final fcmProvider = Provider.of<NotificationProvider>(context);
+    final postModel = Provider.of<DataClass>(context);
 
     /// dummy data ///
+    // todo AD: use getFriendsList, getKitchenConstraints and getUserSkill APIs
+
     final List<Map> myFriends =
         List.generate(6, (index) => {"id": index, "name": "Friend $index"})
             .toList();
-    String dropdownValue = list.first;
+    String? dropdownValue = postModel.skillLevel;
+
 
     return Consumer<AuthProvider>(builder: (context, model, _) {
       return Scaffold(
@@ -125,6 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
         body: Column(
           children: [
             /// friend setup ///
+            //todo AD: use AddFriend API
             Container(
                 margin: EdgeInsets.only(top: 20, bottom: 15),
                 child: Text(
@@ -155,6 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         false);
                   }),
             )),
+
             inputTextButton(textController, "Enter your friend's email",
                 "Add friend!", myFocusNode),
 
@@ -198,6 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
             )),
 
             /// set skill level ///
+            //todo AD: use AddSkillLevel API
             StatefulBuilder(
                 builder: (BuildContext context, StateSetter setState) {
               return Row(
@@ -205,9 +220,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   Container(
                       margin: EdgeInsets.all(25),
                       child: Text(
-                        "Select your skill level:",
+                        "Change your skill level:",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
+                            fontWeight: FontWeight.bold, fontSize: 15),
                       )),
                   DropdownButton<String>(
                     value: dropdownValue,
@@ -225,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         //TODO: handle API call
                       });
                     },
-                    items: list.map<DropdownMenuItem<String>>((String value) {
+                    items: skillList.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value, style: TextStyle(fontSize: 18)),
@@ -237,6 +252,7 @@ class _HomeScreenState extends State<HomeScreen> {
             }),
 
             /// set kitchen constraints
+            //todo AD: use KitchenConstraints API
             Container(
                 margin: EdgeInsets.only(top: 5, bottom: 20),
                 child: Text(
