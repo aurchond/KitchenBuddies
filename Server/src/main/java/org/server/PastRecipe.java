@@ -3,15 +3,17 @@ package org.server;
 import java.util.List;
 
 public class PastRecipe {
-    String recipeName;
-    List<String> ingredientList;
-    Float completionTime;
-    String lastTimeMade;//might switch to Date
+    public Integer recipeID;
+    public String recipeName;
+    public List<String> ingredientList;
+    public Integer totalTimeMinutes;
+    public String lastTimeMade;//might switch to Date
 
-    public PastRecipe(String recipeName,List<String> ingredientList,Float completionTime,String lastTimeMade) {
+    public PastRecipe(Integer recipeID, String recipeName,List<String> ingredientList,Integer completionTime,String lastTimeMade) {
+        this.recipeID = recipeID;
         this.recipeName = recipeName;
         this.ingredientList = ingredientList;
-        this.completionTime = completionTime;
+        this.totalTimeMinutes = completionTime;
         this.lastTimeMade = lastTimeMade;
     }
 }

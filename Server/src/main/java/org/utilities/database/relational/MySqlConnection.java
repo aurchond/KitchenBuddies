@@ -1,10 +1,12 @@
 package org.utilities.database.relational;
 
 import org.server.KitchenConstraint;
+import org.server.PastRecipe;
 // public package org.utilities.database.relational;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -16,6 +18,7 @@ import java.util.List;
 import scala.Console;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.sql.ResultSet;
 
 public class MySqlConnection {
@@ -301,25 +304,15 @@ public class MySqlConnection {
             stmt.setString(1, email);
 
             ResultSet rs = stmt.executeQuery();
-            if (!rs.next()) {
-                System.out.println("Result set is empty");
-                return friends;
-            }
-
             while(rs.next()) {
                 friends.add(rs.getString("FriendEmail"));
             }
-            return friends;
-            
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
-            return friends;
         }
-        
+        return friends;
     }
-    //should we avoid duplicates? i.e. if there is a link already between friend 1 and 2, avoid friend 2 and 1?
-    //consider performance .... then we need to change findFriend function too
-    //friends are bidirectional?
+
     public static Boolean addToFriendsList(String email, String friendEmail) {
         String addFriend = "INSERT INTO FriendsList(Email, FriendEmail) VALUES(?, ?);";
         try {
@@ -449,74 +442,43 @@ public class MySqlConnection {
         
     }
 
-    private static void addToFavRecipes(String email, int recipeId) {
-        String addFav = "INSERT INTO FavRecipes(Email, RecipeId) VALUES(?, ?);";
-        try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
-            PreparedStatement preprep = con.prepareStatement(useKB);
-            PreparedStatement prep = con.prepareStatement(addFav);) {
-            
-            preprep.executeUpdate();
-
-            //fill in parametrized query
-            prep.setString(1, email); //autonumber users?
-            prep.setInt(2, recipeId);
-            prep.executeUpdate();
-        }
-        catch (SQLIntegrityConstraintViolationException e) {
-            Console.print("Duplicate entry was ignored");
-            return;
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    //call this from front page of app to show your friends list
-    //TODO: make structs for User?
-    private static List<String> findFriends(String email) {
-        List<String> friends = new ArrayList<String>();
-        String findFriend = "SELECT FriendsList.FriendEmail FROM UserInfo INNER JOIN FriendsList on UserInfo.Email=FriendsList.FriendEmail WHERE FriendsList.Email = ?;";
-        try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
-            PreparedStatement preprep = con.prepareStatement(useKB);
-            PreparedStatement prep = con.prepareStatement(findFriend);) {
-            
-            preprep.executeUpdate();
-            prep.setString(1, email);
-            try (ResultSet rs = prep.executeQuery()) {
-                while(rs.next()) {
-                    friends.add(rs.getString("FriendEmail"));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        Console.print(friends + "\n");
-        return friends;
-    }
-
     //call this from front page of app to show the names of your saved recipes
-    private static List<String> findYourRecipes(String email) {
-        String joinRecipeTables = "SELECT FavRecipes.RecipeId, AllRecipes.Name FROM AllRecipes INNER JOIN FavRecipes on AllRecipes.RecipeId=FavRecipes.RecipeId WHERE FavRecipes.Email = ?;";
-        List<String> recipeNames = new ArrayList<String>();
+    public static List<PastRecipe> findUserRecipes(String email) {
+        String joinRecipeTables = "SELECT ar.RecipeId, ar.Name, ar.Ingredients, ar.TotalTime, url.LastDateMade FROM AllRecipes as ar INNER JOIN UserLinkedRecipes as url on ar.RecipeId=url.RecipeId WHERE url.Email = ?;";
+        List<PastRecipe> recipes = new ArrayList<PastRecipe>();
 
-        try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
-            PreparedStatement preprep = con.prepareStatement(useKB);
-            PreparedStatement prep = con.prepareStatement(joinRecipeTables);) {
-            
-            preprep.executeUpdate();
-            prep.setString(1, email);
-            try (ResultSet rs = prep.executeQuery()) {
-                while(rs.next()) {
-                    recipeNames.add(rs.getString("Name"));
+        try {
+            Connection conn = startSession();
+            PreparedStatement stmt = conn.prepareStatement(joinRecipeTables);
+
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()) {
+                Integer recipeId = rs.getInt("ar.RecipeId");
+                String name = rs.getString("ar.Name");
+                Integer totalTime = rs.getInt("ar.TotalTime");
+                
+                // Parse ingredients
+                String strIngr = rs.getString("ar.Ingredients");
+                String[] parts = strIngr.split(",");
+                List<String> ingredients = Arrays.asList(parts);
+
+                // LastDate
+                Date dateValue = rs.getDate("url.LastDateMade");
+                String date = "";
+
+                if (dateValue != null) {
+                    date = dateValue.toString();
                 }
+
+                PastRecipe pRecipe = new PastRecipe(recipeId, name, ingredients, totalTime, date);
+                recipes.add(pRecipe);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        Console.print(recipeNames + "\n");
-        return recipeNames;
+        return recipes;
     }
 
     //TODO: make a kitchen struct?
