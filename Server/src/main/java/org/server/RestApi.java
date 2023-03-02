@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.utilities.database.relational.MySqlConnection;
+import org.input_processing.RecipeExtractor;
 
 import javax.validation.Valid;
 import java.util.Arrays;
@@ -134,15 +135,8 @@ public class RestApi {
 
     @PostMapping(value = "/RequestRecipeByUrl", produces="application/json")
     @ResponseBody
-    public String RequestRecipeByUrl(@Valid @RequestBody RecipeInfo recipeInfo) {
-        //get url from api call
-        //get recipes and store them to user
-        /**
-         * {
-            "userEmail": "shadisz@yahoo.ca",
-                "recipeUrl": "www.allrecipes.com/fish"
-        }
-
+    public ResponseEntity<Object> RequestRecipeByUrl(@Valid @RequestBody User user) {
+        /*
         //once received in backend
             a) backend checks url in AllRecipes database
                 i) if recipe does not exist, add to AllRecipes database to get auto ID
@@ -150,10 +144,23 @@ public class RestApi {
                 i.ii) add to graph database with id from AllRecipes
             b) add to FaveRecipes database for that user
          */
+        try {
+            Boolean res = MySqlConnection.doesRecipeExist(user.userEmail, user.recipeUrl);
+            if (res) {
+                return ResponseEntity.ok("Recipe already in both databases");
+            }
 
+            // URL not parsed yet, enter input processing
+            res = RecipeExtractor.parseRecipeUrl(user.userEmail, user.recipeUrl);
+            if (res) {
+                return ResponseEntity.ok("Recipe added to user " + user.userEmail);
+            }
 
-        //return recipe info
-        return "Greetings from Spring Boot!";
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Recipe failed to be added to user");
+        } catch (Exception e) {
+            // In case another error occurs
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     @PostMapping("/RequestMealSessionSteps")

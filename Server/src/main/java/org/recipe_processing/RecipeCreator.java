@@ -24,7 +24,7 @@ public class RecipeCreator {
             HashMap<String, List<Integer>> ingredients,
             HashMap<String, List<Integer>> resourcesRequired,
             HashMap<String, List<Integer>> holdingResource_Id, // String will be formatted as "holdingResource_holdingId"
-            Long lastRecipeID //TODO: THIS WILL COME FROM RELATIONAL DB IN FALL
+            Long recipeID
             ){
         /**
          * 1. Step Creation - This should be done in Input Processing since the NLP should put it in the Data Structure
@@ -107,8 +107,8 @@ TODO: how do we want to create recipe ids
 //TODO: ENFORCE ASSUMPTION THAT LARGEST STEP IS FINAL STEP BECAUSE IT SHOULD USE EVERYTHING/COMBINE EVERYTHING
         //assign the time left for each step
         for (Step step : steps) {
-            step.setRecipeID(lastRecipeID+1);
-            step.setNodeID(Double.valueOf((lastRecipeID+1)+"."+step.getStepID()));
+            step.setRecipeID(recipeID);
+            step.setNodeID(Double.valueOf((recipeID)+"."+step.getStepID()));
             step.setName(step.getNodeID().toString());
             List<Connection> connections = new ArrayList<>();
             connections.addAll(step.getConnections());
@@ -132,7 +132,7 @@ TODO: how do we want to create recipe ids
             }
         }
         recipe.setFinalStep(steps.get(steps.size()-1));
-        recipe.setRecipeID(lastRecipeID+1);
+        recipe.setRecipeID(recipeID);
         return recipe;
     }
 

@@ -210,7 +210,7 @@ public class MySqlConnection {
     }
 
     public static long addToAllRecipes(String recipeName, String recipeUrl, String ingrString, int recipeTime) {
-        String checkRecipe = "SELECT COUNT(*) FROM AllRecipes WHERE URL = ?";
+        String checkRecipe = "SELECT RecipeId FROM AllRecipes WHERE URL = ?";
         String addRecipe = "INSERT INTO AllRecipes(Name, Url, Ingredients, TotalTime) VALUES(?, ?, ?, ?);";
         try {
             Connection conn = startSession();
@@ -231,11 +231,16 @@ public class MySqlConnection {
             prep.setString(2, recipeUrl);
             prep.setString(3, ingrString);
             prep.setInt(4, recipeTime);
-            prep.executeUpdate();
+            int rowsUpdated = prep.executeUpdate();
+            if (rowsUpdated == 0) {return -1;}
 
-            String sql = "SELECT LAST_INSERT_ID() as last_id FROM AllRecipes;";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            PreparedStatement stmt = conn.prepareStatement(checkRecipe);
+            stmt.setString(1, recipeUrl);
             ResultSet rs = stmt.executeQuery();
+            if (!rs.next()) {
+                System.out.println("Result set is empty");
+                return -1;
+            }
             return (long)rs.getInt(1);
             // return value
         }
@@ -349,6 +354,79 @@ public class MySqlConnection {
         return false;
     }
 
+    public static Boolean addUserLinkedRecipe(String email, int recipeId) {
+        try {
+            String sql = "INSERT INTO UserLinkedRecipes(Email, RecipeId) VALUES(?, ?);";
+            Connection conn = startSession();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, email);
+            stmt.setInt(2, recipeId);
+
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated > 0) {return true;} else {return false;}
+            
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public static Boolean doesRecipeExist(String email, String url) {
+        /* 
+        1. Check 
+            a. URL connected with user
+            b. if graph
+        2. If a. not satisfied
+            a. check if URL exists in AllRecipes
+            b. if not, return false
+            c. Add URL to User
+        3. Either after 1 or 2, check if URL has been parsed and placed in graphDB
+        */
+        try {
+            // Check if url in All_Recipes join on UserLinkedRecipes with ID
+            String sql = "SELECT ar.InGraphDB as GraphCheck FROM AllRecipes as ar " +
+                         "JOIN UserLinkedRecipes as ulr on ar.RecipeID=ulr.RecipeId WHERE ulr.Email = ? AND ar.Url = ?;";
+            Connection conn = startSession();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, email);
+            stmt.setString(2, url);
+
+            ResultSet rs = stmt.executeQuery();
+            if (!rs.next()) {
+                // Check if URL in AllRecipe and select InGraphDB
+                sql = "SELECT RecipeId, InGraphDB FROM AllRecipes as ar WHERE ar.Url = ?;";
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, url);
+                
+                if (!rs.next()) {
+                    // URL hasn't been parsed
+                    return false;
+                }
+
+                // Insert recipeId into UserLinkedRecipe
+                int recipeId = rs.getInt("RecipeId");
+                Boolean res = addUserLinkedRecipe(email, recipeId);
+
+                if (!res) {
+                    System.out.println("Couldn't add recipe to UserLinkedRecipe? Throw an error??");
+                }
+                
+                // Check if Recipe in GraphDB
+                Boolean inGraphDB = rs.getBoolean("GraphCheck");
+                if (inGraphDB) {return true;} else {return false;}
+            } 
+
+            Boolean inGraphDB = rs.getBoolean("GraphCheck");
+            if (inGraphDB) {return true;} else {return false;}
+            
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return false;
+    }
+
     public static long getRecipeID() {
         try {
             String sql = "SELECT LAST_INSERT_ID() as last_id FROM AllRecipes;";
@@ -392,9 +470,6 @@ public class MySqlConnection {
             e.printStackTrace();
         }
     }
-
-
-
 
     //call this from front page of app to show your friends list
     //TODO: make structs for User?
@@ -468,5 +543,4 @@ public class MySqlConnection {
         Console.print(numBurners + "\n");
         return numBurners; //should do error checking if -1 is received
     }
-
 }

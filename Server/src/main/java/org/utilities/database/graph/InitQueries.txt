@@ -12,8 +12,9 @@ CREATE TABLE AllRecipes (
 	RecipeId int NOT NULL AUTO_INCREMENT,
 	Name varchar(255) NOT NULL,
 	Url varchar(255) UNIQUE, #this might need to be increased
-	Ingredients varchar(500), #this might need to be increased -> storing ingredients as one string for now 
+	Ingredients varchar(2000), #this might need to be increased -> storing ingredients as one string for now 
 	TotalTime int, #stored in minutes
+    InGraphDB BOOLEAN DEFAULT FALSE,
 	PRIMARY KEY (RecipeId)
 );
 
@@ -51,9 +52,11 @@ CREATE TABLE FriendsList (
 SHOW TABLES; # get list of tables in database
 SELECT * FROM _tables_; # show everything in that table
 DELETE FROM _tables_ WHERE .... ;
+ALTER TABLE AllRecipes MODIFY COLUMN Ingredients varchar(2000);
 
 CREATE TABLE Friends; #join table on User id?
 
+SELECT ar.InGraphDB as GraphCheck FROM AllRecipes as ar JOIN UserLinkedRecipes as ulr on ar.RecipeID=ulr.RecipeId WHERE ulr.Email = 'aurchon@gmail.com' AND ar.Url = 'https://amandascookin.com/baked-cake-donuts/';
 
 ////experimenting with join queries/////
 SELECT FavRecipes.RecipeId, FavRecipes.UserId, AllRecipes.Name FROM AllRecipes INNER JOIN FavRecipes on AllRecipes.RecipeID=FavRecipes.RecipeId WHERE FavRecipes.UserId = 1;

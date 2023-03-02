@@ -27,78 +27,76 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class Main {
-    // Will handle parsing steps apart before the recipe Creator gets called
-    /**
-     * 1. Step Creation - This should be done in Input Processing since the NLP should put it in the Data Structure
-         *                      we have made for a Step
-         * 2. Look for all the dependencies in the steps - This can be done efficiently if we do it alongside step creation
-     */
-    public static void main(String[] args) throws IOException {
-        // try {
-        //     // Set up the URL and HTTP connection
-        //     URL url = new URL("https://mocki.io/v1/3700c4d7-98a8-4c26-b231-60c677bfc4f5");
-        //     HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        //     con.setRequestMethod("GET");
-        //     con.setRequestProperty("Content-Type", "application/json");
+public class RecipeExtractor {
 
-        //     // Read the JSON response
-        //     BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        //     String inputLine;
-        //     StringBuilder response = new StringBuilder();
-        //     while ((inputLine = in.readLine()) != null) {
-        //         response.append(inputLine);
-        //     }
-        //     in.close();
+    public static void parseUserRecipe() {
+        // Input the json from our app with title, totalTime, ingredients, instructions
+        // Covert data to InputRecipe
 
-        //     // Print the JSON response
-        //     System.out.println(response.toString());
+        // Run RecipeExtractor
 
-        // } catch (IOException e) {
-        //     e.printStackTrace();
-        // }
-        
-        String url = "https://tasty.co/recipe/easy-chicken-alfredo-penne";
+        // return Success or Failure
+    }
+
+    public static Boolean parseRecipeUrl(String email, String url) {
+        // String url = "https://amandascookin.com/baked-cake-donuts/";
         // Scrape website and place info in text file within Py_Text_Processing/Input folder
         Webscrape scraper = new Webscrape(url);
-        InputRecipe in_recipe = scraper.extractRecipe();
+        InputRecipe inRecipe = scraper.extractRecipe();
 
-    //     // TODO: Place basic multithreading (1 thread for steps, other thread for placing recipe in database)
-    //     // Use Python to process the recipe instructions, step file exported to json file within Py_Text_Processing/Output folder
-    //     parseInstructionsPython(in_recipe.recipeFile + ".txt");
+        // Add to relational database
+        long recipeID = addToAllRecipes(inRecipe.getRecipeTitle(), url, inRecipe.convertIngredientsToString(), inRecipe.getTotalTime());
 
-    // //     // Retrieve recipe steps 
-    //     List<Step> steps = new ArrayList<Step>();
-    //     HashMap<String, List<Integer>> ingredients = new HashMap<String, List<Integer>>();//<ingredient, List<StepId>>
-    //     HashMap<String, List<Integer>> resourcesRequired = new HashMap<String, List<Integer>>();//<tool, List<StepId>>
-    //     HashMap<String, List<Integer>> holdingResource_Id = new HashMap<String, List<Integer>>();//<holdingResource, List<StepId>>
-    //     // TODO: Check this works with our json format
-    //     parseJson(
-    //             "Py_Text_Processing/output/" + in_recipe.recipeFile + ".json",
-    //             steps,
-    //             ingredients,
-    //             resourcesRequired,
-    //             holdingResource_Id
-    //     );
+        // Add recipe to UserLinkedRecipes
+        Boolean res = addUserLinkedRecipe(email, (int)recipeID);
+        if (!res) {
+            // Might enter here if URL already exists, but recipe not in graph db
+            // Do nothing
+        }
 
-    //     // TODO: Place the metadata (name, ingredients, time, whatever) relational db
-    //     // Metadata = details about a recipe
-    //     long recipeID = addToAllRecipes(in_recipe.getRecipeTitle(), url, in_recipe.convertIngredientsToString(), in_recipe.getTotalTime());
+        // Process Text and Add to graph database
+        res = ExtractRecipe(inRecipe, url, recipeID);
+        return res;
+    }
+
+    private static Boolean ExtractRecipe(InputRecipe inRecipe, String url, long recipeID) {
+        // TODO: Place basic multithreading (1 thread for steps, other thread for placing recipe in database)
+        // Use Python to process the recipe instructions, step file exported to json file within Py_Text_Processing/Output folder
+        parseInstructionsPython(inRecipe.recipeFile + ".txt");
+
+        // Retrieve recipe steps 
+        List<Step> steps = new ArrayList<Step>();
+        HashMap<String, List<Integer>> ingredients = new HashMap<String, List<Integer>>();//<ingredient, List<StepId>>
+        HashMap<String, List<Integer>> resourcesRequired = new HashMap<String, List<Integer>>();//<tool, List<StepId>>
+        HashMap<String, List<Integer>> holdingResource_Id = new HashMap<String, List<Integer>>();//<holdingResource, List<StepId>>
+        // TODO: Check this works with our json format
+        parseJson(
+                "Py_Text_Processing/output/" + inRecipe.recipeFile + ".json",
+                steps,
+                ingredients,
+                resourcesRequired,
+                holdingResource_Id
+        );
+
+        // Metadata = details about a recipe
         
+        
+        // TODO: Fix Recipe Processing
     //     Recipe out_recipe = createRecipe(steps, ingredients, resourcesRequired, holdingResource_Id, recipeID);// String will be formatted as "holdingResource_holdingId"
-    //     out_recipe.setRecipeName(in_recipe.recipeTitle);
+    //     out_recipe.setRecipeName(inRecipe.recipeTitle);
     //     saveRecipe(out_recipe, out_recipe.getRecipeName());
 
     //    System.out.println(Arrays.asList(ingredients));
     //    System.out.println(Arrays.asList(resourcesRequired));
     //    System.out.println(Arrays.asList(holdingResource_Id));
+       return true;
     }
 
-    public static void parseInstructionsPython(String recipeFile){
+    private static void parseInstructionsPython(String recipeFile){
         try {
             long startTime = System.nanoTime();
             String currentDirectory = System.getProperty("user.dir");
-            System.out.println("Current directory: " + currentDirectory);
+            // System.out.println("Current directory: " + currentDirectory);
             String os = System.getProperty("os.name");
             String activateEnv = "";
             String command = "";
@@ -120,7 +118,7 @@ public class Main {
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
             while ((line = in.readLine()) != null) {
-                System.out.println(line);
+                // System.out.println(line);
             }
             in.close();
 
@@ -151,7 +149,7 @@ public class Main {
             Object obj = jsonParser.parse(json);
 
             JSONArray stepList = (JSONArray) obj;
-            System.out.println(stepList);
+            // System.out.println(stepList);
 
             stepList.forEach( s -> {
                 try {
@@ -185,32 +183,32 @@ public class Main {
         //Get employee object within list
         String key = stepNumber.iterator().next();
         Integer stepId = Integer.parseInt(key);
-        System.out.println(stepId);
+        // System.out.println(stepId);
         s.setStepID(stepId);
         JSONObject stepObject = (JSONObject) step.get(key);
 
         //Get employee first name
         Boolean prepStep = (Boolean) stepObject.get("prepStep");
-        System.out.println(prepStep);
+        // System.out.println(prepStep);
         s.setPrepStep(prepStep);
 
         String holdingResource = (String) stepObject.get("holdingResource");
-        System.out.println(holdingResource);
+        // System.out.println(holdingResource);
         s.setHoldingResource(holdingResource);
 
         Integer holdingID = ((Long)stepObject.get("holdingID")).intValue();
-        System.out.println(holdingID);
+        // System.out.println(holdingID);
         s.setHoldingID(holdingID);
 
         holdingResource_Id.computeIfAbsent(holdingResource+"_"+holdingID, k -> new ArrayList<>()).add(stepId);
         resourcesRequired.computeIfAbsent(holdingResource, k -> new ArrayList<>()).add(stepId);
 
         Integer stepTime = ((Long)stepObject.get("stepTime")).intValue();
-        System.out.println(stepTime);
+        // System.out.println(stepTime);
         s.setStepTime(stepTime);
 
         Integer userTime = ((Long)stepObject.get("userTime")).intValue();
-        System.out.println(userTime);
+        // System.out.println(userTime);
         s.setUserTime(userTime);
 
         List<String> ingredientList = (List<String>) stepObject.get("ingredientList");
@@ -218,18 +216,18 @@ public class Main {
             ingredientList = new ArrayList<String>();
         }
         s.setIngredientList(ingredientList);
-        System.out.println(ingredientList);
+        // System.out.println(ingredientList);
         for (String ingredient: ingredientList) {
             ingredients.computeIfAbsent(ingredient, k -> new ArrayList<>()).add(stepId);
         }
-        System.out.println(Arrays.asList(ingredients));
+        // System.out.println(Arrays.asList(ingredients));
 
         List<Float> ingredientQuantity = (List<Float>) stepObject.get("ingredientQuantity");
-        System.out.println(ingredientQuantity);
+        // System.out.println(ingredientQuantity);
         s.setIngredientQuantity(ingredientQuantity);
 
         List<String> rRequired = (List<String>) stepObject.get("resourcesRequired");
-        System.out.println(rRequired);
+        // System.out.println(rRequired);
         s.setResourcesRequired(rRequired);
 
         for (String resource: rRequired) {
@@ -237,7 +235,7 @@ public class Main {
         }
 
         String instructions = (String) stepObject.get("instructions");
-        System.out.println(instructions);
+        // System.out.println(instructions);
         s.setInstructions(instructions);
 
         steps.add(s);
