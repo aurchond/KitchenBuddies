@@ -1,0 +1,1358 @@
+{
+    "recipeIngredient": [
+        "2 tablespoons dried parsley",
+        "2 tablespoons ground dried rosemary",
+        "2 tablespoons rubbed dried sage",
+        "2 tablespoons dried thyme leaves",
+        "1 tablespoon lemon-pepper seasoning",
+        "1 tablespoon salt",
+        "1 (15 pound) whole turkey, neck and giblets removed",
+        "1 medium orange, cut into 8 wedges",
+        "1 medium onion, chopped into large pieces",
+        "1 medium carrot, cut into 1/2-inch slices",
+        "2 stalks celery, cut into 1/2-inch slices",
+        "1 (750 milliliter) bottle champagne",
+        "1 (14.5 ounce) can chicken broth"
+    ],
+    "image": {
+        "@type": "ImageObject",
+        "width": 960,
+        "url": "https://www.allrecipes.com/thmb/Iahgn0VQJm1Fkg1v5u9efyqywzE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/3217227-juicy-thanksgiving-turkey_photo-by-acruz6-ef03aa1ae4874a8a8cd4e787e695950b.jpg",
+        "height": 960
+    },
+    "@type": [
+        "Recipe",
+        "NewsArticle"
+    ],
+    "author": [
+        {
+            "@type": "Person",
+            "name": "Kirsten",
+            "url": "https://www.allrecipes.com/cook/2100246"
+        }
+    ],
+    "totalTime": "PT210M",
+    "cookTime": "PT180M",
+    "about": [],
+    "description": "This Thanksgiving turkey recipe makes a juicy, succulent turkey. The turkey is rubbed with dried herbs, then baked in a champagne chicken broth.",
+    "dateModified": "2022-11-29T15:35:23.000-05:00",
+    "video": {
+        "embedUrl": "https://players.brightcove.net/1033249144001/default_default/index.html?videoId=2203161179001",
+        "duration": "PT5M13S",
+        "uploadDate": "2021-03-01T23:01:23.241-05:00",
+        "@type": "VideoObject",
+        "name": "Juicy Thanksgiving Turkey",
+        "description": "A secret ingredient helps create a succulent holiday turkey.",
+        "thumbnailUrl": "https://static.onecms.io/wp-content/uploads/sites/43/2021/10/07/166160-juicy-thanksgiving-turkey-mfs-125-tout.jpg"
+    },
+    "mainEntityOfPage": {
+        "breadcrumb": {
+            "itemListElement": [
+                {
+                    "item": {
+                        "name": "Turkey",
+                        "@id": "https://www.allrecipes.com/recipes/975/holidays-and-events/thanksgiving/turkey/"
+                    },
+                    "@type": "ListItem",
+                    "position": 1
+                },
+                {
+                    "item": {
+                        "name": "Roasted",
+                        "@id": "https://www.allrecipes.com/recipes/16028/holidays-and-events/thanksgiving/turkey/roasted/"
+                    },
+                    "@type": "ListItem",
+                    "position": 2
+                },
+                {
+                    "item": {
+                        "name": "Juicy Thanksgiving Turkey",
+                        "@id": "https://www.allrecipes.com/recipe/166160/juicy-thanksgiving-turkey/"
+                    },
+                    "@type": "ListItem",
+                    "position": 3
+                }
+            ],
+            "@type": "BreadcrumbList"
+        },
+        "@type": [
+            "WebPage"
+        ],
+        "@id": "https://www.allrecipes.com/recipe/166160/juicy-thanksgiving-turkey/"
+    },
+    "@context": "http://schema.org",
+    "prepTime": "PT20M",
+    "datePublished": "2019-04-02T02:50:33.000-04:00",
+    "recipeYield": [
+        "10"
+    ],
+    "nutrition": {
+        "sugarContent": "2 g",
+        "proteinContent": "69 g",
+        "fiberContent": "1 g",
+        "@type": "NutritionInformation",
+        "unsaturatedFatContent": "0 g",
+        "fatContent": "24 g",
+        "cholesterolContent": "201 mg",
+        "calories": "556 kcal",
+        "carbohydrateContent": "4 g",
+        "saturatedFatContent": "7 g",
+        "sodiumContent": "680 mg"
+    },
+    "review": [
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Allrecipes Member"
+            },
+            "reviewBody": "Used sparkling wine and herb du salee, very good and best gravy ever!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Nicole Bergeron Bosse"
+            },
+            "reviewBody": "no change except I put a fes potatos inside,",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "KANDIYOHIV"
+            },
+            "reviewBody": "Use a Reynolds bag. I made it one year and it was amazing. Made it again this year but it turned out dry. The turkey this year cooked way faster than the calculated time (my fault for not watching closer) and I tasted only a bit of the flavor from all the stuffed ingredients, but not too much and was sadly pretty dry. I'll try it again based on my first results.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "4"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "LeVonMC"
+            },
+            "reviewBody": "Delicious!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "erichmrother"
+            },
+            "reviewBody": "I've been using this recipe consistently for 10+ years, it's a staple in our house. This recipe has made me the \"turkey guy\" for family dinners because the results are always the same - the best moist turkey your palet will ever taste. If you mess this recipe up, somehow - you don't belong in a kitchen.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Laura Grieve"
+            },
+            "reviewBody": "I add a splash of fresh OJ. I LOVE this turkey- mainly because of the gravy it produces. So good!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "jer-bear"
+            },
+            "reviewBody": "So... First time making a turkey and this turned out FABULOUS! I brined my 16lb bird for a day and a half, then let it dry out in the fridge until the next morning when it was time to prepare it. I took another's suggestion and made a garlic-herb butter that I rubbed inside the cavity and stuck slabs of it under the skin. Followed the recipe to the letter and it was THE juiciest turkey I've ever eaten. Everyone was amazed at how juicy and flavorful the breast meat was. Will be doing it this way every year now! Highly recommend!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Karla Sam Pang"
+            },
+            "reviewBody": "Easy to follow and provides amazing results every year!! Love the recipe and everyone praises the flavorful and tender results!! Thanks for sharing!!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Sue Faunce Broderick"
+            },
+            "reviewBody": "I have used this recipe for the past 5 years. Unbelievably easy and DELICIOUS!!!!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "John Pocino"
+            },
+            "reviewBody": "Worked perfectly.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Allrecipes Member"
+            },
+            "reviewBody": "Best receipe ever. I use it every year without fail. The juiciest .",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Allrecipes Member"
+            },
+            "reviewBody": "I\u2019ve used this recipes for four thanksgivings! It\u2019s a hit! Thanks for sharing! In love with the simplicity of it, and the great outcome!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Tatimatias"
+            },
+            "reviewBody": "I have been chosen by the family to make the turkey every year since 4 years ago I found this recipe and made it for the family. Since then, every Thanksgiving I come back to this recipe and every year it comes out better and better. Thank you!!!!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Allrecipes Member"
+            },
+            "reviewBody": "made it 4 years in a row and always get amazing compliments.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Dalton Edward Flint II"
+            },
+            "reviewBody": "I return to allrecipes every year for Thanksgiving and Christmas to make this turkey recipe. It is so juicy and tender and the flavor profile amazing. I get raves from family and friends when I make it this way. It's my go to every holiday season!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Allrecipes Member"
+            },
+            "reviewBody": "I have to say I\u2019ve made this 3-4 years in a row. Follows all instructions except I have put it in a roasting bag and then on the rack. It\u2019s been absolutely perfect. I hope I\u2019m not missing out on something even better but I don\u2019t dare change now. Everyone raves about it and the gravy from the drippings is spectacular.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Joe Kosiek"
+            },
+            "reviewBody": "But why not use cooking bags. I use Reynolds turkey bags, never worry about basting and mine has been the juiciest in the family.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "LisaAnn Eichenblatt"
+            },
+            "reviewBody": "This was the BEST EVER!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "shashank test"
+            },
+            "reviewBody": "Good",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "caitlyn.laroche.609"
+            },
+            "reviewBody": "I loved the way this turned out it was far better than any turkey I had growing up. I marinated it for 24 hours as I had read in the reviews which I think was totally worth it.the only actual change I made was using tarragon instead of rosemary and thyme due to family allergies. Savory is a much better alternative for the two but I couldn't find any so I hoped for the best and used tarragon, which I personally think was a great choice.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "GesikaMarie"
+            },
+            "reviewBody": "I followed the recipe to a T and my family and I love it!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Allrecipes Member"
+            },
+            "reviewBody": "I made my first Thanksgiving turkey last night and used this recipient as a base. The only changes I made was whipping 4 sticks of butter with all the spices. Then I massaged the turkey with the butter between the meat and skin and then coated the outside of the turkey with butter. I cooked it at 325 for 4 hours. My brother said it was the best turkey he\u2019d ever had. Will definitely keep this recipe for future Thanksgivings.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "phoenixfloyd639"
+            },
+            "reviewBody": "I don\u2019t know if I found this recipe from another blog the author may have posted it on or from here, but I found it about 3 years ago. I roast a turkey fairly often because you can get so many meals out of it now that my kids love turkey. This recipe hasn\u2019t failed me yet. It\u2019s always the juiciest and most delicious. \nSometimes I don\u2019t have oranges so I\u2019ve used other citrus fruits like lemons and even once a small grapefruit. It\u2019s still just perfect.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Katrina Graff"
+            },
+            "reviewBody": "I love this turkey recipe! It's so juicy and flavorful! I have used this recipe every year since I started hosting Thanksgiving and everyone loves it! I do it a little differently though. \n\nI use all of the seasonings as written. I stuff it traditional sage dressing (bread, egg, onion, celery, and lots of sage) though, which is so yummy with the chicken broth and champagne. I also top the turkey with some of the seasonings as well. The gravy from the champagne and left over stuffing is fantastic! \n\nSeriously, so good!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "RobLanger"
+            },
+            "reviewBody": "make this every year its delicious",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "tsemenza"
+            },
+            "reviewBody": "I made this last Thanksgiving, my first turkey ever, and it was amazing!! So juicy, everyone loved it! I didn't change a thing and will make it the exact same way this year. Thank you so much for sharing!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Robyn McCloskey Diakite"
+            },
+            "reviewBody": "This recipe is fantastic just the way it is. I made it for thanksgiving and then again for new year\u2019s day. It is super moist and the combination of seasoning and flavors is outstanding. I would never have thought to pour a bottle of champagne over a bird, but it is the ticket! My whole family highly recommends. We didn\u2019t even feel the need to make gravy we just skimmed the juice from the baking dish and poured it over the whole plate. Scrumptious!!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Jahari Davis"
+            },
+            "reviewBody": "OK so here's a funny Christmas story. I volunteered for the job of making the turkey for Christmas dinner this year. I'd never done a turkey but I wanted to learn so I stepped up. I found this recipe and away I went. Now, I did swap out the champagne for Grand Traverse Pinot Grisio, rubbed the turkey down with EV Olive Oil instead of butter, and rubbed the seasoning mixture all over the turkey not just inside it. However you may want to keep some of the seasoning to reapply after you pour the chicken broth and wine/champagne over it. She was all ready to go and she was absolutely beautiful. The over was pre-heated and I tented her with foil and put her in the oven and set the timer for 3 hours. Then I went and sat down to watch a movie. My mother and sister were making the dressing and everything while the turkey was cooking or so I thought. The timer went off and I went to take the bird out. She was cold. Turns out, when I set the timer, I somehow turned off the oven. Talk about massively disappointed! Luckily we had ham as well so my sister went ahead and finished the rest of the sides and we ate. Before we ate, I heated the oven again and in the turkey went. She got done about 11pm and then I pulled her out and rubbed butter on her and put her back in uncovered for about another 45 minutes. When I pulled her out, OH MY GOD! She was just beautiful!!!! I let her sit for another 30 minutes and then I cut some of the breast off to taste and let out a loud YES!!!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Sungoddess"
+            },
+            "reviewBody": "My turkey stayed juicy with adding Prosecco. Next year, I will double the seasoning, because the herbs combination was really yummy.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Mel Frey"
+            },
+            "reviewBody": "This is my go-to recipe. Every year the turkey comes out incredibly succulent and guests are amazed at how flavorful it is. The secret is the champagne that really maintains the moisture.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "cathyG"
+            },
+            "reviewBody": "I hate turkey! This recipe made me a believer. very moist and easy i did add additional stuffing to the cavity that was it . why mess with perfection?",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Karen"
+            },
+            "reviewBody": "This recipe is so easy and SO YUMMY. Nice and moist!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Diana Jimenez"
+            },
+            "reviewBody": "On my previous review, i used extra dry andre champagne not chardonnay. I also would add about 1-2 cups of ice every few hours (not all at once)",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Julie Noonan"
+            },
+            "reviewBody": "This turkey was delicious and stayed moist through leftovers! The only changes I made were no orange and only used a half bottle of champagne with a full 32 oz carton of Chicken stock. Also, I used someone else's tip and mixed all of my herbs into a stick of softened butter and smeared it inside and outside of the bird. I'll do it exactly the same next time - YUM!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Kathleen Parsley"
+            },
+            "reviewBody": "I have never cooked a turkey before and it made me nervous! Followed the recipe to the letter and it was awesome! I\u2019ll be making it again next year for sure!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Christine Bean"
+            },
+            "reviewBody": "I don\u2019t think the champagne or all the dried herbs amounted to anything special, sorry to say.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "2"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Samantha Swann"
+            },
+            "reviewBody": "Really moist turkey overall. Even my guests that say they don't usually eat turkey because it is dry, said this one was not dry at all. I should add that I brined it beforehand. The only reason I didn't give a 5 star was that the flavor was a little bland for my Caribbean taste. Next time, I will add some more salt and seasonings to flavor the bird. Otherwise, this is a solid recipe!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "4"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "DisplacedWIMomof3"
+            },
+            "reviewBody": "Most moist turkey I have ever made.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "mom2u"
+            },
+            "reviewBody": "I made the recipe per the instructions and it was delicious! The turkey was moist and tasty. After stripping all the meat off the carcass, I placed the bones, skin and vegetables in a stockpot, covered with water and brought to a slight simmer for several hours for a delicious stock. I will definitely make this again!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Sandi"
+            },
+            "reviewBody": "I followed this recipe exactly except for the orange. It was absolutely tender, juicy and delicious!! Turkey can be a challenge but this made it easy. A keeper for sure!!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Eleanorcooks"
+            },
+            "reviewBody": "A good solid turkey recipe, the best part surprisingly was the champagne broth! So shockingly good and as a gravy it was just superb. I used a 14.5 lb butterball turkey. The meat was fine, moist but almost bland, I don\u2019t know what I expected. It\u2019s a LOT of seasoning to put inside the turkey so I put some under the skin on the meat for more flavor but still. Next time maybe I\u2019ll try injecting some flavor but all in all a fine recipe and easy for a first timer! Would make this again.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "4"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "vholzinger"
+            },
+            "reviewBody": "This was the most delicious Turkey I have ever made. I will be making this every year moving forward!!!!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Melissa Neering Rieman"
+            },
+            "reviewBody": "I am 55 and know how to cook, but I have never had to make the thanksgiving turkey! Until covid. This was so good. Everyone could not say enough about how flavorful and moist the turkey was. I mixed the seasoning w butter and put under the skin, on top and inside also. I did not use Champaign but ginger ale, and only about a cup, and the rest chicken broth. The gravy made from the juices with the seasoning flavor mixed in was amazing, and I\u2019ve never really made home made gravely before either!! I will be using the recipe from now on.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "LlanaH"
+            },
+            "reviewBody": "WARNING!!!! This recipe should come with a warning that you can't make gravy out of the drippings! It is sooooo sour, we used Korbel Brut and it was awful! Had I known that the drippings were ruined I would have never used this recipe. I had to scramble and use the reserved neck and make a gravy out of things I could find in my pantry. Really bummed, since I only make a turkey once a year. The turkey was good, but mine was fresh and I brined it. So it would have turned out good anyways. This must be from someone who uses packaged gravy.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "1"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Allrecipes Member"
+            },
+            "reviewBody": "This recipe was God sent! Thank you so much. I just made the juiciest turkey ever! I followed everything but I added butter to the skin and underneath it and rubbed the delicious smelling herbs. I used vegetable broth instead of chicken. I am pretty sure the secret is giving the turkey a champagne shower. =) Esp the cavity. We tend to forget the parts we don't see. Last but not least, breast side up! No more basting no more opening n closing the oven. 350° f for 3hrs then 30 mins tent off. I am so happy with the result. So was the whole family! Making it again for Christmas!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Lucas Grendahl"
+            },
+            "reviewBody": "Adding this as a go to for Thanksgiving.\nI usually make 5 or more turkeys for Thanksgiving since we invite soldiers every year as well as our family and making that much ALWAYS fry them. But with the Covid 19 lock downs it was only my immediate family so I decided to forget the oil and go towards an old traditional style bird. \nI did cheat a little and soak or brine the bird for 48 hrs prior to cooking but everything else was almost exact. I love my deep fried birds but this gobbler was so tender, so juicy, and even looked like perfection on the dinner table! \nFor sure keeping this in mind for later!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "suze"
+            },
+            "reviewBody": "Absolutely wonderful. Followed recipe exactly...16 pound turkey took about 5 hours at 350 but was perfect",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Heidi Lee"
+            },
+            "reviewBody": "Excellent seasoning! I ran out of champagne, so I did a carton and a half of chicken broth. Turkey was fabulous and the carcass cut in half made two 6 quart Instant Pot turkey broth. This will be my recipe of choice.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "MagnoliaMama"
+            },
+            "reviewBody": "Everyone loved this turkey!!! It\u2019s the juiciest Thanksgiving Turkey I\u2019ve ever had. I will be making this every year from now on!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Mariza Erwin"
+            },
+            "reviewBody": "Made this last thanksgiving everyone kept telling me how good it was and said it was more juicy than any turkey they\u2019ve ever had! I did marinate the turkey in the chicken broth My family doesn\u2019t drink so I used white grape juice instead of wine. This is now my forever favorite recipe thank you for sharing!!!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "jcstout6"
+            },
+            "reviewBody": "This is the best turkey I ever had / made. It is juicy and very simple to make.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Frank DeCesare"
+            },
+            "reviewBody": "Extremely moist turkey, however i thought it was too sweet. I marinated in asti champagne and chicken stock overnight. Next time would substitute the asti for proseco, less sweet. Would use the same approach though as everyone liked it.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "4"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "AshleeyDaawn"
+            },
+            "reviewBody": "Used gingerale, turned out really well. Grandma was even impressed! Making again this year.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Estefania"
+            },
+            "reviewBody": "This was my very first turkey dinner since my family only ate chicken on the holiday. I followed this recipe after brining my turkey and it came out unexpectedly perfect. I didn't realize I was able to pull it off. Will continue to use the recipe. Even if I'm commenting months after I made the recipe, I cant wait to do it again this year.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "tlmoreno"
+            },
+            "reviewBody": "Juiciest turkey I have ever made!!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Stunner"
+            },
+            "reviewBody": "This was by far the best turkey I have ever made!!! I followed the recipe exactly. Thank You for the recipe!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Bob Marini"
+            },
+            "reviewBody": "Very good taste and easy.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Shannon Marcum"
+            },
+            "reviewBody": "Juicy and just the right delicate turkey flavoring; I omitted rosemary due to personal dislike.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Kiara Dermody"
+            },
+            "reviewBody": "This recipe was a start at Christmas! Thank you for sharing! Loved how easy it was to do :)",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Larry Bush"
+            },
+            "reviewBody": "Follow the recipe and you will get raves !!!!!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "KMH"
+            },
+            "reviewBody": "WOW! Never thought a turkey could be this moist and delicious. My nephew, (who never compliments anything,) actually said it was the best turkey he has ever had. It was the first dish to go! We did not do the veggies or seasonings, but instead filled it with dressing. We used the champagne and broth on the outside and followed the recipe on cooking it to the t. It was absolutely delicious and really moist. Will forever be using this recipe. Thank you Kirsten!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Ccmomx3"
+            },
+            "reviewBody": "The juiciest turkey I\u2019ve ever made! Everyone loves it!! Thank you!!!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "zeekule"
+            },
+            "reviewBody": "very juicy and flavorable...highly recommend!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "DB"
+            },
+            "reviewBody": "It was alright. The Turkey was falling apart tender but didn't brown well. Think I'll go back to the directions on the Turkey.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "4"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Stephanie Sindeldecker Rawson"
+            },
+            "reviewBody": "Best Turkey I have ever made. 10 stars!!!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "cherylb416"
+            },
+            "reviewBody": "This was the most flavorful turkey I have ever made...thank you for sharing! I made it just like the recipe states. Everyone loved it at our Thanksgiving dinner. A new tradition for us! Excellent!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Carol Schwab"
+            },
+            "reviewBody": "I will definitely be making this my Thanksgiving go-to turkey recipe.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "joannabrown310"
+            },
+            "reviewBody": "The turkey was juicy but not a lot of flavor",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "4"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Steve B"
+            },
+            "reviewBody": "We did not care for this recipe at all. Something about the oranges made the flavors fight with each other. It was better the 2nd day once the citrus wore off a bit. I am not a seasoned turkey cooker so im going to take some of the blame here. This was my third turkey ever. Im still learning. Next year i'm going deep fryer.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "3"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "709karin"
+            },
+            "reviewBody": "We were excited about this recipe and gave it a try. Unfortunately we were disappointed. The turkey had to cook more than an hour longer than it should have, the gravy was sweet from the champagne, and the meat was rather bland....no seasonings. We followed the directions exactly.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "3"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "edsberg1"
+            },
+            "reviewBody": "I too made this using Ginger-Ale. I used a baking brown and serve bag and it was great. The turkey was falling apart it was soo moist and didn\u2019t look as pretty, but that\u2019s probably my fault for using the bag instead of the foil. \nI kept the drippings after using some to make a big pan of gravy, and used those for soup (after skimming off the fat)- and it was great too!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "James Rainey"
+            },
+            "reviewBody": "This is a great Turkey recipe and it will always please you and your guests. I made it without sage or an orange just because I didn't feel like going back to the store to get these items. It is simple and fun and tastes great.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "4"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "KImW"
+            },
+            "reviewBody": "We did two turkeys, one with champagne and one white wine. Both came out really great. We will continue to use this recipe.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "HartyParty"
+            },
+            "reviewBody": "I need to invest in a better turkey rack for next time. That way, the bird will brown more uniformly. The bird came out very juicy and delicious.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "mary"
+            },
+            "reviewBody": "I made this for Thanksgiving this year and it was wonderful! So juicy and moist and the stock made a fantastic gravy! My turkey was 20 lbs. so I increased the cooking time a little bit. I also used white moscato wine instead of champagne. I loved this recipe but had trouble finding it again on the website because I didn\u2019t save it first! Finally found it and saved it and wrote it in my recipe journal as well. I will use this again and again!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Tonya Owens"
+            },
+            "reviewBody": "easy &amp; delicious!!!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "JoyE"
+            },
+            "reviewBody": "Juicy",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "BlueSaphire70"
+            },
+            "reviewBody": "This recipe is truly outstanding! The turkey cooks slowly in a delicious vapor so that the meat is so tender you don't need a knife to cut it. I first used this recipe in 2016 because I needed a gluten-free recipe and now it's the only one I use. Thank you so much for sharing!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Carol"
+            },
+            "reviewBody": "We all loved this recipe. \nI added a spoon and half of salt instead of just 1, and I rubbed the turkey with butter in and out with the salt. I cooked it in a bag. The lemon pepper and the sparkling made the sauce taste out of this world and so so juicy.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Shawn MacLean"
+            },
+            "reviewBody": "Phenomenal recipe. The one change I made was I brined the turkey with salt, brown sugar and spices for 48 hours. Thanksgiving morning I followed the recipe as directed, slow cooked the turkey at 225 for about 3 hours, turned it up to 350 for about an hour and then finished it off at 450 for about 45 minutes. My best turkey yet.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "dmarto01"
+            },
+            "reviewBody": "Holy moly this was the BEST TURKEY EVER! Only problem I had was no champagne so I substituted 2 cups of apple cider. Not the vinegar, just the kind you drink chilled. I rubbed the spices all over and left it uncovered in the fridge overnight. Also used fresh rosemary in the cavity because I didn\u2019t have dried. Everyone commented on how juicy it was and my picky stepson was shocked when he tasted it asked me what I used to make it taste so good because the other turkey he had over by his mom\u2019s house was plain and dry. This recipe will not disappoint and was super easy to make.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Robin Belz"
+            },
+            "reviewBody": "followed recipe to a T, but we used mandarins in stead of oranges! turkey had great flavor and was moist. i do wish the skin was a bit crunchier, but was still great!!!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Kathy"
+            },
+            "reviewBody": "Turned out delicious! Everyone raved about it. Made a 21 lb. turkey for 22 people. Yumm!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Alison Fenton Borel"
+            },
+            "reviewBody": "I followed this recipe to. The. Letter. No deviation, no substitution. First I made sure my oven cooks at 350 with a temperature gauge. It does. From there I followed every direction without question. My turkey cooked for a full hour more after pulling away the foil, I had a pop-out temperature plug inserted in the turkey, decided to blindly trust it after checking the temperature with a digital reader, and boom. Perfection. The loveliest part of pouring the champagne was giving myself a glass and celebrating the beginning of the end of the struggle. This will go in my rotation forever. Kids complimented me, My friend\u2019s toddler who doesn\u2019t like turkey ate it, and the men loved the moist meat with the crispy skin. Not a dry bite in the house! I\u2019m sure there are other great recipes out there, but I chose this one because I didn\u2019t change the heat from 425 to 350, no babysitting, and I was intrigued by the champagne. So glad I did this. My guests loved the novelty of using champagne and it was a fun conversation.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Hogan's fav. Recipes"
+            },
+            "reviewBody": "Our Turkey turn Out Delish !!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "SandyM"
+            },
+            "reviewBody": "This was the best turkey I\u2019ve ever made!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Tawny Jennings"
+            },
+            "reviewBody": "My first roasted turkey came out amazing thanks to this recipe!! I cooked a 13.5lb turkey for 2.5 hr +30min and my breast was a little dry but the dark meat fell off the bone. The flavor is nice and herb-ey with a hint of sweetness from the oranges and champagne. I followed the instructions exactly except I added a little kosher salt onto the skin after I poured over with the broth and booze. Thank you for posting!!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Angela"
+            },
+            "reviewBody": "Very very delicious Turkey. I used brut champagne best gravy ever.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Zhyldyz Ibraimova"
+            },
+            "reviewBody": "Followed the recipe exactly and it turned out perfect! Thank you very much!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Crystal Raye"
+            },
+            "reviewBody": "Perfectly Succulent! Best turkey I\u2019ve ever had! Followed to the tee, except I didn\u2019t have the champagne. But even without that the flavor and juiciness was the BEST!! 5 star hands down! Thanks for the recipe!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Gregory Basped"
+            },
+            "reviewBody": "I just made it for thanksgiving today, and it turned out great!!! Loved the recipe, and I recommend it to all!!!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Lola Honey"
+            },
+            "reviewBody": "I\u2019ve been doing this recipe for 4 years and I\u2019m famous now! It\u2019s perfect",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Tammy M Curry"
+            },
+            "reviewBody": "Outstanding!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Glenna Williams"
+            },
+            "reviewBody": "I normally do not care for turkey because its dry, but this was AMAZING!! So juicy and great flavor! My family LOVED it!!! It will be my traditional Turkey recipe from now on!!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Lisa~May"
+            },
+            "reviewBody": "This was my first time cooking a turkey. I used a turkey bag like another reviewer mentioned and kept everything else the same. It came out AWESOME! So easy to follow and the flavor is fantastic!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Mimi Maria Argentina Rangel"
+            },
+            "reviewBody": "I have made this recipe for the past 3-4 years and everyone loves it hope is as good again this year. I put the champagne and the chicken broth in separate cups and inject all I can with a large turkey Syringe and put the rest in the cavity it\u2019s really juicy",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "sarah elfallah"
+            },
+            "reviewBody": "Wonderful juicy recipe! The cooking method and juices made such a wonderful turkey. However, the herbs were very strong and next time would alter the spices a bit. Definitely one of the best turkeys I've had.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Miriam Bonifatti"
+            },
+            "reviewBody": "This is the second time I made this turkey, I saved the recipe last year, but my computer went down and lost it. lucky me.....I found it and I am planning to make this year also.\nhappy Thanksgiving",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Darcy Earley"
+            },
+            "reviewBody": "I make it every Thanksgiving and everyone loves it!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5"
+            }
+        }
+    ],
+    "name": "Juicy Thanksgiving Turkey",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Allrecipes",
+        "logo": {
+            "@type": "ImageObject",
+            "width": 112,
+            "url": "https://www.allrecipes.com/thmb/Z9lwz1y0B5aX-cemPiTgpn5YB0k=/112x112/filters:no_upscale():max_bytes(150000):strip_icc()/allrecipes_logo_schema-867c69d2999b439a9eba923a445ccfe3.png",
+            "height": 112
+        },
+        "brand": "Allrecipes",
+        "url": "https://www.allrecipes.com",
+        "publishingPrinciples": "https://www.allrecipes.com/about-us-6648102#toc-editorial-guidelines",
+        "sameAs": [
+            "https://www.facebook.com/allrecipes",
+            "https://www.instagram.com/allrecipes/",
+            "https://www.pinterest.com/allrecipes/",
+            "https://www.tiktok.com/@allrecipes",
+            "https://www.youtube.com/user/allrecipes/videos",
+            "https://twitter.com/Allrecipes",
+            "https://flipboard.com/@Allrecipes",
+            "https://en.wikipedia.org/wiki/Allrecipes.com",
+            "https://apps.apple.com/us/app/allrecipes-dinner-spinner/id299515267",
+            "https://play.google.com/store/apps/details?id=com.allrecipes.spinner.free&hl=en_US&gl=US",
+            "https://www.youtube.com/c/foodwishes",
+            "https://www.linkedin.com/company/19312/admin/"
+        ]
+    },
+    "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "886"
+    },
+    "headline": "Juicy Thanksgiving Turkey",
+    "recipeInstructions": [
+        {
+            "@type": "HowToStep",
+            "text": "Preheat the oven to 350 degrees F (175 degrees C). Line a roaster with sheets of aluminum foil long enough to wrap around turkey."
+        },
+        {
+            "@type": "HowToStep",
+            "text": "Stir together parsley, rosemary, sage, thyme, lemon-pepper seasoning, and salt in a small bowl."
+        },
+        {
+            "@type": "HowToStep",
+            "text": "Rub herb mixture into the turkey cavity, then stuff with orange wedges, onion, carrot and celery. Tie the legs together with kitchen string, then tuck the wings under the body. Place turkey on the foil in the roasting pan."
+        },
+        {
+            "@type": "HowToStep",
+            "text": "Pour champagne and chicken broth over turkey, making sure to get some liquid in the cavity. Bring aluminum foil up and over the top of turkey and seal; try to keep the foil from touching the turkey."
+        },
+        {
+            "@type": "HowToStep",
+            "text": "Roast turkey in the preheated oven until juices run clear, 2 1/2 to 3 hours. Uncover turkey and continue baking until the skin turns golden brown, 30 to 60 more minutes. An instant-read thermometer inserted into the thickest part of thigh, near the bone, should read 180 degrees F (82 degrees C)."
+        },
+        {
+            "image": [
+                {
+                    "@type": "ImageObject",
+                    "url": "https://www.allrecipes.com/thmb/f2LZMuTDkUmWKsxImSzwcC1fzog=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/166160-juicy-turkey-the-details-Classic-table-1x1-mfs-053-7cd8f2d28b1141dcaf17f572928423ae.jpg"
+                }
+            ],
+            "@type": "HowToStep",
+            "text": "Remove turkey from the oven, cover with two sheets of aluminum foil, and allow to rest in a warm area before slicing, 10 to 15 minutes."
+        }
+    ]
+}

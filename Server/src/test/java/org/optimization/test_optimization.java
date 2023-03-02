@@ -27,29 +27,29 @@ public class test_optimization {
     @Test
     public void testOptimize() {
         // Setup
-        // List<Recipe> recipes = new ArrayList<Recipe>();
+        List<Recipe> recipes = new ArrayList<Recipe>();
 
-        // List<String> recipeNames = Arrays.asList("rotini", "fried_rice", "salmon");
+        List<String> recipeNames = Arrays.asList("rotini", "fried_rice", "salmon");
 
-        // for (String rName: recipeNames) {
-        //     recipes.add(RecipeHelper.getRecipeFromDatabase(rName));
-        // }
+        for (String rName: recipeNames) {
+            recipes.add(RecipeHelper.getRecipeFromDatabase(rName));
+        }
 
-        // List<User> buddies = new ArrayList<User>();
-        // buddies.add(new User("Marley"));
-        // buddies.add(new User("Aurchon"));
-        // buddies.add(new User("Shadi"));
+        List<User> buddies = new ArrayList<User>();
+        buddies.add(new User("Marley"));
+        buddies.add(new User("Aurchon"));
+        buddies.add(new User("Shadi"));
 
-        // Meal m = new Meal();
-        // m.createMeal(recipes, buddies);
+        Meal m = new Meal();
+        m.createMeal(recipes, buddies);
 
-        // for (User b: buddies) {
-        //     b.printStepList();
-        // }
+        for (User b: buddies) {
+            b.printStepList();
+        }
 
-        // System.out.println("Finished Test!");
+        System.out.println("Finished Test!");
 
-        // Main.userStepsToJson(buddies);
+        Main.userStepsToJson(buddies);
 
     }
 }

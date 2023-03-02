@@ -80,22 +80,10 @@ public class InputRecipe {
         if (rInstructions == null) {
             return;
         } 
-        System.out.println(rInstructions.getClass());
 
         List<HashMap<String, Object>> instrArray = (ArrayList<HashMap<String, Object>>) rInstructions;
         List<String> instructions = new ArrayList<String>();
 
-        // for (JSONObject obj : instrArray) {
-        //     Object val = obj.get("@type");
-        //     String type = "";
-        //     if (val != null) {type = val.toString();}
-
-        //     if (type.equals("HowToStep")) {
-        //         // Parse step
-        //         String instr = obj.get("text").toString();
-        //         instructions.add(instr);
-        //     } 
-        // }
         for (int i = 0; i < instrArray.size(); i++) {
             HashMap<String, Object> obj = instrArray.get(i);
 

@@ -58,7 +58,7 @@ public class Main {
         //     e.printStackTrace();
         // }
         
-        String url = "https://www.justonecookbook.com/homemade-miso-soup/";
+        String url = "https://tasty.co/recipe/easy-chicken-alfredo-penne";
         // Scrape website and place info in text file within Py_Text_Processing/Input folder
         Webscrape scraper = new Webscrape(url);
         InputRecipe in_recipe = scraper.extractRecipe();
