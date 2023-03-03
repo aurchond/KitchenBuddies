@@ -14,18 +14,18 @@ public class User {
     // Track where the current user is finished working
     private Integer currentTime;
 
-    String name;
+    String email;
 
 
 
-    public User (String name) {
+    public User (String email) {
         this.head = null;
         this.tail = null;
         this.recent = null;
 
         this.allottedTime = 0;
         this.currentTime = 0;
-        this.name = name;
+        this.email = email;
     }
 
     public UserTask getHead() {
@@ -40,8 +40,8 @@ public class User {
         return recent;
     }
 
-    public String getName() {
-        return name;
+    public String getEmail() {
+        return email;
     }
 
     public Integer getCurrentTime(){
@@ -79,16 +79,16 @@ public class User {
     }
 
     public void setName() {
-        this.name = name;
+        this.email = email;
     }
     // make function to update tail ptr to be head at the end of optimization
 
     public void printStepList() {
         UserTask traverse = this.tail;
-        String stepList = this.name + ": ";
+        String stepList = this.email + ": ";
         String detailedList = "";
 
-        System.out.println(this.name + " Steps");
+        System.out.println(this.email + " Steps");
 
         while (traverse != null) {
             stepList += traverse.step.getNodeID();

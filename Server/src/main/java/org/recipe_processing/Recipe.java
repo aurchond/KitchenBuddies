@@ -30,6 +30,12 @@ public class Recipe {
         this.finalStep = finalStep;
     }
 
+    public Recipe(HashMap<Integer, Step> steps, Step finalStep, Long recipeID) {
+        this.steps = steps;
+        this.finalStep = finalStep;
+        this.recipeID = recipeID;
+    }
+
     public HashMap<Integer, Step> getSteps() {
         return steps;
     }
