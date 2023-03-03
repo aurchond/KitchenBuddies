@@ -42,14 +42,10 @@ class RecipeInfo {
       _instructionList = instructionList;
 
   RecipeInfo.fromJson(Map<String, dynamic> json) {
-
-
-
     _recipeName = json['recipeName'];
     _ingredientList = json['ingredientList'].cast<String>();
     _totalTime = json['completionTime'];
     _lastDateMade = json['lastTimeMade'];
-    _instructionList = json['instructionList'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:first_app/helpers/kitchen_constraints.dart';
 import 'package:first_app/local_notification_service.dart';
 import 'package:first_app/provider/auth_provider.dart';
 import 'package:first_app/screens/meal_session_screens/received_instructions_screen.dart';
@@ -17,7 +18,6 @@ import '../helpers/tile_decorated.dart';
 
 const List<String> skillList = <String>['Beginner', 'Intermediate', 'Advanced'];
 String savedSkillValue = "Intermediate";
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -43,9 +43,14 @@ class _HomeScreenState extends State<HomeScreen> {
   final knifeController = TextEditingController();
   late FocusNode knifeFocusNode = FocusNode();
 
+  final List<FocusNode> focusNodes =
+      List<FocusNode>.generate(5, (int index) => FocusNode());
+  final List<TextEditingController> controllers =
+      List<TextEditingController>.generate(
+          5, (int index) => TextEditingController());
+
   @override
   void initState() {
-
     final dataModel = Provider.of<DataClass>(context, listen: false);
     dataModel.loadHomePage(); //todo: save string value
 
@@ -128,7 +133,6 @@ class _HomeScreenState extends State<HomeScreen> {
     String? dropdownValue = dataModel.skillLevel;
     List<String>? myFriends = dataModel.friendsList?.friends;
 
-
     return Consumer<AuthProvider>(builder: (context, model, _) {
       return Scaffold(
         appBar: AppBar(
@@ -154,10 +158,11 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
                 child: Container(
               padding: const EdgeInsets.all(10),
+              color: Colors.black,
               child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: 300,
-                      childAspectRatio: 5 / 2,
+                      childAspectRatio: 4 / 2,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10),
                   itemCount: myFriends?.length,
@@ -175,48 +180,54 @@ class _HomeScreenState extends State<HomeScreen> {
                         false);
                   }),
             )),
-
-            inputTextButton(textController, "Enter your friend's email",
-                "Add friend!", myFocusNode, onPressedCallback),
+            Container(
+                padding: const EdgeInsets.only(bottom: 7),
+                color: Colors.black,
+                child: inputTextButton(
+                    textController,
+                    "Enter your friend's email",
+                    "Add friend!",
+                    myFocusNode,
+                    onPressedCallback)),
 
             /// old push notif stuff ///
-            Expanded(
-                child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Container(
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.deepOrange.shade100,
-                ),
-                child: StreamBuilder<QuerySnapshot>(
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return ListView.builder(
-                            itemBuilder: (context, index) {
-                              return Card(
-                                  child: ListTile(
-                                      onTap: () {
-                                        fcmProvider.sendNotification(
-                                            token: snapshot.data!.docs[index]
-                                                ["token"],
-                                            title: snapshot.data!.docs[index]
-                                                ["user_name"],
-                                            body: "Notification Test");
-                                      },
-                                      // indexing user from the db
-                                      title: Text(snapshot.data!.docs[index]
-                                          ["user_name"])));
-                            },
-                            itemCount: snapshot.data!.docs.length);
-                      } else {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-                    },
-                    stream: FirebaseFirestore.instance
-                        .collection("users")
-                        .snapshots()),
-              ),
-            )),
+            // Expanded(
+            //     child: Padding(
+            //   padding: const EdgeInsets.all(10),
+            //   child: Container(
+            //     alignment: Alignment.center,
+            //     decoration: BoxDecoration(
+            //       color: Colors.deepOrange.shade100,
+            //     ),
+            //     child: StreamBuilder<QuerySnapshot>(
+            //         builder: (context, snapshot) {
+            //           if (snapshot.hasData) {
+            //             return ListView.builder(
+            //                 itemBuilder: (context, index) {
+            //                   return Card(
+            //                       child: ListTile(
+            //                           onTap: () {
+            //                             fcmProvider.sendNotification(
+            //                                 token: snapshot.data!.docs[index]
+            //                                     ["token"],
+            //                                 title: snapshot.data!.docs[index]
+            //                                     ["user_name"],
+            //                                 body: "Notification Test");
+            //                           },
+            //                           // indexing user from the db
+            //                           title: Text(snapshot.data!.docs[index]
+            //                               ["user_name"])));
+            //                 },
+            //                 itemCount: snapshot.data!.docs.length);
+            //           } else {
+            //             return const Center(child: CircularProgressIndicator());
+            //           }
+            //         },
+            //         stream: FirebaseFirestore.instance
+            //             .collection("users")
+            //             .snapshots()),
+            //   ),
+            // )),
 
             /// set skill level ///
             //todo AD: use AddSkillLevel API
@@ -225,11 +236,11 @@ class _HomeScreenState extends State<HomeScreen> {
               return Row(
                 children: [
                   Container(
-                      margin: EdgeInsets.all(25),
+                      margin: EdgeInsets.all(20),
                       child: Text(
                         "Change your skill level:",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 15),
+                            fontWeight: FontWeight.bold, fontSize: 18),
                       )),
                   DropdownButton<String>(
                     value: dropdownValue,
@@ -247,7 +258,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         //TODO: handle API call
                       });
                     },
-                    items: skillList.map<DropdownMenuItem<String>>((String value) {
+                    items:
+                        skillList.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value, style: TextStyle(fontSize: 18)),
@@ -257,28 +269,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               );
             }),
-
             /// set kitchen constraints
             //todo AD: use AddKitchenConstraints API
-            Container(
-                margin: EdgeInsets.only(top: 5, bottom: 20),
-                child: Text(
-                  "Customize your kitchen:",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                )),
-            Flexible(
-                child: ListView(
-                  children: [
-                    inputTextButton(burnerController, "Change # of burners",
-                        "Update # of burners", burnerFocusNode, onPressedCallback),
-                    inputTextButton(potController, "Change # of pots",
-                        "Update # of pots", potFocusNode, onPressedCallback),
-                    inputTextButton(panController, "Change # of pans",
-                        "Update # of pans", panFocusNode, onPressedCallback),
-                    inputTextButton(knifeController, "Change # of knives",
-                        "Update # of knives", knifeFocusNode, onPressedCallback),
-                  ],
-            ))
+            SingleChildScrollView(
+                child: KitchenConstraintsContainer(focusNodes, controllers))
           ],
         ),
       );

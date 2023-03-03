@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:first_app/helpers/globals.dart';
 import 'package:first_app/data_models/recipe_info.dart';
 import 'package:first_app/helpers/input_text_button.dart';
 import 'package:first_app/helpers/tile_decorated.dart';
@@ -56,36 +56,44 @@ class _AllRecipesState extends State<AllRecipes> {
       Navigator.pop(context);
     });
 
-    int timeIndex = valueText.indexOf("Total Time:");
-    int ingredientIndex = valueText.indexOf("Ingredients:");
-    int instructionsIndex = valueText.indexOf("Instructions:");
+    if (textEntered) {
+      int timeIndex = valueText.indexOf("Total Time:");
+      int ingredientIndex = valueText.indexOf("Ingredients:");
+      int instructionsIndex = valueText.indexOf("Instructions:");
 
-    String recipeName = valueText.substring(0, timeIndex-1);
-    print(recipeName);
+      String recipeName = valueText.substring(0, timeIndex - 1);
+      print(recipeName);
 
-    //hardcode length of "total time" string bc im too lazy to declare variables for each pattern
-    String totalTime = valueText.substring(timeIndex+12, ingredientIndex);
-    print(totalTime);
+      //hardcode length of "total time" string bc im too lazy to declare variables for each pattern
+      String totalTime = valueText.substring(timeIndex + 12, ingredientIndex);
+      print(totalTime);
 
-    //add or subtract 1 to index to account for newline character we don't want
-    String ingredients = valueText.substring(ingredientIndex+13, instructionsIndex-1);
-    List<String> ingredientList = ingredients.split('\n');
-    print(ingredientList);
+      //add or subtract 1 to index to account for newline character we don't want
+      String ingredients = valueText.substring(
+          ingredientIndex + 14, instructionsIndex-1);
+      List<String> ingredientList = ingredients.split('\n');
+      print(ingredientList);
 
-    String instructions = valueText.substring(instructionsIndex+14);
-    List<String> instructionList = instructions.split('\n');
-    print(instructionList);
+      String instructions = valueText.substring(instructionsIndex + 14);
+      List<String> instructionList = instructions.split('\n');
+      print(instructionList);
 
-    RecipeInfo recipeByText = RecipeInfo(recipeName: recipeName, ingredientList: ingredientList, totalTime: double.parse(totalTime), instructionList: instructionList);
-    String data = jsonEncode(recipeByText);
-    //TODO: send json to backend
-    //print(data);
+      RecipeInfo recipeByText = RecipeInfo(recipeName: recipeName,
+          ingredientList: ingredientList,
+          totalTime: double.parse(totalTime),
+          instructionList: instructionList);
+      Map<String, dynamic> data = recipeByText.toJson();
+      //TODO: send json to backend
+      //print(data);
+    }
   }
 
   textCallback(String value) {
     setState(() {
       valueText = value;
     });
+
+    textEntered = true;
   }
 
   //input text button callback
@@ -119,16 +127,6 @@ class _AllRecipesState extends State<AllRecipes> {
         ));
       }
     }
-
-    //should this be a map too? to match CheckboxDecorated
-    List<recipeTile> _data = [
-      recipeTile(title: "Option ", ingredients: "Ingredients", totalTime: 60),
-      recipeTile(title: "Option ", ingredients: "Ingredients", totalTime: 60),
-      recipeTile(title: "Option ", ingredients: "Ingredients", totalTime: 60),
-      recipeTile(title: "Option ", ingredients: "Ingredients", totalTime: 60),
-      recipeTile(title: "Option ", ingredients: "Ingredients", totalTime: 60),
-    ];
-
 
     return Scaffold(
       appBar: AppBar(title: const Text("All Recipes")),
