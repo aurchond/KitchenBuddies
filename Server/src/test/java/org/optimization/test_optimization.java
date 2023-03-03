@@ -1,9 +1,9 @@
 package org.optimization;
 
 import org.junit.jupiter.api.Test;
+import org.output_processing.OutputJson;
 import org.recipe_processing.Recipe;
 import org.utilities.database.graph.RecipeHelper;
-import org.output_processing.Main;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,9 +31,10 @@ public class test_optimization {
 
         // List<String> recipeNames = Arrays.asList("rotini", "fried_rice", "salmon");
 
-        // for (String rName: recipeNames) {
-        //     recipes.add(RecipeHelper.getRecipeFromDatabase(rName));
-        // }
+        for (String rName: recipeNames) {
+            //TODO: THIS NO LONGER WORKS SINCE IT IS MEANT TO TAKE  IN THE RECIPE ID
+            recipes.add(RecipeHelper.getRecipeFromDatabase(rName));
+        }
 
         // List<User> buddies = new ArrayList<User>();
         // buddies.add(new User("Marley"));
@@ -49,7 +50,8 @@ public class test_optimization {
 
         // System.out.println("Finished Test!");
 
-        // Main.userStepsToJson(buddies);
+        //CURRENTLY TESTING OLD VERSION
+        OutputJson.userStepsToJsonOld(buddies);
 
     }
 }

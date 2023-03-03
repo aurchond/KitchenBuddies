@@ -4,28 +4,22 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.server.RecipeInfo;
 import org.utilities.database.graph.Step;
-import org.recipe_processing.Recipe;
-import static org.recipe_processing.RecipeCreator.createRecipe;
-import static org.utilities.database.graph.RecipeHelper.*;
-import static org.utilities.database.relational.MySqlConnection.*;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import static org.utilities.database.relational.MySqlConnection.addToAllRecipes;
+import static org.utilities.database.relational.MySqlConnection.addUserLinkedRecipe;
 
 public class RecipeExtractor {
 
@@ -38,17 +32,17 @@ public class RecipeExtractor {
         // return Success or Failure
     }
 
-    public static Boolean parseRecipeUrl(String email, String url) {
+    public static RecipeInfo parseRecipeUrl(String email, String url) {
         // String url = "https://amandascookin.com/baked-cake-donuts/";
         // Scrape website and place info in text file within Py_Text_Processing/Input folder
         Webscrape scraper = new Webscrape(url);
         InputRecipe inRecipe = scraper.extractRecipe();
 
         // Add to relational database
-        long recipeID = addToAllRecipes(inRecipe.getRecipeTitle(), url, inRecipe.convertIngredientsToString(), inRecipe.getTotalTime());
+        Long recipeID = addToAllRecipes(inRecipe.getRecipeTitle(), url, inRecipe.convertIngredientsToString(), inRecipe.getTotalTime());
 
         // Add recipe to UserLinkedRecipes
-        Boolean res = addUserLinkedRecipe(email, (int)recipeID);
+        Boolean res = addUserLinkedRecipe(email, recipeID);
         if (!res) {
             // Might enter here if URL already exists, but recipe not in graph db
             // Do nothing
@@ -56,7 +50,10 @@ public class RecipeExtractor {
 
         // Process Text and Add to graph database
         res = ExtractRecipe(inRecipe, url, recipeID);
-        return res;
+        if(res){
+            return new RecipeInfo(recipeID, inRecipe.getRecipeTitle(), inRecipe.ingredients, inRecipe.getTotalTime(), null);
+        }
+        return null;
     }
 
     private static Boolean ExtractRecipe(InputRecipe inRecipe, String url, long recipeID) {
@@ -82,6 +79,7 @@ public class RecipeExtractor {
         
         
         // TODO: Fix Recipe Processing
+
     //     Recipe out_recipe = createRecipe(steps, ingredients, resourcesRequired, holdingResource_Id, recipeID);// String will be formatted as "holdingResource_holdingId"
     //     out_recipe.setRecipeName(inRecipe.recipeTitle);
     //     saveRecipe(out_recipe, out_recipe.getRecipeName());

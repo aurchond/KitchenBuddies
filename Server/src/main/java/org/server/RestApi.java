@@ -120,17 +120,20 @@ public class RestApi {
                 i.i) parse recipe (input processing)
                 i.ii) add to graph database with id from AllRecipes
             b) add to FaveRecipes database for that user
+
+         RETURNS RECIPE INFO
          */
         try {
-            Boolean res = MySqlConnection.doesRecipeExist(user.userEmail, user.recipeUrl);
-            if (res) {
-                return ResponseEntity.ok("Recipe already in both databases");
+            //TODO: doesRecipeExist needs to retrieve RecipeInfo aka fix MySqlConnection
+            RecipeInfo recipeInfo = MySqlConnection.doesRecipeExist(user.userEmail, user.recipeUrl);
+            if (recipeInfo != null ) {
+                return ResponseEntity.ok(recipeInfo);
             }
 
             // URL not parsed yet, enter input processing
-            res = RecipeExtractor.parseRecipeUrl(user.userEmail, user.recipeUrl);
-            if (res) {
-                return ResponseEntity.ok("Recipe added to user " + user.userEmail);
+            recipeInfo = RecipeExtractor.parseRecipeUrl(user.userEmail, user.recipeUrl);
+            if (recipeInfo != null) {
+                return ResponseEntity.ok(recipeInfo);
             }
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("RequestRecipeByUrl Request Failed");
@@ -141,65 +144,29 @@ public class RestApi {
     }
 
     @GetMapping("/GetPastRecipes")
-    public ResponseEntity<List<PastRecipe>> GetPastRecipes(@Valid @RequestParam String userEmail) {
+    public ResponseEntity<List<RecipeInfo>> GetPastRecipes(@Valid @RequestParam String userEmail) {
         try {
-            List<PastRecipe> recipes = MySqlConnection.findUserRecipes(userEmail);
+            List<RecipeInfo> recipes = MySqlConnection.findUserRecipes(userEmail);
             return ResponseEntity.ok(recipes);
 
         } catch (Exception e) {
-            List<PastRecipe> error = new ArrayList<PastRecipe>();
+            List<RecipeInfo> error = new ArrayList<RecipeInfo>();
             // In case another error occurs
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
         }
     }
 
-    @PostMapping("/RequestStepsByID")
-    public String RequestStepsByID(@Valid @RequestBody MealSessionInfo mealSessionInfo) {
-        // System.out.println(mealSessionInfo.kitchenConstraints);
-        // for (Integer id : mealSessionInfo.recipeIDs) {
-        //     System.out.println(id);
-        // }
-        // TODO: Refactor SetupMealSteps to output a JSONString (or an object in the same structure)
-        GenerateMeal.SetupMealSteps();
+    @PostMapping("/RequestMealSessionSteps")
+    public List<MealSessionUsersSteps> RequestMealSessionSteps(@Valid @RequestBody MealSessionInfo mealSessionInfo) {
+
+        KitchenConstraint kitchenConstraints = mealSessionInfo.kitchenConstraints;
+        List<Long> recipeIDs = mealSessionInfo.recipeIDs;
+        //Should be emails
+        List<String> includedFriends = mealSessionInfo.includedFriends;
+        List<MealSessionUsersSteps> response = GenerateMeal.SetupMealSteps(kitchenConstraints, recipeIDs, includedFriends);
 
          //return meal session steps
-        return "Greetings from Spring Boot!";
-        /**
-         * Responses
-         * [
-         *     {
-         *         "userEmail": "aurchond@gmail.com",
-         *         "recipeStep": [
-         *             {
-         *                 "number": "2.1",
-         *                 "instructions": "heat oil in a wok",
-         *                 "ingredientList": [
-         *                     "teaspoon coconut oil"
-         *                 ],
-         *                 "ingredientQuantity": [
-         *                     1
-         *                 ],
-         *                 "dependencyItem": "",
-         *                 "nextUserEmail": "aurchond@gmail.com"
-         *             },
-         *             {
-         *                 "number": "2.2",
-         *                 "instructions": "cook veggies in wok",
-         *                 "ingredientList": [
-         *                     "teaspoon salt",
-         *                     "shredded carrots"
-         *                 ],
-         *                 "ingredientQuantity": [
-         *                     1,
-         *                     2
-         *                 ],
-         *                 "dependencyItem": "",
-         *                 "nextUserEmail": "shadi@gmail.com"
-         *             }
-         *         ]
-         *     }
-         * ]
-         */
+        return response;
     }
 
 
