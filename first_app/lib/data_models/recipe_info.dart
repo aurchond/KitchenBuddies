@@ -1,10 +1,10 @@
-class PastRecipes {
+class RecipeInfo {
   String? _recipeName;
   List<String>? _ingredientList;
   double? _totalTime;
   String? _lastDateMade;
 
-  PastRecipes(
+  RecipeInfo(
       {String? recipeName,
         List<String>? ingredientList,
         double? totalTime,
@@ -34,7 +34,10 @@ class PastRecipes {
   String? get lastTimeMade => _lastDateMade;
   set lastTimeMade(String? lastTimeMade) => _lastDateMade = lastTimeMade;
 
-  PastRecipes.fromJson(Map<String, dynamic> json) {
+  RecipeInfo.fromJson(Map<String, dynamic> json) {
+
+
+
     _recipeName = json['recipeName'];
     _ingredientList = json['ingredientList'].cast<String>();
     _totalTime = json['completionTime'];

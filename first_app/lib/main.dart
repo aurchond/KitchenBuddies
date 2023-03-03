@@ -19,7 +19,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'backend_processing/data_class.dart';
-import 'data_models/past_recipes.dart';
+import 'data_models/recipe_info.dart';
 import 'helpers/keys.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {

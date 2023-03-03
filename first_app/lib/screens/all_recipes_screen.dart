@@ -19,7 +19,7 @@ class recipeTile {
   final String? title;
   final String?
       ingredients; //todo: we will join list of ingredients with .join(", ")
-  final int? totalTime;
+  final double? totalTime;
   final DateTime? lastDateMade;
 
   recipeTile({this.title, this.ingredients, this.totalTime, this.lastDateMade});
@@ -32,6 +32,14 @@ class _AllRecipesState extends State<AllRecipes> {
   // code for inputting recipes as text
   late String valueText;
   final recipeByTextController = TextEditingController();
+
+  @override
+  void initState() {
+    final dataModel = Provider.of<DataClass>(context, listen: false);
+    dataModel.loadAllRecipesPage(); //todo: save string value
+
+    super.initState();
+  }
 
   // callback functions for alert dialog
   buttonCallback() {
@@ -97,6 +105,22 @@ class _AllRecipesState extends State<AllRecipes> {
 
   @override
   Widget build(BuildContext context) {
+
+    final dataModel = Provider.of<DataClass>(context);
+
+    List<recipeTile> _pastRecipes = <recipeTile>[];
+
+    int? pastRecipesLength = dataModel.pastRecipes?.length;
+    if (pastRecipesLength != null) {
+      for (int i=0; i<pastRecipesLength; i++) {
+        _pastRecipes.add(recipeTile(
+            title: dataModel.pastRecipes?[i]?.recipeName,
+            ingredients: "oops baby sipping on the goose like whoops baby",
+            totalTime: dataModel.pastRecipes?[i]?.completionTime
+        ));
+      }
+    }
+
     //should this be a map too? to match CheckboxDecorated
     List<recipeTile> _data = [
       recipeTile(title: "Option ", ingredients: "Ingredients", totalTime: 60),
@@ -105,6 +129,9 @@ class _AllRecipesState extends State<AllRecipes> {
       recipeTile(title: "Option ", ingredients: "Ingredients", totalTime: 60),
       recipeTile(title: "Option ", ingredients: "Ingredients", totalTime: 60),
     ];
+
+
+
 
     return Scaffold(
       appBar: AppBar(title: const Text("All Recipes")),
@@ -120,7 +147,7 @@ class _AllRecipesState extends State<AllRecipes> {
                 )),
             Expanded(
               child: new ListView.builder(
-                  itemCount: _data.length,
+                  itemCount: _pastRecipes.length,
                   itemBuilder: (context, index) {
                     return SizedBox(
                         width: 100,
@@ -131,14 +158,12 @@ class _AllRecipesState extends State<AllRecipes> {
                             child: TileDecorated(
                                 Colors.white,
                                 Icon(Icons.fastfood),
-                                Text(_data[index].title! +
-                                    "" +
-                                    (index + 1).toString()),
-                                Text(_data[index].ingredients! +
+                                Text(_pastRecipes[index].title! +
+                                    ""),
+                                Text(_pastRecipes[index].ingredients! +
                                     " " +
-                                    (index + 1).toString() +
                                     "\nTotal time: " +
-                                    _data[index].totalTime.toString() +
+                                    _pastRecipes[index].totalTime.toString() +
                                     " minutes"),
                                 true),
                           ),

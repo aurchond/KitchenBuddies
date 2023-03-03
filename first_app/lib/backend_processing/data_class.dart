@@ -4,6 +4,7 @@ import 'package:first_app/data_models/kitchen_constraints.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../data_models/meal_session_steps.dart';
+import '../data_models/recipe_info.dart';
 import 'get_requests.dart';
 
 class DataClass extends ChangeNotifier {
@@ -11,6 +12,7 @@ class DataClass extends ChangeNotifier {
   String? skillLevel;
   KitchenConstraints? kitchenConstraints;
   FriendsList? friendsList;
+  List<RecipeInfo?>? pastRecipes;
 
   bool loading = false;
 
@@ -32,6 +34,14 @@ class DataClass extends ChangeNotifier {
     skillLevel = await getUserSkill();
     kitchenConstraints = await getKitchenConstraints();
     friendsList = await getFriendsList();
+    loading = false;
+
+    notifyListeners();
+  }
+
+  loadAllRecipesPage() async {
+    loading = true;
+    pastRecipes = await getPastRecipes(); //todo: null check for past recipes
     loading = false;
 
     print(skillLevel);

@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import '../data_models/friends_list.dart';
+import '../data_models/recipe_info.dart';
 import 'data_class.dart';
 import '../data_models/meal_session_steps.dart';
 
@@ -40,8 +41,6 @@ Future<KitchenConstraints?> getKitchenConstraints() async {
 
 Future<FriendsList?> getFriendsList() async {
   final response = await sendGetRequest("/GetFriendsList");
-
-
   final item = json.decode(response!.body);
 
   FriendsList? friendsList = FriendsList.fromJson(item);
@@ -50,11 +49,30 @@ Future<FriendsList?> getFriendsList() async {
  return friendsList;
 }
 
+
+Future<List<RecipeInfo?>> getPastRecipes() async {
+  final response = await sendGetRequest("/GetPastRecipes");
+  final item = json.decode(response!.body);
+  List<RecipeInfo?> pastRecipes = <RecipeInfo?>[];
+
+  if (item.length > 0) {
+    for (int i=0; i<item.length; i++) {
+      print(item[i]);
+      pastRecipes.add(RecipeInfo.fromJson(item[i]));
+    }
+  }
+  //print(pastRecipes);
+
+  //print(item['skillLevel']);
+
+  return pastRecipes;
+}
+
 Future<Response?> sendGetRequest(String route) async{
 
   try {
     final queryParameters = {
-      "userEmail": "aurchon@gmail.com",
+      "userEmail": "caleb@gmail.com",
     };
 
     final uri = Uri.http("178.128.227.93:8080",route, queryParameters);

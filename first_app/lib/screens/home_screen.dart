@@ -46,8 +46,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
 
-    final postModel = Provider.of<DataClass>(context, listen: false);
-    postModel.loadHomePage(); //todo: save string value
+    final dataModel = Provider.of<DataClass>(context, listen: false);
+    dataModel.loadHomePage(); //todo: save string value
 
     //in terminated state
     FirebaseMessaging.instance.getInitialMessage().then((value) {
@@ -111,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final fcmProvider = Provider.of<NotificationProvider>(context);
-    final postModel = Provider.of<DataClass>(context);
+    final dataModel = Provider.of<DataClass>(context);
 
     /// dummy data ///
     // todo AD: use getKitchenConstraints APIs
@@ -119,8 +119,8 @@ class _HomeScreenState extends State<HomeScreen> {
     //final List<Map> myFriends =
     //     List.generate(6, (index) => {"id": index, "name": "Friend $index"})
     //         .toList();
-    String? dropdownValue = postModel.skillLevel;
-    List<String>? myFriends = postModel.friendsList?.friends;
+    String? dropdownValue = dataModel.skillLevel;
+    List<String>? myFriends = dataModel.friendsList?.friends;
 
 
     return Consumer<AuthProvider>(builder: (context, model, _) {
