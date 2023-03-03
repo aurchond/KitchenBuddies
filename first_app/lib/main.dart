@@ -20,6 +20,7 @@ import 'package:http/http.dart' as http;
 
 import 'backend_processing/data_class.dart';
 import 'data_models/recipe_info.dart';
+import 'helpers/globals.dart';
 import 'helpers/keys.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -54,15 +55,17 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
             scaffoldMessengerKey: Keys.scaffoldMessengerKey,
-            title: 'FlutterChat',
+            title: 'KitchenBuddies',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               primarySwatch: Colors.deepOrange,
             ),
-            home: StreamBuilder(
+            home: StreamBuilder<User?>(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
+                  User? user = snapshot.data;
+                  myEmail = user?.email ?? "";
                   return BottomNavigation();
                 }
                 else {
