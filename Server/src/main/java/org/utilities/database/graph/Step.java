@@ -30,7 +30,7 @@ public class Step {
     private String name;
 
     @Id
-    private Double nodeID;
+    private String nodeID;
 
     private Long recipeID; //number identifying recipe in database
     private Integer stepID; //step number from original recipe
@@ -70,9 +70,8 @@ public class Step {
         this.ingredientList = ingredientList;
         this.ingredientQuantity = ingredientQuantity;
         this.resourcesRequired = resourcesRequired;
-        Double step = Double.valueOf(stepID);
-        this.nodeID = recipeID.doubleValue() + Double.valueOf(step/10);
-        this.name = this.nodeID.toString();
+        this.nodeID = Long.toString(recipeID) + "." + Integer.toString(stepID);
+        this.name = this.nodeID;
         this.userTime = userTime;
         this.action = action;
     }
@@ -88,9 +87,8 @@ public class Step {
         this.holdingID = holdingID;
         this.stepTime = stepTime;
         this.timeLeft = timeLeft;
-        Double step = Double.valueOf(stepID);
-        this.nodeID = recipeID.doubleValue() + Double.valueOf(step/10);
-        this.name = this.nodeID.toString();
+        this.nodeID = Long.toString(recipeID) + "." + Integer.toString(stepID);
+        this.name = this.nodeID;
         this.userTime = userTime;
     }
 
@@ -110,7 +108,7 @@ public class Step {
     public Integer getStepID() {
         return this.stepID;
     }
-    public Double getNodeID() {
+    public String getNodeID() {
         return this.nodeID;
     }
     public Boolean checkIfPrep() { return this.prepStep; }
@@ -152,7 +150,7 @@ public class Step {
         }
     public void setRecipeID(Long ID) { this.recipeID = ID; }
     public void setStepID(Integer ID) { this.stepID = ID; }
-    public void setNodeID(Double ID) { this.nodeID = ID; }
+    public void setNodeID(String ID) { this.nodeID = ID; }
     public void setPrepStep(Boolean prep) { this.prepStep = prep; }
     public void setHoldingResource(String holdingResource) { this.holdingResource = holdingResource; }
     public void setHoldingID(Integer holdingID) { this.holdingID = holdingID; }

@@ -151,8 +151,8 @@
     },
     {
         "7": {
-            "instructions": "Add wet ingredients to dry ingredients and gently mix with a wooden spoon until combined \u2013 but be careful not to over mix",
-            "ingredients": [],
+            "instructions": "Add vanilla and egg yolks mix to bowl with flour and gently mix with a wooden spoon until combined \u2013 but be careful not to over mix",
+            "ingredients": ["flour", "egg yolks", "vanilla"],
             "ingredientsQuantity": [],
             "resourcesRequired": [
                 "bowl1"
