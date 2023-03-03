@@ -38,24 +38,28 @@ public class RecipeExtractor {
         // return Success or Failure
     }
 
-    public static Boolean parseRecipeUrl(String url) {
-        // Input the url
-        System.out.println(url);
-
-        // Webscrape and place data in InputRecipe
-        // Run RecipeExtractor
-        
+    public static Boolean parseRecipeUrl(String email, String url) {
         // String url = "https://amandascookin.com/baked-cake-donuts/";
         // Scrape website and place info in text file within Py_Text_Processing/Input folder
         Webscrape scraper = new Webscrape(url);
         InputRecipe inRecipe = scraper.extractRecipe();
 
-        // return Success or Failure
-        Boolean res = ExtractRecipe(inRecipe, url);
+        // Add to relational database
+        long recipeID = addToAllRecipes(inRecipe.getRecipeTitle(), url, inRecipe.convertIngredientsToString(), inRecipe.getTotalTime());
+
+        // Add recipe to UserLinkedRecipes
+        Boolean res = addUserLinkedRecipe(email, (int)recipeID);
+        if (!res) {
+            // Might enter here if URL already exists, but recipe not in graph db
+            // Do nothing
+        }
+
+        // Process Text and Add to graph database
+        res = ExtractRecipe(inRecipe, url, recipeID);
         return res;
     }
 
-    private static Boolean ExtractRecipe(InputRecipe inRecipe, String url) {
+    private static Boolean ExtractRecipe(InputRecipe inRecipe, String url, long recipeID) {
         // TODO: Place basic multithreading (1 thread for steps, other thread for placing recipe in database)
         // Use Python to process the recipe instructions, step file exported to json file within Py_Text_Processing/Output folder
         parseInstructionsPython(inRecipe.recipeFile + ".txt");
@@ -75,7 +79,7 @@ public class RecipeExtractor {
         );
 
         // Metadata = details about a recipe
-        long recipeID = addToAllRecipes(inRecipe.getRecipeTitle(), url, inRecipe.convertIngredientsToString(), inRecipe.getTotalTime());
+        
         
         // TODO: Fix Recipe Processing
     //     Recipe out_recipe = createRecipe(steps, ingredients, resourcesRequired, holdingResource_Id, recipeID);// String will be formatted as "holdingResource_holdingId"
@@ -92,7 +96,7 @@ public class RecipeExtractor {
         try {
             long startTime = System.nanoTime();
             String currentDirectory = System.getProperty("user.dir");
-            System.out.println("Current directory: " + currentDirectory);
+            // System.out.println("Current directory: " + currentDirectory);
             String os = System.getProperty("os.name");
             String activateEnv = "";
             String command = "";
@@ -114,7 +118,7 @@ public class RecipeExtractor {
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
             while ((line = in.readLine()) != null) {
-                System.out.println(line);
+                // System.out.println(line);
             }
             in.close();
 
@@ -145,7 +149,7 @@ public class RecipeExtractor {
             Object obj = jsonParser.parse(json);
 
             JSONArray stepList = (JSONArray) obj;
-            System.out.println(stepList);
+            // System.out.println(stepList);
 
             stepList.forEach( s -> {
                 try {
@@ -179,32 +183,32 @@ public class RecipeExtractor {
         //Get employee object within list
         String key = stepNumber.iterator().next();
         Integer stepId = Integer.parseInt(key);
-        System.out.println(stepId);
+        // System.out.println(stepId);
         s.setStepID(stepId);
         JSONObject stepObject = (JSONObject) step.get(key);
 
         //Get employee first name
         Boolean prepStep = (Boolean) stepObject.get("prepStep");
-        System.out.println(prepStep);
+        // System.out.println(prepStep);
         s.setPrepStep(prepStep);
 
         String holdingResource = (String) stepObject.get("holdingResource");
-        System.out.println(holdingResource);
+        // System.out.println(holdingResource);
         s.setHoldingResource(holdingResource);
 
         Integer holdingID = ((Long)stepObject.get("holdingID")).intValue();
-        System.out.println(holdingID);
+        // System.out.println(holdingID);
         s.setHoldingID(holdingID);
 
         holdingResource_Id.computeIfAbsent(holdingResource+"_"+holdingID, k -> new ArrayList<>()).add(stepId);
         resourcesRequired.computeIfAbsent(holdingResource, k -> new ArrayList<>()).add(stepId);
 
         Integer stepTime = ((Long)stepObject.get("stepTime")).intValue();
-        System.out.println(stepTime);
+        // System.out.println(stepTime);
         s.setStepTime(stepTime);
 
         Integer userTime = ((Long)stepObject.get("userTime")).intValue();
-        System.out.println(userTime);
+        // System.out.println(userTime);
         s.setUserTime(userTime);
 
         List<String> ingredientList = (List<String>) stepObject.get("ingredientList");
@@ -212,18 +216,18 @@ public class RecipeExtractor {
             ingredientList = new ArrayList<String>();
         }
         s.setIngredientList(ingredientList);
-        System.out.println(ingredientList);
+        // System.out.println(ingredientList);
         for (String ingredient: ingredientList) {
             ingredients.computeIfAbsent(ingredient, k -> new ArrayList<>()).add(stepId);
         }
-        System.out.println(Arrays.asList(ingredients));
+        // System.out.println(Arrays.asList(ingredients));
 
         List<Float> ingredientQuantity = (List<Float>) stepObject.get("ingredientQuantity");
-        System.out.println(ingredientQuantity);
+        // System.out.println(ingredientQuantity);
         s.setIngredientQuantity(ingredientQuantity);
 
         List<String> rRequired = (List<String>) stepObject.get("resourcesRequired");
-        System.out.println(rRequired);
+        // System.out.println(rRequired);
         s.setResourcesRequired(rRequired);
 
         for (String resource: rRequired) {
@@ -231,7 +235,7 @@ public class RecipeExtractor {
         }
 
         String instructions = (String) stepObject.get("instructions");
-        System.out.println(instructions);
+        // System.out.println(instructions);
         s.setInstructions(instructions);
 
         steps.add(s);

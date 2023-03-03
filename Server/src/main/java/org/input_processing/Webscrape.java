@@ -21,20 +21,24 @@ public class Webscrape {
     String url;
     // Previously used URLS
     // Lemonade: https://www.simplyrecipes.com/recipes/perfect_lemonade/
-    // Turkey: https://www.allrecipes.com/recipe/166160/juicy-thanksgiving-turkey/
+    // Turkey: 
     // Chili: https://www.thewholesomedish.com/the-best-classic-chili/
     // Baked Cake Donuts: https://amandascookin.com/baked-cake-donuts/
     // Chicken Alfredo Penne: https://tasty.co/recipe/easy-chicken-alfredo-penne
     // Oven Baked Chicken and Rice: https://www.recipetineats.com/oven-baked-chicken-and-rice/
     // Corn Chowder: https://www.foodandwine.com/recipes/corn-chowder
     // Summer Corn Chowder: https://www.cookingclassy.com/summer-corn-chowder/
+
+    /* URLs Throwing Errors
+     * https://www.allrecipes.com/recipe/12682/apple-pie-by-grandma-ople/
+     * https://www.allrecipes.com/recipe/166160/juicy-thanksgiving-turkey/
+     * 
+    */
     public Webscrape(String url) {
         this.url = url;
     }
 
     public InputRecipe extractRecipe() {
-        System.out.println("We're back!!");
-        
         JSONObject recipeJson = getRecipeObject(this.url);
 
         InputRecipe inRecipe = new InputRecipe();
@@ -77,12 +81,12 @@ public class Webscrape {
                 ingredients.add(ingr);
             }
             inRecipe.setIngredients(ingredients);
-            System.out.println(inRecipe.ingredients);
+            // System.out.println(inRecipe.ingredients);
         }
         
         // Instructions - recipeInstructions
         inRecipe.findInstructions(microData);
-        System.out.println(inRecipe.instructions.toString());
+        // System.out.println(inRecipe.instructions.toString());
 
         inRecipe.writeTextFile();
         return inRecipe;
@@ -134,11 +138,11 @@ public class Webscrape {
             recipeJson = jsonArray.getJSONObject(0);
         }
 
-        if (foundRecipeType(recipeJson)) {
-            System.out.println(recipeJson);
+        Boolean res = foundRecipeType(recipeJson);
+        if (res) {
+            // System.out.println(recipeJson);
             return recipeJson;
         }
-
 
         // More parsing required to find recipe
         try {
@@ -147,7 +151,7 @@ public class Webscrape {
                 JSONObject obj = graphObj.getJSONObject(i);
                 // System.out.println(obj);
                 if (foundRecipeType(obj)) {
-                    System.out.println(obj);
+                    // System.out.println(obj);
                     return obj;
                 }
             }
@@ -163,7 +167,7 @@ public class Webscrape {
     private Boolean foundRecipeType(JSONObject obj) {
         try {
             String type = obj.getString("@type");
-            System.out.println(type);
+            // System.out.println(type);
             if (type.equals("Recipe")) {
                 return true;
             }
@@ -178,12 +182,13 @@ public class Webscrape {
             return false;
         }
 
-        System.out.println(obj);
+        // System.out.println(obj);
         if (types instanceof String && types.equals("Recipe")) {
             return true;
-        } else if (types instanceof List<?>) {
-            List<String> objectTypes = (List<String>)types;
-            for (String type: objectTypes) {
+        } else if (types instanceof JSONArray) {
+            JSONArray objectTypes = (JSONArray)types;
+            for (int i = 0; i < objectTypes.length(); i++) {
+                String type = (String)objectTypes.get(i);
                 if (type.equals("Recipe")) {
                     return true;
                 }
@@ -192,4 +197,3 @@ public class Webscrape {
         return false;
     }
 }
-

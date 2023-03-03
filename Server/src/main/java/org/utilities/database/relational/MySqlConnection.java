@@ -1,7 +1,12 @@
 package org.utilities.database.relational;
+
+import org.server.KitchenConstraint;
+import org.server.PastRecipe;
+// public package org.utilities.database.relational;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -13,6 +18,7 @@ import java.util.List;
 import scala.Console;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.sql.ResultSet;
 
 public class MySqlConnection {
@@ -115,54 +121,99 @@ public class MySqlConnection {
         }
     }
 
-    private static void addUser(String email, int skill) {
-        //users are autonumbered
-        String addUser = "INSERT INTO UserInfo(Email, Skill) VALUES(?, ?);";
-        try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
-            PreparedStatement preprep = con.prepareStatement(useKB);
-            PreparedStatement prep = con.prepareStatement(addUser);) {
-            
-            preprep.executeUpdate();
+    public static Boolean addUser(String email, int skill, String username) {
+        String addUser = "INSERT INTO UserInfo(Email, Skill, Username) VALUES(?, ?, ?);";
+        try {
+            Connection conn = startSession();
+            PreparedStatement stmt = conn.prepareStatement(addUser);
 
             //fill in parametrized query
             //users are autonumbered
-            prep.setString(1, email);
-            prep.setInt(2, skill);
-            prep.executeUpdate();
+            stmt.setString(1, email);
+            stmt.setInt(2, skill);
+            stmt.setString(3, username);
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated > 0) {return true;} else {return false;}
         }
         catch (SQLIntegrityConstraintViolationException e) {
             Console.print("Duplicate entry was ignored");
-            return;
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
-    private static void addKitchen(String email, int burners, int pans, int pots, int cuttingBoards, int knives) {
-        String addKitchen = "INSERT INTO KitchenConstraints(Email, Burners, Pans, Pots, CuttingBoards, Knives) VALUES(?, ?, ?, ?, ?, ?);";
-        try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
-            PreparedStatement preprep = con.prepareStatement(useKB);
-            PreparedStatement prep = con.prepareStatement(addKitchen);) {
-            
-            preprep.executeUpdate();
+    public static KitchenConstraint getKitchen(String email) {
+        String getKitchen = "SELECT Burner, Pan, Pot, Knife, CuttingBoard, Oven, Microwave FROM KitchenConstraints WHERE Email = ?";
+        KitchenConstraint userKC = new KitchenConstraint();
+        try {
+            Connection conn = startSession();
+            PreparedStatement stmt = conn.prepareStatement(getKitchen);
 
             //fill in parametrized query
-            prep.setString(1, email);
-            prep.setInt(2, burners);
-            prep.setInt(3, pans);
-            prep.setInt(4, pots);
-            prep.setInt(5, cuttingBoards);
-            prep.setInt(6, knives);
-            prep.executeUpdate();
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            if (!rs.next()) {
+                return userKC;
+            }
+
+            userKC.burner = rs.getInt("Burner");
+            userKC.pan = rs.getInt("Pan");
+            userKC.pot = rs.getInt("Pot");
+            userKC.knife = rs.getInt("Knife");
+            userKC.cuttingBoard = rs.getInt("CuttingBoard");
+            userKC.oven = rs.getInt("Oven");
+            userKC.microwave = rs.getInt("Microwave");
+
         }
         catch (SQLException e) {
             e.printStackTrace();
+        }
+        return userKC;
+    }
+
+    public static Boolean addKitchen(String email, int burners, int pans, int pots, int knives, int cuttingBoards, int ovens, int microwaves) {
+        String addKitchen = "";
+        try {
+            Connection conn = startSession();
+            // Check if this is the first time adding kitchenConstraints
+            String checkUser = "SELECT Email FROM KitchenConstraints WHERE Email = ?";
+
+            PreparedStatement check = conn.prepareStatement(checkUser);
+            check.setString(1, email);
+
+            ResultSet rs = check.executeQuery();
+            if (!rs.next()) {
+                // First time adding kitchen constraints
+                addKitchen = "INSERT INTO KitchenConstraints(Burner, Pan, Pot, Knife, CuttingBoard, Oven, Microwave, Email) VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
+            } else {
+                addKitchen = "UPDATE KitchenConstraints SET Burner = ?, Pan = ?, Pot = ?, Knife = ?, CuttingBoard = ?, Oven = ?, Microwave = ? WHERE Email = ?;";
+            }
+            PreparedStatement stmt = conn.prepareStatement(addKitchen);
+
+            //fill in parametrized query
+            stmt.setInt(1, burners);
+            stmt.setInt(2, pans);
+            stmt.setInt(3, pots);
+            stmt.setInt(4, knives);
+            stmt.setInt(5, cuttingBoards);
+            stmt.setInt(6, ovens);
+            stmt.setInt(7, microwaves);
+            stmt.setString(8, email);
+            
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated > 0) {return true;} else {return false;}
+
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
     public static long addToAllRecipes(String recipeName, String recipeUrl, String ingrString, int recipeTime) {
-        String checkRecipe = "SELECT COUNT(*) FROM AllRecipes WHERE URL = ?";
+        String checkRecipe = "SELECT RecipeId FROM AllRecipes WHERE URL = ?";
         String addRecipe = "INSERT INTO AllRecipes(Name, Url, Ingredients, TotalTime) VALUES(?, ?, ?, ?);";
         try {
             Connection conn = startSession();
@@ -183,11 +234,16 @@ public class MySqlConnection {
             prep.setString(2, recipeUrl);
             prep.setString(3, ingrString);
             prep.setInt(4, recipeTime);
-            prep.executeUpdate();
+            int rowsUpdated = prep.executeUpdate();
+            if (rowsUpdated == 0) {return -1;}
 
-            String sql = "SELECT LAST_INSERT_ID() as last_id FROM AllRecipes;";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            PreparedStatement stmt = conn.prepareStatement(checkRecipe);
+            stmt.setString(1, recipeUrl);
             ResultSet rs = stmt.executeQuery();
+            if (!rs.next()) {
+                System.out.println("Result set is empty");
+                return -1;
+            }
             return (long)rs.getInt(1);
             // return value
         }
@@ -195,6 +251,173 @@ public class MySqlConnection {
             e.printStackTrace();
             return -2;
         }
+    }
+
+    public static int getSkillLevel(String email) {
+        try {
+            String sql = "SELECT Skill FROM UserInfo WHERE Email = ?;";
+            Connection conn = startSession();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, email);
+
+            ResultSet rs = stmt.executeQuery();
+            if (!rs.next()) {
+                System.out.println("Result set is empty");
+                return -1;
+            }
+            int skill = rs.getInt(1);
+            return skill;
+            
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return -2;
+        }
+        
+    }
+
+    public static Boolean addSkillLevel(String email, int skillLevel) {
+        
+        try {
+            String updateSkill = "UPDATE UserInfo SET Skill = ? WHERE Email = ?;";
+            Connection conn = startSession();
+            PreparedStatement stmt = conn.prepareStatement(updateSkill);
+            stmt.setInt(1, skillLevel);
+            stmt.setString(2, email);
+
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated > 0) {return true;} else {return false;}
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static List<String> getFriendsList(String email) {
+        List<String> friends = new ArrayList<String>();
+        try {
+            String sql = "SELECT FriendEmail FROM FriendsList WHERE Email = ?;";
+            Connection conn = startSession();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, email);
+
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()) {
+                friends.add(rs.getString("FriendEmail"));
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return friends;
+    }
+
+    public static Boolean addToFriendsList(String email, String friendEmail) {
+        String addFriend = "INSERT INTO FriendsList(Email, FriendEmail) VALUES(?, ?);";
+        try {
+            Connection conn = startSession();
+            PreparedStatement stmt = conn.prepareStatement(addFriend);
+
+            stmt.setString(1, email);
+            stmt.setString(2, friendEmail);
+
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated == 0) {
+                // Most likely already friends
+                return false;
+            }
+
+            // Adding in friends in other direction now
+            stmt = conn.prepareStatement(addFriend);
+            stmt.setString(1, friendEmail);
+            stmt.setString(2, email);
+
+            rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated > 0) {return true;} else {return false;}
+            
+        }
+        catch (SQLIntegrityConstraintViolationException e) {
+            Console.print("Duplicate entry was ignored");
+            
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static Boolean addUserLinkedRecipe(String email, int recipeId) {
+        try {
+            String sql = "INSERT INTO UserLinkedRecipes(Email, RecipeId) VALUES(?, ?);";
+            Connection conn = startSession();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, email);
+            stmt.setInt(2, recipeId);
+
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated > 0) {return true;} else {return false;}
+            
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public static Boolean doesRecipeExist(String email, String url) {
+        /* 
+        1. Check 
+            a. URL connected with user
+            b. if graph
+        2. If a. not satisfied
+            a. check if URL exists in AllRecipes
+            b. if not, return false
+            c. Add URL to User
+        3. Either after 1 or 2, check if URL has been parsed and placed in graphDB
+        */
+        try {
+            // Check if url in All_Recipes join on UserLinkedRecipes with ID
+            String sql = "SELECT ar.InGraphDB as GraphCheck FROM AllRecipes as ar " +
+                         "JOIN UserLinkedRecipes as ulr on ar.RecipeID=ulr.RecipeId WHERE ulr.Email = ? AND ar.Url = ?;";
+            Connection conn = startSession();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, email);
+            stmt.setString(2, url);
+
+            ResultSet rs = stmt.executeQuery();
+            if (!rs.next()) {
+                // Check if URL in AllRecipe and select InGraphDB
+                sql = "SELECT RecipeId, InGraphDB FROM AllRecipes as ar WHERE ar.Url = ?;";
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, url);
+                
+                if (!rs.next()) {
+                    // URL hasn't been parsed
+                    return false;
+                }
+
+                // Insert recipeId into UserLinkedRecipe
+                int recipeId = rs.getInt("RecipeId");
+                Boolean res = addUserLinkedRecipe(email, recipeId);
+
+                if (!res) {
+                    System.out.println("Couldn't add recipe to UserLinkedRecipe? Throw an error??");
+                }
+                
+                // Check if Recipe in GraphDB
+                Boolean inGraphDB = rs.getBoolean("GraphCheck");
+                if (inGraphDB) {return true;} else {return false;}
+            } 
+
+            Boolean inGraphDB = rs.getBoolean("GraphCheck");
+            if (inGraphDB) {return true;} else {return false;}
+            
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return false;
     }
 
     public static long getRecipeID() {
@@ -219,101 +442,43 @@ public class MySqlConnection {
         
     }
 
-    private static void addToFavRecipes(String email, int recipeId) {
-        String addFav = "INSERT INTO FavRecipes(Email, RecipeId) VALUES(?, ?);";
-        try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
-            PreparedStatement preprep = con.prepareStatement(useKB);
-            PreparedStatement prep = con.prepareStatement(addFav);) {
-            
-            preprep.executeUpdate();
-
-            //fill in parametrized query
-            prep.setString(1, email); //autonumber users?
-            prep.setInt(2, recipeId);
-            prep.executeUpdate();
-        }
-        catch (SQLIntegrityConstraintViolationException e) {
-            Console.print("Duplicate entry was ignored");
-            return;
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    //should we avoid duplicates? i.e. if there is a link already between friend 1 and 2, avoid friend 2 and 1?
-    //consider performance .... then we need to change findFriend function too
-    private static void addToFriendsList(String email, String friendEmail) {
-        String addFriend = "INSERT INTO FriendsList(Email, FriendEmail) VALUES(?, ?);";
-        try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
-            PreparedStatement preprep = con.prepareStatement(useKB);
-            PreparedStatement prep = con.prepareStatement(addFriend);) {
-
-            preprep.executeUpdate();
-            
-            //fill in parametrized query
-            prep.setString(1, email);
-            prep.setString(2, friendEmail);
-            prep.executeUpdate();
-        }
-        catch (SQLIntegrityConstraintViolationException e) {
-            Console.print("Duplicate entry was ignored");
-            return;
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        //friends are bidirectional?
-    }
-
-
-    //call this from front page of app to show your friends list
-    //TODO: make structs for User?
-    private static List<String> findFriends(String email) {
-        List<String> friends = new ArrayList<String>();
-        String findFriend = "SELECT FriendsList.FriendEmail FROM UserInfo INNER JOIN FriendsList on UserInfo.Email=FriendsList.FriendEmail WHERE FriendsList.Email = ?;";
-        try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
-            PreparedStatement preprep = con.prepareStatement(useKB);
-            PreparedStatement prep = con.prepareStatement(findFriend);) {
-            
-            preprep.executeUpdate();
-            prep.setString(1, email);
-            try (ResultSet rs = prep.executeQuery()) {
-                while(rs.next()) {
-                    friends.add(rs.getString("FriendEmail"));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        Console.print(friends + "\n");
-        return friends;
-    }
-
     //call this from front page of app to show the names of your saved recipes
-    private static List<String> findYourRecipes(String email) {
-        String joinRecipeTables = "SELECT FavRecipes.RecipeId, AllRecipes.Name FROM AllRecipes INNER JOIN FavRecipes on AllRecipes.RecipeId=FavRecipes.RecipeId WHERE FavRecipes.Email = ?;";
-        List<String> recipeNames = new ArrayList<String>();
+    public static List<PastRecipe> findUserRecipes(String email) {
+        String joinRecipeTables = "SELECT ar.RecipeId, ar.Name, ar.Ingredients, ar.TotalTime, url.LastDateMade FROM AllRecipes as ar INNER JOIN UserLinkedRecipes as url on ar.RecipeId=url.RecipeId WHERE url.Email = ?;";
+        List<PastRecipe> recipes = new ArrayList<PastRecipe>();
 
-        try (Connection con = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
-            PreparedStatement preprep = con.prepareStatement(useKB);
-            PreparedStatement prep = con.prepareStatement(joinRecipeTables);) {
-            
-            preprep.executeUpdate();
-            prep.setString(1, email);
-            try (ResultSet rs = prep.executeQuery()) {
-                while(rs.next()) {
-                    recipeNames.add(rs.getString("Name"));
+        try {
+            Connection conn = startSession();
+            PreparedStatement stmt = conn.prepareStatement(joinRecipeTables);
+
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()) {
+                Integer recipeId = rs.getInt("ar.RecipeId");
+                String name = rs.getString("ar.Name");
+                Integer totalTime = rs.getInt("ar.TotalTime");
+                
+                // Parse ingredients
+                String strIngr = rs.getString("ar.Ingredients");
+                String[] parts = strIngr.split(",");
+                List<String> ingredients = Arrays.asList(parts);
+
+                // LastDate
+                Date dateValue = rs.getDate("url.LastDateMade");
+                String date = "";
+
+                if (dateValue != null) {
+                    date = dateValue.toString();
                 }
+
+                PastRecipe pRecipe = new PastRecipe(recipeId, name, ingredients, totalTime, date);
+                recipes.add(pRecipe);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        Console.print(recipeNames + "\n");
-        return recipeNames;
+        return recipes;
     }
 
     //TODO: make a kitchen struct?

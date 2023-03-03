@@ -112,35 +112,32 @@ public class RestApi {
     }
 
     @PostMapping(value = "/RequestRecipeByUrl", produces="application/json")
-    @ResponseBody
-    public ResponseEntity<Object> RequestRecipeByUrl(@Valid @RequestBody User user) {
-        // get url from api call
-        // return recipe info
-        // String ret = "Greetings from Spring Boot! " + user.userEmail;
-        //parseRecipeUrl(url)
-        Boolean result = parseRecipeUrl(user.recipeURL);
+    public ResponseEntity<Object> RequestRecipeByUrl(@Valid @RequestBody ApiUser user) {
+        /**
+        //once received in backend
+            a) backend checks url in AllRecipes database
+                i) if recipe does not exist, add to AllRecipes database to get auto ID
+                i.i) parse recipe (input processing)
+                i.ii) add to graph database with id from AllRecipes
+            b) add to FaveRecipes database for that user
+         */
+        try {
+            Boolean res = MySqlConnection.doesRecipeExist(user.userEmail, user.recipeUrl);
+            if (res) {
+                return ResponseEntity.ok("Recipe already in both databases");
+            }
 
-        if (!result) {
-            return ResponseEntity.ok("Error in parsing Recipe URL");
+            // URL not parsed yet, enter input processing
+            res = RecipeExtractor.parseRecipeUrl(user.userEmail, user.recipeUrl);
+            if (res) {
+                return ResponseEntity.ok("Recipe added to user " + user.userEmail);
+            }
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("RequestRecipeByUrl Request Failed");
+        } catch (Exception e) {
+            // In case another error occurs
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
-
-        return ResponseEntity.ok(user.recipeURL);
-    }
-
-    @PostMapping("/RequestMealSessionSteps")
-    @ResponseBody
-    public String RequestMealSessionSteps() {
-        // get constraints
-        // get friends
-        // get recipes
-
-        //return meal session steps
-        return "Greetings from Spring Boot!";
-    }
-
-    @PostMapping("/AddRecipes")
-    public void AddRecipes() {
-        //get recipes and store them to user
     }
 
     @GetMapping("/GetPastRecipes")
@@ -167,6 +164,42 @@ public class RestApi {
 
          //return meal session steps
         return "Greetings from Spring Boot!";
+        /**
+         * Responses
+         * [
+         *     {
+         *         "userEmail": "aurchond@gmail.com",
+         *         "recipeStep": [
+         *             {
+         *                 "number": "2.1",
+         *                 "instructions": "heat oil in a wok",
+         *                 "ingredientList": [
+         *                     "teaspoon coconut oil"
+         *                 ],
+         *                 "ingredientQuantity": [
+         *                     1
+         *                 ],
+         *                 "dependencyItem": "",
+         *                 "nextUserEmail": "aurchond@gmail.com"
+         *             },
+         *             {
+         *                 "number": "2.2",
+         *                 "instructions": "cook veggies in wok",
+         *                 "ingredientList": [
+         *                     "teaspoon salt",
+         *                     "shredded carrots"
+         *                 ],
+         *                 "ingredientQuantity": [
+         *                     1,
+         *                     2
+         *                 ],
+         *                 "dependencyItem": "",
+         *                 "nextUserEmail": "shadi@gmail.com"
+         *             }
+         *         ]
+         *     }
+         * ]
+         */
     }
 
 

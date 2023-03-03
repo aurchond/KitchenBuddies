@@ -1,0 +1,68 @@
+YSQL STARTUP:
+
+CREATE DATABASE KitchenBuddies;
+USE KitchenBuddies;
+CREATE TABLE UserInfo (
+	Email varchar(255) UNIQUE NOT NULL, 
+	Skill int,
+	PRIMARY KEY (Email)	
+);
+	
+CREATE TABLE AllRecipes (
+	RecipeId int NOT NULL AUTO_INCREMENT,
+	Name varchar(255) NOT NULL,
+	Url varchar(255) UNIQUE, #this might need to be increased
+	Ingredients varchar(2000), #this might need to be increased -> storing ingredients as one string for now 
+	TotalTime int, #stored in minutes
+    InGraphDB BOOLEAN DEFAULT FALSE,
+	PRIMARY KEY (RecipeId)
+);
+
+CREATE TABLE UserLinkedRecipes (
+	Email varchar(255) NOT NULL,
+	RecipeId int NOT NULL,
+	LastDateMade date,
+	FOREIGN KEY (Email) REFERENCES UserInfo(Email),
+	FOREIGN KEY (RecipeId) REFERENCES AllRecipes(RecipeId),
+	CONSTRAINT Relationship UNIQUE (Email, RecipeId) # recipe should only get mapped to user once
+);
+
+CREATE TABLE KitchenConstraints (
+	Email varchar(255) NOT NULL,
+	Burner int, #number of stovetop burners
+	Pan int,
+	Pot int,
+    Knife int,
+	CuttingBoard int,
+	Oven int,
+    Microwave int,
+	PRIMARY KEY (Email),
+	FOREIGN KEY (Email) REFERENCES UserInfo(Email)
+);
+
+CREATE TABLE FriendsList (
+	Email varchar(255) NOT NULL,
+	FriendEmail varchar(255) NOT NULL,
+	FOREIGN KEY (Email) REFERENCES UserInfo(Email),
+	FOREIGN KEY (FriendEmail) REFERENCES UserInfo(Email), # both emails should be found in User list
+	CONSTRAINT Relationship UNIQUE (Email, FriendEmail)
+);
+
+### useful commands ###
+SHOW TABLES; # get list of tables in database
+SELECT * FROM _tables_; # show everything in that table
+DELETE FROM _tables_ WHERE .... ;
+ALTER TABLE AllRecipes MODIFY COLUMN Ingredients varchar(2000);
+
+CREATE TABLE Friends; #join table on User id?
+
+SELECT ar.InGraphDB as GraphCheck FROM AllRecipes as ar JOIN UserLinkedRecipes as ulr on ar.RecipeID=ulr.RecipeId WHERE ulr.Email = 'aurchon@gmail.com' AND ar.Url = 'https://amandascookin.com/baked-cake-donuts/';
+
+////experimenting with join queries/////
+SELECT FavRecipes.RecipeId, FavRecipes.UserId, AllRecipes.Name FROM AllRecipes INNER JOIN FavRecipes on AllRecipes.RecipeID=FavRecipes.RecipeId WHERE FavRecipes.UserId = 1;
+
+SELECT FavRecipes.RecipeId, FavRecipes.UserId, AllRecipes.Name FROM AllRecipes INNER JOIN FavRecipes on AllRe
+cipes.RecipeID=FavRecipes.RecipeId;
+
+SELECT FavRecipes.RecipeId, AllRecipes.Name FROM AllRecipes INNER JOIN FavRecipes on AllRecipes.RecipeID=FavRecip
+es.RecipeId WHERE FavRecipes.UserId = 1;
