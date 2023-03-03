@@ -14,6 +14,7 @@ import 'package:http/http.dart' as http;
 
 import '../backend_processing/data_class.dart';
 import '../backend_processing/get_requests.dart';
+import '../helpers/globals.dart';
 import '../helpers/tile_decorated.dart';
 
 const List<String> skillList = <String>['Beginner', 'Intermediate', 'Advanced'];
@@ -152,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
                 margin: EdgeInsets.only(top: 20, bottom: 15),
                 child: Text(
-                  "Your friends:",
+                  "Hello " + myEmail + "! Your friends are",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 )),
             Expanded(
