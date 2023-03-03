@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:first_app/data_models/recipe_info.dart';
 import 'package:first_app/helpers/input_text_button.dart';
 import 'package:first_app/helpers/tile_decorated.dart';
 import 'package:flutter/cupertino.dart';
@@ -57,8 +60,8 @@ class _AllRecipesState extends State<AllRecipes> {
     int ingredientIndex = valueText.indexOf("Ingredients:");
     int instructionsIndex = valueText.indexOf("Instructions:");
 
-    String recipeTitle = valueText.substring(0, timeIndex);
-    print(recipeTitle);
+    String recipeName = valueText.substring(0, timeIndex-1);
+    print(recipeName);
 
     //hardcode length of "total time" string bc im too lazy to declare variables for each pattern
     String totalTime = valueText.substring(timeIndex+12, ingredientIndex);
@@ -73,19 +76,9 @@ class _AllRecipesState extends State<AllRecipes> {
     List<String> instructionList = instructions.split('\n');
     print(instructionList);
 
-    Map<String, dynamic> data;
-
-    // populate json with string data??
-    data = {
-      "title": recipeTitle,
-      "total_time": totalTime,
-      "ingredients": {
-        ingredientList,
-      },
-      "instructions": {
-       instructionList,
-      },
-    };
+    RecipeInfo recipeByText = RecipeInfo(recipeName: recipeName, ingredientList: ingredientList, totalTime: double.parse(totalTime), instructionList: instructionList);
+    String data = jsonEncode(recipeByText);
+    //TODO: send json to backend
     //print(data);
   }
 
@@ -93,6 +86,12 @@ class _AllRecipesState extends State<AllRecipes> {
     setState(() {
       valueText = value;
     });
+  }
+
+  //input text button callback
+  onPressedCallback(FocusNode _focusNode, TextEditingController _controller) {
+    print(_controller.text);
+    _focusNode.unfocus();
   }
 
   @override
@@ -129,8 +128,6 @@ class _AllRecipesState extends State<AllRecipes> {
       recipeTile(title: "Option ", ingredients: "Ingredients", totalTime: 60),
       recipeTile(title: "Option ", ingredients: "Ingredients", totalTime: 60),
     ];
-
-
 
 
     return Scaffold(
@@ -172,7 +169,7 @@ class _AllRecipesState extends State<AllRecipes> {
             ),
             SizedBox(width: 10, height: 10),
             inputTextButton(recipeByUrlController, "Input your recipe URL",
-                "Add recipe!", myFocusNode),
+                "Add recipe!", myFocusNode, onPressedCallback),
             SizedBox(width: 10, height: 10),
             SizedBox(
                 width: 360,

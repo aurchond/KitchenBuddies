@@ -3,12 +3,13 @@ class RecipeInfo {
   List<String>? _ingredientList;
   double? _totalTime;
   String? _lastDateMade;
+  List<String>? _instructionList;
 
   RecipeInfo(
       {String? recipeName,
         List<String>? ingredientList,
         double? totalTime,
-        String? lastDateMade}) {
+        String? lastDateMade, List<String>? instructionList}) {
     if (recipeName != null) {
       this._recipeName = recipeName;
     }
@@ -20,6 +21,9 @@ class RecipeInfo {
     }
     if (lastDateMade != null) {
       this._lastDateMade = lastDateMade;
+    }
+    if (instructionList != null) {
+      this._instructionList = instructionList;
     }
   }
 
@@ -33,6 +37,9 @@ class RecipeInfo {
       _totalTime = completionTime;
   String? get lastTimeMade => _lastDateMade;
   set lastTimeMade(String? lastTimeMade) => _lastDateMade = lastTimeMade;
+  List<String>? get instructionList => _instructionList;
+  set instructionList(List<String>? instructionList) =>
+      _instructionList = instructionList;
 
   RecipeInfo.fromJson(Map<String, dynamic> json) {
 
@@ -42,6 +49,7 @@ class RecipeInfo {
     _ingredientList = json['ingredientList'].cast<String>();
     _totalTime = json['completionTime'];
     _lastDateMade = json['lastTimeMade'];
+    _instructionList = json['instructionList'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
@@ -50,6 +58,7 @@ class RecipeInfo {
     data['ingredientList'] = this._ingredientList;
     data['completionTime'] = this._totalTime;
     data['lastTimeMade'] = this._lastDateMade;
+    data['instructionList'] = this._instructionList;
     return data;
   }
 }

@@ -88,6 +88,12 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
+  //input text button callback
+  onPressedCallback(FocusNode _focusNode, TextEditingController _controller) {
+    print(_controller.text);
+    _focusNode.unfocus();
+  }
+
   @override
   void dispose() {
     // dispose of resources for input text buttons
@@ -171,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
             )),
 
             inputTextButton(textController, "Enter your friend's email",
-                "Add friend!", myFocusNode),
+                "Add friend!", myFocusNode, onPressedCallback),
 
             /// old push notif stuff ///
             Expanded(
@@ -264,13 +270,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: ListView(
                   children: [
                     inputTextButton(burnerController, "Change # of burners",
-                        "Update # of burners", burnerFocusNode),
+                        "Update # of burners", burnerFocusNode, onPressedCallback),
                     inputTextButton(potController, "Change # of pots",
-                        "Update # of pots", potFocusNode),
+                        "Update # of pots", potFocusNode, onPressedCallback),
                     inputTextButton(panController, "Change # of pans",
-                        "Update # of pans", panFocusNode),
+                        "Update # of pans", panFocusNode, onPressedCallback),
                     inputTextButton(knifeController, "Change # of knives",
-                        "Update # of knives", knifeFocusNode),
+                        "Update # of knives", knifeFocusNode, onPressedCallback),
                   ],
             ))
           ],

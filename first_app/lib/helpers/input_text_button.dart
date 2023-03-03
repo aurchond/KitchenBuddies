@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Widget inputTextButton(TextEditingController _controller, String hint, String buttonText, FocusNode _focusNode) {
+Widget inputTextButton(TextEditingController _controller, String hint, String buttonText, FocusNode _focusNode, Function(FocusNode _focusNode, TextEditingController _controller) _onPressed) {
   return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Container(
@@ -30,9 +30,7 @@ Widget inputTextButton(TextEditingController _controller, String hint, String bu
               width: 120, height: 60, child:
             ElevatedButton(
                 onPressed: () {
-                  print(_controller.text);
-                  _focusNode.unfocus();
-                  //TODO: API callback function
+                  _onPressed(_focusNode, _controller);
                 },
                 child: Text(buttonText)),
             )],
