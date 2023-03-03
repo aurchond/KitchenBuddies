@@ -1,4 +1,4 @@
-MYSQL STARTUP:
+YSQL STARTUP:
 
 CREATE DATABASE KitchenBuddies;
 USE KitchenBuddies;

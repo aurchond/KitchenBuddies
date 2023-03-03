@@ -1,0 +1,311 @@
+[
+    {
+        "1": {
+            "instructions": "Preheat the oven to 400\u2109",
+            "ingredientList": [],
+            "ingredientQuantity": [],
+            "resourcesRequired": [
+                "oven1"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "preheat"
+            ],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "oven1",
+            "holdingID": 0
+        }
+    },
+    {
+        "2": {
+            "instructions": "Line a large baking sheet with parchment paper or a silicone baking mat",
+            "ingredientList": [
+                "baking"
+            ],
+            "ingredientQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "mat"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "line"
+            ],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "mat1",
+            "holdingID": 1
+        }
+    },
+    {
+        "3": {
+            "instructions": " Place the sweet potato cubes, \u00a0Brussels sprouts, and minced garlic on the baking sheet",
+            "ingredientList": [
+                "baking",
+                "potato cubes",
+                "minced garlic"
+            ],
+            "ingredientQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "mat1"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "place",
+                "sprouts"
+            ],
+            "stepTime": 12,
+            "userTime": 12,
+            "holdingResource": "mat1",
+            "holdingID": 1
+        }
+    },
+    {
+        "4": {
+            "instructions": " Drizzle oil over vegetables then gently toss to coat and sprinkle with salt and pepper before spreading them out so that they\u2019re in a single layer",
+            "ingredientList": [
+                "salt",
+                "oil",
+                "pepper"
+            ],
+            "ingredientQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "mat1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "toss",
+                "coat",
+                "sprinkle",
+                "spreading"
+            ],
+            "stepTime": 18,
+            "userTime": 18,
+            "holdingResource": "mat1",
+            "holdingID": 1
+        }
+    },
+    {
+        "5": {
+            "instructions": "Place the baking sheet in the oven and roast the vegetables for 15 minutes",
+            "ingredientList": [
+                "baking"
+            ],
+            "ingredientQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "oven"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "place",
+                "roast"
+            ],
+            "stepTime": 15,
+            "userTime": 2,
+            "holdingResource": "mat1",
+            "holdingID": 1
+        }
+    },
+    {
+        "6": {
+            "instructions": "While the vegetables are roasting, mix the ground beef with \u00bc cup BBQ sauce, garlic and onion powders, thyme, salt, and pepper",
+            "ingredientList": [
+                "beef",
+                "sauce",
+                "onion",
+                "salt",
+                "pepper",
+                "thyme",
+                "garlic"
+            ],
+            "ingredientQuantity": [
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl1"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "mix"
+            ],
+            "stepTime": 14,
+            "userTime": 14,
+            "holdingResource": "bowl1",
+            "holdingID": 2
+        }
+    },
+    {
+        "7": {
+            "instructions": " Divide the meat mixture into 4 portions and shape each into a football shape about \u00be-inch thick",
+            "ingredientList": [],
+            "ingredientQuantity": [],
+            "resourcesRequired": [
+                "bowl1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "divide",
+                "shape"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "bowl1",
+            "holdingID": 2
+        }
+    },
+    {
+        "8": {
+            "instructions": " Set aside",
+            "ingredientList": [],
+            "ingredientQuantity": [],
+            "resourcesRequired": [
+                "bowl1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "set"
+            ],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "bowl1",
+            "holdingID": 1
+        }
+    },
+    {
+        "9": {
+            "instructions": "After the vegetables have been in the oven for 15 minutes, remove the baking sheet from the oven",
+            "ingredientList": [
+                "oven",
+                "baking sheet"
+            ],
+            "ingredientQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "oven",
+                "mat1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "remove"
+            ],
+            "stepTime": 15,
+            "userTime": 2,
+            "holdingResource": "mat1",
+            "holdingID": 1
+        }
+    },
+    {
+        "10": {
+            "instructions": " Stir vegetables then make a space between them for the meatloaves",
+            "ingredientList": [],
+            "ingredientQuantity": [],
+            "resourcesRequired": [
+                "mat1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "stir",
+                "make"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "mat1",
+            "holdingID": 1
+        }
+    },
+    {
+        "11": {
+            "instructions": "Place the meatloaves on the pan and spread the remaining BBQ sauce over each one",
+            "ingredientList": [
+                "remaining sauce"
+            ],
+            "ingredientQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "pan"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "place",
+                "spread"
+            ],
+            "stepTime": 4,
+            "userTime": 4,
+            "holdingResource": "pan1",
+            "holdingID": 3
+        }
+    },
+    {
+        "12": {
+            "instructions": "Return the baking sheet to the oven and bake for an additional 12-15 minutes or until an instant-read thermometer inserted into the thickest part of the meatloaves registers 165\u2109",
+            "ingredientList": [
+                "baking sheet"
+            ],
+            "ingredientQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "read thermometer",
+                "oven"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "return",
+                "bake",
+                "registers"
+            ],
+            "stepTime": 12,
+            "userTime": 2,
+            "holdingResource": "mat1",
+            "holdingID": 1
+        }
+    },
+    {
+        "13": {
+            "instructions": "Remove the baking sheet from the oven, sprinkle with chopped parsley (if desired) and serve immediately",
+            "ingredientList": [
+                "baking",
+                "chopped parsley"
+            ],
+            "ingredientQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "mat1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "remove",
+                "sprinkle",
+                "serve"
+            ],
+            "stepTime": 5,
+            "userTime": 5,
+            "holdingResource": "mat1",
+            "holdingID": 1
+        }
+    }
+]

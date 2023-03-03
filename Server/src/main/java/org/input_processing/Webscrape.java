@@ -197,4 +197,3 @@ public class Webscrape {
         return false;
     }
 }
-

@@ -1,0 +1,247 @@
+[
+    {
+        "1": {
+            "instructions": "Preheat the oven to 425 degrees F",
+            "ingredientList": [
+                "F"
+            ],
+            "ingredientQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "oven1"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "preheat"
+            ],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "oven1",
+            "holdingID": 0
+        }
+    },
+    {
+        "2": {
+            "instructions": "Season the chicken thighs on both sides with 1 teaspoon salt and 1/2 teaspoon pepper",
+            "ingredientList": [
+                "chicken thighs"
+            ],
+            "ingredientQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "oven1"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 0,
+            "userTime": 0,
+            "holdingResource": "oven1",
+            "holdingID": 0
+        }
+    },
+    {
+        "3": {
+            "instructions": "Heat the olive oil in a roasting pan on the stovetop over medium-high heat",
+            "ingredientList": [
+                "oil"
+            ],
+            "ingredientQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "roasting pan"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "heat"
+            ],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "pan1",
+            "holdingID": 1
+        }
+    },
+    {
+        "4": {
+            "instructions": " Add the chicken, skin-side down, and sear until golden brown, 4 to 5 minutes",
+            "ingredientList": [
+                "chicken"
+            ],
+            "ingredientQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "pan1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add",
+                "remove"
+            ],
+            "stepTime": 5,
+            "userTime": 5,
+            "holdingResource": "pan1",
+            "holdingID": 1
+        }
+    },
+    {
+        "5": {
+            "instructions": " remove to a plate",
+            "ingredientList": [
+                "chicken"
+            ],
+            "ingredientQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "plate1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add",
+                "remove"
+            ],
+            "stepTime": 5,
+            "userTime": 5,
+            "holdingResource": "plate1",
+            "holdingID": 2
+        }
+    },
+    {
+        "6": {
+            "instructions": "Add the potatoes, garlic, onions, thyme, parsnips, 1 teaspoon salt and 1/2 teaspoon pepper to the roasting pan",
+            "ingredientList": [
+                "potatoes",
+                "thyme"
+            ],
+            "ingredientQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "pan1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add",
+                "stir"
+            ],
+            "stepTime": 4,
+            "userTime": 4,
+            "holdingResource": "pan1",
+            "holdingID": 1
+        }
+    },
+    {
+        "7": {
+            "instructions": "stir",
+            "ingredientList": [],
+            "ingredientQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "pan1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add",
+                "stir"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "pan1",
+            "holdingID": 1
+        }
+    },
+    {
+        "6": {
+            "instructions": " Cook until the vegetables are warmed and coated in oil, 2 minutes",
+            "ingredientList": [
+                "oil"
+            ],
+            "ingredientQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "pan1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "coated"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "pan1",
+            "holdingID": 1
+        }
+    },
+    {
+        "7": {
+            "instructions": "Place the chicken, skin-side up, on top of the vegetables",
+            "ingredientList": [
+                "chicken"
+            ],
+            "ingredientQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "plate1"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "place"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "plate1",
+            "holdingID": 2
+        }
+    },
+    {
+        "8": {
+            "instructions": " Scatter with the lemon slices and thyme sprigs",
+            "ingredientList": [
+                "thyme sprigs",
+                "lemon slices"
+            ],
+            "ingredientQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "plate1"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 0,
+            "userTime": 0,
+            "holdingResource": "plate1",
+            "holdingID": 2
+        }
+    },
+    {
+        "9": {
+            "instructions": "Roast until the chicken is cooked through and the potatoes are tender, 35 to 40 minutes",
+            "ingredientList": [
+                "potatoes",
+                "chicken"
+            ],
+            "ingredientQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "oven"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 40,
+            "userTime": 2,
+            "holdingResource": "oven1",
+            "holdingID": 0
+        }
+    }
+]

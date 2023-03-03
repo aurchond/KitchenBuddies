@@ -1,0 +1,144 @@
+[
+    {
+        "1": {
+            "instructions": "Combine the chicken thighs, vinegar, soy sauce, garlic, peppercorns and bay leaves in a large pot",
+            "ingredientList": [
+                "chicken thighs",
+                "sauce",
+                "garlic",
+                "vinegar",
+                "peppercorns"
+            ],
+            "ingredientQuantity": [
+                -1,
+                -1,
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "large pot"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "combine"
+            ],
+            "stepTime": 5,
+            "userTime": 5,
+            "holdingResource": "pot1",
+            "holdingID": 0
+        }
+    },
+    {
+        "2": {
+            "instructions": " Cover and marinate the chicken in the refrigerator for 1 to 3 hours",
+            "ingredientList": [
+                "chicken"
+            ],
+            "ingredientQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "cover",
+                "marinate"
+            ],
+            "stepTime": 180,
+            "userTime": 2,
+            "holdingResource": "pot1",
+            "holdingID": 0
+        }
+    },
+    {
+        "3": {
+            "instructions": "Bring the chicken to a boil over high heat",
+            "ingredientList": [
+                "chicken"
+            ],
+            "ingredientQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "bring"
+            ],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "pot1",
+            "holdingID": 0
+        }
+    },
+    {
+        "4": {
+            "instructions": " Lower the heat, cover and let simmer for 30 minutes, stirring occasionally",
+            "ingredientList": [],
+            "ingredientQuantity": [],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "lower",
+                "cover",
+                "let"
+            ],
+            "stepTime": 30,
+            "userTime": 2,
+            "holdingResource": "pot1",
+            "holdingID": 0
+        }
+    },
+    {
+        "5": {
+            "instructions": " Remove the lid and simmer until the sauce is reduced and thickened and the chicken is tender, about 20 more minutes",
+            "ingredientList": [
+                "chicken",
+                "sauce"
+            ],
+            "ingredientQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "remove",
+                "thickened"
+            ],
+            "stepTime": 20,
+            "userTime": 2,
+            "holdingResource": "pot1",
+            "holdingID": 0
+        }
+    },
+    {
+        "6": {
+            "instructions": " Serve with steamed rice",
+            "ingredientList": [
+                "steamed rice"
+            ],
+            "ingredientQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "serve"
+            ],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "pot1",
+            "holdingID": 0
+        }
+    }
+]

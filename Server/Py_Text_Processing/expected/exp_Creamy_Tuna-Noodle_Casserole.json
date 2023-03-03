@@ -1,0 +1,163 @@
+[
+    {
+        "1": {
+            "instructions": "Preheat oven to 350&deg;",
+            "ingredientList": [
+                "oven"
+            ],
+            "ingredientQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "oven"
+            ],
+            "prepStep": true,
+            "verbs": [],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "oven1",
+            "holdingID": 0
+        }
+    },
+    {
+        "2": {
+            "instructions": " Cook noodles according to package directions for al dente, adding peas during the last minute of cooking; drain",
+            "ingredientList": [
+                "noodles",
+                "peas"
+            ],
+            "ingredientQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "oven1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "according",
+                "drain"
+            ],
+            "stepTime": 5,
+            "userTime": 5,
+            "holdingResource": "oven1",
+            "holdingID": 0
+        }
+    },
+    {
+        "3": {
+            "instructions": ",    Meanwhile, in a large bowl, combine soup, sour cream, cheese, milk and salt; stir in tuna, onion and pepper",
+            "ingredientList": [
+                "tuna",
+                "sour cream",
+                "cheese",
+                "salt",
+                "onion",
+                "milk",
+                "pepper"
+            ],
+            "ingredientQuantity": [
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "large bowl"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "stir"
+            ],
+            "stepTime": 7,
+            "userTime": 7,
+            "holdingResource": "bowl1",
+            "holdingID": 1
+        }
+    },
+    {
+        "4": {
+            "instructions": " Add noodles and peas; toss to combine",
+            "ingredientList": [
+                "noodles"
+            ],
+            "ingredientQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl1"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "toss",
+                "combine"
+            ],
+            "stepTime": 3,
+            "userTime": 3,
+            "holdingResource": "bowl1",
+            "holdingID": 1
+        }
+    },
+    {
+        "5": {
+            "instructions": ",    Transfer to an 11x7-in. baking dish coated with cooking spray",
+            "ingredientList": [
+                "cooking spray"
+            ],
+            "ingredientQuantity": [],
+            "resourcesRequired": [
+                "baking dish1"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "baking dish1",
+            "holdingID": 2
+        }
+    },
+    {
+        "6": {
+            "instructions": " In a small bowl, toss bread crumbs with melted butter; sprinkle over top",
+            "ingredientList": [
+                "melted butter",
+                "crumbs"
+            ],
+            "ingredientQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "small bowl"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "toss",
+                "sprinkle"
+            ],
+            "stepTime": 4,
+            "userTime": 4,
+            "holdingResource": "bowl2",
+            "holdingID": 3
+        }
+    },
+    {
+        "8": {
+            "instructions": " Bake, uncovered, 25-30 minutes or until bubbly",
+            "ingredientList": [],
+            "ingredientQuantity": [],
+            "resourcesRequired": [
+                "oven"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 30,
+            "userTime": 2,
+            "holdingResource": "baking dish1",
+            "holdingID": 2
+        }
+    }
+]
