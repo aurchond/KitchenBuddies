@@ -145,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
             )
           ],
         ),
-        body: Column(
+        body: Padding(  padding: const EdgeInsets.all(8.0), child: Column(
           children: [
             /// friend setup ///
             //todo AD: use AddFriend API
@@ -162,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: 300,
-                      childAspectRatio: 4 / 2,
+                      childAspectRatio: 5 / 2,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10),
                   itemCount: myFriends?.length,
@@ -269,13 +269,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               );
             }),
+
             /// set kitchen constraints
             //todo AD: use AddKitchenConstraints API
             SingleChildScrollView(
                 child: KitchenConstraintsContainer(focusNodes, controllers))
           ],
         ),
-      );
+      ));
     });
   }
 }

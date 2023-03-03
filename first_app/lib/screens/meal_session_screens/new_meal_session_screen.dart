@@ -118,12 +118,14 @@ class _NewMealSessionState extends State<NewMealSession> {
                 ));
               },
             ),
-            ElevatedButton(
+        SizedBox(
+            width: 360,
+            height: 60, child: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => InstructionsScreen()));
                 },
-                child: Text("Start new session!")),
+                child: Text("Start new session!"))),
           ])),
     );
   }
