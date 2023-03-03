@@ -8,7 +8,7 @@ import 'data_class.dart';
 import '../data_models/meal_session_steps.dart';
 
 // called from data class to get actual data from the URL
-Future<MealSessionSteps?> getSinglePostData(String emailToFind) async {
+Future<MealSessionSteps?> getMealSessionSteps(String emailToFind) async {
   MealSessionSteps dummy = new MealSessionSteps();
   try {
     final response = await http.get(

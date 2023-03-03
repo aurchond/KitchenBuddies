@@ -116,10 +116,11 @@ class _HomeScreenState extends State<HomeScreen> {
     /// dummy data ///
     // todo AD: use getFriendsList, getKitchenConstraints and getUserSkill APIs
 
-    final List<Map> myFriends =
-        List.generate(6, (index) => {"id": index, "name": "Friend $index"})
-            .toList();
+    //final List<Map> myFriends =
+    //     List.generate(6, (index) => {"id": index, "name": "Friend $index"})
+    //         .toList();
     String? dropdownValue = postModel.skillLevel;
+    List<String>? myFriends = postModel.friendsList?.friends;
 
 
     return Consumer<AuthProvider>(builder: (context, model, _) {
@@ -153,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       childAspectRatio: 5 / 2,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10),
-                  itemCount: myFriends.length,
+                  itemCount: myFriends?.length,
                   itemBuilder: (BuildContext context, index) {
                     return TileDecorated(
                         Colors.deepOrange.shade200,
@@ -161,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Icons.person,
                           color: Colors.deepOrange.shade700,
                         ),
-                        Text(myFriends[index]["name"],
+                        Text(myFriends![index],
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w400)),
                         Text(""),

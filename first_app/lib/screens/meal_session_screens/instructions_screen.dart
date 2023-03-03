@@ -21,7 +21,7 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
   void initState() {
     super.initState();
     final postModel = Provider.of<DataClass>(context, listen: false);
-    postModel.getPostData("shadiz@gmail.com"); //todo: update this to the user's own email
+    postModel.loadMealSessionSteps("shadiz@gmail.com"); //todo: update this to the user's own email
   }
 
   @override
@@ -70,7 +70,7 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                       Container(
                         margin: EdgeInsets.all(20),
                         child: Text(
-                          postModel.post?.userEmail ?? "",
+                          postModel.mealSessionSteps?.userEmail ?? "",
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),
@@ -81,7 +81,7 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                       // display the user's instructions below
                       new Expanded(
                           child: new ListView.builder(
-                              itemCount: postModel.post?.recipeStep?.length,
+                              itemCount: postModel.mealSessionSteps?.recipeStep?.length,
                               itemBuilder: (BuildContext context, int index) {
 
                                 // first argument to the function has it's step number
@@ -90,11 +90,11 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                                 return groupedButtonText(
                                     (index + 1).toString() +
                                         ". " +
-                                        (postModel.post?.recipeStep?[index]
+                                        (postModel.mealSessionSteps?.recipeStep?[index]
                                                 .instructions ??
                                             "") +
                                         " (" +
-                                        (postModel.post?.recipeStep?[index]
+                                        (postModel.mealSessionSteps?.recipeStep?[index]
                                                 .ingredientsCompleteList
                                                 ?.join(', ') ??
                                             "") +

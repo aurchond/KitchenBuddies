@@ -1,20 +1,25 @@
-import 'package:first_app/backend_processing/service_class.dart';
+import 'package:first_app/backend_processing/post_requests.dart';
+import 'package:first_app/data_models/friends_list.dart';
+import 'package:first_app/data_models/kitchen_constraints.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../data_models/meal_session_steps.dart';
 import 'get_requests.dart';
 
 class DataClass extends ChangeNotifier {
-  MealSessionSteps? post;
+  MealSessionSteps? mealSessionSteps;
   String? skillLevel;
+  KitchenConstraints? kitchenConstraints;
+  FriendsList? friendsList;
+
   bool loading = false;
 
   // called from instructions screen to get specific instructions for user
-  getPostData(String emailToFind) async {
+  loadMealSessionSteps(String emailToFind) async {
 
     // actually show that the screen is loading while the info is fetched
     loading = true;
-    post = (await getSinglePostData(emailToFind));
+    mealSessionSteps = (await getMealSessionSteps(emailToFind));
     loading = false;
 
     notifyListeners();
@@ -24,7 +29,9 @@ class DataClass extends ChangeNotifier {
 
     // actually show that the screen is loading while the info is fetched
     loading = true;
-    skillLevel = (await GetUserSkill());
+    skillLevel = await getUserSkill();
+    kitchenConstraints = await getKitchenConstraints();
+    friendsList = await getFriendsList();
     loading = false;
 
     print(skillLevel);
