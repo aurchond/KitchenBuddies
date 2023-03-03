@@ -225,21 +225,21 @@ public class MySqlConnection {
             prep.setString(3, ingrString);
             prep.setInt(4, recipeTime);
             int rowsUpdated = prep.executeUpdate();
-            if (rowsUpdated == 0) {return -1;}
+            if (rowsUpdated == 0) {return -1L;}
 
             PreparedStatement stmt = conn.prepareStatement(checkRecipe);
             stmt.setString(1, recipeUrl);
             ResultSet rs = stmt.executeQuery();
             if (!rs.next()) {
                 System.out.println("Result set is empty");
-                return -1;
+                return -1L;
             }
             return (long)rs.getInt(1);
             // return value
         }
         catch (SQLException e) {
             e.printStackTrace();
-            return -2;
+            return -2L;
         }
     }
 
@@ -385,6 +385,7 @@ public class MySqlConnection {
             stmt.setString(2, url);
 
             ResultSet rs = stmt.executeQuery();
+
             if (!rs.next()) {
                 // Check if URL in AllRecipe and select InGraphDB
                 sql = "SELECT RecipeId, InGraphDB FROM AllRecipes as ar WHERE ar.Url = ?;";
@@ -393,11 +394,11 @@ public class MySqlConnection {
 
                 if (!rs.next()) {
                     // URL hasn't been parsed
-                    return false;
+                    return null;
                 }
 
                 // Insert recipeId into UserLinkedRecipe
-                int recipeId = rs.getInt("RecipeId");
+                Long recipeId = rs.getLong("ar.RecipeId");
                 Boolean res = addUserLinkedRecipe(email, recipeId);
 
                 if (!res) {
@@ -407,7 +408,6 @@ public class MySqlConnection {
                 // Check if Recipe in GraphDB
                 Boolean inGraphDB = rs.getBoolean("GraphCheck");
                 if (inGraphDB) {
-                    Long recipeId = rs.getLong("ar.RecipeId");
                     String name = rs.getString("ar.Name");
                     Integer totalTime = rs.getInt("ar.TotalTime");
 
@@ -424,17 +424,36 @@ public class MySqlConnection {
                         date = dateValue.toString();
                     }
 
-                    RecipeInfo pRecipe = new RecipeInfo(recipeId, name, ingredients, totalTime, date);
-                } else {return false;}
+                    return new RecipeInfo(recipeId, name, ingredients, totalTime, date);
+                } else {return null;}
             }
 
             Boolean inGraphDB = rs.getBoolean("GraphCheck");
-            if (inGraphDB) {return true;} else {return false;}
+            if (inGraphDB) {
+                Long recipeId = rs.getLong("ar.RecipeId");
+                String name = rs.getString("ar.Name");
+                Integer totalTime = rs.getInt("ar.TotalTime");
+
+                // Parse ingredients
+                String strIngr = rs.getString("ar.Ingredients");
+                String[] parts = strIngr.split(",");
+                List<String> ingredients = Arrays.asList(parts);
+
+                // LastDate
+                Date dateValue = rs.getDate("url.LastDateMade");
+                String date = "";
+
+                if (dateValue != null) {
+                    date = dateValue.toString();
+                }
+
+                return new RecipeInfo(recipeId, name, ingredients, totalTime, date);
+            } else {return null;}
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
-        return false;
+        return null;
     }
 
     public static long getRecipeID() {
