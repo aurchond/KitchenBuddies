@@ -1,7 +1,6 @@
 {
     "kitchenConstraints": {
         "userEmail": "shadisz@yahoo.ca",
-        "skill": 2,
         "burner": 3,
         "pot": 4,
         "pan": 2,
@@ -15,7 +14,7 @@
     ],
     "includedFriends": [
         "aditi@gmail.com",
-        "shadi@gmail.com"
+        "aurchon@gmail.com"
     ]
 }
 

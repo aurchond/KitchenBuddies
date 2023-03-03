@@ -1,6 +1,7 @@
 [
     {
         "userEmail": "aurchond@gmail.com",
+        "notes": "string",
         "recipeStep": [
             {
                 "number": "2.1",
