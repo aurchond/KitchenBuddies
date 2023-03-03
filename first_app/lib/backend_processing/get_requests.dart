@@ -12,16 +12,16 @@ import '../data_models/meal_session_steps.dart';
 
 // called from data class to get actual data from the URL
 Future<String> getUserSkill() async {
-    //sendGetRequest("/GetUserSkill");
+    final response = await sendGetRequest("/GetUserSkill");
 
-  final response = await http.get(
-    Uri.parse("https://mocki.io/v1/5a499647-319b-4da8-8e2e-9471d3c12113"),
-    headers: {
-      HttpHeaders.contentTypeHeader: "application/json",
-    },
-  );
+  // final response = await http.get(
+  //   Uri.parse("https://mocki.io/v1/5a499647-319b-4da8-8e2e-9471d3c12113"),
+  //   headers: {
+  //     HttpHeaders.contentTypeHeader: "application/json",
+  //   },
+  // );
 
-  final item = json.decode(response.body);
+  final item = json.decode(response!.body);
   //print(item['skillLevel']);
 
   if (item['skillLevel'] == 1) {
@@ -39,14 +39,10 @@ Future<KitchenConstraints?> getKitchenConstraints() async {
 }
 
 Future<FriendsList?> getFriendsList() async {
-  final response = await http.get(
-    Uri.parse("https://mocki.io/v1/f1ac5265-155e-42d4-b588-9650dbf593c0"),
-    headers: {
-      HttpHeaders.contentTypeHeader: "application/json",
-    },
-  );
+  final response = await sendGetRequest("/GetFriendsList");
 
-  final item = json.decode(response.body);
+
+  final item = json.decode(response!.body);
 
   FriendsList? friendsList = FriendsList.fromJson(item);
   //print(item['skillLevel']);

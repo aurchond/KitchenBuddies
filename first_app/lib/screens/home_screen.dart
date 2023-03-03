@@ -114,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final postModel = Provider.of<DataClass>(context);
 
     /// dummy data ///
-    // todo AD: use getFriendsList, getKitchenConstraints and getUserSkill APIs
+    // todo AD: use getKitchenConstraints APIs
 
     //final List<Map> myFriends =
     //     List.generate(6, (index) => {"id": index, "name": "Friend $index"})
@@ -162,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Icons.person,
                           color: Colors.deepOrange.shade700,
                         ),
-                        Text(myFriends![index],
+                        Text(myFriends?[index] ?? "",
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w400)),
                         Text(""),
@@ -253,7 +253,7 @@ class _HomeScreenState extends State<HomeScreen> {
             }),
 
             /// set kitchen constraints
-            //todo AD: use KitchenConstraints API
+            //todo AD: use AddKitchenConstraints API
             Container(
                 margin: EdgeInsets.only(top: 5, bottom: 20),
                 child: Text(
@@ -262,16 +262,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 )),
             Flexible(
                 child: ListView(
-              children: [
-                inputTextButton(burnerController, "Enter # of burners",
-                    "Add kitchen constraint!", burnerFocusNode),
-                inputTextButton(potController, "Enter # of pots",
-                    "Add kitchen constraint!", potFocusNode),
-                inputTextButton(panController, "Enter # of pans",
-                    "Add kitchen constraint!", panFocusNode),
-                inputTextButton(knifeController, "Enter # of knives",
-                    "Add kitchen constraint!", knifeFocusNode),
-              ],
+                  children: [
+                    inputTextButton(burnerController, "Change # of burners",
+                        "Update # of burners", burnerFocusNode),
+                    inputTextButton(potController, "Change # of pots",
+                        "Update # of pots", potFocusNode),
+                    inputTextButton(panController, "Change # of pans",
+                        "Update # of pans", panFocusNode),
+                    inputTextButton(knifeController, "Change # of knives",
+                        "Update # of knives", knifeFocusNode),
+                  ],
             ))
           ],
         ),
