@@ -35,7 +35,9 @@ public class RestApi {
     public ResponseEntity<Object> GetUserSkill(@Valid @RequestParam String userEmail) {
         try {
             int skillLvl = MySqlConnection.getSkillLevel(userEmail);
-            return ResponseEntity.ok(skillLvl);
+            SkillLevelBody skill = new SkillLevelBody();
+            skill.skillLevel = skillLvl;
+            return ResponseEntity.ok(skill);
 
         } catch (Exception e) {
             // In case another error occurs

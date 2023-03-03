@@ -161,7 +161,7 @@ TODO: how do we want to create recipe ids
         for (Integer i = 0; i < stepIds.size() - 1 ; i++) {
             Integer stepId1 = stepIds.get(i);
             Integer stepId2 = stepIds.get(i+1);
-            if(!steps.get(stepId1).hasResourceConnection(steps.get(stepId2))){
+            if(!steps.get(stepId1).hasResourceConnection(steps.get(stepId2)) && stepId1 != stepId2){
                 steps.get(stepId1).addConnection(steps.get(stepId2));
             }
         }

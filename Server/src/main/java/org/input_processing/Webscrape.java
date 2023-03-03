@@ -159,6 +159,7 @@ public class Webscrape {
             e.printStackTrace();
         }
 
+        System.out.println(recipeJson);
         System.out.println("ANOTHER JSON EDGE CASE DETECTED");
         
         return recipeJson;

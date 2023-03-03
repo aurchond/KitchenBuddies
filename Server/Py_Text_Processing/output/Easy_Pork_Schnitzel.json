@@ -1,0 +1,422 @@
+[
+    {
+        "1": {
+            "instructions": "On a cutting board, using a very sharp knife, butterfly the pork chops; making sure not to cut all the way through",
+            "ingredients": [
+                "pork chops"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "sharp knife",
+                "cutting board"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "butterfly",
+                "cut"
+            ],
+            "stepTime": 4,
+            "userTime": 4,
+            "holdingResource": "board1",
+            "holdingID": 0
+        }
+    },
+    {
+        "2": {
+            "instructions": " Open chops and place between two pieces of parchment paper or plastic wrap and pound with a meat mallet until  between 1/16 to 1/4-inch thick (depending on your preference)",
+            "ingredients": [
+                "wrap",
+                "chops",
+                "inch"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "mallet"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "open",
+                "depending"
+            ],
+            "stepTime": 6,
+            "userTime": 6,
+            "holdingResource": "board1",
+            "holdingID": 0
+        }
+    },
+    {
+        "3": {
+            "instructions": " Season both sides of chops with salt and pepper",
+            "ingredients": [
+                "Season",
+                "chops",
+                "salt",
+                "pepper"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "board1"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 0,
+            "userTime": 0,
+            "holdingResource": "board1",
+            "holdingID": 0
+        }
+    },
+    {
+        "4": {
+            "instructions": "In a shallow bowl whisk together panko and Italian seasoning",
+            "ingredients": [
+                "Italian seasoning",
+                "panko"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "whisk",
+                "shallow bowl"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 0,
+            "userTime": 0,
+            "holdingResource": "bowl1",
+            "holdingID": 1
+        }
+    },
+    {
+        "5": {
+            "instructions": " In another shallow bowl pour flour",
+            "ingredients": [
+                "flour"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl1"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 0,
+            "userTime": 0,
+            "holdingResource": "bowl1",
+            "holdingID": 1
+        }
+    },
+    {
+        "6": {
+            "instructions": " In the last shallow bowl beat eggs",
+            "ingredients": [
+                "eggs"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "last shallow bowl"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "beat"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "bowl2",
+            "holdingID": 2
+        }
+    },
+    {
+        "7": {
+            "instructions": " \n",
+            "ingredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "bowl2"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 0,
+            "userTime": 0,
+            "holdingResource": "bowl2",
+            "holdingID": 2
+        }
+    },
+    {
+        "8": {
+            "instructions": "Place a wire cooling rack over a baking sheet",
+            "ingredients": [
+                "baking",
+                "cooling rack"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl2"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "place"
+            ],
+            "stepTime": 4,
+            "userTime": 4,
+            "holdingResource": "bowl2",
+            "holdingID": 2
+        }
+    },
+    {
+        "9": {
+            "instructions": " One at a time dredge both sides of the pork chop in flour then dip into egg mixture, letting any excess drip off before placing in panko",
+            "ingredients": [
+                "panko",
+                "flour",
+                "pork chop",
+                "egg mixture"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl2"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "dredge",
+                "dip",
+                "placing"
+            ],
+            "stepTime": 12,
+            "userTime": 12,
+            "holdingResource": "bowl2",
+            "holdingID": 2
+        }
+    },
+    {
+        "10": {
+            "instructions": " Make sure both sides are completely covered in bread crumbs before placing breaded chop on wire rack",
+            "ingredients": [
+                "rack",
+                "crumbs"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl2"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "make",
+                "covered",
+                "placing"
+            ],
+            "stepTime": 6,
+            "userTime": 6,
+            "holdingResource": "bowl2",
+            "holdingID": 2
+        }
+    },
+    {
+        "11": {
+            "instructions": " Repeat process with remaining chops",
+            "ingredients": [
+                "remaining chops"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl2"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 0,
+            "userTime": 0,
+            "holdingResource": "bowl2",
+            "holdingID": 2
+        }
+    },
+    {
+        "12": {
+            "instructions": "To a large skillet, add enough oil to sufficiently cover the bottom of the pan",
+            "ingredients": [
+                "enough oil"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "large skillet"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add",
+                "cover"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "skillet1",
+            "holdingID": 3
+        }
+    },
+    {
+        "13": {
+            "instructions": " Heat over medium-high",
+            "ingredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "skillet1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "heat"
+            ],
+            "stepTime": 0,
+            "userTime": 0,
+            "holdingResource": "skillet1",
+            "holdingID": 3
+        }
+    },
+    {
+        "14": {
+            "instructions": " Once oil is hot, add breaded chops; working in batches of 2-3",
+            "ingredients": [
+                "oil"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "skillet1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add"
+            ],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "skillet1",
+            "holdingID": 3
+        }
+    },
+    {
+        "15": {
+            "instructions": " Cook 3-4 minutes per side, or until chop is golden brown and crispy",
+            "ingredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "skillet1"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 4,
+            "userTime": 4,
+            "holdingResource": "skillet1",
+            "holdingID": 3
+        }
+    },
+    {
+        "16": {
+            "instructions": " Remove to a paper towel-lined plate",
+            "ingredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "lined plate"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "remove"
+            ],
+            "stepTime": 0,
+            "userTime": 0,
+            "holdingResource": "plate1",
+            "holdingID": 4
+        }
+    },
+    {
+        "17": {
+            "instructions": " Immediately season with salt",
+            "ingredients": [
+                "salt",
+                "season"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "plate1"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 0,
+            "userTime": 0,
+            "holdingResource": "plate1",
+            "holdingID": 4
+        }
+    },
+    {
+        "18": {
+            "instructions": " \n",
+            "ingredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "plate1"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 0,
+            "userTime": 0,
+            "holdingResource": "plate1",
+            "holdingID": 4
+        }
+    },
+    {
+        "19": {
+            "instructions": "Serve over mashed potatoes topped with sauerkraut, mustard, and a side of corn",
+            "ingredients": [
+                "mashed potatoes",
+                "sauerkraut",
+                "mustard"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "plate1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "serve",
+                "topped"
+            ],
+            "stepTime": 4,
+            "userTime": 4,
+            "holdingResource": "plate1",
+            "holdingID": 4
+        }
+    }
+]

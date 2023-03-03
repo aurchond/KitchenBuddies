@@ -58,40 +58,42 @@ public class Main {
         //     e.printStackTrace();
         // }
         
-        String url = "https://www.justonecookbook.com/homemade-miso-soup/";
+        String url = "https://www.sweetestmenu.com/cinnamon-apple-cake/";
         // Scrape website and place info in text file within Py_Text_Processing/Input folder
         Webscrape scraper = new Webscrape(url);
         InputRecipe in_recipe = scraper.extractRecipe();
 
     //     // TODO: Place basic multithreading (1 thread for steps, other thread for placing recipe in database)
     //     // Use Python to process the recipe instructions, step file exported to json file within Py_Text_Processing/Output folder
-    //     parseInstructionsPython(in_recipe.recipeFile + ".txt");
+        parseInstructionsPython(in_recipe.recipeFile + ".txt");
 
-    // //     // Retrieve recipe steps 
-    //     List<Step> steps = new ArrayList<Step>();
-    //     HashMap<String, List<Integer>> ingredients = new HashMap<String, List<Integer>>();//<ingredient, List<StepId>>
-    //     HashMap<String, List<Integer>> resourcesRequired = new HashMap<String, List<Integer>>();//<tool, List<StepId>>
-    //     HashMap<String, List<Integer>> holdingResource_Id = new HashMap<String, List<Integer>>();//<holdingResource, List<StepId>>
-    //     // TODO: Check this works with our json format
-    //     parseJson(
-    //             "Py_Text_Processing/output/" + in_recipe.recipeFile + ".json",
-    //             steps,
-    //             ingredients,
-    //             resourcesRequired,
-    //             holdingResource_Id
-    //     );
+        // Retrieve recipe steps 
+        List<Step> steps = new ArrayList<Step>();
+        HashMap<String, List<Integer>> ingredients = new HashMap<String, List<Integer>>();//<ingredient, List<StepId>>
+        HashMap<String, List<Integer>> resourcesRequired = new HashMap<String, List<Integer>>();//<tool, List<StepId>>
+        HashMap<String, List<Integer>> holdingResource_Id = new HashMap<String, List<Integer>>();//<holdingResource, List<StepId>>
+        // TODO: Check this works with our json format
+        String demo_file = "exp_cinnamon_apple_cake";
+        parseJson(
+                "Py_Text_Processing/output/" + demo_file + ".json",
+                // "Py_Text_Processing/output/" + in_recipe.recipeFile + ".json",
+                steps,
+                ingredients,
+                resourcesRequired,
+                holdingResource_Id
+        );
 
-    //     // TODO: Place the metadata (name, ingredients, time, whatever) relational db
-    //     // Metadata = details about a recipe
-    //     long recipeID = addToAllRecipes(in_recipe.getRecipeTitle(), url, in_recipe.convertIngredientsToString(), in_recipe.getTotalTime());
+        // TODO: Place the metadata (name, ingredients, time, whatever) relational db
+        // Metadata = details about a recipe
+        long recipeID = addToAllRecipes(in_recipe.getRecipeTitle(), url, in_recipe.convertIngredientsToString(), in_recipe.getTotalTime());
         
-    //     Recipe out_recipe = createRecipe(steps, ingredients, resourcesRequired, holdingResource_Id, recipeID);// String will be formatted as "holdingResource_holdingId"
-    //     out_recipe.setRecipeName(in_recipe.recipeTitle);
-    //     saveRecipe(out_recipe, out_recipe.getRecipeName());
+        Recipe out_recipe = createRecipe(steps, ingredients, resourcesRequired, holdingResource_Id, recipeID);// String will be formatted as "holdingResource_holdingId"
+        out_recipe.setRecipeName(in_recipe.recipeTitle);
+        saveRecipe(out_recipe, out_recipe.getRecipeName());
 
-    //    System.out.println(Arrays.asList(ingredients));
-    //    System.out.println(Arrays.asList(resourcesRequired));
-    //    System.out.println(Arrays.asList(holdingResource_Id));
+       System.out.println(Arrays.asList(ingredients));
+       System.out.println(Arrays.asList(resourcesRequired));
+       System.out.println(Arrays.asList(holdingResource_Id));
     }
 
     public static void parseInstructionsPython(String recipeFile){
@@ -185,7 +187,7 @@ public class Main {
         //Get employee object within list
         String key = stepNumber.iterator().next();
         Integer stepId = Integer.parseInt(key);
-        System.out.println(stepId);
+        System.out.println("this is the stepId:"+stepId);
         s.setStepID(stepId);
         JSONObject stepObject = (JSONObject) step.get(key);
 
@@ -203,7 +205,7 @@ public class Main {
         s.setHoldingID(holdingID);
 
         holdingResource_Id.computeIfAbsent(holdingResource+"_"+holdingID, k -> new ArrayList<>()).add(stepId);
-        resourcesRequired.computeIfAbsent(holdingResource, k -> new ArrayList<>()).add(stepId);
+        // resourcesRequired.computeIfAbsent(holdingResource, k -> new ArrayList<>()).add(stepId);
 
         Integer stepTime = ((Long)stepObject.get("stepTime")).intValue();
         System.out.println(stepTime);
@@ -213,7 +215,7 @@ public class Main {
         System.out.println(userTime);
         s.setUserTime(userTime);
 
-        List<String> ingredientList = (List<String>) stepObject.get("ingredientList");
+        List<String> ingredientList = (List<String>) stepObject.get("ingredients");
         if (ingredientList == null) {
             ingredientList = new ArrayList<String>();
         }
@@ -224,7 +226,7 @@ public class Main {
         }
         System.out.println(Arrays.asList(ingredients));
 
-        List<Float> ingredientQuantity = (List<Float>) stepObject.get("ingredientQuantity");
+        List<Float> ingredientQuantity = (List<Float>) stepObject.get("ingredientsQuantity");
         System.out.println(ingredientQuantity);
         s.setIngredientQuantity(ingredientQuantity);
 

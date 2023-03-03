@@ -79,6 +79,7 @@ public class RecipeHelper {
 
         Session s = createSession();
         Long recipeId = recipeNameToID.get(recipeName);
+        System.out.println(recipeName + " = Recipe ID: " + Long.toString(recipeId));
 
         Step headNode = getHeadNode(s,recipeId).iterator().next();
         Iterable<Step> steps = copyRecipe(s, recipeId);
