@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../backend_processing/post_requests.dart';
 import '../widgets/custom_text_field.dart';
 import '../helpers/keys.dart';
 
@@ -56,6 +57,9 @@ class AuthProvider extends ChangeNotifier {
           "user_name": usernameController.text,
           "token": token,
         });
+
+        addUser(emailController.text, usernameController.text);
+
       }
       if (_authType == AuthType.signIn) {
         userCredential = await firebaseAuth.signInWithEmailAndPassword(

@@ -75,6 +75,16 @@ Future<void> addKitchenConstriants(KitchenConstraints kitchenConstraints) async 
   Response? response = await sendPostRequest("AddKitchenConstraints", body);
 }
 
+Future<void> addUser(String email, String username) async {
+
+  final body = jsonEncode(<String, String>{
+    "userEmail": email,
+    "skillLevel": "2",
+    "username": username
+  });
+  Response? response = await sendPostRequest("AddUser", body);
+}
+
 
 Future<Response?> sendPostRequest(String route, String body) async{
 
