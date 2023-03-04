@@ -80,8 +80,8 @@
                 "vinegar",
                 "pepper",
                 "oil",
-                "salt", 
-                "lemon juice", 
+                "salt",
+                "lemon juice",
                 "oregano"
             ],
             "ingredientsQuantity": [
@@ -159,7 +159,7 @@
             "userTime": 5,
             "holdingResource": "bowl2",
             "holdingID": 2,
-            "lineNumber": 2 
+            "lineNumber": 2
         }
     },
     {
