@@ -4,7 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../helpers/custom_text_field.dart';
+import '../widgets/custom_text_field.dart';
 import '../helpers/keys.dart';
 
 class AuthProvider extends ChangeNotifier {

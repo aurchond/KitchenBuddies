@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:first_app/helpers/kitchen_constraints.dart';
+import 'package:first_app/widgets/kitchen_constraints.dart';
 import 'package:first_app/local_notification_service.dart';
 import 'package:first_app/provider/auth_provider.dart';
 import 'package:first_app/screens/meal_session_screens/received_instructions_screen.dart';
-import 'package:first_app/helpers/input_text_button.dart';
+import 'package:first_app/widgets/input_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +16,7 @@ import '../backend_processing/data_class.dart';
 import '../backend_processing/get_requests.dart';
 import '../backend_processing/post_requests.dart';
 import '../helpers/globals.dart';
-import '../helpers/tile_decorated.dart';
+import '../widgets/tile_decorated.dart';
 
 const List<String> skillList = <String>['Beginner', 'Intermediate', 'Advanced'];
 String savedSkillValue = "Intermediate";

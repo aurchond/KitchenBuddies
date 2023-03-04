@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../../provider/auth_provider.dart';
 import '../../provider/notification_provider.dart';
-import '../../helpers/grouped_button_text.dart';
+import '../../widgets/grouped_button_text.dart';
 
 class InstructionsScreen extends StatefulWidget {
   const InstructionsScreen({Key? key}) : super(key: key);

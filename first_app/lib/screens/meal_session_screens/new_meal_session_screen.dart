@@ -1,4 +1,4 @@
-import 'package:first_app/helpers/checkbox_decorated.dart';
+import 'package:first_app/widgets/checkbox_decorated.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

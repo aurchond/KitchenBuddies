@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'package:first_app/helpers/globals.dart';
 import 'package:first_app/data_models/recipe_info.dart';
-import 'package:first_app/helpers/input_text_button.dart';
-import 'package:first_app/helpers/tile_decorated.dart';
+import 'package:first_app/widgets/input_text_button.dart';
+import 'package:first_app/widgets/tile_decorated.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../backend_processing/data_class.dart';
-import '../helpers/alert_dialog.dart';
+import '../widgets/alert_dialog.dart';
 
 class AllRecipes extends StatefulWidget {
   const AllRecipes({Key? key}) : super(key: key);
