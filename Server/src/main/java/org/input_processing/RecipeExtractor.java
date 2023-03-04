@@ -5,12 +5,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.server.RecipeInfo;
+import org.server.RecipeInput;
 import org.utilities.database.graph.Step;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -23,13 +21,47 @@ import static org.utilities.database.relational.MySqlConnection.addUserLinkedRec
 
 public class RecipeExtractor {
 
-    public static void parseUserRecipe() {
-        // Input the json from our app with title, totalTime, ingredients, instructions
+    public static RecipeInfo parseUserRecipe(RecipeInput recipeInput) throws IOException {
+
         // Covert data to InputRecipe
+        List<String> instructions = new ArrayList<>();
+        for (String step : recipeInput.getInstructionList()) {
+            if (step.charAt(step.length() - 1) == '.') {
+                instructions.add(step);
+            } else {
+                instructions.add(step + ".");
+            }
+        }
+
+        //TODO: might need to format the file name to not have spaces or something
+        // Input the json from our app with title, totalTime, ingredients, instructions
+
+        InputRecipe inRecipe = new InputRecipe();
+        inRecipe.setRecipeTitle(recipeInput.getRecipeName());
+        inRecipe.setTotalTime(recipeInput.getTotalTimeMinutes());
+        inRecipe.setIngredients(recipeInput.getIngredientList());
+        inRecipe.setInstructions(instructions);
+        inRecipe.writeTextFile();
+
+
+
+        // Add to relational database
+        Long recipeID = addToAllRecipes(inRecipe.getRecipeTitle(), "UserInputtedRecipe", inRecipe.convertIngredientsToString(), inRecipe.getTotalTime());
+
+        // Add recipe to UserLinkedRecipes
+        Boolean res = addUserLinkedRecipe(recipeInput.getUserEmail(), recipeID);
+        if (!res) {
+            // Might enter here if URL already exists, but recipe not in graph db
+            // Do nothing
+        }
 
         // Run RecipeExtractor
-
+        res = ExtractRecipe(inRecipe, recipeID);
         // return Success or Failure
+        if (res) {
+            return new RecipeInfo(recipeID, inRecipe.getRecipeTitle(), inRecipe.ingredients, inRecipe.getTotalTime(), null);
+        }
+        return null;
     }
 
     public static RecipeInfo parseRecipeUrl(String email, String url) {
@@ -49,14 +81,14 @@ public class RecipeExtractor {
         }
 
         // Process Text and Add to graph database
-        res = ExtractRecipe(inRecipe, url, recipeID);
-        if(res){
+        res = ExtractRecipe(inRecipe, recipeID);
+        if (res) {
             return new RecipeInfo(recipeID, inRecipe.getRecipeTitle(), inRecipe.ingredients, inRecipe.getTotalTime(), null);
         }
         return null;
     }
 
-    private static Boolean ExtractRecipe(InputRecipe inRecipe, String url, long recipeID) {
+    private static Boolean ExtractRecipe(InputRecipe inRecipe, long recipeID) {
         // TODO: Place basic multithreading (1 thread for steps, other thread for placing recipe in database)
         // Use Python to process the recipe instructions, step file exported to json file within Py_Text_Processing/Output folder
         parseInstructionsPython(inRecipe.recipeFile + ".txt");
@@ -76,21 +108,21 @@ public class RecipeExtractor {
         );
 
         // Metadata = details about a recipe
-        
-        
+
+
         // TODO: Fix Recipe Processing
 
-    //     Recipe out_recipe = createRecipe(steps, ingredients, resourcesRequired, holdingResource_Id, recipeID);// String will be formatted as "holdingResource_holdingId"
-    //     out_recipe.setRecipeName(inRecipe.recipeTitle);
-    //     saveRecipe(out_recipe, out_recipe.getRecipeName());
-
-    //    System.out.println(Arrays.asList(ingredients));
-    //    System.out.println(Arrays.asList(resourcesRequired));
-    //    System.out.println(Arrays.asList(holdingResource_Id));
-       return true;
+//             Recipe out_recipe = createRecipe(steps, ingredients, resourcesRequired, holdingResource_Id, recipeID);// String will be formatted as "holdingResource_holdingId"
+//             out_recipe.setRecipeName(inRecipe.recipeTitle);
+//             saveRecipe(out_recipe, out_recipe.getRecipeName());
+//
+//            System.out.println(Arrays.asList(ingredients));
+//            System.out.println(Arrays.asList(resourcesRequired));
+//            System.out.println(Arrays.asList(holdingResource_Id));
+        return true;
     }
 
-    private static void parseInstructionsPython(String recipeFile){
+    private static void parseInstructionsPython(String recipeFile) {
         try {
             long startTime = System.nanoTime();
             String currentDirectory = System.getProperty("user.dir");
@@ -135,13 +167,12 @@ public class RecipeExtractor {
             HashMap<String, List<Integer>> ingredients,
             HashMap<String, List<Integer>> resourcesRequired,
             HashMap<String, List<Integer>> holdingResource_Id
-    ){
+    ) {
         JSONParser jsonParser = new JSONParser();
         Path path = Path.of(filePath);
 
 
-        try
-        {
+        try {
             String json = Files.readString(path);
             //Read JSON file
             Object obj = jsonParser.parse(json);
@@ -149,9 +180,9 @@ public class RecipeExtractor {
             JSONArray stepList = (JSONArray) obj;
             // System.out.println(stepList);
 
-            stepList.forEach( s -> {
+            stepList.forEach(s -> {
                 try {
-                    parseStepObject( (JSONObject) s, steps, ingredients, resourcesRequired,holdingResource_Id );
+                    parseStepObject((JSONObject) s, steps, ingredients, resourcesRequired, holdingResource_Id);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -174,7 +205,7 @@ public class RecipeExtractor {
             HashMap<String, List<Integer>> holdingResource_Id
     ) throws Exception {
         Set<String> stepNumber = step.keySet();
-        if(stepNumber.size() != 1){
+        if (stepNumber.size() != 1) {
             throw new Exception("there are more than one step to process");
         }
         Step s = new Step();
@@ -194,18 +225,18 @@ public class RecipeExtractor {
         // System.out.println(holdingResource);
         s.setHoldingResource(holdingResource);
 
-        Integer holdingID = ((Long)stepObject.get("holdingID")).intValue();
+        Integer holdingID = ((Long) stepObject.get("holdingID")).intValue();
         // System.out.println(holdingID);
         s.setHoldingID(holdingID);
 
-        holdingResource_Id.computeIfAbsent(holdingResource+"_"+holdingID, k -> new ArrayList<>()).add(stepId);
+        holdingResource_Id.computeIfAbsent(holdingResource + "_" + holdingID, k -> new ArrayList<>()).add(stepId);
         resourcesRequired.computeIfAbsent(holdingResource, k -> new ArrayList<>()).add(stepId);
 
-        Integer stepTime = ((Long)stepObject.get("stepTime")).intValue();
+        Integer stepTime = ((Long) stepObject.get("stepTime")).intValue();
         // System.out.println(stepTime);
         s.setStepTime(stepTime);
 
-        Integer userTime = ((Long)stepObject.get("userTime")).intValue();
+        Integer userTime = ((Long) stepObject.get("userTime")).intValue();
         // System.out.println(userTime);
         s.setUserTime(userTime);
 
@@ -215,7 +246,7 @@ public class RecipeExtractor {
         }
         s.setIngredientList(ingredientList);
         // System.out.println(ingredientList);
-        for (String ingredient: ingredientList) {
+        for (String ingredient : ingredientList) {
             ingredients.computeIfAbsent(ingredient, k -> new ArrayList<>()).add(stepId);
         }
         // System.out.println(Arrays.asList(ingredients));
@@ -228,7 +259,7 @@ public class RecipeExtractor {
         // System.out.println(rRequired);
         s.setResourcesRequired(rRequired);
 
-        for (String resource: rRequired) {
+        for (String resource : rRequired) {
             resourcesRequired.computeIfAbsent(resource, k -> new ArrayList<>()).add(stepId);
         }
 
