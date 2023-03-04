@@ -11,7 +11,7 @@
                 -1
             ],
             "resourcesRequired": [
-                "oven"
+                "oven1"
             ],
             "prepStep": false,
             "verbs": [
@@ -53,8 +53,7 @@
                 "powder",
                 "flour",
                 "sugar",
-                "baking",
-                "soda"
+                "baking soda"
             ],
             "ingredientsQuantity": [
                 -1,
@@ -66,7 +65,8 @@
                 -1
             ],
             "resourcesRequired": [
-                "large mixing bowl"
+                "large mixing bowl",
+                
             ],
             "prepStep": false,
             "verbs": [
@@ -116,7 +116,7 @@
                 -1
             ],
             "resourcesRequired": [
-                "separate bowl"
+                "bowl2"
             ],
             "prepStep": false,
             "verbs": [
@@ -150,8 +150,8 @@
     },
     {
         "7": {
-            "instructions": "Add wet ingredients to dry ingredients and gently mix with a wooden spoon until combined \u2013 but be careful not to over mix",
-            "ingredients": [],
+            "instructions": "Add vanilla and egg yolks mix to bowl with flour and gently mix with a wooden spoon until combined \u2013 but be careful not to over mix",
+            "ingredients": ["flour", "egg yolks", "vanilla"],
             "ingredientsQuantity": [],
             "resourcesRequired": [
                 "bowl1"
@@ -170,8 +170,8 @@
     },
     {
         "8": {
-            "instructions": " Spoon batter into prepared tin",
-            "ingredients": [],
+            "instructions": "Spoon vanilla mix into prepared pan",
+            "ingredients": ["vanilla"],
             "ingredientsQuantity": [],
             "resourcesRequired": [
                 "pan1"
@@ -218,7 +218,7 @@
             "ingredients": [],
             "ingredientsQuantity": [],
             "resourcesRequired": [
-                "bowl1"
+                "bowl3"
             ],
             "prepStep": true,
             "verbs": [
@@ -232,11 +232,11 @@
     },
     {
         "11": {
-            "instructions": " Sprinkle over cake batter",
-            "ingredients": [],
+            "instructions": " Sprinkle over cake batter in pan",
+            "ingredients": ["cake"],
             "ingredientsQuantity": [],
             "resourcesRequired": [
-                "bowl1"
+                "pan1"
             ],
             "prepStep": false,
             "verbs": [
@@ -251,11 +251,11 @@
     {
         "12": {
             "instructions": "Bake cake for approximately 30-35 minutes or until a skewer inserted into the middle comes out clean",
-            "ingredients": [],
+            "ingredients": ["cake"],
             "ingredientsQuantity": [],
             "resourcesRequired": [
                 "skewer",
-                "oven"
+                "oven1"
             ],
             "prepStep": false,
             "verbs": [
@@ -272,6 +272,7 @@
     {
         "13": {
             "instructions": " Transfer cake to a wire rack to cool completely",
+            "lineNumber": 3,
             "ingredients": [],
             "ingredientsQuantity": [],
             "resourcesRequired": [
@@ -315,7 +316,7 @@
             "ingredients": [],
             "ingredientsQuantity": [],
             "resourcesRequired": [
-                "bowl1"
+                "bowl4"
             ],
             "prepStep": false,
             "verbs": [],
@@ -330,7 +331,8 @@
             "instructions": " If the glaze is too thick, add an extra tablespoon of milk",
             "ingredients": [
                 "extra tablespoon",
-                "milk"
+                "milk",
+                "glaze"
             ],
             "ingredientsQuantity": [
                 -1,
@@ -352,7 +354,7 @@
     {
         "17": {
             "instructions": " Drizzle glaze all over the cake",
-            "ingredients": [],
+            "ingredients": ["glaze"],
             "ingredientsQuantity": [],
             "resourcesRequired": [
                 "oven1"
