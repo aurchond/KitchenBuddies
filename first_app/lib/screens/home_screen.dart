@@ -278,6 +278,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   // This is called when the user selects an item.
                                   setState(() {
                                     dropdownValue = value!;
+                                    addSkillLevel(value);
                                     //TODO: handle API call
                                   });
                                 },

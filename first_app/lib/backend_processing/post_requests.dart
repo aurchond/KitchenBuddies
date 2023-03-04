@@ -50,6 +50,23 @@ Future<void> addFriend(String newFriend) async {
   Response? response = await sendPostRequest("AddFriend", body);
 }
 
+Future<void> addSkillLevel(String newSkillLevel) async {
+
+  int intSkill = 2;
+  if (newSkillLevel == "Beginner") {
+    intSkill = 1;
+  } else if (newSkillLevel == "Advanced") {
+    intSkill = 3;
+  }
+
+  final body = jsonEncode(<String, String>{
+    "userEmail": myEmail,
+    "skillLevel": intSkill.toString()
+  });
+
+  Response? response = await sendPostRequest("AddSkillLevel", body);
+}
+
 
 Future<Response?> sendPostRequest(String route, String body) async{
 
