@@ -8,6 +8,7 @@ import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import '../data_models/friends_list.dart';
 import '../data_models/recipe_info.dart';
+import '../helpers/globals.dart';
 import 'data_class.dart';
 import '../data_models/meal_session_steps.dart';
 
@@ -72,7 +73,7 @@ Future<Response?> sendGetRequest(String route) async{
 
   try {
     final queryParameters = {
-      "userEmail": "caleb@gmail.com",
+      "userEmail": myEmail,
     };
 
     final uri = Uri.http("178.128.227.93:8080",route, queryParameters);
