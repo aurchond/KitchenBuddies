@@ -1,18 +1,18 @@
 class MealSessionSteps {
   String? _userEmail;
   String? _notes;
-  List<RecipeStep>? _recipeStep;
+  List<RecipeStep>? _recipeSteps;
 
   MealSessionSteps(
-      {String? userEmail, String? notes, List<RecipeStep>? recipeStep}) {
+      {String? userEmail, String? notes, List<RecipeStep>? recipeSteps}) {
     if (userEmail != null) {
       this._userEmail = userEmail;
     }
     if (notes != null) {
       this._notes = notes;
     }
-    if (recipeStep != null) {
-      this._recipeStep = recipeStep;
+    if (recipeSteps != null) {
+      this._recipeSteps = recipeSteps;
     }
   }
 
@@ -20,16 +20,16 @@ class MealSessionSteps {
   set userEmail(String? userEmail) => _userEmail = userEmail;
   String? get notes => _notes;
   set notes(String? notes) => _notes = notes;
-  List<RecipeStep>? get recipeStep => _recipeStep;
-  set recipeStep(List<RecipeStep>? recipeStep) => _recipeStep = recipeStep;
+  List<RecipeStep>? get recipeSteps => _recipeSteps;
+  set recipeSteps(List<RecipeStep>? recipeSteps) => _recipeSteps = recipeSteps;
 
   MealSessionSteps.fromJson(Map<String, dynamic> json) {
     _userEmail = json['userEmail'];
     _notes = json['notes'];
-    if (json['recipeStep'] != null) {
-      _recipeStep = <RecipeStep>[];
-      json['recipeStep'].forEach((v) {
-        _recipeStep!.add(new RecipeStep.fromJson(v));
+    if (json['recipeSteps'] != null) {
+      _recipeSteps = <RecipeStep>[];
+      json['recipeSteps'].forEach((v) {
+        _recipeSteps!.add(new RecipeStep.fromJson(v));
       });
     }
   }
@@ -38,8 +38,8 @@ class MealSessionSteps {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['userEmail'] = this._userEmail;
     data['notes'] = this._notes;
-    if (this._recipeStep != null) {
-      data['recipeStep'] = this._recipeStep!.map((v) => v.toJson()).toList();
+    if (this._recipeSteps != null) {
+      data['recipeSteps'] = this._recipeSteps!.map((v) => v.toJson()).toList();
     }
     return data;
   }

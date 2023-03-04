@@ -81,7 +81,7 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                       // display the user's instructions below
                       new Expanded(
                           child: new ListView.builder(
-                              itemCount: postModel.mealSessionSteps?.recipeStep?.length,
+                              itemCount: postModel.mealSessionSteps?.recipeSteps?.length,
                               itemBuilder: (BuildContext context, int index) {
 
                                 // first argument to the function has it's step number
@@ -90,11 +90,11 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                                 return groupedButtonText(
                                     (index + 1).toString() +
                                         ". " +
-                                        (postModel.mealSessionSteps?.recipeStep?[index]
+                                        (postModel.mealSessionSteps?.recipeSteps?[index]
                                                 .instructions ??
                                             "") +
                                         " (" +
-                                        (postModel.mealSessionSteps?.recipeStep?[index]
+                                        (postModel.mealSessionSteps?.recipeSteps?[index]
                                                 .ingredientsCompleteList
                                                 ?.join(', ') ??
                                             "") +

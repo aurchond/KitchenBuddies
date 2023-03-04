@@ -14,6 +14,7 @@ import 'package:http/http.dart' as http;
 
 import '../backend_processing/data_class.dart';
 import '../backend_processing/get_requests.dart';
+import '../backend_processing/post_requests.dart';
 import '../helpers/tile_decorated.dart';
 
 const List<String> skillList = <String>['Beginner', 'Intermediate', 'Advanced'];
@@ -96,6 +97,9 @@ class _HomeScreenState extends State<HomeScreen> {
   //input text button callback
   onPressedCallback(FocusNode _focusNode, TextEditingController _controller) {
     print(_controller.text);
+
+    addFriend(_controller.text);
+
     _focusNode.unfocus();
   }
 

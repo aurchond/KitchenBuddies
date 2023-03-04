@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:first_app/helpers/globals.dart';
 import 'package:first_app/screens/meal_session_screens/new_meal_session_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -39,24 +40,24 @@ Future<MealSessionSteps?> getMealSessionSteps(String emailToFind) async {
   return dummy; //error check?
 }
 
-void addFriend(String newFriend) {
+Future<void> addFriend(String newFriend) async {
 
   final body = jsonEncode(<String, String>{
-    "userEmail": "shadisz@yahoo.ca",
+    "userEmail": myEmail,
     "newFriend": newFriend
   });
+
+  Response? response = await sendPostRequest("AddFriend", body);
 }
 
 
 Future<Response?> sendPostRequest(String route, String body) async{
 
   try {
-
     final uri = Uri.http("178.128.227.93:8080",route);
     final headers = {HttpHeaders.contentTypeHeader: 'application/json'};
     final response = await http.post(uri, headers: headers, body: body);
     //return response;
-
 
     // status code is fine
     if (response.statusCode == 200) {
