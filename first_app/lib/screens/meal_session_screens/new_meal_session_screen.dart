@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:first_app/widgets/checkbox_decorated.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,11 +15,39 @@ class NewMealSession extends StatefulWidget {
 }
 
 class _NewMealSessionState extends State<NewMealSession> {
+  dynamic tokens;
+
   checkboxCallback(
       bool? val, List<Map> _data, int index, StateSetter setState) {
     setState(() {
       _data[index]["isSelected"] = val!;
     });
+  }
+
+  Future<dynamic> getTokens(List<Map>? myFriends) async {
+    List<String> selectedFriends = <String>[];
+    List<String> tokens = <String>[];
+
+    for (int i = 0; i < (myFriends?.length ?? 0); i++) {
+      if (myFriends?[i]["isSelected"] == true) {
+        selectedFriends.add(myFriends?[i]["name"]);
+      }
+    }
+
+    print(selectedFriends);
+
+    var collection = FirebaseFirestore.instance.collection('users');
+    for (int i = 0; i < selectedFriends.length; i++) {
+      var querySnapshot = await collection.where('email', isEqualTo: selectedFriends[i]).get();
+      if (!querySnapshot.docs.isEmpty) {
+        for (QueryDocumentSnapshot ds in querySnapshot.docs) {
+          tokens.add(ds.get("token"));
+        } // <-- The value you want to retrieve.
+        // Call setState if needed.
+      }
+    }
+
+    print(tokens);
   }
 
   @override
@@ -75,7 +104,8 @@ class _NewMealSessionState extends State<NewMealSession> {
                                     myRecipes[index]["title"],
                                   ),
                                   Text("Total time: " +
-                                      myRecipes[index]["totalTime"].toString() + " minutes"),
+                                      myRecipes[index]["totalTime"].toString() +
+                                      " minutes"),
                                   true,
                                   checkboxCallback,
                                   setState)),
@@ -130,8 +160,12 @@ class _NewMealSessionState extends State<NewMealSession> {
                 height: 60,
                 child: ElevatedButton(
                     onPressed: () {
+                      getTokens(myFriends);
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => InstructionsScreen()));
+
+                      //send notification to other friends in session
+                      //call firebase to get device tokens
                     },
                     child: Text("Start new session!"))),
           ])),

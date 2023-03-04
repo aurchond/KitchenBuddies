@@ -156,6 +156,7 @@ class _AllRecipesState extends State<AllRecipes> {
                         return Center(
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
+                            //TODO: deal with format exception
                             child: TileDecorated(
                                 Colors.white,
                                 Icon(Icons.fastfood),
@@ -225,7 +226,7 @@ class _AllRecipesState extends State<AllRecipes> {
                             "Add Recipe By Text",
                             "Enter your recipe text");
                       },
-                      child: Text('Add recipe by text!'),
+                      child: Text('Add recipe by text!'), //TODO: make this refresh the user's recipes
                     ))
               ],
             );
