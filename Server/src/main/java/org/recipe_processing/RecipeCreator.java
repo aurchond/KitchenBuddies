@@ -111,11 +111,11 @@ public class RecipeCreator {
             }
         }
 
-/**
- *
-TODO: how do we want to create recipe ids
- private Integer recipeID;
- */
+        /**
+         *
+        TODO: how do we want to create recipe ids
+         private Integer recipeID;
+         */
 
 //TODO: ENFORCE ASSUMPTION THAT LARGEST STEP IS FINAL STEP BECAUSE IT SHOULD USE EVERYTHING/COMBINE EVERYTHING
         //assign the time left for each step
@@ -151,7 +151,7 @@ TODO: how do we want to create recipe ids
 
     private static boolean isFindsPath(Step startNode, Step endNode, Boolean depthIsOne) {
         // DFS Implementation to check if path between two nodes exist
-        if (startNode.getStepID() == endNode.getStepID() && !depthIsOne) {
+        if (startNode.getStepID() == endNode.getStepID() ) {//&& !depthIsOne
             // Only return true if this is not a direct connection between original node and end node
             return true;
         }

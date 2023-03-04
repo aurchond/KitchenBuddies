@@ -71,15 +71,15 @@ public class RecipeHelper {
         recipeNameToID.put(recipeName, recipeID);
     }
 
-    public static Recipe getRecipeFromDatabase(String recipeName){
+    public static Recipe getRecipeFromDatabase(Long recipeId){
         /**
          * two helper function getHeadNode(the head step), getAllNodes(iterable step list)
          * loop through all nodes and add to hashmap<id,step>
          */
 
         Session s = createSession();
-        Long recipeId = recipeNameToID.get(recipeName);
-        System.out.println(recipeName + " = Recipe ID: " + Long.toString(recipeId));
+//        //TODO: this should be a db call: also idk if it should be taking in a recipe Name
+//        Long recipeId = recipeNameToID.get(recipeName);
 
         Step headNode = getHeadNode(s,recipeId).iterator().next();
         Iterable<Step> steps = copyRecipe(s, recipeId);
@@ -89,7 +89,7 @@ public class RecipeHelper {
             stepMap.put(step.getStepID(), step);
         }
 
-        return new Recipe(stepMap, headNode);
+        return new Recipe(stepMap, headNode, recipeId);
     }
 
     public static Session createSession() {
