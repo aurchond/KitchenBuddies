@@ -37,7 +37,12 @@ Future<String> getUserSkill() async {
 
 
 Future<KitchenConstraints?> getKitchenConstraints() async {
-  sendGetRequest("/GetKitchenConstraints");
+  final response = await sendGetRequest("/GetKitchenConstraints");
+  final item = json.decode(response!.body);
+
+  KitchenConstraints? kitchenConstraints = KitchenConstraints.fromJson(item);
+
+  return kitchenConstraints;
 }
 
 Future<FriendsList?> getFriendsList() async {
@@ -45,7 +50,6 @@ Future<FriendsList?> getFriendsList() async {
   final item = json.decode(response!.body);
 
   FriendsList? friendsList = FriendsList.fromJson(item);
-  //print(item['skillLevel']);
 
  return friendsList;
 }
@@ -62,9 +66,6 @@ Future<List<RecipeInfo?>> getPastRecipes() async {
       pastRecipes.add(RecipeInfo.fromJson(item[i]));
     }
   }
-  //print(pastRecipes);
-
-  //print(item['skillLevel']);
 
   return pastRecipes;
 }

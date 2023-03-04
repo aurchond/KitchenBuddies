@@ -129,12 +129,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final fcmProvider = Provider.of<NotificationProvider>(context);
     final dataModel = Provider.of<DataClass>(context);
 
-    /// dummy data ///
-    // todo AD: use getKitchenConstraints APIs
-
-    //final List<Map> myFriends =
-    //     List.generate(6, (index) => {"id": index, "name": "Friend $index"})
-    //         .toList();
     String? dropdownValue = dataModel.skillLevel;
     List<String>? myFriends = dataModel.friendsList?.friends;
 
@@ -164,7 +158,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         /// friend setup ///
-                        //todo AD: use AddFriend API
                         Flexible(
                             fit: FlexFit.loose,
                             child: Container(
@@ -252,7 +245,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         //   ),
                         // )),
                         /// set skill level ///
-                        //todo AD: use AddSkillLevel API
                         StatefulBuilder(builder:
                             (BuildContext context, StateSetter setState) {
                           return Row(
@@ -297,7 +289,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         }),
 
                         /// set kitchen constraints
-                        //todo AD: use AddKitchenConstraints API
                         KitchenConstraintsContainer(focusNodes, controllers)
                       ],
                     ),
