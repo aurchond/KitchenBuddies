@@ -235,6 +235,7 @@ public class Meal {
 
         // Check if constraint is available at this time
         // holding holdingResource and resourcesRequired
+        //TODO: make sure this adds time depending on a user's skill level
         List<String> resources = s.getResourcesRequired();
         String holdingResource = s.getHoldingResource() != null ? s.getHoldingResource() : "";
 
@@ -260,6 +261,7 @@ public class Meal {
             String hResource,
             List<String> tools,
             HashMap<String, List<Resource>> constraints) {
+        //TODO: make sure this checks kitchen constraints
         List<Integer> resourceIds = new ArrayList<Integer>();
         List<Integer> earliestTimes = new ArrayList<Integer>();
         Integer holdingResource = -1;

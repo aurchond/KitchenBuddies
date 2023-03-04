@@ -144,7 +144,7 @@ public class RestApi {
                 i) if recipe does not exist, add to AllRecipes database to get auto ID
                 i.i) parse recipe (input processing)
                 i.ii) add to graph database with id from AllRecipes
-            b) add to FaveRecipes database for that user
+            b) add to FaveRecipes database for that user TODO: Check this happens
 
          RETURNS RECIPE INFO
          */
