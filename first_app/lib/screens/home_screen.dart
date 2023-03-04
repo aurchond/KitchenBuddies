@@ -108,6 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     String? dropdownValue = dataModel.skillLevel;
     List<String>? myFriends = dataModel.friendsList?.friends;
+    KitchenConstraints? kitchenConstraints = dataModel?.kitchenConstraints;
 
     List<bool> isTextFieldShown = List.filled(5, false, growable: true);
 
@@ -334,7 +335,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 fontWeight: FontWeight.bold)),
                                         color: Colors.deepOrange[300],
                                       ),
-                                      //number input of constraints
+                                      /// number input of each of the constraints ///
+                                      // number of ovens
                                       Container(
                                           padding: const EdgeInsets.all(8),
                                           color: Colors.deepOrange[200],
@@ -362,8 +364,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 0] = true;
                                                           });
                                                         },
-                                                        child: Text("1"))),
+                                                        child: Text((kitchenConstraints?.oven ?? 0).toString()))),
                                           )),
+
+                                      // number of pots
                                       Container(
                                         padding: const EdgeInsets.all(8),
                                         child: isTextFieldShown[1]
@@ -385,9 +389,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             true;
                                                       });
                                                     },
-                                                    child: Text("2"))),
+                                                    child: Text((kitchenConstraints?.pot ?? 0).toString()))),
                                         color: Colors.deepOrange[200],
                                       ),
+
+                                      // number of pans
                                       Container(
                                         padding: const EdgeInsets.all(8),
                                         child: isTextFieldShown[2]
@@ -409,9 +415,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             true;
                                                       });
                                                     },
-                                                    child: Text("3"))),
+                                                    child: Text((kitchenConstraints?.pan ?? 0).toString()))),
                                         color: Colors.deepOrange[200],
                                       ),
+
+
+                                      // number of bowls
                                       Container(
                                         padding: const EdgeInsets.all(8),
                                         child: isTextFieldShown[3]
@@ -433,9 +442,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             true;
                                                       });
                                                     },
-                                                    child: Text("4"))),
+                                                    child: Text((kitchenConstraints?.bowl ?? 0).toString()))),
                                         color: Colors.deepOrange[200],
                                       ),
+
+                                      // number of cutting boards
                                       Container(
                                         padding: const EdgeInsets.all(8),
                                         child: isTextFieldShown[4]
@@ -457,7 +468,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             true;
                                                       });
                                                     },
-                                                    child: Text("5"))),
+                                                    child: Text((kitchenConstraints?.cuttingBoard ?? 0).toString()))),
                                         color: Colors.deepOrange[200],
                                       ),
                                     ])),
@@ -487,6 +498,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                       addKitchenConstriants(kitchenConstraints);
                                       setState(() {
+                                        dataModel.loadHomePage();
                                         for (int i = 0;
                                             i < isTextFieldShown.length;
                                             i++) {
