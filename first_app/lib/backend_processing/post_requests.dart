@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:first_app/data_models/kitchen_constraints.dart';
 import 'package:first_app/helpers/globals.dart';
 import 'package:first_app/screens/meal_session_screens/new_meal_session_screen.dart';
 import 'package:http/http.dart' as http;
@@ -65,6 +66,13 @@ Future<void> addSkillLevel(String newSkillLevel) async {
   });
 
   Response? response = await sendPostRequest("AddSkillLevel", body);
+}
+
+Future<void> addKitchenConstriants(KitchenConstraints kitchenConstraints) async {
+
+  final body = jsonEncode(kitchenConstraints.toJson());
+
+  Response? response = await sendPostRequest("AddKitchenConstraints", body);
 }
 
 

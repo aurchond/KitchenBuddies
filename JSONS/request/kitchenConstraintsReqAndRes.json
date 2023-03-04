@@ -1,9 +1,8 @@
 {
     "userEmail": "shadisz@yahoo.ca",
+    "oven": 1,
     "pot": 4,
     "pan": 2,
     "bowl": 5,
-    "cuttingBoard": 1,
-    "oven": 1,
-    "microwave": 2
+    "cuttingBoard": 1
 }

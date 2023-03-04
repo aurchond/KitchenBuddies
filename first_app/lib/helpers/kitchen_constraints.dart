@@ -1,6 +1,10 @@
+import 'package:first_app/backend_processing/post_requests.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import '../data_models/kitchen_constraints.dart';
+import 'globals.dart';
 
 Widget KitchenConstraintsContainer(
     List<FocusNode> focusNodes, List<TextEditingController> controllers) {
@@ -145,6 +149,16 @@ Widget KitchenConstraintsContainer(
         child: ElevatedButton(
             onPressed: () {
               print(controllers[0].text);
+              KitchenConstraints kitchenConstraints = KitchenConstraints(
+                userEmail: myEmail,
+                oven: int.parse(controllers[0].text),
+                pot: int.parse(controllers[1].text),
+                pan: int.parse(controllers[2].text),
+                bowl: int.parse(controllers[3].text),
+                cuttingBoard: int.parse(controllers[4].text)
+              );
+
+            addKitchenConstriants(kitchenConstraints);
             },
             child: Text("Save your kitchen constraints!")))
   ]);
