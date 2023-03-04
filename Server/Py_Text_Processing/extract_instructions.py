@@ -20,6 +20,7 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
     resource_dataset=[]
     hold_res_dic = {}
     hold_res_count = 0
+    line_num_count = 0
 
     # print(steps_out)
 
@@ -38,6 +39,8 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
 
         # create a new step object
         step = Step(instr)
+        if 'BREAK' in step.instructions: line_num_count += 1
+        step.lineNumber = line_num_count
 
         # build a custom pipeline to produce better nlp results?
         # clean sentence
@@ -127,6 +130,7 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
         steps_out.append(step)
         all_ingr_base_words.append(ingr_base_words)
 
+        print(step.instructions, step.lineNumber)
             #make the previous holding resource also the current one
             #else: check to see if there is overlap with ingredients in the current step with any of the previous steps
             #if nothing has been found, then make the previous holding resource current one

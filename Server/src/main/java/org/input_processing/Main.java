@@ -72,22 +72,25 @@ public class Main {
         HashMap<String, List<Integer>> ingredients = new HashMap<String, List<Integer>>();//<ingredient, List<StepId>>
         HashMap<String, List<Integer>> resourcesRequired = new HashMap<String, List<Integer>>();//<tool, List<StepId>>
         HashMap<String, List<Integer>> holdingResource_Id = new HashMap<String, List<Integer>>();//<holdingResource, List<StepId>>
+        HashMap<String, List<Integer>> lineNumbers = new HashMap<String, List<Integer>>();
         // TODO: Check this works with our json format
         String demo_file = "exp_cinnamon_apple_cake";
+        // String demo_file = "exp_Greek_Pasta_Salad";
         parseJson(
-                "Py_Text_Processing/output/" + demo_file + ".json",
+                "Py_Text_Processing/expected/" + demo_file + ".json",
                 // "Py_Text_Processing/output/" + in_recipe.recipeFile + ".json",
                 steps,
                 ingredients,
                 resourcesRequired,
-                holdingResource_Id
+                holdingResource_Id,
+                lineNumbers
         );
 
         // TODO: Place the metadata (name, ingredients, time, whatever) relational db
         // Metadata = details about a recipe
-        long recipeID = addToAllRecipes(in_recipe.getRecipeTitle(), url, in_recipe.convertIngredientsToString(), in_recipe.getTotalTime());
-        
-        Recipe out_recipe = createRecipe(steps, ingredients, resourcesRequired, holdingResource_Id, recipeID);// String will be formatted as "holdingResource_holdingId"
+        // long recipeID = addToAllRecipes(in_recipe.getRecipeTitle(), url, in_recipe.convertIngredientsToString(), in_recipe.getTotalTime());
+        long recipeID = 14;
+        Recipe out_recipe = createRecipe(steps, ingredients, resourcesRequired, holdingResource_Id, lineNumbers, recipeID);// String will be formatted as "holdingResource_holdingId"
         out_recipe.setRecipeName(in_recipe.recipeTitle);
         saveRecipe(out_recipe, out_recipe.getRecipeName());
 
@@ -140,7 +143,8 @@ public class Main {
             List<Step> steps,
             HashMap<String, List<Integer>> ingredients,
             HashMap<String, List<Integer>> resourcesRequired,
-            HashMap<String, List<Integer>> holdingResource_Id
+            HashMap<String, List<Integer>> holdingResource_Id,
+            HashMap<String, List<Integer>> lineNumbers
     ){
         JSONParser jsonParser = new JSONParser();
         Path path = Path.of(filePath);
@@ -157,7 +161,7 @@ public class Main {
 
             stepList.forEach( s -> {
                 try {
-                    parseStepObject( (JSONObject) s, steps, ingredients, resourcesRequired,holdingResource_Id );
+                    parseStepObject( (JSONObject) s, steps, ingredients, resourcesRequired,holdingResource_Id, lineNumbers);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -177,7 +181,8 @@ public class Main {
             List<Step> steps,
             HashMap<String, List<Integer>> ingredients,
             HashMap<String, List<Integer>> resourcesRequired,
-            HashMap<String, List<Integer>> holdingResource_Id
+            HashMap<String, List<Integer>> holdingResource_Id,
+            HashMap<String, List<Integer>> lineNumbers
     ) throws Exception {
         Set<String> stepNumber = step.keySet();
         if(stepNumber.size() != 1){
@@ -207,6 +212,10 @@ public class Main {
         holdingResource_Id.computeIfAbsent(holdingResource+"_"+holdingID, k -> new ArrayList<>()).add(stepId);
         // resourcesRequired.computeIfAbsent(holdingResource, k -> new ArrayList<>()).add(stepId);
 
+        Integer lineNumber = ((Long)stepObject.get("lineNumber")).intValue();
+        System.out.println(lineNumber);
+        lineNumbers.computeIfAbsent(Integer.toString(lineNumber), k -> new ArrayList<>()).add(stepId);
+        
         Integer stepTime = ((Long)stepObject.get("stepTime")).intValue();
         System.out.println(stepTime);
         s.setStepTime(stepTime);

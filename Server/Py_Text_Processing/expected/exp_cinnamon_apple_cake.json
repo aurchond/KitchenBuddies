@@ -20,12 +20,13 @@
             "stepTime": 2,
             "userTime": 2,
             "holdingResource": "oven1",
-            "holdingID": 0
+            "holdingID": 0,
+            "lineNumber": 0
         }
     },
     {
         "2": {
-            "instructions": " Grease and line an 8-inch round cake pan\u00a0with baking or parchment paper",
+            "instructions": " Grease and line an 8-inch round cake pan with baking or parchment paper",
             "ingredients": [
                 "baking"
             ],
@@ -42,7 +43,8 @@
             "stepTime": 1,
             "userTime": 1,
             "holdingResource": "pan1",
-            "holdingID": 1
+            "holdingID": 1,
+            "lineNumber": 0
         }
     },
     {
@@ -65,8 +67,7 @@
                 -1
             ],
             "resourcesRequired": [
-                "large mixing bowl",
-                
+                "bowl1"
             ],
             "prepStep": false,
             "verbs": [
@@ -75,7 +76,8 @@
             "stepTime": 6,
             "userTime": 6,
             "holdingResource": "bowl1",
-            "holdingID": 2
+            "holdingID": 2,
+            "lineNumber": 1
         }
     },
     {
@@ -99,7 +101,8 @@
             "stepTime": 3,
             "userTime": 3,
             "holdingResource": "bowl1",
-            "holdingID": 2
+            "holdingID": 2,
+            "lineNumber": 1
         }
     },
     {
@@ -125,7 +128,8 @@
             "stepTime": 3,
             "userTime": 3,
             "holdingResource": "bowl2",
-            "holdingID": 3
+            "holdingID": 3,
+            "lineNumber": 2
         }
     },
     {
@@ -145,13 +149,18 @@
             "stepTime": 0,
             "userTime": 0,
             "holdingResource": "bowl2",
-            "holdingID": 3
+            "holdingID": 3,
+            "lineNumber": 2
         }
     },
     {
         "7": {
             "instructions": "Add vanilla and egg yolks mix to bowl with flour and gently mix with a wooden spoon until combined \u2013 but be careful not to over mix",
-            "ingredients": ["flour", "egg yolks", "vanilla"],
+            "ingredients": [
+                "flour",
+                "egg yolks",
+                "vanilla"
+            ],
             "ingredientsQuantity": [],
             "resourcesRequired": [
                 "bowl1"
@@ -165,7 +174,8 @@
             "stepTime": 0,
             "userTime": 0,
             "holdingResource": "bowl1",
-            "holdingID": 2
+            "holdingID": 2,
+            "lineNumber": 3
         }
     },
     {
@@ -183,7 +193,8 @@
             "stepTime": 0,
             "userTime": 0,
             "holdingResource": "pan1",
-            "holdingID": 1
+            "holdingID": 1,
+            "lineNumber": 3
         }
     },
     {
@@ -209,7 +220,8 @@
             "stepTime": 3,
             "userTime": 3,
             "holdingResource": "bowl3",
-            "holdingID": 4
+            "holdingID": 4,
+            "lineNumber": 4
         }
     },
     {
@@ -227,7 +239,8 @@
             "stepTime": 0,
             "userTime": 0,
             "holdingResource": "bowl3",
-            "holdingID": 4
+            "holdingID": 4,
+            "lineNumber": 4
         }
     },
     {
@@ -245,7 +258,8 @@
             "stepTime": 0,
             "userTime": 0,
             "holdingResource": "pan1",
-            "holdingID": 1
+            "holdingID": 1,
+            "lineNumber": 4
         }
     },
     {
@@ -266,7 +280,8 @@
             "stepTime": 35,
             "userTime": 2,
             "holdingResource": "oven1",
-            "holdingID": 0
+            "holdingID": 0,
+            "lineNumber": 5
         }
     },
     {
@@ -283,7 +298,8 @@
             "stepTime": 0,
             "userTime": 0,
             "holdingResource": "oven1",
-            "holdingID": 0
+            "holdingID": 0,
+            "lineNumber": 5
         }
     },
     {
@@ -307,7 +323,8 @@
             "stepTime": 4,
             "userTime": 4,
             "holdingResource": "bowl4",
-            "holdingID": 5
+            "holdingID": 5,
+            "lineNumber": 6
         }
     },
     {
@@ -323,7 +340,8 @@
             "stepTime": 0,
             "userTime": 0,
             "holdingResource": "bowl4",
-            "holdingID": 5
+            "holdingID": 5,
+            "lineNumber": 6
         }
     },
     {
@@ -348,7 +366,8 @@
             "stepTime": 2,
             "userTime": 2,
             "holdingResource": "bowl4",
-            "holdingID": 5
+            "holdingID": 5,
+            "lineNumber": 6
         }
     },
     {
@@ -364,7 +383,8 @@
             "stepTime": 0,
             "userTime": 0,
             "holdingResource": "oven1",
-            "holdingID": 0
+            "holdingID": 0,
+            "lineNumber": 6
         }
     }
 ]

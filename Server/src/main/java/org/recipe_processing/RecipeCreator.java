@@ -24,6 +24,7 @@ public class RecipeCreator {
             HashMap<String, List<Integer>> ingredients,
             HashMap<String, List<Integer>> resourcesRequired,
             HashMap<String, List<Integer>> holdingResource_Id, // String will be formatted as "holdingResource_holdingId"
+            HashMap<String, List<Integer>> lineNumbers, 
             Long recipeID
             ){
         /**
@@ -69,9 +70,13 @@ public class RecipeCreator {
         for (List<Integer> stepIds : resourcesRequired.values()) {
             createConnections(stepsMap, stepIds);
         }
-        for (List<Integer> stepIds : holdingResource_Id.values()) {
+        for (List<Integer> stepIds : lineNumbers.values()) {
             createConnections(stepsMap, stepIds);
         }
+
+        // for (List<Integer> stepIds : lineNumber.values()) {
+        //     createConnections(stepsMap, stepIds);
+        // }
 
         //collapse dependancies
         /**
