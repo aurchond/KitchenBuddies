@@ -86,23 +86,25 @@ Future<void> addUser(String email, String username) async {
   Response? response = await sendPostRequest("AddUser", body);
 }
 
-
-// todo: test this out
+// todo: test this out after make changes to response
 Future<RecipeInfo?> requestRecipeByURL(String recipeURL) async {
-
-  // todo: take out mock data
-  // final response = await http.get(
-  //   Uri.parse("https://mocki.io/v1/baaae979-218a-4def-8be5-ce56596f36ff"),
-  //   headers: {
-  //     HttpHeaders.contentTypeHeader: "application/json",
-  //   },
-  // );
 
   final body = jsonEncode(<String, String>{
     "userEmail": myEmail,
     "recipeUrl": recipeURL
   });
   Response? response = await sendPostRequest("RequestRecipeByUrl", body);
+  final item = json.decode(response!.body);
+
+  RecipeInfo recipeFromURL = RecipeInfo.fromJson(item);
+  return recipeFromURL;
+}
+
+// todo: test this out lol
+Future<RecipeInfo?> requestRecipeByInput(RecipeInfo recipeByText) async {
+
+  final body = jsonEncode(recipeByText.toJson());
+  Response? response = await sendPostRequest("RequestRecipeByInput", body);
   final item = json.decode(response!.body);
 
   RecipeInfo recipeFromURL = RecipeInfo.fromJson(item);

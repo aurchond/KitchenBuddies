@@ -83,9 +83,10 @@ class _AllRecipesState extends State<AllRecipes> {
           recipeName: recipeName,
           ingredientList: ingredientList,
           totalTime: double.parse(totalTime),
-          instructionList: instructionList);
-      Map<String, dynamic> data = recipeByText.toJson();
-      //TODO: send json to backend
+          instructionList: instructionList
+      );
+      // todo ad: error check
+      requestRecipeByInput(recipeByText);
       //print(data);
     }
   }
