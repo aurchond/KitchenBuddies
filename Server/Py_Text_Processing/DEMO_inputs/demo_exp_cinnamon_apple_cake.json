@@ -54,7 +54,6 @@
                 "salt",
                 "powder",
                 "flour",
-                "sugar",
                 "baking soda"
             ],
             "ingredientsQuantity": [
@@ -202,7 +201,6 @@
             "instructions": "To make cinnamon topping, combine cinnamon, sugar and butter",
             "ingredients": [
                 "butter",
-                "sugar",
                 "cinnamon topping"
             ],
             "ingredientsQuantity": [
@@ -306,7 +304,6 @@
         "14": {
             "instructions": "To make the glaze, mix together sugar and 1 tablespoon of milk",
             "ingredients": [
-                "sugar",
                 "milk"
             ],
             "ingredientsQuantity": [
