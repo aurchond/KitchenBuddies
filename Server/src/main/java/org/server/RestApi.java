@@ -18,7 +18,7 @@ public class RestApi {
     @PostMapping("/AddUser")
     public ResponseEntity<Object> AddUser(@Valid @RequestBody ApiUser user) {
         try {
-            Boolean res = MySqlConnection.addUser(user.userEmail, user.skillLevel, user.username);
+            Boolean res = MySqlConnection.addUser(user.userEmail, user.skillLevel, user.userName);
 
             if (res) {
                 return ResponseEntity.ok(successMsg);
@@ -111,6 +111,31 @@ public class RestApi {
         }
     }
 
+    @PostMapping(value = "/RequestRecipeByInput", produces="application/json")
+    public ResponseEntity<Object> RequestRecipeByInput(@Valid @RequestBody RecipeInput recipeInput) {
+        /**
+         //once received in backend
+         a) format into text file (input into text processing)
+         b) parse recipe (input processing)
+         c) add to graph database with id from AllRecipes
+          TODO: add to FaveRecipes database for that user?
+
+         RETURNS RECIPE INFO
+         */
+        try {
+            // URL not parsed yet, enter input processing
+            RecipeInfo recipeInfo = RecipeExtractor.parseUserRecipe(recipeInput);
+            if (recipeInfo != null) {
+                return ResponseEntity.ok(recipeInfo);
+            }
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("RequestRecipeByUrl Request Failed");
+        } catch (Exception e) {
+            // In case another error occurs
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
     @PostMapping(value = "/RequestRecipeByUrl", produces="application/json")
     public ResponseEntity<Object> RequestRecipeByUrl(@Valid @RequestBody ApiUser user) {
         /**
@@ -124,7 +149,6 @@ public class RestApi {
          RETURNS RECIPE INFO
          */
         try {
-            //TODO: doesRecipeExist needs to retrieve RecipeInfo aka fix MySqlConnection
             RecipeInfo recipeInfo = MySqlConnection.doesRecipeExist(user.userEmail, user.recipeUrl);
             if (recipeInfo != null ) {
                 return ResponseEntity.ok(recipeInfo);

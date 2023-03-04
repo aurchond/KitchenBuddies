@@ -9,9 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.StringJoiner;
 
-import org.json.JSONObject;
-import org.json.JSONArray;
-
 public class InputRecipe {
     String recipeTitle;
     String recipeFile;
@@ -53,6 +50,9 @@ public class InputRecipe {
         long cookTime = duration.toMinutes();
         // Integer totalTime = this.convertISOMinute(isoTotalTime);
         this.totalTime = (int)cookTime;
+    }
+    public void setTotalTime(Integer totalTime) {
+        this.totalTime = totalTime;
     }
 
     public void setCookTime(String isoCookTime) {
