@@ -11,8 +11,8 @@ Widget KitchenConstraintsContainer(
           "Customize your kitchen:",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         )),
-    Container(
-        height: 170,
+    SizedBox(
+        height: 160,
         child: GridView.count(
             padding: const EdgeInsets.all(10),
             crossAxisSpacing: 10,
@@ -22,27 +22,44 @@ Widget KitchenConstraintsContainer(
               //text descriptions of constraints
               Container(
                 padding: const EdgeInsets.all(8),
-                child: const Text('Ovens', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                child: const Text('Ovens',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
                 color: Colors.deepOrange[300],
               ),
               Container(
                 padding: const EdgeInsets.all(8),
-                child: const Text('Pots', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                child: const Text('Pots',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
                 color: Colors.deepOrange[300],
               ),
               Container(
                 padding: const EdgeInsets.all(8),
-                child: const Text('Pans', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                child: const Text('Pans',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
                 color: Colors.deepOrange[300],
               ),
               Container(
                 padding: const EdgeInsets.all(8),
-                child: const Text('Bowls', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                child: const Text(
+                  'Bowls',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
                 color: Colors.deepOrange[300],
               ),
               Container(
                 padding: const EdgeInsets.all(8),
-                child: const Text('Cutting Boards', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                child: const Text('Cutting Boards',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
                 color: Colors.deepOrange[300],
               ),
               //number input of constraints

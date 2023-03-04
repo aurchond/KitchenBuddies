@@ -21,7 +21,7 @@ Widget CheckboxDecorated(
       ),
       child: hasSub
           ? CheckboxListTile(
-              secondary: icon,
+              secondary: Text("  "+ (index+1).toString(), style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
               title: title,
               subtitle: subtitle,
               value: _data[index]["isSelected"],

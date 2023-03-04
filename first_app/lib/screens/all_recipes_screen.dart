@@ -122,7 +122,7 @@ class _AllRecipesState extends State<AllRecipes> {
       for (int i=0; i<pastRecipesLength; i++) {
         _pastRecipes.add(recipeTile(
             title: dataModel.pastRecipes?[i]?.recipeName,
-            ingredients: "oops baby sipping on the goose like whoops baby",
+            ingredients: (dataModel.pastRecipes?[i]?.ingredientList)?.join(", "),
             totalTime: dataModel.pastRecipes?[i]?.completionTime
         ));
       }
@@ -143,11 +143,9 @@ class _AllRecipesState extends State<AllRecipes> {
             Expanded(
               child: new ListView.builder(
                   itemCount: _pastRecipes.length,
+                  shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return SizedBox(
-                        width: 100,
-                        height: 100,
-                        child: Center(
+                    return Center(
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: TileDecorated(
@@ -162,7 +160,7 @@ class _AllRecipesState extends State<AllRecipes> {
                                     " minutes"),
                                 true),
                           ),
-                        ));
+                        );
                   }),
             ),
             SizedBox(width: 10, height: 10),

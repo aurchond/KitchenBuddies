@@ -135,148 +135,167 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Consumer<AuthProvider>(builder: (context, model, _) {
       return Scaffold(
-        appBar: AppBar(
-          actions: [
-            IconButton(
-              onPressed: () {
-                model.logOut();
-              },
-              icon: const Icon(Icons.logout),
-            )
-          ],
-        ),
-        body: Padding(  padding: const EdgeInsets.all(8.0), child: Column(
-          children: [
-            /// friend setup ///
-            //todo AD: use AddFriend API
-            Container(
-                margin: EdgeInsets.only(top: 20, bottom: 15),
-                child: Text(
-                  "Your friends:",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                )),
-            Expanded(
-                child: Container(
-              padding: const EdgeInsets.all(10),
-              color: Colors.black,
-              child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 300,
-                      childAspectRatio: 5 / 2,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10),
-                  itemCount: myFriends?.length,
-                  itemBuilder: (BuildContext context, index) {
-                    return TileDecorated(
-                        Colors.deepOrange.shade200,
-                        Icon(
-                          Icons.person,
-                          color: Colors.deepOrange.shade700,
-                        ),
-                        Text(myFriends?[index] ?? "",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w400)),
-                        Text(""),
-                        false);
-                  }),
-            )),
-            Container(
-                padding: const EdgeInsets.only(bottom: 7),
-                color: Colors.black,
-                child: inputTextButton(
-                    textController,
-                    "Enter your friend's email",
-                    "Add friend!",
-                    myFocusNode,
-                    onPressedCallback)),
+          appBar: AppBar(
+            actions: [
+              IconButton(
+                onPressed: () {
+                  model.logOut();
+                },
+                icon: const Icon(Icons.logout),
+              )
+            ],
+          ),
+          body: SingleChildScrollView(
+              physics: ClampingScrollPhysics(),
+              child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minWidth: MediaQuery.of(context).size.width,
+                    minHeight: MediaQuery.of(context).size.height,
+                  ),
+                  child: IntrinsicHeight(
+                      child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        /// friend setup ///
+                        //todo AD: use AddFriend API
+                        Flexible(
+                            fit: FlexFit.loose,
+                            child: Container(
+                                margin: EdgeInsets.only(top: 20, bottom: 15),
+                                child: Text(
+                                  "Your friends:",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                                ))),
+                        SizedBox(
+                            height: 205,
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              color: Colors.black,
+                              child: GridView.builder(
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          childAspectRatio: 4 / 2,
+                                          crossAxisSpacing: 10,
+                                          mainAxisSpacing: 10),
+                                  itemCount: myFriends?.length,
+                                  itemBuilder: (BuildContext context, index) {
+                                    return TileDecorated(
+                                        Colors.deepOrange.shade200,
+                                        Icon(
+                                          Icons.person,
+                                          color: Colors.deepOrange.shade700,
+                                        ),
+                                        Text(myFriends?[index] ?? "",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w400)),
+                                        Text(""),
+                                        false);
+                                  }),
+                            )),
+                        Container(
+                            padding: const EdgeInsets.only(bottom: 7),
+                            color: Colors.black,
+                            child: inputTextButton(
+                                textController,
+                                "Enter your friend's email",
+                                "Add friend!",
+                                myFocusNode,
+                                onPressedCallback)),
 
-            /// old push notif stuff ///
-            // Expanded(
-            //     child: Padding(
-            //   padding: const EdgeInsets.all(10),
-            //   child: Container(
-            //     alignment: Alignment.center,
-            //     decoration: BoxDecoration(
-            //       color: Colors.deepOrange.shade100,
-            //     ),
-            //     child: StreamBuilder<QuerySnapshot>(
-            //         builder: (context, snapshot) {
-            //           if (snapshot.hasData) {
-            //             return ListView.builder(
-            //                 itemBuilder: (context, index) {
-            //                   return Card(
-            //                       child: ListTile(
-            //                           onTap: () {
-            //                             fcmProvider.sendNotification(
-            //                                 token: snapshot.data!.docs[index]
-            //                                     ["token"],
-            //                                 title: snapshot.data!.docs[index]
-            //                                     ["user_name"],
-            //                                 body: "Notification Test");
-            //                           },
-            //                           // indexing user from the db
-            //                           title: Text(snapshot.data!.docs[index]
-            //                               ["user_name"])));
-            //                 },
-            //                 itemCount: snapshot.data!.docs.length);
-            //           } else {
-            //             return const Center(child: CircularProgressIndicator());
-            //           }
-            //         },
-            //         stream: FirebaseFirestore.instance
-            //             .collection("users")
-            //             .snapshots()),
-            //   ),
-            // )),
+                        /// old push notif stuff ///
+                        // Expanded(
+                        //     child: Padding(
+                        //   padding: const EdgeInsets.all(10),
+                        //   child: Container(
+                        //     alignment: Alignment.center,
+                        //     decoration: BoxDecoration(
+                        //       color: Colors.deepOrange.shade100,
+                        //     ),
+                        //     child: StreamBuilder<QuerySnapshot>(
+                        //         builder: (context, snapshot) {
+                        //           if (snapshot.hasData) {
+                        //             return ListView.builder(
+                        //                 itemBuilder: (context, index) {
+                        //                   return Card(
+                        //                       child: ListTile(
+                        //                           onTap: () {
+                        //                             fcmProvider.sendNotification(
+                        //                                 token: snapshot.data!.docs[index]
+                        //                                     ["token"],
+                        //                                 title: snapshot.data!.docs[index]
+                        //                                     ["user_name"],
+                        //                                 body: "Notification Test");
+                        //                           },
+                        //                           // indexing user from the db
+                        //                           title: Text(snapshot.data!.docs[index]
+                        //                               ["user_name"])));
+                        //                 },
+                        //                 itemCount: snapshot.data!.docs.length);
+                        //           } else {
+                        //             return const Center(child: CircularProgressIndicator());
+                        //           }
+                        //         },
+                        //         stream: FirebaseFirestore.instance
+                        //             .collection("users")
+                        //             .snapshots()),
+                        //   ),
+                        // )),
+                        /// set skill level ///
+                        //todo AD: use AddSkillLevel API
+                        StatefulBuilder(builder:
+                            (BuildContext context, StateSetter setState) {
+                          return Row(
+                            children: [
+                              Container(
+                                  margin: EdgeInsets.all(20),
+                                  child: Text(
+                                    "Change your skill level:",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                  )),
+                              DropdownButton<String>(
+                                value: dropdownValue,
+                                icon: const Icon(Icons.arrow_downward),
+                                elevation: 16,
+                                style:
+                                    const TextStyle(color: Colors.deepOrange),
+                                underline: Container(
+                                  height: 2,
+                                  color: Colors.deepOrangeAccent,
+                                ),
+                                onChanged: (String? value) {
+                                  // This is called when the user selects an item.
+                                  setState(() {
+                                    dropdownValue = value!;
+                                    //TODO: handle API call
+                                  });
+                                },
+                                items: skillList.map<DropdownMenuItem<String>>(
+                                    (String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value,
+                                        style: TextStyle(fontSize: 18)),
+                                  );
+                                }).toList(),
+                              )
+                            ],
+                          );
+                        }),
 
-            /// set skill level ///
-            //todo AD: use AddSkillLevel API
-            StatefulBuilder(
-                builder: (BuildContext context, StateSetter setState) {
-              return Row(
-                children: [
-                  Container(
-                      margin: EdgeInsets.all(20),
-                      child: Text(
-                        "Change your skill level:",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
-                      )),
-                  DropdownButton<String>(
-                    value: dropdownValue,
-                    icon: const Icon(Icons.arrow_downward),
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.deepOrange),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.deepOrangeAccent,
+                        /// set kitchen constraints
+                        //todo AD: use AddKitchenConstraints API
+                        KitchenConstraintsContainer(focusNodes, controllers)
+                      ],
                     ),
-                    onChanged: (String? value) {
-                      // This is called when the user selects an item.
-                      setState(() {
-                        dropdownValue = value!;
-                        //TODO: handle API call
-                      });
-                    },
-                    items:
-                        skillList.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value, style: TextStyle(fontSize: 18)),
-                      );
-                    }).toList(),
-                  )
-                ],
-              );
-            }),
-
-            /// set kitchen constraints
-            //todo AD: use AddKitchenConstraints API
-            SingleChildScrollView(
-                child: KitchenConstraintsContainer(focusNodes, controllers))
-          ],
-        ),
-      ));
+                  )))));
     });
   }
 }
