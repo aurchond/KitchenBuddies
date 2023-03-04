@@ -2,7 +2,7 @@
     {
         "userEmail": "aurchond@gmail.com",
         "notes": "string",
-        "recipeStep": [
+        "recipeSteps": [
             {
                 "number": "2.1",
                 "instructions": "heat oil in a wok",
@@ -61,7 +61,7 @@
     },
     {
         "userEmail": "shadiz@gmail.com",
-        "recipeStep": [
+        "recipeSteps": [
             {
                 "number": "2.1",
                 "instructions": "heat oil in a wok",

@@ -16,7 +16,7 @@ Future<MealSessionSteps?> getMealSessionSteps(String emailToFind) async {
   MealSessionSteps dummy = new MealSessionSteps();
   try {
     final response = await http.get(
-      Uri.parse("https://mocki.io/v1/b05ef8e6-efa7-415c-a185-2971ec2f80d4"),
+      Uri.parse("https://mocki.io/v1/a4a5ff41-edb8-4e40-bbfc-590e8912c2ba"),
       headers: {
         HttpHeaders.contentTypeHeader: "application/json",
       },
@@ -91,18 +91,18 @@ Future<void> addUser(String email, String username) async {
 Future<RecipeInfo?> requestRecipeByURL(String recipeURL) async {
 
   // todo: take out mock data
-  final response = await http.get(
-    Uri.parse("https://mocki.io/v1/baaae979-218a-4def-8be5-ce56596f36ff"),
-    headers: {
-      HttpHeaders.contentTypeHeader: "application/json",
-    },
-  );
+  // final response = await http.get(
+  //   Uri.parse("https://mocki.io/v1/baaae979-218a-4def-8be5-ce56596f36ff"),
+  //   headers: {
+  //     HttpHeaders.contentTypeHeader: "application/json",
+  //   },
+  // );
 
-  // final body = jsonEncode(<String, String>{
-  //   "userEmail": myEmail,
-  //   "recipeUrl": recipeURL
-  // });
-  // Response? response = await sendPostRequest("RequestRecipeByURL", body);
+  final body = jsonEncode(<String, String>{
+    "userEmail": myEmail,
+    "recipeUrl": recipeURL
+  });
+  Response? response = await sendPostRequest("RequestRecipeByUrl", body);
   final item = json.decode(response!.body);
 
 
