@@ -28,7 +28,7 @@ Widget CheckboxDecorated(
               onChanged: (value) {
                 callback(value, _data, index, setState);
               },
-              isThreeLine: true,
+              //isThreeLine: true,
             )
           : CheckboxListTile(
               secondary: icon,

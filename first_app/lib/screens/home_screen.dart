@@ -17,6 +17,7 @@ import '../backend_processing/get_requests.dart';
 import '../backend_processing/post_requests.dart';
 import '../helpers/globals.dart';
 import '../widgets/tile_decorated.dart';
+import '../data_models/kitchen_constraints.dart';
 
 const List<String> skillList = <String>['Beginner', 'Intermediate', 'Advanced'];
 String savedSkillValue = "Intermediate";
@@ -32,18 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
   //initialize controllers and nodes for input text buttons
   final textController = TextEditingController();
   late FocusNode myFocusNode = FocusNode();
-
-  final burnerController = TextEditingController();
-  late FocusNode burnerFocusNode = FocusNode();
-
-  final potController = TextEditingController();
-  late FocusNode potFocusNode = FocusNode();
-
-  final panController = TextEditingController();
-  late FocusNode panFocusNode = FocusNode();
-
-  final knifeController = TextEditingController();
-  late FocusNode knifeFocusNode = FocusNode();
 
   final List<FocusNode> focusNodes =
       List<FocusNode>.generate(5, (int index) => FocusNode());
@@ -100,8 +89,8 @@ class _HomeScreenState extends State<HomeScreen> {
     print(_controller.text);
 
     addFriend(_controller.text);
-
     _focusNode.unfocus();
+    setState(() {}); //TODO: rebuild widget with setState!!
   }
 
   @override
@@ -109,18 +98,6 @@ class _HomeScreenState extends State<HomeScreen> {
     // dispose of resources for input text buttons
     textController.dispose();
     myFocusNode.dispose();
-
-    burnerController.dispose();
-    burnerFocusNode.dispose();
-
-    potController.dispose();
-    potFocusNode.dispose();
-
-    panController.dispose();
-    panFocusNode.dispose();
-
-    knifeController.dispose();
-    knifeFocusNode.dispose();
     super.dispose();
   }
 
@@ -131,6 +108,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
     String? dropdownValue = dataModel.skillLevel;
     List<String>? myFriends = dataModel.friendsList?.friends;
+
+    List<bool> isTextFieldShown = List.filled(5, false, growable: true);
 
     return Consumer<AuthProvider>(builder: (context, model, _) {
       return Scaffold(
@@ -163,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Container(
                                 margin: EdgeInsets.only(top: 20, bottom: 15),
                                 child: Text(
-                                  "Hello "+ myEmail + "! Your friends:",
+                                  "Hello " + myEmail + "! Your friends:",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18),
@@ -171,31 +150,30 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(
                             height: 205,
                             child: Container(
-                              padding: const EdgeInsets.all(10),
-                              color: Colors.black,
-                              child: GridView.builder(
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
-                                          childAspectRatio: 4 / 2,
-                                          crossAxisSpacing: 10,
-                                          mainAxisSpacing: 10),
-                                  itemCount: myFriends?.length,
-                                  itemBuilder: (BuildContext context, index) {
-                                    return TileDecorated(
-                                        Colors.deepOrange.shade200,
-                                        Icon(
-                                          Icons.person,
-                                          color: Colors.deepOrange.shade700,
-                                        ),
-                                        Text(myFriends?[index] ?? "",
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w400)),
-                                        Text(""),
-                                        false);
-                                  }),
-                            )),
+                                padding: const EdgeInsets.all(10),
+                                color: Colors.black,
+                                child: GridView.builder(
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            childAspectRatio: 4 / 2,
+                                            crossAxisSpacing: 10,
+                                            mainAxisSpacing: 10),
+                                    itemCount: myFriends?.length,
+                                    itemBuilder: (BuildContext context, index) {
+                                      return TileDecorated(
+                                          Colors.deepOrange.shade200,
+                                          Icon(
+                                            Icons.person,
+                                            color: Colors.deepOrange.shade700,
+                                          ),
+                                          Text(myFriends?[index] ?? "",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w400)),
+                                          Text(""),
+                                          false);
+                                    }))),
                         Container(
                             padding: const EdgeInsets.only(bottom: 7),
                             color: Colors.black,
@@ -272,7 +250,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   setState(() {
                                     dropdownValue = value!;
                                     addSkillLevel(value);
-                                    //TODO: handle API call
                                   });
                                 },
                                 items: skillList.map<DropdownMenuItem<String>>(
@@ -289,7 +266,239 @@ class _HomeScreenState extends State<HomeScreen> {
                         }),
 
                         /// set kitchen constraints
-                        KitchenConstraintsContainer(focusNodes, controllers)
+                        //todo AD: use AddKitchenConstraints API
+                        StatefulBuilder(builder:
+                            (BuildContext context, StateSetter setState) {
+                          return Column(children: [
+                            Container(
+                                margin: EdgeInsets.all(10),
+                                child: Text(
+                                  "Customize your kitchen:",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                                )),
+                            SizedBox(
+                                height: 160,
+                                child: GridView.count(
+                                    padding: const EdgeInsets.all(10),
+                                    crossAxisSpacing: 10,
+                                    mainAxisSpacing: 10,
+                                    crossAxisCount: 5,
+                                    children: <Widget>[
+                                      //text descriptions of constraints
+                                      Container(
+                                        padding: const EdgeInsets.all(8),
+                                        child: const Text('Ovens',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold)),
+                                        color: Colors.deepOrange[300],
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.all(8),
+                                        child: const Text('Pots',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold)),
+                                        color: Colors.deepOrange[300],
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.all(8),
+                                        child: const Text('Pans',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold)),
+                                        color: Colors.deepOrange[300],
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.all(8),
+                                        child: const Text(
+                                          'Bowls',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        color: Colors.deepOrange[300],
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.all(8),
+                                        child: const Text('Cutting Boards',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold)),
+                                        color: Colors.deepOrange[300],
+                                      ),
+                                      //number input of constraints
+                                      Container(
+                                          padding: const EdgeInsets.all(8),
+                                          color: Colors.deepOrange[200],
+                                          child: AnimatedSwitcher(
+                                            duration: Duration(
+                                              milliseconds: 300,
+                                            ),
+                                            child: isTextFieldShown[0]
+                                                ? TextField(
+                                                    focusNode: focusNodes[0],
+                                                    controller: controllers[0],
+                                                    keyboardType:
+                                                        TextInputType.number,
+                                                    decoration: InputDecoration(
+                                                      border:
+                                                          OutlineInputBorder(),
+                                                    ),
+                                                  )
+                                                : SizedBox(
+                                                    height: 50,
+                                                    child: ElevatedButton(
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            isTextFieldShown[
+                                                                0] = true;
+                                                          });
+                                                        },
+                                                        child: Text("1"))),
+                                          )),
+                                      Container(
+                                        padding: const EdgeInsets.all(8),
+                                        child: isTextFieldShown[1]
+                                            ? TextField(
+                                                focusNode: focusNodes[1],
+                                                controller: controllers[1],
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                ),
+                                              )
+                                            : SizedBox(
+                                                height: 50,
+                                                child: ElevatedButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        isTextFieldShown[1] =
+                                                            true;
+                                                      });
+                                                    },
+                                                    child: Text("2"))),
+                                        color: Colors.deepOrange[200],
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.all(8),
+                                        child: isTextFieldShown[2]
+                                            ? TextField(
+                                                focusNode: focusNodes[2],
+                                                controller: controllers[2],
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                ),
+                                              )
+                                            : SizedBox(
+                                                height: 50,
+                                                child: ElevatedButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        isTextFieldShown[2] =
+                                                            true;
+                                                      });
+                                                    },
+                                                    child: Text("3"))),
+                                        color: Colors.deepOrange[200],
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.all(8),
+                                        child: isTextFieldShown[3]
+                                            ? TextField(
+                                                focusNode: focusNodes[3],
+                                                controller: controllers[3],
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                ),
+                                              )
+                                            : SizedBox(
+                                                height: 50,
+                                                child: ElevatedButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        isTextFieldShown[3] =
+                                                            true;
+                                                      });
+                                                    },
+                                                    child: Text("4"))),
+                                        color: Colors.deepOrange[200],
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.all(8),
+                                        child: isTextFieldShown[4]
+                                            ? TextField(
+                                                focusNode: focusNodes[4],
+                                                controller: controllers[4],
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                ),
+                                              )
+                                            : SizedBox(
+                                                height: 50,
+                                                child: ElevatedButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        isTextFieldShown[4] =
+                                                            true;
+                                                      });
+                                                    },
+                                                    child: Text("5"))),
+                                        color: Colors.deepOrange[200],
+                                      ),
+                                    ])),
+                            SizedBox(
+                                width: 360,
+                                height: 60,
+                                child: ElevatedButton(
+                                    onPressed: () {
+                                      KitchenConstraints kitchenConstraints =
+                                          KitchenConstraints(
+                                              userEmail: myEmail,
+                                              oven: int.tryParse(
+                                                      controllers[0].text) ??
+                                                  0,
+                                              pot: int.tryParse(
+                                                      controllers[1].text) ??
+                                                  0,
+                                              pan: int.tryParse(
+                                                      controllers[2].text) ??
+                                                  0,
+                                              bowl: int.tryParse(
+                                                      controllers[3].text) ??
+                                                  0,
+                                              cuttingBoard: int.tryParse(
+                                                      controllers[4].text) ??
+                                                  0);
+
+                                      addKitchenConstriants(kitchenConstraints);
+                                      setState(() {
+                                        for (int i = 0;
+                                            i < isTextFieldShown.length;
+                                            i++) {
+                                          isTextFieldShown[i] = false;
+                                        }
+                                      });
+                                    },
+                                    child:
+                                        Text("Save your kitchen constraints!")))
+                          ]);
+                        })
+                        //return KitchenConstraintsContainer(focusNodes, controllers, isTextFieldShown, setState);})
                       ],
                     ),
                   )))));
