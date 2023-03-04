@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../backend_processing/data_class.dart';
+import '../backend_processing/post_requests.dart';
 import '../widgets/alert_dialog.dart';
 
 class AllRecipes extends StatefulWidget {
@@ -98,7 +99,10 @@ class _AllRecipesState extends State<AllRecipes> {
 
   //input text button callback
   onPressedCallback(FocusNode _focusNode, TextEditingController _controller) {
-    print(_controller.text);
+    //print(_controller.text);
+
+    requestRecipeByURL(_controller.text);
+
     _focusNode.unfocus();
   }
 

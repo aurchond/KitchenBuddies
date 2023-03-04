@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:first_app/data_models/kitchen_constraints.dart';
+import 'package:first_app/data_models/recipe_info.dart';
 import 'package:first_app/helpers/globals.dart';
 import 'package:first_app/screens/meal_session_screens/new_meal_session_screen.dart';
 import 'package:http/http.dart' as http;
@@ -83,6 +84,30 @@ Future<void> addUser(String email, String username) async {
     "username": username
   });
   Response? response = await sendPostRequest("AddUser", body);
+}
+
+
+// todo: test this out
+Future<RecipeInfo?> requestRecipeByURL(String recipeURL) async {
+
+  // todo: take out mock data
+  final response = await http.get(
+    Uri.parse("https://mocki.io/v1/baaae979-218a-4def-8be5-ce56596f36ff"),
+    headers: {
+      HttpHeaders.contentTypeHeader: "application/json",
+    },
+  );
+
+  // final body = jsonEncode(<String, String>{
+  //   "userEmail": myEmail,
+  //   "recipeUrl": recipeURL
+  // });
+  // Response? response = await sendPostRequest("RequestRecipeByURL", body);
+  final item = json.decode(response!.body);
+
+
+  RecipeInfo recipeFromURL = RecipeInfo.fromJson(item);
+  return recipeFromURL;
 }
 
 
