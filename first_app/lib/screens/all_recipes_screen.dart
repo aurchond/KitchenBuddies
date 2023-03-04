@@ -70,8 +70,8 @@ class _AllRecipesState extends State<AllRecipes> {
       print(totalTime);
 
       //add or subtract 1 to index to account for newline character we don't want
-      String ingredients = valueText.substring(
-          ingredientIndex + 14, instructionsIndex-1);
+      String ingredients =
+          valueText.substring(ingredientIndex + 14, instructionsIndex - 1);
       List<String> ingredientList = ingredients.split('\n');
       print(ingredientList);
 
@@ -79,7 +79,8 @@ class _AllRecipesState extends State<AllRecipes> {
       List<String> instructionList = instructions.split('\n');
       print(instructionList);
 
-      RecipeInfo recipeByText = RecipeInfo(recipeName: recipeName,
+      RecipeInfo recipeByText = RecipeInfo(
+          recipeName: recipeName,
           ingredientList: ingredientList,
           totalTime: double.parse(totalTime),
           instructionList: instructionList);
@@ -116,80 +117,118 @@ class _AllRecipesState extends State<AllRecipes> {
 
   @override
   Widget build(BuildContext context) {
-
     final dataModel = Provider.of<DataClass>(context);
 
     List<recipeTile> _pastRecipes = <recipeTile>[];
 
     int? pastRecipesLength = dataModel.pastRecipes?.length;
     if (pastRecipesLength != null) {
-      for (int i=0; i<pastRecipesLength; i++) {
+      for (int i = 0; i < pastRecipesLength; i++) {
         _pastRecipes.add(recipeTile(
             title: dataModel.pastRecipes?[i]?.recipeName,
-            ingredients: (dataModel.pastRecipes?[i]?.ingredientList)?.join(", "),
-            totalTime: dataModel.pastRecipes?[i]?.completionTime
-        ));
+            ingredients:
+                (dataModel.pastRecipes?[i]?.ingredientList)?.join("\n"),
+            totalTime: dataModel.pastRecipes?[i]?.completionTime));
       }
     }
 
     return Scaffold(
       appBar: AppBar(title: const Text("All Recipes")),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Container(
-                margin: EdgeInsets.only(top: 20, bottom: 20),
-                child: Text(
-                  "Welcome to your pantry!",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                )),
-            Expanded(
-              child: new ListView.builder(
-                  itemCount: _pastRecipes.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return Center(
+          padding: const EdgeInsets.all(8.0),
+          child: StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+            return Column(
+              children: [
+                Container(
+                    margin: EdgeInsets.only(top: 20, bottom: 20),
+                    child: Text(
+                      "Welcome to your pantry!",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    )),
+                Expanded(
+                  child: new ListView.builder(
+                      itemCount: _pastRecipes?.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return Center(
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: TileDecorated(
                                 Colors.white,
                                 Icon(Icons.fastfood),
-                                Text(_pastRecipes[index].title! +
-                                    ""),
-                                Text(_pastRecipes[index].ingredients! +
-                                    " " +
-                                    "\nTotal time: " +
+                                index,
+                                Text(_pastRecipes[index].title!),
+                                Text("Total time: " +
                                     _pastRecipes[index].totalTime.toString() +
                                     " minutes"),
+                                Text(_pastRecipes[index].ingredients!),
                                 true),
                           ),
                         );
-                  }),
-            ),
-            SizedBox(width: 10, height: 10),
-            inputTextButton(recipeByUrlController, "Input your recipe URL",
-                "Add recipe!", myFocusNode, onPressedCallback),
-            SizedBox(width: 10, height: 10),
-            SizedBox(
-                width: 360,
-                height: 60,
-                child: ElevatedButton(
-                  onPressed: () {
-                    alertDialog(
-                        context,
-                        buttonCallback,
-                        parseCallback,
-                        textCallback,
-                        recipeByTextController,
-                        "Add Recipe By Text",
-                        "Enter your recipe text");
-                  },
-                  child: Text('Add recipe by text!'),
-                ))
-          ],
-        ),
-      ),
+                      }),
+                ),
+                SizedBox(width: 10, height: 10),
+                Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.deepOrange.shade200,
+                          border: Border.all(
+                              width: 3, color: Colors.deepOrange.shade300),
+                        ), //https://www.allrecipes.com/recipe/26317/chicken-pot-pie-ix/
+                        child: Row(
+                          children: [
+                            Expanded(
+                                child: TextField(
+                              focusNode: myFocusNode,
+                              controller: recipeByUrlController,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                hintText: "Input your recipe URL",
+                                suffixIcon: IconButton(
+                                  onPressed: recipeByUrlController.clear,
+                                  icon: Icon(Icons.clear),
+                                ),
+                              ),
+                            )),
+                            SizedBox(
+                              width: 120,
+                              height: 60,
+                              child: ElevatedButton(
+                                  onPressed: () {
+                                    requestRecipeByURL(
+                                        recipeByUrlController.text);
+                                    myFocusNode.unfocus();
+                                    dataModel.loadAllRecipesPage();
+                                  },
+                                  child: Text("Add recipe!")),
+                            )
+                          ],
+                        ))),
+                // inputTextButton(recipeByUrlController, "Input your recipe URL",
+                //     "Add recipe!", myFocusNode, onPressedCallback),
+                SizedBox(width: 10, height: 10),
+                SizedBox(
+                    width: 360,
+                    height: 60,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        alertDialog(
+                            context,
+                            buttonCallback,
+                            parseCallback,
+                            textCallback,
+                            recipeByTextController,
+                            "Add Recipe By Text",
+                            "Enter your recipe text");
+                      },
+                      child: Text('Add recipe by text!'),
+                    ))
+              ],
+            );
+          })),
     );
   }
 }

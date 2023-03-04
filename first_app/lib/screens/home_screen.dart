@@ -153,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: 205,
                                 child: Container(
                                     padding: const EdgeInsets.all(10),
-                                    color: Colors.black,
+                                    color: Colors.deepOrange.shade100,
                                     child: GridView.builder(
                                         gridDelegate:
                                             const SliverGridDelegateWithFixedCrossAxisCount(
@@ -170,18 +170,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 Icons.person,
                                                 color:
                                                     Colors.deepOrange.shade700,
-                                              ),
+                                              ), index,
                                               Text(myFriends?[index] ?? "",
                                                   style: TextStyle(
                                                       fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.w400)),
-                                              Text(""),
+                                              Text(""), Text(""),
                                               false);
                                         }))),
                             Container(
                                 padding: const EdgeInsets.only(bottom: 7),
-                                color: Colors.black,
+                                color: Colors.deepOrange.shade100,
                                 child: Padding(
                                     padding: const EdgeInsets.all(10.0),
                                     child: Container(

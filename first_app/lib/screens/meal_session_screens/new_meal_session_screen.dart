@@ -34,7 +34,7 @@ class _NewMealSessionState extends State<NewMealSession> {
               "isSelected": false
             }).toList();
 
-    final List<Map> myRecipes = List.generate(
+    final List<Map>? myRecipes = List.generate(
         dataModel.pastRecipes?.length ?? 0,
         (index) => {
               "id": index,
@@ -58,7 +58,7 @@ class _NewMealSessionState extends State<NewMealSession> {
               builder: (BuildContext context, StateSetter setState) {
                 return Expanded(
                   child: new ListView.builder(
-                    itemCount: myRecipes.length,
+                    itemCount: myRecipes?.length,
                     itemBuilder: (context, index) {
                       return SizedBox(
                         width: 100,
