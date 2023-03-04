@@ -5,7 +5,7 @@ public class Resource {
 
     private Integer id;//should match what is in the array order
 
-    private Integer timeAvailable;//Todo: switch to hashmap
+    private Integer timeAvailable;
 
 
 
