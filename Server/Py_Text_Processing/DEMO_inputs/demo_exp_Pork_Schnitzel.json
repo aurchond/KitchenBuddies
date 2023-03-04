@@ -109,10 +109,7 @@
     {
         "5": {
             "instructions": " Season each dish with salt and pepper",
-            "ingredients": [
-                "salt",
-                "pepper"
-            ],
+            "ingredients": [],
             "ingredientsQuantity": [
                 -1,
                 -1
@@ -211,7 +208,7 @@
         "9": {
             "instructions": " Fry the cutlets for about 2-3 minutes on each side or until they&#039;re a nice deep golden brown",
             "ingredients": [
-                "cutlets"
+                "remaining cutlets"
             ],
             "ingredientsQuantity": [
                 -1
