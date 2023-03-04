@@ -87,10 +87,8 @@ class _HomeScreenState extends State<HomeScreen> {
   //input text button callback
   onPressedCallback(FocusNode _focusNode, TextEditingController _controller) {
     print(_controller.text);
-
     addFriend(_controller.text);
     _focusNode.unfocus();
-    setState(() {}); //TODO: rebuild widget with setState!!
   }
 
   @override
@@ -137,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        /// friend setup ///
+                        /// add and get friends ///
                         Flexible(
                             fit: FlexFit.loose,
                             child: Container(
@@ -148,42 +146,88 @@ class _HomeScreenState extends State<HomeScreen> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18),
                                 ))),
-                        SizedBox(
-                            height: 205,
-                            child: Container(
-                                padding: const EdgeInsets.all(10),
+                        StatefulBuilder(builder:
+                            (BuildContext context, StateSetter setState) {
+                          return Column(children: [
+                            SizedBox(
+                                height: 205,
+                                child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    color: Colors.black,
+                                    child: GridView.builder(
+                                        gridDelegate:
+                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                                crossAxisCount: 2,
+                                                childAspectRatio: 4 / 2,
+                                                crossAxisSpacing: 10,
+                                                mainAxisSpacing: 10),
+                                        itemCount: myFriends?.length,
+                                        itemBuilder:
+                                            (BuildContext context, index) {
+                                          return TileDecorated(
+                                              Colors.deepOrange.shade200,
+                                              Icon(
+                                                Icons.person,
+                                                color:
+                                                    Colors.deepOrange.shade700,
+                                              ),
+                                              Text(myFriends?[index] ?? "",
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w400)),
+                                              Text(""),
+                                              false);
+                                        }))),
+                            Container(
+                                padding: const EdgeInsets.only(bottom: 7),
                                 color: Colors.black,
-                                child: GridView.builder(
-                                    gridDelegate:
-                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 2,
-                                            childAspectRatio: 4 / 2,
-                                            crossAxisSpacing: 10,
-                                            mainAxisSpacing: 10),
-                                    itemCount: myFriends?.length,
-                                    itemBuilder: (BuildContext context, index) {
-                                      return TileDecorated(
-                                          Colors.deepOrange.shade200,
-                                          Icon(
-                                            Icons.person,
-                                            color: Colors.deepOrange.shade700,
-                                          ),
-                                          Text(myFriends?[index] ?? "",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w400)),
-                                          Text(""),
-                                          false);
-                                    }))),
-                        Container(
-                            padding: const EdgeInsets.only(bottom: 7),
-                            color: Colors.black,
-                            child: inputTextButton(
-                                textController,
-                                "Enter your friend's email",
-                                "Add friend!",
-                                myFocusNode,
-                                onPressedCallback)),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.deepOrange.shade200,
+                                          border: Border.all(
+                                              width: 3,
+                                              color:
+                                                  Colors.deepOrange.shade300),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                                child: TextField(
+                                              focusNode: myFocusNode,
+                                              controller: textController,
+                                              decoration: InputDecoration(
+                                                border: OutlineInputBorder(),
+                                                hintText:
+                                                    "Enter your friend's email",
+                                                suffixIcon: IconButton(
+                                                  onPressed:
+                                                      textController.clear,
+                                                  icon: Icon(Icons.clear),
+                                                ),
+                                              ),
+                                            )),
+                                            SizedBox(
+                                              width: 120,
+                                              height: 60,
+                                              child: ElevatedButton(
+                                                  onPressed: () {
+                                                    addFriend(
+                                                        textController.text);
+                                                    myFocusNode.unfocus();
+                                                    setState(() {
+                                                      dataModel.loadHomePage();
+                                                      print(myFriends);
+                                                    });
+                                                  },
+                                                  child: Text("Add friend!")),
+                                            )
+                                          ],
+                                        ))))
+                          ]);
+                        }),
 
                         /// old push notif stuff ///
                         // Expanded(
@@ -223,7 +267,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         //             .snapshots()),
                         //   ),
                         // )),
-                        /// set skill level ///
+                        /// set and get skill level ///
                         StatefulBuilder(builder:
                             (BuildContext context, StateSetter setState) {
                           return Row(
@@ -266,8 +310,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           );
                         }),
 
-                        /// set kitchen constraints
-                        //todo AD: use AddKitchenConstraints API
+                        /// set and get kitchen constraints
                         StatefulBuilder(builder:
                             (BuildContext context, StateSetter setState) {
                           return Column(children: [
@@ -510,7 +553,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         Text("Save your kitchen constraints!")))
                           ]);
                         })
-                        //return KitchenConstraintsContainer(focusNodes, controllers, isTextFieldShown, setState);})
                       ],
                     ),
                   )))));
