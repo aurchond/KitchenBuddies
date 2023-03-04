@@ -1,3 +1,5 @@
+import 'package:first_app/helpers/globals.dart';
+
 class RecipeInfo {
   String? _recipeName;
   List<String>? _ingredientList;
@@ -48,8 +50,10 @@ class RecipeInfo {
     _lastDateMade = json['lastTimeMade'];
   }
 
+  // added email in the json
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['userEmail'] = myEmail;
     data['recipeName'] = this._recipeName;
     data['ingredientList'] = this._ingredientList;
     data['completionTime'] = this._totalTime;

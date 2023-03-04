@@ -79,12 +79,14 @@ class _AllRecipesState extends State<AllRecipes> {
       List<String> instructionList = instructions.split('\n');
       print(instructionList);
 
-      RecipeInfo recipeByText = RecipeInfo(recipeName: recipeName,
+      RecipeInfo recipeByText = RecipeInfo(
+          recipeName: recipeName,
           ingredientList: ingredientList,
           totalTime: double.parse(totalTime),
-          instructionList: instructionList);
-      Map<String, dynamic> data = recipeByText.toJson();
-      //TODO: send json to backend
+          instructionList: instructionList
+      );
+      // todo ad: error check
+      requestRecipeByInput(recipeByText);
       //print(data);
     }
   }

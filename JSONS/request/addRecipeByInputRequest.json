@@ -1,13 +1,11 @@
 {
-    "recipeID": 6,
+    "userEmail": "aurchon@gmail.com",
     "recipeName": "sugar carrots",
     "ingredientList": [
         "1 cup of sugar",
         "2 carrots"
     ],
-    "totalTimeMinutes": 90,
-    "lastDateMade": "2022-3-14",
-    "userEmail": "aurchon@gmail.com",
+    "totalTime": 90,
     "instructionList": [
         "1. heat oil in a wok",
         "cook veggies in wok"
