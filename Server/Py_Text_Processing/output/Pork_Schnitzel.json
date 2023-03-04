@@ -1,0 +1,296 @@
+[
+    {
+        "1": {
+            "instructions": "Tenderize the pork: Using the flat end of a meat tenderizer, pound the pork working from the center out until the cutlets are \u00bc&quot; thick",
+            "ingredients": [
+                "cutlets",
+                "pork"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "cutting board1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "tenderize",
+                "pound",
+                "working"
+            ],
+            "stepTime": 6,
+            "userTime": 6,
+            "holdingResource": "cutting board1",
+            "holdingID": 0
+        }
+    },
+    {
+        "2": {
+            "instructions": " Season each pork cutlet with salt and pepper",
+            "ingredients": [
+                "pepper",
+                "pork cutlet",
+                "salt"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "cutting board1"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 0,
+            "userTime": 0,
+            "holdingResource": "cutting board1",
+            "holdingID": 0
+        }
+    },
+    {
+        "3": {
+            "instructions": "Bread the pork: Prepare 3 shallow dishes",
+            "ingredients": [
+                "shallow dishes",
+                "Bread",
+                "pork"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                3
+            ],
+            "resourcesRequired": [
+                "cutting board1"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "prepare"
+            ],
+            "stepTime": 6,
+            "userTime": 6,
+            "holdingResource": "cutting board1",
+            "holdingID": 0
+        }
+    },
+    {
+        "4": {
+            "instructions": " One will have the flour, one will have the eggs (beaten), and the last one will have the breadcrumbs",
+            "ingredients": [
+                "eggs",
+                "breadcrumbs",
+                "flour"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "cutting board1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "have",
+                "have",
+                "beaten",
+                "have"
+            ],
+            "stepTime": 12,
+            "userTime": 12,
+            "holdingResource": "cutting board1",
+            "holdingID": 0
+        }
+    },
+    {
+        "5": {
+            "instructions": " Season each dish with salt and pepper",
+            "ingredients": [
+                "pepper",
+                "salt"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "cutting board1"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 0,
+            "userTime": 0,
+            "holdingResource": "cutting board1",
+            "holdingID": 0
+        }
+    },
+    {
+        "6": {
+            "instructions": " Dredge each cutlet through flour on both sides, next through the beaten egg and finally through the breadcrumbs",
+            "ingredients": [
+                "flour",
+                "beaten egg",
+                "cutlet"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "cutting board1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "dredge"
+            ],
+            "stepTime": 3,
+            "userTime": 3,
+            "holdingResource": "cutting board1",
+            "holdingID": 0
+        }
+    },
+    {
+        "7": {
+            "instructions": " Place them on a large plate and repeat with remaining cutlets",
+            "ingredients": [
+                "remaining cutlets"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "large plate"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "place",
+                "repeat"
+            ],
+            "stepTime": 4,
+            "userTime": 4,
+            "holdingResource": "plate1",
+            "holdingID": 1
+        }
+    },
+    {
+        "8": {
+            "instructions": "Fry the pork: Fill a large skillet with about \u00bd&quot; of oil over medium-high heat and heat it until it&#039;s 350\u00b0F",
+            "ingredients": [
+                "oil",
+                "pork",
+                "F"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "large skillet"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "fry",
+                "fill",
+                "heat"
+            ],
+            "stepTime": 12,
+            "userTime": 12,
+            "holdingResource": "cutting board1",
+            "holdingID": 0
+        }
+    },
+    {
+        "9": {
+            "instructions": " Fry the cutlets for about 2-3 minutes on each side or until they&#039;re a nice deep golden brown",
+            "ingredients": [
+                "cutlets"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "cutting board1"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 3,
+            "userTime": 3,
+            "holdingResource": "cutting board1",
+            "holdingID": 0
+        }
+    },
+    {
+        "10": {
+            "instructions": " Transfer to a paper towel lined plate and repeat with remaining schnitzel",
+            "ingredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "plate"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "lined",
+                "repeat"
+            ],
+            "stepTime": 0,
+            "userTime": 0,
+            "holdingResource": "cutting board1",
+            "holdingID": 0
+        }
+    },
+    {
+        "11": {
+            "instructions": " You might have to change the oil halfway through if it gets too dirty",
+            "ingredients": [
+                "oil"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "cutting board1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "have",
+                "change"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "cutting board1",
+            "holdingID": 0
+        }
+    },
+    {
+        "12": {
+            "instructions": "Serve: Serve with lemon wedges and mustard over mashed potatoes",
+            "ingredients": [
+                "lemon wedges",
+                "mashed potatoes",
+                "mustard"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "cutting board1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "serve",
+                "serve"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "cutting board1",
+            "holdingID": 0
+        }
+    }
+]

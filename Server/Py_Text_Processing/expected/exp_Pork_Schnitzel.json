@@ -1,0 +1,303 @@
+[
+    {
+        "1": {
+            "instructions": "Tenderize the pork: Using the flat end of a meat tenderizer, pound the pork working from the center out until the cutlets are \u00c2\u00bc&quot; thick",
+            "ingredients": [
+                "pork",
+                "cutlets"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "cutting board1",
+                "meat tenderizer"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "tenderize",
+                "pound",
+                "working"
+            ],
+            "stepTime": 6,
+            "userTime": 6,
+            "holdingResource": "cutting board1",
+            "holdingID": 0,
+            "lineNumber": 0
+        }
+    },
+    {
+        "2": {
+            "instructions": " Season each pork cutlet with salt and pepper",
+            "ingredients": [
+                "salt",
+                "pork cutlet",
+                "pepper"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "cutting board1"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "cutting board1",
+            "holdingID": 0,
+            "lineNumber": 0
+        }
+    },
+    {
+        "3": {
+            "instructions": "Prepare 3 shallow dishes",
+            "ingredients": [],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                3
+            ],
+            "resourcesRequired": [
+                "shallow dishes1"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "prepare"
+            ],
+            "stepTime": 6,
+            "userTime": 6,
+            "holdingResource": "shallow dishes1", 
+            "holdingID": 1,
+            "lineNumber": 1
+        }
+    },
+    {
+        "4": {
+            "instructions": " One will have the flour, one will have the eggs (beaten), and the last one will have the breadcrumbs",
+            "ingredients": [
+                "eggs",
+                "flour",
+                "breadcrumbs"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "Shallow dishes1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "have",
+                "have",
+                "beaten",
+                "have"
+            ],
+            "stepTime": 0,
+            "userTime": 0,
+            "holdingResource": "Shallow dishes1",
+            "holdingID": 1,
+            "lineNumber": 1
+        }
+    },
+    {
+        "5": {
+            "instructions": " Season each dish with salt and pepper",
+            "ingredients": [
+                "salt",
+                "pepper"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "Shallow dishes1"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 0,
+            "userTime": 0,
+            "holdingResource": "Shallow dishes1",
+            "holdingID": 1,
+            "lineNumber": 1
+        }
+    },
+    {
+        "6": {
+            "instructions": " Dredge each cutlet through flour on both sides, next through the beaten egg and finally through the breadcrumbs",
+            "ingredients": [
+                "beaten egg",
+                "cutlet",
+                "flour"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "cutting board1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "dredge"
+            ],
+            "stepTime": 3,
+            "userTime": 3,
+            "holdingResource": "cutting board1",
+            "holdingID": 0,
+            "lineNumber": 1
+        }
+    },
+    {
+        "7": {
+            "instructions": " Place them on a large plate and repeat with remaining cutlets",
+            "ingredients": [
+                "remaining cutlets"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "plate1"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "place",
+                "repeat"
+            ],
+            "stepTime": 4,
+            "userTime": 4,
+            "holdingResource": "plate1",
+            "holdingID": 2,
+            "lineNumber": 1
+        }
+    },
+    {
+        "8": {
+            "instructions": "Fill a large skillet with about \u00c2\u00bd&quot; of oil over medium-high heat and heat it until it&#039;s 350\u00c2\u00b0F",
+            "ingredients": [
+                "oil"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "skillet1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "fry",
+                "fill",
+                "heat"
+            ],
+            "stepTime": 12,
+            "userTime": 12,
+            "holdingResource": "skillet1",
+            "holdingID": 3,
+            "lineNumber": 2
+        }
+    },
+    {
+        "9": {
+            "instructions": " Fry the cutlets for about 2-3 minutes on each side or until they&#039;re a nice deep golden brown",
+            "ingredients": [
+                "cutlets"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "Skillet1"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 3,
+            "userTime": 3,
+            "holdingResource": "Skillet1",
+            "holdingID": 3,
+            "lineNumber": 2
+        }
+    },
+    {
+        "10": {
+            "instructions": " Transfer to a paper towel lined plate and repeat with remaining schnitzel",
+            "ingredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "plate2"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "lined",
+                "repeat"
+            ],
+            "stepTime": 0,
+            "userTime": 0,
+            "holdingResource": "plate2",
+            "holdingID": 4,
+            "lineNumber": 2
+        }
+    },
+    {
+        "11": {
+            "instructions": " You might have to change the oil halfway through if it gets too dirty",
+            "ingredients": [
+                "oil"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "plate2"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "have",
+                "change"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "plate2",
+            "holdingID": 4,
+            "lineNumber": 2
+        }
+    },
+    {
+        "12": {
+            "instructions": "Serve with lemon wedges and mustard over mashed potatoes",
+            "ingredients": [
+                "mashed potatoes",
+                "mustard",
+                "lemon wedges"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "plate2"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "serve",
+                "serve"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "plate2",
+            "holdingID": 4,
+            "lineNumber": 2
+        }
+    }
+]

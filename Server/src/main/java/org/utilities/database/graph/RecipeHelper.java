@@ -43,7 +43,7 @@ public class RecipeHelper {
     }
 
     //delete step from recipe
-    public static void removeStep(Session s, Double nodeID) {
+    public static void removeStep(Session s, String nodeID) {
         Step targetStep = s.load(Step.class, nodeID);
         s.delete(targetStep);
     }

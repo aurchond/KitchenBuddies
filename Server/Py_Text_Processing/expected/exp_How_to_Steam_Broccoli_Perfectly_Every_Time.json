@@ -1,0 +1,174 @@
+[
+    {
+        "1": {
+            "instructions": "Prep the broccoli crowns and stems: Cut the crowns away from the large stems of the broccoli",
+            "ingredients": [
+                "broccoli"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "cutting board1"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "prep",
+                "crowns",
+                "stems",
+                "cut"
+            ],
+            "stepTime": 8,
+            "userTime": 8,
+            "holdingResource": "cutting board1",
+            "holdingID": 0
+        }
+    },
+    {
+        "2": {
+            "instructions": " Break the crown up into bite-sized florets",
+            "ingredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "cutting board1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "break"
+            ],
+            "stepTime": 0,
+            "userTime": 0,
+            "holdingResource": "cutting board1",
+            "holdingID": 0
+        }
+    },
+    {
+        "3": {
+            "instructions": " Rinse the broccoli florets thoroughly",
+            "ingredients": [
+                "broccoli florets"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "cutting board1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "rinse",
+            ],
+            "stepTime": 3,
+            "userTime": 3,
+            "holdingResource": "cutting board1",
+            "holdingID": 0
+        }
+    },
+    {
+        "4": {
+            "instructions": " Peel and discard the thick outer skin of the stems",
+            "ingredients": [
+                "broccoli"
+            ],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "cutting board1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "discard"
+            ],
+            "stepTime": 0,
+            "userTime": 0,
+            "holdingResource": "cutting board1",
+            "holdingID": 0
+        }
+    },
+    {
+        "5": {
+            "instructions": " Slice the stems or cut them into quarters lengthwise",
+            "ingredients": ["broccoli"],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "cutting board2"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "cut"
+            ],
+            "stepTime": 0,
+            "userTime": 0,
+            "holdingResource": "cutting board2",
+            "holdingID": 1
+        }
+    },
+    {
+        "6": {
+            "instructions": "Bring pot of water to a boil: Place 3/4 to 1 inch of water in a saucepan with a pot and bring to a boil",
+            "ingredients": [
+                "water"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "bring",
+                "bring"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "pot1",
+            "holdingID": 2
+        }
+    },
+    {
+        "7": {
+            "instructions": "Add broccoli, steam 5 to 6 min: Add the broccoli to the pot and cover; reduce heat to medium and let cook for 5-6 minutes",
+            "ingredients": [
+                "broccoli"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add",
+                "add",
+                "cover",
+                "reduce",
+                "let",
+                "cook"
+            ],
+            "stepTime": 5,
+            "userTime": 5,
+            "holdingResource": "pot1",
+            "holdingID": 2
+        }
+    },
+    {
+        "8": {
+            "instructions": " As soon as it is pierce-able, remove from heat, place in serving dish",
+            "ingredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 0,
+            "userTime": 0,
+            "holdingResource": "pot1",
+            "holdingID": 3
+        }
+    }
+]

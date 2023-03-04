@@ -100,6 +100,7 @@ class Step:
         self.userTime = 0
         self.holdingResource = ''
         self.holdingID = -1
+        self.lineNumber = -1
 
     def extract_verb_from_step(self, token):
         self.verbs.append(token.text.lower())

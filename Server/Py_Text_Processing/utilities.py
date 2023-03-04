@@ -73,7 +73,9 @@ def extract_instructions(file):
                 for sent in mini_steps:
                     if sent == '' or sent == '\n':
                         continue
+
                     instr_steps.append(sent)
+
                 instr_steps.append('BREAK' + str(instr_line_count))
                 instr_line_count += 1
     
