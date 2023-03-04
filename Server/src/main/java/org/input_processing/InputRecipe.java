@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.Duration;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,28 +47,40 @@ public class InputRecipe {
     public void setRecipeFile(String recipeFile) { this.recipeFile = recipeFile; }
 
     public void setTotalTime(String isoTotalTime) {
-        Duration duration = Duration.parse(isoTotalTime);
-        long cookTime = duration.toMinutes();
-        // Integer totalTime = this.convertISOMinute(isoTotalTime);
-        this.totalTime = (int)cookTime;
+        try {
+            Duration duration = Duration.parse(isoTotalTime);
+            long cookTime = duration.toMinutes();
+            this.totalTime = (int)cookTime;
+        } catch (DateTimeParseException dp) {
+            this.totalTime = 0;
+            dp.printStackTrace();
+        }
+
     }
     public void setTotalTime(Integer totalTime) {
         this.totalTime = totalTime;
     }
 
     public void setCookTime(String isoCookTime) {
-        Duration duration = Duration.parse(isoCookTime);
-        long cookTime = duration.toMinutes();
-        // System.out.println(minutes);
-        // Integer cookTime = this.convertISOMinute(isoCookTime);
-        this.cookTime = (int)cookTime;
+        try {
+            Duration duration = Duration.parse(isoCookTime);
+            long cookTime = duration.toMinutes();
+            this.cookTime = (int)cookTime;
+        } catch (DateTimeParseException dp) {
+            this.cookTime = 0;
+            dp.printStackTrace();
+        }
     }
 
     public void setPrepTime(String isoPrepTime) {
-        Duration duration = Duration.parse(isoPrepTime);
-        long prepTime = duration.toMinutes();
-        // Integer prepTime = this.convertISOMinute(isoPrepTime);
-        this.prepTime = (int)prepTime;
+        try {
+            Duration duration = Duration.parse(isoPrepTime);
+            long prepTime = duration.toMinutes();
+            this.prepTime = (int)prepTime;
+        } catch (DateTimeParseException dp) {
+            this.prepTime = 0;
+            dp.printStackTrace();
+        }
     }
 
     public void setIngredients(List<String> ingredients) { this.ingredients = ingredients; }

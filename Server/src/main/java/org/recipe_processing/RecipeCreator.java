@@ -24,6 +24,7 @@ public class RecipeCreator {
             HashMap<String, List<Integer>> ingredients,
             HashMap<String, List<Integer>> resourcesRequired,
             HashMap<String, List<Integer>> holdingResource_Id, // String will be formatted as "holdingResource_holdingId"
+            HashMap<String, List<Integer>> lineNumbers, 
             Long recipeID
             ){
         /**
@@ -48,6 +49,14 @@ public class RecipeCreator {
          *
          */
 
+        // Connections broken
+        // 12.6 -> 12.7 (Ingredient hack)
+        // 12.7 -> 12.8
+        // 12.10 -> 12.11
+        // 12.11 -> 12.12
+        // 12.16-> 12.17
+
+
         Recipe recipe = new Recipe();
         HashMap<Integer, Step> stepsMap = new HashMap<Integer, Step>();
         for (Step step : steps) {
@@ -61,9 +70,13 @@ public class RecipeCreator {
         for (List<Integer> stepIds : resourcesRequired.values()) {
             createConnections(stepsMap, stepIds);
         }
-        for (List<Integer> stepIds : holdingResource_Id.values()) {
+        for (List<Integer> stepIds : lineNumbers.values()) {
             createConnections(stepsMap, stepIds);
         }
+
+        // for (List<Integer> stepIds : lineNumber.values()) {
+        //     createConnections(stepsMap, stepIds);
+        // }
 
         //collapse dependancies
         /**
@@ -108,8 +121,8 @@ public class RecipeCreator {
         //assign the time left for each step
         for (Step step : steps) {
             step.setRecipeID(recipeID);
-            step.setNodeID(Double.valueOf((recipeID)+"."+step.getStepID()));
-            step.setName(step.getNodeID().toString());
+            step.setNodeID(Long.toString(recipeID)+"."+Integer.toString(step.getStepID()));
+            step.setName(step.getNodeID());
             List<Connection> connections = new ArrayList<>();
             connections.addAll(step.getConnections());
             for(Connection c: connections){
@@ -161,7 +174,7 @@ public class RecipeCreator {
         for (Integer i = 0; i < stepIds.size() - 1 ; i++) {
             Integer stepId1 = stepIds.get(i);
             Integer stepId2 = stepIds.get(i+1);
-            if(!steps.get(stepId1).hasResourceConnection(steps.get(stepId2))){
+            if(!steps.get(stepId1).hasResourceConnection(steps.get(stepId2)) && stepId1 != stepId2){
                 steps.get(stepId1).addConnection(steps.get(stepId2));
             }
         }

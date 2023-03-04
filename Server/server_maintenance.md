@@ -13,6 +13,14 @@ Use Neo4j login (found on discord -> Utilities -> Pinned Message)
 Go to the query and login using the Neo4J Explorer credientials (also found in discord)
 Run `MATCH (n) RETURN n` to return all nodes
 
+`MATCH (nStep {recipeID: 12}) RETURN n`
+
+To delete a recipe in Neo4J:
+```
+MATCH (n:Step {recipeID: 12})-[r]-()
+DETACH DELETE n, r
+```
+
 ### MySQL
 On the terminal run, `sudo mysql` and enter the password. This should take you to the mysql terminal. 
 Run `USE KitchenBuddies` to enter the KB Database.
