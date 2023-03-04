@@ -1,6 +1,6 @@
 package org.optimization;
 
-public class User {
+public class User implements Comparable<User> {
     String email;
     Integer skillLevel;
     // Linked List with all their tasks
@@ -121,5 +121,13 @@ public class User {
         stepList += " total allotted time: " + this.allottedTime.toString();
 
         System.out.println(stepList);
+    }
+    public Integer getLeastUserTime(){
+        return (recent != null) ? recent.getStartTime() + recent.getUserTime() : 0;
+    }
+
+    @Override
+    public int compareTo(User o) {
+        return this.getLeastUserTime().compareTo(o.getLeastUserTime() );
     }
 }

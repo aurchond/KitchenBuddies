@@ -31,12 +31,12 @@ public class GenerateMeal {
 
         Meal m = new Meal();
         List<User> buddies = new ArrayList<User>();
-        for (String friend : includedFriends) {
-            Integer skillLevel = MySqlConnection.getSkillLevel(friend);
-            buddies.add(new User(friend, skillLevel));
-        }
         Integer skillLevel = MySqlConnection.getSkillLevel(kitchenConstraints.userEmail);
         buddies.add(new User(kitchenConstraints.userEmail, skillLevel));
+        for (String friend : includedFriends) {
+            skillLevel = MySqlConnection.getSkillLevel(friend);
+            buddies.add(new User(friend, skillLevel));
+        }
         m.createMeal(recipes, buddies);
         /**
          * Send off to users using the buddies listed and the result of create Meal

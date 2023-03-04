@@ -5,10 +5,7 @@ import org.recipe_processing.Recipe;
 import org.utilities.database.graph.Connection;
 import org.utilities.database.graph.Step;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import static org.utilities.database.relational.Main.relationDbFunctionGetConstraints;
 
@@ -31,7 +28,6 @@ public class Meal {
 
         // First user is the user who initiated the meal
         User p_bud = buddies.get(0);
-
         // Get User kitchen constraints from database (Helper Method within Optimization?)
         HashMap<String, List<Resource>> constraints = relationDbFunctionGetConstraints(p_bud);
 
@@ -40,6 +36,7 @@ public class Meal {
             - Step currStep =
             - List<Nodes> evalNodes =  (stores the nodes of each recipe we are currently analyzing)
             - curTime = 0 (represents the current time for our current task
+            - priorityQUeue users - puts all users in pq
          */
 
         // Identifies task from recipe with largest TimeLeft
@@ -56,6 +53,12 @@ public class Meal {
         }
 
         // What if we store the last node of each recipe and have a hashmap for the rest of the nodes
+
+
+        PriorityQueue<User> users = new PriorityQueue<>();
+        for (User u: buddies){
+            users.add(u);
+        }
 
         while (evalSteps.size() > 0) {
             // Find step to assign to user based on timeLeft
@@ -101,7 +104,7 @@ public class Meal {
             */
 
             // Helper function -> assign Step to User
-            int priorIdx = this.mapResourceStepToUser(currStep, buddies, constraints);
+            User priorUser = this.mapResourceStepToUser(currStep, users, constraints);
 
             // Add all time dependent previous tasks from the current node to a new list
             List<Step> timeDependSteps = new ArrayList<Step>();
@@ -115,7 +118,7 @@ public class Meal {
 //                // TODO: Do we need to use stepTime?
 //                int stepTime = c.getConnectionTime();
 //
-//                this.mapTimeStepToUser(tStep, priorIdx, buddies, constraints);
+//                this.mapTimeStepToUser(tStep, priorUser, buddies, constraints);
 //            }
 
             // Add all resource dependent previous tasks from the current node to the evalNodes
@@ -140,7 +143,7 @@ public class Meal {
     ) {
         // we could give more priority to the same user that just did the resource task that this task relies on
         // check if prioritized buddy can take this process first
-        User prioBuddy = buddies.get(prioBuddyIdx);
+        User prioBuddy = buddies.get(prioBuddyIdx);//TODO: need to add prioBuddy back to queue once all stuff is added
         Integer currentTime = prioBuddy.getCurrentTime();
 
         Integer taskStartTime = currentTime + prioBuddy.getRecentTask().getStep().getStepTime();
@@ -206,32 +209,34 @@ public class Meal {
 //    time = 11
 //    timeDependantNodes = [(NodeB, 10), (NodeC,15), (NodeD dependencies)]
 
-    private Integer mapResourceStepToUser(
+    private User mapResourceStepToUser(
             Step s,
-            List<User> buddies,
+            PriorityQueue<User> buddies,
             HashMap<String, List<Resource>> constraints
     ) {
         // Check which user has the least amount of work so
-        UserTask recent = buddies.get(0).getRecent();
-
-
-
-        Integer leastUserTime = (recent != null) ? recent.getStartTime() + recent.getUserTime() : 0;
-        User user = buddies.get(0);
-        Integer userIdx = 0;
-
-        // TODO: Change this process to a min heap?
-
-        for (User u: buddies) {
-            recent = u.getRecent();
-            int recentEndTime = (recent != null) ? recent.getStartTime() + recent.getUserTime() : 0;
-
-            if (recentEndTime < leastUserTime) {
-                leastUserTime = recentEndTime;
-                user = u;
-                userIdx = 0;//TODO: this should be set to an index
-            }
-        }
+        User user = buddies.poll();
+        Integer leastUserTime = user.getLeastUserTime();
+//        UserTask recent = buddies.peek().getRecent();
+//
+//
+//
+//        Integer leastUserTime = (recent != null) ? recent.getStartTime() + recent.getUserTime() : 0;
+//        User user = buddies.peek();
+//        Integer userIdx = 0;
+//
+//        // TODO: Change this process to a min heap?
+//
+//        for (User u: buddies) {
+//            recent = u.getRecent();
+//            int recentEndTime = (recent != null) ? recent.getStartTime() + recent.getUserTime() : 0;
+//
+//            if (recentEndTime < leastUserTime) {
+//                leastUserTime = recentEndTime;
+//                user = u;
+//                userIdx = 0;//TODO: this should be set to an index
+//            }
+//        }
 
         // Check if constraint is available at this time
         // holding holdingResource and resourcesRequired
@@ -247,7 +252,7 @@ public class Meal {
             updateResourceTimes(s, resources, constraints, (List<Integer>) taskResources.get(1), (Integer) taskResources.get(0));
         }
         // Return user so that we may be able to prioritize this user to work on time dependent tasks
-        return userIdx;
+        return user;
     }
 
     private Integer findLeastTimeUser() {

@@ -5,8 +5,7 @@ public class Resource {
 
     private Integer id;//should match what is in the array order
 
-    private Integer timeAvailable;
-
+    private Integer timeAvailable;//TODO: Switch to queue debate? don't think it is needed
 
 
     public Resource (String name, Integer id, Integer timeAvailable) {
