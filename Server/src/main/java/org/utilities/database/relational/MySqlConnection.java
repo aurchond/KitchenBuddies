@@ -212,14 +212,22 @@ public class MySqlConnection {
                 System.out.println("Recipe already exists in relational database");
                 return (long) result.getInt(1);
             }
+            if (recipeUrl.equals("UserInputtedRecipe")) {
+                addRecipe = "INSERT INTO AllRecipes(Name, Ingredients, TotalTime) VALUES(?, ?, ?);";
+            }
 
             prep = conn.prepareStatement(addRecipe);
-
-            //fill in parametrized query
-            prep.setString(1, recipeName);
-            prep.setString(2, recipeUrl);
-            prep.setString(3, ingrString);
-            prep.setInt(4, recipeTime);
+            if (recipeUrl.equals("UserInputtedRecipe")) {
+                prep.setString(1, recipeName);
+                prep.setString(2, ingrString);
+                prep.setInt(3, recipeTime);
+            } else {
+                //fill in parametrized query
+                prep.setString(1, recipeName);
+                prep.setString(2, recipeUrl);
+                prep.setString(3, ingrString);
+                prep.setInt(4, recipeTime);
+            }
             int rowsUpdated = prep.executeUpdate();
             if (rowsUpdated == 0) {return -1L;}
 

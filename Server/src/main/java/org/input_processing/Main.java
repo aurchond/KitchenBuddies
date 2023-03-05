@@ -45,7 +45,8 @@ public class Main {
         
         String url = "https://www.sweetestmenu.com/cinnamon-apple-cake/";
         String demo_file = "demo_exp_cinnamon_apple_cake";
-        long recipeID = 103;
+        // long recipeID = 103;
+        long recipeID = 22;
         // Scrape website and place info in text file within Py_Text_Processing/Input folder
         Webscrape scraper = new Webscrape(url);
         InputRecipe in_recipe = scraper.extractRecipe();
@@ -77,7 +78,7 @@ public class Main {
         // TODO: Place the metadata (name, ingredients, time, whatever) relational db
         // Metadata = details about a recipe
         // long recipeID = addToAllRecipes(in_recipe.getRecipeTitle(), url, in_recipe.convertIngredientsToString(), in_recipe.getTotalTime());
-        long recipeID = 22;
+
         Recipe out_recipe = createRecipe(steps, baseIngredients, resourcesRequired, holdingResource_Id, lineNumbers, recipeID);// String will be formatted as "holdingResource_holdingId"
         out_recipe.setRecipeName(in_recipe.recipeTitle);
         saveRecipe(out_recipe, out_recipe.getRecipeName());

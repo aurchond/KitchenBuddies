@@ -3,21 +3,11 @@ package org.server;
 import java.util.List;
 
 public class RecipeInput {
-    Long recipeID;
     String recipeName;
     List<String> ingredientList;
-    Integer totalTimeMinutes;
-    String lastDateMade;
+    Integer totalTime;
     String userEmail;
     List<String> instructionList;
-
-    public Long getRecipeID() {
-        return recipeID;
-    }
-
-    public void setRecipeID(Long recipeID) {
-        this.recipeID = recipeID;
-    }
 
     public String getRecipeName() {
         return recipeName;
@@ -35,20 +25,12 @@ public class RecipeInput {
         this.ingredientList = ingredientList;
     }
 
-    public Integer getTotalTimeMinutes() {
-        return totalTimeMinutes;
+    public Integer getTotalTime() {
+        return totalTime;
     }
 
-    public void setTotalTimeMinutes(Integer totalTimeMinutes) {
-        this.totalTimeMinutes = totalTimeMinutes;
-    }
-
-    public String getLastDateMade() {
-        return lastDateMade;
-    }
-
-    public void setLastDateMade(String lastDateMade) {
-        this.lastDateMade = lastDateMade;
+    public void setTotalTime(Integer totalTime) {
+        this.totalTime = totalTime;
     }
 
     public String getUserEmail() {

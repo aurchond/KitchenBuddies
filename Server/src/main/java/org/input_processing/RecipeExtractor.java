@@ -38,7 +38,7 @@ public class RecipeExtractor {
 
         InputRecipe inRecipe = new InputRecipe();
         inRecipe.setRecipeTitle(recipeInput.getRecipeName());
-        inRecipe.setTotalTime(recipeInput.getTotalTimeMinutes());
+        inRecipe.setTotalTime(recipeInput.getTotalTime());
         inRecipe.setIngredients(recipeInput.getIngredientList());
         inRecipe.setInstructions(instructions);
         inRecipe.writeTextFile();
