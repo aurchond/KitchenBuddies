@@ -17,13 +17,10 @@ public class OutputJson {
 
     public static List<MealSessionUsersSteps> userStepsToJson(List<User> users) {
         List<MealSessionUsersSteps> usersStepsList = new ArrayList<>();
-        //JSONArray recipeDetails = new JSONArray();
 
         for (User u : users) {
             List<RecipeStep> recipeSteps = new ArrayList<>();
-            //JSONObject userJSON = new JSONObject();
             UserTask task = u.getTail();
-            //JSONArray userDetails = new JSONArray();
             while (task != null) {
                 Step s = task.getStep();
                 RecipeStep recipeStep = new RecipeStep();

@@ -61,6 +61,7 @@ public class RecipeCreator {
         HashMap<Integer, Step> stepsMap = new HashMap<Integer, Step>();
         for (Step step : steps) {
             stepsMap.put(step.getStepID(), step);
+            recipe.addResourcesForRecipe(step.getResourcesRequired(), step.getHoldingResource());
         }
         recipe.setSteps(stepsMap);
 

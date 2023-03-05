@@ -7,9 +7,8 @@ import scala.Console;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.sql.Date;
+import java.util.*;
 
 public class MySqlConnection {
     private static final String sqlUrl = "jdbc:mysql://localhost";
@@ -547,8 +546,9 @@ public class MySqlConnection {
     }
 
 
-    //TODO: Fill to get the recipeName from ID
-    public static String getRecipeNameFromId(Long recipeId) {
-        return "";
+
+    //TODO: Fill to get the recipeResources from ID
+    public static Set<String> getRecipeResourcesFromId(Long recipeId) {
+        return new HashSet<>();
     }
 }
