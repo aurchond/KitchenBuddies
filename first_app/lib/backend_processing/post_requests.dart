@@ -16,10 +16,7 @@ import '../data_models/meal_session_steps.dart';
 // called from data class to get actual data from the URL
 Future<MealSessionSteps?> requestMealSessionSteps(String emailToFind, MealSessionStepsRequest? mealSessionStepsRequest) async {
 
-  final body = jsonEncode(<String, String>{
-    // "userEmail": myEmail,
-    // "newFriend": newFriend
-  });
+  final body = jsonEncode(mealSessionStepsRequest!.toJson());
 
   Response? response = await sendPostRequest("RequestMealSessionSteps", body);
   final item = json.decode(response!.body);

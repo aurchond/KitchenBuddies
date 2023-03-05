@@ -202,9 +202,9 @@ class _NewMealSessionState extends State<NewMealSession> {
                 height: 60,
                 child: ElevatedButton(
                     onPressed: () async {
-                      List<int> selectedRecipes = getSelectedRecipes(myRecipes);
-                      List<String> selectedFriends = getSelectedFriends(myFriends);
-                      List<String> _tokens = await getTokens(selectedFriends);
+                      List<int> _selectedRecipes = getSelectedRecipes(myRecipes);
+                      List<String> _selectedFriends = getSelectedFriends(myFriends);
+                      List<String> _tokens = await getTokens(_selectedFriends);
                       print(_tokens);
 
                       //send meal session steps to other friends in session
@@ -218,7 +218,7 @@ class _NewMealSessionState extends State<NewMealSession> {
 
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) =>
-                              InstructionsScreen(tokens: _tokens)));
+                              InstructionsScreen(tokens: _tokens, selectedRecipes: _selectedRecipes, selectedFriends: _selectedFriends)));
                     },
                     child: Text("Start new session!"))),
           ])),
