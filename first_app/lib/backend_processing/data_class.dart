@@ -1,11 +1,11 @@
 import 'package:first_app/backend_processing/post_requests.dart';
-import 'package:first_app/data_models/friends_list.dart';
+import 'package:first_app/data_models/friends_list_model.dart';
 import 'package:first_app/data_models/kitchen_constraints_model.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../data_models/meal_session_steps.dart';
-import '../data_models/meal_session_steps_request.dart';
-import '../data_models/recipe_info.dart';
+import '../data_models/meal_session_steps_model.dart';
+import '../data_models/meal_session_steps_request_model.dart';
+import '../data_models/recipe_info_model.dart';
 import 'get_requests.dart';
 
 class DataClass extends ChangeNotifier {

@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:first_app/helpers/globals.dart';
-import 'package:first_app/data_models/recipe_info.dart';
+import 'package:first_app/data_models/recipe_info_model.dart';
 import 'package:first_app/widgets/input_text_button.dart';
 import 'package:first_app/widgets/tile_decorated.dart';
 import 'package:flutter/cupertino.dart';

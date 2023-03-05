@@ -19,7 +19,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'backend_processing/data_class.dart';
-import 'data_models/recipe_info.dart';
+import 'data_models/recipe_info_model.dart';
 import 'helpers/globals.dart';
 import 'helpers/keys.dart';
 
