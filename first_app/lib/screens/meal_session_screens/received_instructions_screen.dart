@@ -1,4 +1,4 @@
-import 'package:first_app/data_models/received_meal_sessions_steps.dart';
+import 'package:first_app/data_models/token_and_steps.dart';
 import 'package:first_app/screens/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
