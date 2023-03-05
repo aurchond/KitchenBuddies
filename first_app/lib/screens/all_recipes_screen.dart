@@ -71,7 +71,7 @@ class _AllRecipesState extends State<AllRecipes> {
 
       //add or subtract 1 to index to account for newline character we don't want
       String ingredients =
-          valueText.substring(ingredientIndex + 14, instructionsIndex - 1);
+          valueText.substring(ingredientIndex + 14, instructionsIndex - 1); //this only works if we have more than 1 ingredient?
       List<String> ingredientList = ingredients.split('\n');
       print(ingredientList);
 
@@ -87,7 +87,6 @@ class _AllRecipesState extends State<AllRecipes> {
       );
       // todo ad: error check
       requestRecipeByInput(recipeByText);
-      //print(data);
     }
   }
 
@@ -101,10 +100,7 @@ class _AllRecipesState extends State<AllRecipes> {
 
   //input text button callback
   onPressedCallback(FocusNode _focusNode, TextEditingController _controller) {
-    //print(_controller.text);
-
     requestRecipeByURL(_controller.text);
-
     _focusNode.unfocus();
   }
 

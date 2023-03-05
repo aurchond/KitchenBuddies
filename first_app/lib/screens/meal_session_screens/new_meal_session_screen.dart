@@ -212,9 +212,10 @@ class _NewMealSessionState extends State<NewMealSession> {
                         fcmProvider.sendNotification(
                             token: _tokens[i],
                             title: "Meal Session Steps",
-                            body:
+                            body: //unzip him -> add a sweather underneath (instructions + tokens) -> zip him up and send in notification
                                 "1. Put lettuce in a bowl\n2. Cut a cucumber and add to bowl\n3.Toss lettuce and cucumber with olive oil, salt, and pepper");
                       }
+                      //send tokens to everyone so they can also use blocked buttons
 
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) =>
