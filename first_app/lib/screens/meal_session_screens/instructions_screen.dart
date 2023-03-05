@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:first_app/backend_processing/data_class.dart';
+import 'package:first_app/data_models/meal_session_steps_request.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -11,8 +12,10 @@ import '../../provider/notification_provider.dart';
 import '../../widgets/grouped_button_text.dart';
 
 class InstructionsScreen extends StatefulWidget {
-  const InstructionsScreen({Key? key, required List<String> this.tokens}) : super(key: key);
+  const InstructionsScreen({Key? key, required List<String> this.tokens, required List<int> this.selectedRecipes, required List<String> this.selectedFriends}) : super(key: key);
   final List<String> tokens;
+  final List<int> selectedRecipes;
+  final List<String> selectedFriends;
 
   @override
   _InstructionsScreenState createState() => _InstructionsScreenState();
@@ -24,8 +27,8 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
     super.initState();
     final postModel = Provider.of<DataClass>(context, listen: false);
 
-    // get list of selected friends and selected recipes
-
+    postModel.kitchenConstraints?.userEmail = myEmail;
+    postModel.mealSessionStepsRequest = MealSessionStepsRequest(kitchenConstraints: postModel.kitchenConstraints, recipeIDs: widget.selectedRecipes, includedFriends: widget.selectedFriends);
     postModel.loadMealSessionSteps(myEmail); //todo: update this to the user's own email
   }
 

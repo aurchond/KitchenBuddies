@@ -4,7 +4,7 @@ class RecipeInfo {
   int? _recipeID;
   String? _recipeName;
   List<String>? _ingredientList;
-  double? _totalTime;
+  int? _totalTime;
   String? _lastDateMade;
   List<String>? _instructionList;
 
@@ -12,7 +12,7 @@ class RecipeInfo {
       {int? recipeID,
         String? recipeName,
         List<String>? ingredientList,
-        double? totalTime,
+        int? totalTime,
         String? lastDateMade,
         List<String>? instructionList}) {
     if (recipeID != null) {
@@ -42,8 +42,8 @@ class RecipeInfo {
   List<String>? get ingredientList => _ingredientList;
   set ingredientList(List<String>? ingredientList) =>
       _ingredientList = ingredientList;
-  double? get totalTime => _totalTime;
-  set totalTime(double? totalTime) => _totalTime = totalTime;
+  int? get totalTime => _totalTime;
+  set totalTime(int? totalTime) => _totalTime = totalTime;
   String? get lastDateMade => _lastDateMade;
   set lastDateMade(String? lastDateMade) => _lastDateMade = lastDateMade;
   List<String>? get instructionList => _instructionList;
