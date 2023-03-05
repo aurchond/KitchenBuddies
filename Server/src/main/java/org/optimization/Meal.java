@@ -7,14 +7,12 @@ import org.utilities.database.graph.Step;
 
 import java.util.*;
 
-import static org.utilities.database.relational.Main.relationDbFunctionGetConstraints;
-
 public class Meal {
     // Hashmap of Kitchen Constraints (key=string, value=list<int>(each element is time the resource is next available))
     // List of Task Stacks (each element is a Task Class)
     HashMap<String, HashMap<Integer, Integer>> resourceMap = new HashMap<String, HashMap<Integer, Integer>>();
 
-    public Meal () {
+    public Meal() {
 
     }
 
@@ -49,7 +47,7 @@ public class Meal {
 
         // Initialize evalSteps list - get the last step in each recipe
         // TODO: Change evalSteps to a max heap
-        for (Recipe recipe: recipes) {
+        for (Recipe recipe : recipes) {
             evalSteps.add(recipe.getFinalStep());
         }
 
@@ -57,7 +55,7 @@ public class Meal {
 
 
         PriorityQueue<User> users = new PriorityQueue<>();
-        for (User u: buddies){
+        for (User u : buddies) {
             users.add(u);
         }
 
@@ -88,7 +86,7 @@ public class Meal {
             User priorUser = this.mapResourceStepToUser(currStep, users, constraints);
 
             // Add all resource dependent previous tasks from the current node to the evalNodes
-            for(Connection c: currStep.getResourceDependencies()) {
+            for (Connection c : currStep.getResourceDependencies()) {
                 evalSteps.add(c.getEndNode());
             }
         }
@@ -142,14 +140,16 @@ public class Meal {
 
         List<Object> taskResources = findTimeToGetConstraints(leastUserTime, s, holdingResource, resources, constraints);
 
-        if (s.getHoldingResource() != null) {resources.add(0, holdingResource); }
+        if (s.getHoldingResource() != null) {
+            resources.add(0, holdingResource);
+        }
 
-        if(appendResourceTaskToUser(user, s, (Integer) taskResources.get(0), s.getUserTime())) {
+        if (appendResourceTaskToUser(user, s, (Integer) taskResources.get(0), s.getUserTime())) {
             updateResourceTimes(s, resources, constraints, (List<Integer>) taskResources.get(1), (Integer) taskResources.get(0));
         } else {
             // TODO: Do something if false?
         }
-        
+
         // Return user so that we may be able to prioritize this user to work on time dependent tasks
         return user;
     }
@@ -174,7 +174,7 @@ public class Meal {
         Integer holdingResource = -1;
 
         // Holding Resource first
-        if(resourceMap.get(hResource) != null) {
+        if (resourceMap.get(hResource) != null) {
             // TODO: FIX CONSTRAINTS Mapping
             // Get the id of the resource we need 
             // i.e. Bowl2: hResource=Bowl, s.getHoldingID()=2, holdingResource = 2
@@ -219,7 +219,7 @@ public class Meal {
         }
 
 
-        for(String resource: tools) {
+        for (String resource : tools) {
             // TODO: Add burner resource check if pot or pan
             // TODO: Add burner to resourcemap
             // Check list of elements for a resource and see if any are less than leastUserTime
@@ -275,7 +275,7 @@ public class Meal {
     private void updateResourceTimes(Step s, List<String> resources, HashMap<String, List<Resource>> constraints, List<Integer> resourceIds, Integer taskStart) {
         // Update the earliest accessible time for each resource used
         // TODO: Add list functionality to account for gaps
-        for(Integer i = 0; i < resources.size(); i++) {
+        for (Integer i = 0; i < resources.size(); i++) {
             Resource holdResource = constraints.get(resources.get(i))//get the resource id list for that type
                     .get(resourceIds.get(i));//get the resource of a sepecifc id
 
@@ -310,7 +310,7 @@ public class Meal {
             user.setCurrentTime(taskStart + userTime);
             //TODO in the fall: can we fill in gaps created by waiting for a resource effectively
 
-        } else if(recent.getNext() == null){
+        } else if (recent.getNext() == null) {
             newTask.setPrev(recent);
             recent.setNext(newTask);
             // Append to end of list
@@ -321,7 +321,7 @@ public class Meal {
             // TODO: Fix current time
             user.setCurrentTime(taskStart + userTime);
 
-        }else {
+        } else {
             // there's enough space to insert
             // Insert newTask between recent and its old next task
             UserTask nextNode = recent.getNext();
