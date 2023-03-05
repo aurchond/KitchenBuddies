@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../backend_processing/data_class.dart';
-import '../../data_models/friends_list.dart';
-import '../../data_models/recipe_info.dart';
+import '../../data_models/friends_list_model.dart';
+import '../../data_models/recipe_info_model.dart';
 import 'instructions_screen.dart';
 
 class NewMealSession extends StatefulWidget {

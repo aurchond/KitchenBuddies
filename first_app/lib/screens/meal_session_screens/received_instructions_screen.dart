@@ -1,11 +1,11 @@
-import 'package:first_app/data_models/token_and_steps_communication.dart';
+import 'package:first_app/data_models/data_communication_wrapper_model.dart';
 import 'package:first_app/screens/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../data_models/meal_session_steps.dart';
+import '../../data_models/meal_session_steps_model.dart';
 import '../../helpers/globals.dart';
 import '../../provider/notification_provider.dart';
 import '../../widgets/grouped_button_text.dart';

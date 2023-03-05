@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:first_app/data_models/meal_session_steps.dart';
+import 'package:first_app/data_models/meal_session_steps_model.dart';
 
 class DataCommunicationWrapper {
   String? _title;

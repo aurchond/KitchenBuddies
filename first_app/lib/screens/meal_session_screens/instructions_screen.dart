@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:first_app/backend_processing/data_class.dart';
-import 'package:first_app/data_models/meal_session_steps_request.dart';
+import 'package:first_app/data_models/meal_session_steps_request_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
-import '../../data_models/token_and_steps_communication.dart';
+import '../../data_models/data_communication_wrapper_model.dart';
 import '../../helpers/globals.dart';
 import '../../provider/auth_provider.dart';
 import '../../provider/notification_provider.dart';
