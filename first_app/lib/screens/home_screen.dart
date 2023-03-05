@@ -62,11 +62,11 @@ class _HomeScreenState extends State<HomeScreen> {
       //getting problem about widget being unmounted
       if (mounted) {
         final splitMessage = (event.data.toString().split('title: '))[1]
-            .split('}'); //TODO: do this in regex
+            .split('}');
         //we will categorize our notifications based on title
         //notifications to send to other users about completing a step
         //notification that redirects user to instruction page
-        if (splitMessage[0] != "Step Completed") {
+        if (splitMessage[0] != "Step Blocked") {
           Navigator.of(context).push(MaterialPageRoute(
               //if this starts bugging out again, use pushReplacement
               builder: (context) => ReceivedInstructionScreen(message: event)));

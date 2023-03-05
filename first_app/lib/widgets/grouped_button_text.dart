@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // Widget to group together texts and buttons, such that after clicking the button
 // a notification can be sent
 Widget groupedButtonText(
-    String text, String buttonText, String token, final fcmProvider) {
+    String text, String buttonText, List<String> tokens, final fcmProvider) {
   return Padding(
     padding: const EdgeInsets.only(bottom: 15),
     child: Row(
@@ -38,10 +38,11 @@ Widget groupedButtonText(
                                 padding: const EdgeInsets.all(10),
                                 backgroundColor: Colors.deepOrange),
                             onPressed: () {
-                              fcmProvider.sendNotification(
-                                  token: token,
-                                  title: "Step Completed",
-                                  body: "I'm finished with my step!");
+                              for (int i = 0; i < tokens.length; i++) {
+                                fcmProvider.sendNotification(
+                                    token: tokens[i],
+                                  title: "Step Blocked",
+                                  body: "I'm blocked on my step!");}
                             },
                             child: Text(buttonText),
                           ),

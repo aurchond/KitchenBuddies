@@ -59,7 +59,6 @@ class AuthProvider extends ChangeNotifier {
         });
 
         addUser(emailController.text, usernameController.text);
-
       }
       if (_authType == AuthType.signIn) {
         userCredential = await firebaseAuth.signInWithEmailAndPassword(

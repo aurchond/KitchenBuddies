@@ -15,13 +15,12 @@ class NotificationProvider extends ChangeNotifier {
         "registration_ids": [token],
         "collapse_key": "type_a",
         "notification": {
-          "title": title, // todo: use a different title for the two types of notifs (send instructions and notify done step)
+          "title": title,
           "body": body, // currently sending as string
         },
         'data': {
           "title": title,
           "body": body,
-          "_id": "this is the payload",
         },
       };
 

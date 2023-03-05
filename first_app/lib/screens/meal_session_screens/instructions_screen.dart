@@ -10,7 +10,8 @@ import '../../provider/notification_provider.dart';
 import '../../widgets/grouped_button_text.dart';
 
 class InstructionsScreen extends StatefulWidget {
-  const InstructionsScreen({Key? key}) : super(key: key);
+  const InstructionsScreen({Key? key, required List<String> this.tokens}) : super(key: key);
+  final List<String> tokens;
 
   @override
   _InstructionsScreenState createState() => _InstructionsScreenState();
@@ -99,8 +100,8 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                                                 ?.join(', ') ??
                                             "") +
                                         ")",
-                                    "I'm done this step!",
-                                    token,
+                                    "I'm blocked on this step!",
+                                    widget.tokens,
                                     fcmProvider);
                               })),
                     ],

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:first_app/provider/notification_provider.dart';
 import 'package:first_app/widgets/checkbox_decorated.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class _NewMealSessionState extends State<NewMealSession> {
     });
   }
 
-  Future<dynamic> getTokens(List<Map>? myFriends) async {
+  Future<List<String>> getTokens(List<Map>? myFriends) async {
     List<String> selectedFriends = <String>[];
     List<String> tokens = <String>[];
 
@@ -34,11 +35,10 @@ class _NewMealSessionState extends State<NewMealSession> {
       }
     }
 
-    print(selectedFriends);
-
     var collection = FirebaseFirestore.instance.collection('users');
     for (int i = 0; i < selectedFriends.length; i++) {
-      var querySnapshot = await collection.where('email', isEqualTo: selectedFriends[i]).get();
+      var querySnapshot =
+          await collection.where('email', isEqualTo: selectedFriends[i]).get();
       if (!querySnapshot.docs.isEmpty) {
         for (QueryDocumentSnapshot ds in querySnapshot.docs) {
           tokens.add(ds.get("token"));
@@ -46,14 +46,14 @@ class _NewMealSessionState extends State<NewMealSession> {
         // Call setState if needed.
       }
     }
-
-    print(tokens);
+    return (tokens);
   }
 
   @override
   Widget build(BuildContext context) {
     //TODO: read recipes and create list below
     final dataModel = Provider.of<DataClass>(context);
+    final fcmProvider = Provider.of<NotificationProvider>(context);
 
     final List<Map>? myFriends = List.generate(
         dataModel.friendsList?.friends?.length ?? 0,
@@ -159,13 +159,22 @@ class _NewMealSessionState extends State<NewMealSession> {
                 width: 360,
                 height: 60,
                 child: ElevatedButton(
-                    onPressed: () {
-                      getTokens(myFriends);
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => InstructionsScreen()));
+                    onPressed: () async {
+                      List<String> _tokens = await getTokens(myFriends);
+                      print(_tokens);
 
-                      //send notification to other friends in session
-                      //call firebase to get device tokens
+                      //send meal session steps to other friends in session
+                      for (int i = 0; i < _tokens.length; i++) {
+                        fcmProvider.sendNotification(
+                            token: _tokens[i],
+                            title: "Meal Session Steps",
+                            body:
+                                "1. Put lettuce in a bowl\n2. Cut a cucumber and add to bowl\n3.Toss lettuce and cucumber with olive oil, salt, and pepper");
+                      }
+
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>
+                              InstructionsScreen(tokens: _tokens)));
                     },
                     child: Text("Start new session!"))),
           ])),
