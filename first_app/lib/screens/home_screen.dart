@@ -17,7 +17,7 @@ import '../backend_processing/get_requests.dart';
 import '../backend_processing/post_requests.dart';
 import '../helpers/globals.dart';
 import '../widgets/tile_decorated.dart';
-import '../data_models/kitchen_constraints.dart';
+import '../data_models/kitchen_constraints_model.dart';
 
 const List<String> skillList = <String>['Beginner', 'Intermediate', 'Advanced'];
 String savedSkillValue = "Intermediate";

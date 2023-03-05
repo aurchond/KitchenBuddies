@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../data_models/kitchen_constraints.dart';
+import '../data_models/kitchen_constraints_model.dart';
 import '../helpers/globals.dart';
 
 Widget KitchenConstraintsContainer(

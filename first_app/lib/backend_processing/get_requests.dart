@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-import 'package:first_app/data_models/kitchen_constraints.dart';
+import 'package:first_app/data_models/kitchen_constraints_model.dart';
 import 'package:first_app/screens/meal_session_screens/new_meal_session_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
