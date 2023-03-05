@@ -99,8 +99,8 @@
                 "beaten",
                 "have"
             ],
-            "stepTime": 0,
-            "userTime": 0,
+            "stepTime": 1,
+            "userTime": 1,
             "holdingResource": "Shallow dishes1",
             "holdingID": 1,
             "lineNumber": 1
@@ -119,8 +119,8 @@
             ],
             "prepStep": false,
             "verbs": [],
-            "stepTime": 0,
-            "userTime": 0,
+            "stepTime": 1,
+            "userTime": 1,
             "holdingResource": "Shallow dishes1",
             "holdingID": 1,
             "lineNumber": 1
@@ -238,8 +238,8 @@
                 "lined",
                 "repeat"
             ],
-            "stepTime": 0,
-            "userTime": 0,
+            "stepTime": 1,
+            "userTime": 1,
             "holdingResource": "plate2",
             "holdingID": 4,
             "lineNumber": 2

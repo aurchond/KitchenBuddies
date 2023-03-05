@@ -35,30 +35,17 @@ public class Main {
          * 2. Look for all the dependencies in the steps - This can be done efficiently if we do it alongside step creation
      */
     public static void main(String[] args) throws IOException {
-        // try {
-        //     // Set up the URL and HTTP connection
-        //     URL url = new URL("https://mocki.io/v1/3700c4d7-98a8-4c26-b231-60c677bfc4f5");
-        //     HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        //     con.setRequestMethod("GET");
-        //     con.setRequestProperty("Content-Type", "application/json");
-
-        //     // Read the JSON response
-        //     BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        //     String inputLine;
-        //     StringBuilder response = new StringBuilder();
-        //     while ((inputLine = in.readLine()) != null) {
-        //         response.append(inputLine);
-        //     }
-        //     in.close();
-
-        //     // Print the JSON response
-        //     System.out.println(response.toString());
-
-        // } catch (IOException e) {
-        //     e.printStackTrace();
-        // }
+        /*
+         * 100 = demo_exp_Greek_Pasta_Salad = https://www.allrecipes.com/recipe/176650/greek-pasta-salad/
+         * 101 = demo_exp_Pork_Schnitzel = https://www.jocooks.com/recipes/pork-schnitzel/
+         * 102 = demo_exp_steam_broccoli = https://www.simplyrecipes.com/recipes/steamed_broccoli/
+         * 103 = demo_exp_cinnamon_apple_cake = "https://www.sweetestmenu.com/cinnamon-apple-cake/"
+         * 
+         */
         
         String url = "https://www.sweetestmenu.com/cinnamon-apple-cake/";
+        String demo_file = "demo_exp_cinnamon_apple_cake";
+        long recipeID = 103;
         // Scrape website and place info in text file within Py_Text_Processing/Input folder
         Webscrape scraper = new Webscrape(url);
         InputRecipe in_recipe = scraper.extractRecipe();
@@ -74,10 +61,10 @@ public class Main {
         HashMap<String, List<Integer>> holdingResource_Id = new HashMap<String, List<Integer>>();//<holdingResource, List<StepId>>
         HashMap<String, List<Integer>> lineNumbers = new HashMap<String, List<Integer>>();
         // TODO: Check this works with our json format
-        String demo_file = "exp_cinnamon_apple_cake";
+        
         // String demo_file = "exp_Greek_Pasta_Salad";
         parseJson(
-                "Py_Text_Processing/expected/" + demo_file + ".json",
+                "Py_Text_Processing/DEMO_inputs/" + demo_file + ".json",
                 // "Py_Text_Processing/output/" + in_recipe.recipeFile + ".json",
                 steps,
                 ingredients,
@@ -89,7 +76,7 @@ public class Main {
         // TODO: Place the metadata (name, ingredients, time, whatever) relational db
         // Metadata = details about a recipe
         // long recipeID = addToAllRecipes(in_recipe.getRecipeTitle(), url, in_recipe.convertIngredientsToString(), in_recipe.getTotalTime());
-        long recipeID = 14;
+        
         Recipe out_recipe = createRecipe(steps, ingredients, resourcesRequired, holdingResource_Id, lineNumbers, recipeID);// String will be formatted as "holdingResource_holdingId"
         out_recipe.setRecipeName(in_recipe.recipeTitle);
         saveRecipe(out_recipe, out_recipe.getRecipeName());

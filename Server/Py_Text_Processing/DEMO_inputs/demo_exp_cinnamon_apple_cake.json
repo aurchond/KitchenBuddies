@@ -145,8 +145,8 @@
             ],
             "prepStep": false,
             "verbs": [],
-            "stepTime": 0,
-            "userTime": 0,
+            "stepTime": 1,
+            "userTime": 1,
             "holdingResource": "bowl2",
             "holdingID": 3,
             "lineNumber": 2
@@ -170,8 +170,8 @@
                 "mix",
                 "combined"
             ],
-            "stepTime": 0,
-            "userTime": 0,
+            "stepTime": 1,
+            "userTime": 1,
             "holdingResource": "bowl1",
             "holdingID": 2,
             "lineNumber": 3
@@ -189,8 +189,8 @@
             "verbs": [
                 "spoon"
             ],
-            "stepTime": 0,
-            "userTime": 0,
+            "stepTime": 1,
+            "userTime": 1,
             "holdingResource": "pan1",
             "holdingID": 1,
             "lineNumber": 3
@@ -234,8 +234,8 @@
             "verbs": [
                 "mix"
             ],
-            "stepTime": 0,
-            "userTime": 0,
+            "stepTime": 1,
+            "userTime": 1,
             "holdingResource": "bowl3",
             "holdingID": 4,
             "lineNumber": 4
@@ -253,8 +253,8 @@
             "verbs": [
                 "sprinkle"
             ],
-            "stepTime": 0,
-            "userTime": 0,
+            "stepTime": 1,
+            "userTime": 1,
             "holdingResource": "pan1",
             "holdingID": 1,
             "lineNumber": 4
@@ -293,8 +293,8 @@
             ],
             "prepStep": false,
             "verbs": [],
-            "stepTime": 0,
-            "userTime": 0,
+            "stepTime": 1,
+            "userTime": 1,
             "holdingResource": "oven1",
             "holdingID": 0,
             "lineNumber": 5
@@ -334,8 +334,8 @@
             ],
             "prepStep": false,
             "verbs": [],
-            "stepTime": 0,
-            "userTime": 0,
+            "stepTime": 1,
+            "userTime": 1,
             "holdingResource": "bowl4",
             "holdingID": 5,
             "lineNumber": 6
@@ -377,8 +377,8 @@
             ],
             "prepStep": false,
             "verbs": [],
-            "stepTime": 0,
-            "userTime": 0,
+            "stepTime": 1,
+            "userTime": 1,
             "holdingResource": "oven1",
             "holdingID": 0,
             "lineNumber": 6

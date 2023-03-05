@@ -38,8 +38,8 @@
             "verbs": [
                 "break"
             ],
-            "stepTime": 0,
-            "userTime": 0,
+            "stepTime": 1,
+            "userTime": 1,
             "holdingResource": "cutting board1",
             "holdingID": 0,
             "lineNumber": 0
@@ -82,8 +82,8 @@
             "verbs": [
                 "discard"
             ],
-            "stepTime": 0,
-            "userTime": 0,
+            "stepTime": 1,
+            "userTime": 1,
             "holdingResource": "cutting board1",
             "holdingID": 0,
             "lineNumber": 0
@@ -103,8 +103,8 @@
             "verbs": [
                 "cut"
             ],
-            "stepTime": 0,
-            "userTime": 0,
+            "stepTime": 1,
+            "userTime": 1,
             "holdingResource": "cutting board2",
             "holdingID": 1,
             "lineNumber": 0
@@ -174,8 +174,8 @@
             ],
             "prepStep": false,
             "verbs": [],
-            "stepTime": 0,
-            "userTime": 0,
+            "stepTime": 1,
+            "userTime": 1,
             "holdingResource": "pot1",
             "holdingID": 3,
             "lineNumber": 2
