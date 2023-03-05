@@ -8,7 +8,7 @@ import java.util.*;
 
 @NodeEntity(label="Step")
 //this defines our step node and all its attributes
-public class Step {
+public class Step implements Comparable<Step> {
     /*
     This class represents a Step in a Recipe and contains the following
 
@@ -205,6 +205,11 @@ public class Step {
     }
 
     public void setInstructions(String instructions) { this.instructions = instructions;}
+
+    @Override
+    public int compareTo(Step o) {
+        return o.getTimeLeft().compareTo(this.getTimeLeft());
+    }
 
 // hashCode, equals, toString, no-arg constructor ommitted..
 }

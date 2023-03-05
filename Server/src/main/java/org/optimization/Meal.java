@@ -44,7 +44,8 @@ public class Meal {
         Integer time = 0;
 
         // Current steps being evaluated
-        List<Step> evalSteps = new ArrayList<Step>();
+        PriorityQueue<Step> evalSteps = new PriorityQueue<>();
+        //List<Step> evalSteps = new ArrayList<Step>();
 
         // Initialize evalSteps list - get the last step in each recipe
         // TODO: Change evalSteps to a max heap
@@ -62,30 +63,8 @@ public class Meal {
 
         while (evalSteps.size() > 0) {
             // Find step to assign to user based on timeLeft
+            Step currStep = evalSteps.poll();
 
-            // TODO: Maybe switch to priority queue?
-            int currStepId = 0;
-            for (int i = 0; i < evalSteps.size(); i++) {
-                Step s = evalSteps.get(i);
-                if (s.getTimeLeft() > maxTimeLeft) {
-                    maxTimeLeft = s.getTimeLeft();
-                    currStepId = i;
-                }
-            }
-
-            maxTimeLeft = 0;
-
-            // TODO: Manually pop value
-            Step currStep = null;
-            currStep = evalSteps.get(currStepId);
-            evalSteps.remove(currStep);
-            // for (int i = 0; i < evalSteps.size(); i++) {
-            //     currStep = evalSteps.get(i);
-            //     if (i == currStepId) {
-            //         evalSteps.remove(currStep);
-            //         break;
-            //     }
-            // }
 
             System.out.println("Working on " + currStep.getNodeID());
 

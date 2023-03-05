@@ -37,6 +37,9 @@ public class GenerateMeal {
             skillLevel = MySqlConnection.getSkillLevel(friend);
             buddies.add(new User(friend, skillLevel));
         }
+
+        // TODO: Convert kitchen constraints to Resource Class
+        // TODO: Add burner Resource oven*4
         m.createMeal(recipes, buddies);
         /**
          * Send off to users using the buddies listed and the result of create Meal

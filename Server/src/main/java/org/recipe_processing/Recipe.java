@@ -5,9 +5,6 @@ import org.utilities.database.graph.Step;
 import java.util.HashMap;
 
 public class Recipe {
-    /*
-    TODO: we need a way to specify time and resource dependencies between steps (these might be different links)
-    */
     // Metadata
     // Title
     // Overall time
