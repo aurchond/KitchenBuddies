@@ -1,4 +1,36 @@
 import 'meal_session_steps.dart';
+class Data {
+  String? _title;
+  TokenAndStepsCommunication? _tokenAndStepsCommunication;
+
+  Data({String? title, TokenAndStepsCommunication? tokenAndStepsCommunication}) {
+    if (title != null) {
+      this._title = title;
+    }
+    if (tokenAndStepsCommunication != null) {
+      this._tokenAndStepsCommunication = tokenAndStepsCommunication;
+    }
+  }
+
+  String? get title => _title;
+  set title(String? title) => _title = title;
+  TokenAndStepsCommunication? get tokenAndStepsCommunication => _tokenAndStepsCommunication;
+  set body(TokenAndStepsCommunication? tokenAndStepsCommunication) => _tokenAndStepsCommunication = tokenAndStepsCommunication;
+
+  Data.fromJson(Map<String, dynamic> json) {
+    _title = json['title'];
+    _tokenAndStepsCommunication = json['body'] != null ? new TokenAndStepsCommunication.fromJson(json['body']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['title'] = this._title;
+    if (this._tokenAndStepsCommunication!= null) {
+      data['body'] = this._tokenAndStepsCommunication!.toJson();
+    }
+    return data;
+  }
+}
 
 class TokenAndStepsCommunication {
   List<String>? _tokens;
