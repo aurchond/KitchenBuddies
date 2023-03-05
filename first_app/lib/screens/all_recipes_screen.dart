@@ -23,7 +23,7 @@ class recipeTile {
   final String? title;
   final String?
       ingredients; //todo: we will join list of ingredients with .join(", ")
-  final double? totalTime;
+  final int? totalTime;
   final DateTime? lastDateMade;
 
   recipeTile({this.title, this.ingredients, this.totalTime, this.lastDateMade});
@@ -82,7 +82,7 @@ class _AllRecipesState extends State<AllRecipes> {
       RecipeInfo recipeByText = RecipeInfo(
           recipeName: recipeName,
           ingredientList: ingredientList,
-          totalTime: double.parse(totalTime),
+          totalTime: int.tryParse(totalTime) ?? 0,
           instructionList: instructionList
       );
       // todo ad: error check
