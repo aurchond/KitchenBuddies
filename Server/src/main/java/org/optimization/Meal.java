@@ -84,9 +84,9 @@ public class Meal {
 
             System.out.println("Working on " + currStep.getNodeID());
 
-            if (currStep.getNodeID() == 120.3 || currStep.getNodeID() == 122.1) {
-                System.out.println("Debugging");
-            }
+            // if (currStep.getNodeID() == 120.3 || currStep.getNodeID() == 122.1) {
+            //     System.out.println("Debugging");
+            // }
 
             /*
                 // LOOP through current node and previous time dependent tasks

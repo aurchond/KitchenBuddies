@@ -1,3 +1,4 @@
+import re
 import spacy 
 from spacy import displacy
 nlp = spacy.load("en_core_web_sm")
@@ -95,7 +96,7 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
                 # NOTE: assume the last supply is the holding resource
                 # bag or pan
                 
-                holding_res_found, hold_res_dic, hold_res_count = step.extract_holdingres_from_step(token, step_words, hold_res_dic, hold_res_count)
+                holding_res_found, hold_res_dic, hold_res_count = step.extract_holdingres_from_step(token, children, step_words, hold_res_dic, hold_res_count)
 
 
                 # NOTE: maybe add hold_res_count and dic to the step property
@@ -124,13 +125,22 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
             hold_res_count, hold_res_dic = step.holdingres_edge_case(hold_res_count, hold_res_dic, step_words, steps_out, resource_dataset, ingr_base_words, all_ingr_base_words)
             # print(step_words)
         
+        hold_res_nonnumeric = re.sub('\d+', '', step.holdingResource)   #if step.holdingResource = 'bowl1' and step.resourcesRequired = ['separate bowl'], then it will replace 'separate bowl' with 'bowl1'
+        for resource in step.resourcesRequired:
+            if hold_res_nonnumeric in resource: 
+                step.resourcesRequired.remove(resource)
+                step.resourcesRequired.append(step.holdingResource)
+        
         if len(step.resourcesRequired) == 0 and step.holdingResource != '':
             step.resourcesRequired.append(step.holdingResource)
 
         steps_out.append(step)
+        step.baseIngredients = ingr_base_words
         all_ingr_base_words.append(ingr_base_words)
+        
+    print(all_ingr_base_words)
 
-        print(step.instructions, step.lineNumber)
+        #print(step.instructions, step.lineNumber)
             #make the previous holding resource also the current one
             #else: check to see if there is overlap with ingredients in the current step with any of the previous steps
             #if nothing has been found, then make the previous holding resource current one

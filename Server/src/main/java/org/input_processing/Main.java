@@ -65,22 +65,23 @@ public class Main {
 
     //     // TODO: Place basic multithreading (1 thread for steps, other thread for placing recipe in database)
     //     // Use Python to process the recipe instructions, step file exported to json file within Py_Text_Processing/Output folder
+        in_recipe.setRecipeFile("DEMO_Cinnamon_Apple_Cake");
         parseInstructionsPython(in_recipe.recipeFile + ".txt");
 
         // Retrieve recipe steps 
         List<Step> steps = new ArrayList<Step>();
-        HashMap<String, List<Integer>> ingredients = new HashMap<String, List<Integer>>();//<ingredient, List<StepId>>
+        HashMap<String, List<Integer>> baseIngredients = new HashMap<String, List<Integer>>();//<ingredient, List<StepId>>
         HashMap<String, List<Integer>> resourcesRequired = new HashMap<String, List<Integer>>();//<tool, List<StepId>>
         HashMap<String, List<Integer>> holdingResource_Id = new HashMap<String, List<Integer>>();//<holdingResource, List<StepId>>
         HashMap<String, List<Integer>> lineNumbers = new HashMap<String, List<Integer>>();
         // TODO: Check this works with our json format
-        String demo_file = "exp_cinnamon_apple_cake";
+        String demo_file = "exp_Pork_Schnitzel";
         // String demo_file = "exp_Greek_Pasta_Salad";
         parseJson(
-                "Py_Text_Processing/expected/" + demo_file + ".json",
-                // "Py_Text_Processing/output/" + in_recipe.recipeFile + ".json",
+                // "Py_Text_Processing/expected/" + demo_file + ".json",
+                "Py_Text_Processing/output/" + in_recipe.recipeFile + ".json",
                 steps,
-                ingredients,
+                baseIngredients,
                 resourcesRequired,
                 holdingResource_Id,
                 lineNumbers
@@ -89,12 +90,12 @@ public class Main {
         // TODO: Place the metadata (name, ingredients, time, whatever) relational db
         // Metadata = details about a recipe
         // long recipeID = addToAllRecipes(in_recipe.getRecipeTitle(), url, in_recipe.convertIngredientsToString(), in_recipe.getTotalTime());
-        long recipeID = 14;
-        Recipe out_recipe = createRecipe(steps, ingredients, resourcesRequired, holdingResource_Id, lineNumbers, recipeID);// String will be formatted as "holdingResource_holdingId"
+        long recipeID = 22;
+        Recipe out_recipe = createRecipe(steps, baseIngredients, resourcesRequired, holdingResource_Id, lineNumbers, recipeID);// String will be formatted as "holdingResource_holdingId"
         out_recipe.setRecipeName(in_recipe.recipeTitle);
         saveRecipe(out_recipe, out_recipe.getRecipeName());
 
-       System.out.println(Arrays.asList(ingredients));
+       System.out.println(Arrays.asList(baseIngredients));
        System.out.println(Arrays.asList(resourcesRequired));
        System.out.println(Arrays.asList(holdingResource_Id));
     }
@@ -141,7 +142,7 @@ public class Main {
     public static void parseJson(
             String filePath,
             List<Step> steps,
-            HashMap<String, List<Integer>> ingredients,
+            HashMap<String, List<Integer>> baseIngredients,
             HashMap<String, List<Integer>> resourcesRequired,
             HashMap<String, List<Integer>> holdingResource_Id,
             HashMap<String, List<Integer>> lineNumbers
@@ -161,7 +162,7 @@ public class Main {
 
             stepList.forEach( s -> {
                 try {
-                    parseStepObject( (JSONObject) s, steps, ingredients, resourcesRequired,holdingResource_Id, lineNumbers);
+                    parseStepObject( (JSONObject) s, steps, baseIngredients, resourcesRequired,holdingResource_Id, lineNumbers);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -179,7 +180,7 @@ public class Main {
     private static void parseStepObject(
             JSONObject step,
             List<Step> steps,
-            HashMap<String, List<Integer>> ingredients,
+            HashMap<String, List<Integer>> baseIngredients,
             HashMap<String, List<Integer>> resourcesRequired,
             HashMap<String, List<Integer>> holdingResource_Id,
             HashMap<String, List<Integer>> lineNumbers
@@ -224,16 +225,16 @@ public class Main {
         System.out.println(userTime);
         s.setUserTime(userTime);
 
-        List<String> ingredientList = (List<String>) stepObject.get("ingredients");
+        List<String> ingredientList = (List<String>) stepObject.get("baseIngredients");
         if (ingredientList == null) {
             ingredientList = new ArrayList<String>();
         }
         s.setIngredientList(ingredientList);
         System.out.println(ingredientList);
         for (String ingredient: ingredientList) {
-            ingredients.computeIfAbsent(ingredient, k -> new ArrayList<>()).add(stepId);
+            baseIngredients.computeIfAbsent(ingredient, k -> new ArrayList<>()).add(stepId);
         }
-        System.out.println(Arrays.asList(ingredients));
+        System.out.println(Arrays.asList(baseIngredients));
 
         List<Float> ingredientQuantity = (List<Float>) stepObject.get("ingredientsQuantity");
         System.out.println(ingredientQuantity);

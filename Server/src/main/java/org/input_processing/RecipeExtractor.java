@@ -98,16 +98,24 @@ public class RecipeExtractor {
         HashMap<String, List<Integer>> ingredients = new HashMap<String, List<Integer>>();//<ingredient, List<StepId>>
         HashMap<String, List<Integer>> resourcesRequired = new HashMap<String, List<Integer>>();//<tool, List<StepId>>
         HashMap<String, List<Integer>> holdingResource_Id = new HashMap<String, List<Integer>>();//<holdingResource, List<StepId>>
+        HashMap<String, List<Integer>> lineNumbers = new HashMap<String, List<Integer>>();
         // TODO: Check this works with our json format
         parseJson(
                 "Py_Text_Processing/output/" + inRecipe.recipeFile + ".json",
                 steps,
                 ingredients,
                 resourcesRequired,
-                holdingResource_Id
+                holdingResource_Id,
+                lineNumbers
         );
 
         // Metadata = details about a recipe
+        
+        
+        // TODO: Fix Recipe Processing
+    //     Recipe out_recipe = createRecipe(steps, ingredients, resourcesRequired, holdingResource_Id, lineNumbers, recipeID);// String will be formatted as "holdingResource_holdingId"
+    //     out_recipe.setRecipeName(inRecipe.recipeTitle);
+    //     saveRecipe(out_recipe, out_recipe.getRecipeName());
 
 
         // TODO: Fix Recipe Processing
@@ -166,8 +174,9 @@ public class RecipeExtractor {
             List<Step> steps,
             HashMap<String, List<Integer>> ingredients,
             HashMap<String, List<Integer>> resourcesRequired,
-            HashMap<String, List<Integer>> holdingResource_Id
-    ) {
+            HashMap<String, List<Integer>> holdingResource_Id,
+            HashMap<String, List<Integer>> lineNumbers
+    ){
         JSONParser jsonParser = new JSONParser();
         Path path = Path.of(filePath);
 
@@ -182,7 +191,7 @@ public class RecipeExtractor {
 
             stepList.forEach(s -> {
                 try {
-                    parseStepObject((JSONObject) s, steps, ingredients, resourcesRequired, holdingResource_Id);
+                    parseStepObject( (JSONObject) s, steps, ingredients, resourcesRequired,holdingResource_Id, lineNumbers );
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -202,7 +211,8 @@ public class RecipeExtractor {
             List<Step> steps,
             HashMap<String, List<Integer>> ingredients,
             HashMap<String, List<Integer>> resourcesRequired,
-            HashMap<String, List<Integer>> holdingResource_Id
+            HashMap<String, List<Integer>> holdingResource_Id,
+            HashMap<String, List<Integer>> lineNumbers
     ) throws Exception {
         Set<String> stepNumber = step.keySet();
         if (stepNumber.size() != 1) {
@@ -229,8 +239,12 @@ public class RecipeExtractor {
         // System.out.println(holdingID);
         s.setHoldingID(holdingID);
 
-        holdingResource_Id.computeIfAbsent(holdingResource + "_" + holdingID, k -> new ArrayList<>()).add(stepId);
-        resourcesRequired.computeIfAbsent(holdingResource, k -> new ArrayList<>()).add(stepId);
+        holdingResource_Id.computeIfAbsent(holdingResource+"_"+holdingID, k -> new ArrayList<>()).add(stepId);
+        // resourcesRequired.computeIfAbsent(holdingResource, k -> new ArrayList<>()).add(stepId);
+
+        Integer lineNumber = ((Long)stepObject.get("lineNumber")).intValue();
+        // System.out.println(lineNumber);
+        lineNumbers.computeIfAbsent(Integer.toString(lineNumber), k -> new ArrayList<>()).add(stepId);
 
         Integer stepTime = ((Long) stepObject.get("stepTime")).intValue();
         // System.out.println(stepTime);

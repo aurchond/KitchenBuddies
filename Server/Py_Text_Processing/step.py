@@ -92,6 +92,7 @@ class Step:
     def __init__(self, instructions):
         self.instructions = instructions
         self.ingredients = []
+        self.baseIngredients = []
         self.ingredientsQuantity = []
         self.resourcesRequired = []
         self.prepStep = False
@@ -345,11 +346,17 @@ class Step:
         # print(self.ingredients)
         # print(self.resourcesRequired)
             
-    def extract_holdingres_from_step(self, token, step_words, hold_res_dic, hold_res_count):
+    def extract_holdingres_from_step(self, token, children, step_words, hold_res_dic, hold_res_count):
         head_word = token.head 
         #print(token, head_word.lemma_)
         if token.dep_ == "pobj" and (str(head_word.lemma_) == "in" or str(head_word.lemma_) == "on" or str(head_word.lemma_) == "to" or str(head_word.lemma_) == "into"  ):
-            if head_word.dep_ == 'prep' and (str(head_word.head.lemma_) == 'return' or str(head_word.head.lemma_) == 'back'):
+            no_new_resource = False
+            for child in children:
+                if str(child.dep_) == 'det' and str(child) == 'the': 
+                    no_new_resource = True
+                    break
+
+            if (head_word.dep_ == 'prep' and (str(head_word.head.lemma_) == 'return' or str(head_word.head.lemma_) == 'back')) or no_new_resource == True:
                 for key in hold_res_dic:
                     if str(token) in key: 
                         self.holdingResource = key
@@ -419,8 +426,20 @@ class Step:
             if self.holdingResource == '': self.holdingResource = 'N/A'
            
         elif 'BREAK' not in steps_out[-1].instructions:
-            self.holdingResource = steps_out[-1].holdingResource
-            self.holdingID = steps_out[-1].holdingID
+            if len(self.resourcesRequired) == 1:
+                temp_count = 0
+                for key in hold_res_dic:
+                    if self.resourcesRequired[0] in key: temp_count += 1
+                
+
+                self.holdingResource = self.resourcesRequired[0] + str(temp_count+1)
+                self.holdingID = hold_res_count
+                hold_res_dic[self.holdingResource] = hold_res_count
+                hold_res_count += 1
+
+            else: 
+                self.holdingResource = steps_out[-1].holdingResource
+                self.holdingID = steps_out[-1].holdingID
             
             #if self.holdingResource == 'large skillet1': print('Aha')
 

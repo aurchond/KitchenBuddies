@@ -73,8 +73,8 @@ public class RestApi {
     @PostMapping("/AddKitchenConstraints")
     public ResponseEntity<Object> AddKitchenConstraints(@Valid @RequestBody KitchenConstraint kConstraint) {
         try {
-            Boolean res = MySqlConnection.addKitchen(kConstraint.userEmail, kConstraint.burner, kConstraint.pan,
-                                    kConstraint.pot, kConstraint.knife, kConstraint.cuttingBoard, kConstraint.oven, kConstraint.microwave);
+            Boolean res = MySqlConnection.addKitchen(kConstraint.userEmail, kConstraint.pan, kConstraint.pot, 
+                                                    kConstraint.bowl, kConstraint.cuttingBoard, kConstraint.oven);
             if (res) {
                 return ResponseEntity.ok(successMsg);
             }

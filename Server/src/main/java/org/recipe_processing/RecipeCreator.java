@@ -21,7 +21,7 @@ public class RecipeCreator {
     }
     public static Recipe createRecipe(
             List<Step> steps,//TODO: ENFORCE ASSUMPTION THAT STEPS IS IN ORDER OF STEPID
-            HashMap<String, List<Integer>> ingredients,
+            HashMap<String, List<Integer>> baseIngredients,
             HashMap<String, List<Integer>> resourcesRequired,
             HashMap<String, List<Integer>> holdingResource_Id, // String will be formatted as "holdingResource_holdingId"
             HashMap<String, List<Integer>> lineNumbers, 
@@ -63,9 +63,17 @@ public class RecipeCreator {
             stepsMap.put(step.getStepID(), step);
         }
         recipe.setSteps(stepsMap);
-        for (List<Integer> stepIds : ingredients.values()) {
-            createConnections(stepsMap, stepIds);
+
+        HashMap<String, Integer> badIngredients = createBadIngredients();
+
+        for (String keyIngredient : baseIngredients.keySet()) {
+            if (!badIngredients.containsKey(keyIngredient)) { 
+            createConnections(stepsMap, baseIngredients.get(keyIngredient));
+            }
         }
+        //for (List<Integer> stepIds : ingredients.values()) {
+            //createConnections(stepsMap, stepIds);
+        //}
         // if you go in order for lowest to highest step, each step should only have one connection, than flip the connections at the end
         for (List<Integer> stepIds : resourcesRequired.values()) {
             createConnections(stepsMap, stepIds);
@@ -73,10 +81,6 @@ public class RecipeCreator {
         for (List<Integer> stepIds : lineNumbers.values()) {
             createConnections(stepsMap, stepIds);
         }
-
-        // for (List<Integer> stepIds : lineNumber.values()) {
-        //     createConnections(stepsMap, stepIds);
-        // }
 
         //collapse dependancies
         /**
@@ -178,5 +182,12 @@ public class RecipeCreator {
                 steps.get(stepId1).addConnection(steps.get(stepId2));
             }
         }
+    }
+
+    private static HashMap<String, Integer> createBadIngredients() {
+        HashMap<String, Integer> badIngredients = new HashMap<>();
+        String[] badIngredientsList = {"salt", "Salt", "pepper", "Pepper", "sugar", "Sugar", "oil", "Oil"};
+        for (String ingr : badIngredientsList) {badIngredients.put(ingr, 1);}
+        return badIngredients;
     }
 }
