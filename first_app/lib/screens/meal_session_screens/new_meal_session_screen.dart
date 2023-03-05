@@ -73,7 +73,6 @@ class _NewMealSessionState extends State<NewMealSession> {
   Widget build(BuildContext context) {
     //TODO: read recipes and create list below
     final dataModel = Provider.of<DataClass>(context);
-    final fcmProvider = Provider.of<NotificationProvider>(context);
 
     final List<Map>? myFriends = List.generate(
         dataModel.friendsList?.friends?.length ?? 0,
@@ -206,16 +205,6 @@ class _NewMealSessionState extends State<NewMealSession> {
                       List<String> _selectedFriends = getSelectedFriends(myFriends);
                       List<String> _tokens = await getTokens(_selectedFriends);
                       print(_tokens);
-
-                      //send meal session steps to other friends in session
-                      for (int i = 0; i < _tokens.length; i++) {
-                        fcmProvider.sendNotification(
-                            token: _tokens[i],
-                            title: "Meal Session Steps",
-                            body: //unzip him -> add a sweather underneath (instructions + tokens) -> zip him up and send in notification
-                                "1. Put lettuce in a bowl\n2. Cut a cucumber and add to bowl\n3.Toss lettuce and cucumber with olive oil, salt, and pepper");
-                      }
-                      //send tokens to everyone so they can also use blocked buttons
 
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) =>

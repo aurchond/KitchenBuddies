@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:first_app/backend_processing/data_class.dart';
 import 'package:first_app/data_models/meal_session_steps_request.dart';
@@ -6,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
+import '../../data_models/token_and_steps_communication.dart';
 import '../../helpers/globals.dart';
 import '../../provider/auth_provider.dart';
 import '../../provider/notification_provider.dart';
@@ -29,7 +32,11 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
 
     postModel.kitchenConstraints?.userEmail = myEmail;
     postModel.mealSessionStepsRequest = MealSessionStepsRequest(kitchenConstraints: postModel.kitchenConstraints, recipeIDs: widget.selectedRecipes, includedFriends: widget.selectedFriends);
-    postModel.loadMealSessionSteps(myEmail); //todo: update this to the user's own email
+    postModel.loadMealSessionSteps(myEmail);
+
+
+
+    //send tokens to everyone so they can also use blocked buttons
   }
 
   @override
@@ -37,10 +44,22 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
     final postModel = Provider.of<DataClass>(context);
     final fcmProvider = Provider.of<NotificationProvider>(context);
 
-    // this is the token for firebase auth
-    String token =
-        "eMvq6DPDRTCzCPGZAD5hC7:APA91bHNtgKTMGNOpcHdeGxACuv8gE3XrInhkViPFvevKLl-dvZ4Wi3YfkxNN3_1fO4LduElNBhl9B0BPJbI7yAE6unWiVwkg528lZO5rtVOQPbUzu5era9GQTxewY8vd-GROjjyTRW2";
-    //final authProvider = Provider.of<AuthProvider>(context);
+    //send tokens to everyone so they can also use blocked buttons
+    TokenAndStepsCommunication sendTokenAndSteps = new TokenAndStepsCommunication();
+    sendTokenAndSteps.tokens = widget.tokens;
+    sendTokenAndSteps.mealSessionSteps = postModel.mealSessionSteps;
+
+    // zip it up
+    final body = jsonEncode(sendTokenAndSteps.toJson());
+
+    //send meal session steps to other friends in session
+    for (int i = 0; i < widget.tokens.length; i++) {
+      fcmProvider.sendNotification(
+          token: widget.tokens[i],
+          title: "Meal Session Steps",
+          body: body //unzip him -> add a sweather underneath (instructions + tokens) -> zip him up and send in notification
+      );
+    }
 
     return Consumer<AuthProvider>(builder: (context, model, _) {
       return Scaffold(

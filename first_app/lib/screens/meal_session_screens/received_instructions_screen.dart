@@ -1,4 +1,4 @@
-import 'package:first_app/data_models/token_and_steps.dart';
+import 'package:first_app/data_models/token_and_steps_communication.dart';
 import 'package:first_app/screens/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -19,17 +19,17 @@ class ReceivedInstructionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final fcmProvider = Provider.of<NotificationProvider>(context);
 
-    Map<String, dynamic> dataMap = message.data!;
-    TokenAndSteps? tokenAndSteps = TokenAndSteps.fromJson(dataMap["body"]);
-    List<MealSessionSteps>? sessionList = tokenAndSteps?.mealSessionSteps;
-    MealSessionSteps thisUserSteps = new MealSessionSteps(); //dummy variable
+    Map<String, dynamic> dataMap = message.data;
+    TokenAndStepsCommunication? receivedTokenAndSteps = TokenAndStepsCommunication.fromJson(dataMap["body"]);
+    //MealSessionSteps? sessionList = tokenAndSteps?.mealSessionSteps;
+    MealSessionSteps? thisUserSteps = receivedTokenAndSteps.mealSessionSteps;
 
-    for (int i = 0; i < (sessionList?.length ?? 0); i++) {
-      // emailToFind is the user's own email
-      if (sessionList?[i].userEmail == myEmail) {
-        thisUserSteps = sessionList![i];
-      }
-    }
+    // for (int i = 0; i < (sessionList?.length ?? 0); i++) {
+    //   // emailToFind is the user's own email
+    //   if (sessionList?[i].userEmail == myEmail) {
+    //     thisUserSteps = sessionList![i];
+    //   }
+    // }
 
     return Scaffold(
       appBar: AppBar(title: const Text("Received Instructions")),
@@ -41,7 +41,7 @@ class ReceivedInstructionScreen extends StatelessWidget {
                 children: [
           new Expanded(
               child: new ListView.builder(
-                  itemCount: tokenAndSteps?.mealSessionSteps?.length ?? 0,
+                  itemCount: thisUserSteps?.recipeSteps?.length ?? 0,
                   itemBuilder: (BuildContext context, int index) {
                     // first argument to the function has it's step number
                     // appended to the instruction appended to the
@@ -51,17 +51,17 @@ class ReceivedInstructionScreen extends StatelessWidget {
                         //     ". " + dataMap["body"], //remove null checks for now
                         (index + 1).toString() +
                             ". " +
-                            (thisUserSteps.recipeSteps?[index]
+                            (thisUserSteps?.recipeSteps?[index]
                                 .instructions ??
                                 "") +
                             " (" +
-                            (thisUserSteps.recipeSteps?[index]
+                            (thisUserSteps?.recipeSteps?[index]
                                 .ingredientsCompleteList
                                 ?.join(', ') ??
                                 "") +
                             ")",
                         "I'm blocked on this step!",
-                        tokenAndSteps?.tokens ?? [""],
+                        receivedTokenAndSteps?.tokens ?? [""],
                         fcmProvider);
                   }))]),
       )),

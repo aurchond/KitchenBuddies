@@ -17,8 +17,16 @@ import '../data_models/meal_session_steps.dart';
 Future<MealSessionSteps?> requestMealSessionSteps(String emailToFind, MealSessionStepsRequest? mealSessionStepsRequest) async {
 
   final body = jsonEncode(mealSessionStepsRequest!.toJson());
+  //Response? response = await sendPostRequest("RequestMealSessionSteps", body);
 
-  Response? response = await sendPostRequest("RequestMealSessionSteps", body);
+  // todo: this is mocked! take it out later
+  final response = await http.get(
+    Uri.parse("https://mocki.io/v1/4836648d-98d8-4fbe-ab59-42857a8bf7bd"),
+    headers: {
+      HttpHeaders.contentTypeHeader: "application/json",
+    },
+  );
+
   final item = json.decode(response!.body);
 
   for (int i = 0; i < item.length; i++) {
