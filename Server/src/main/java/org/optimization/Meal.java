@@ -18,7 +18,7 @@ public class Meal {
 
     }
 
-    public void createMeal(List<Recipe> recipes, List<User> buddies) {
+    public void createMeal(List<Recipe> recipes, List<User> buddies, HashMap<String, List<Resource>> constraints) {
 
         /* Objects to pass in
             - List of Recipe keys to access database
@@ -29,7 +29,7 @@ public class Meal {
         // First user is the user who initiated the meal
         User p_bud = buddies.get(0);
         // Get User kitchen constraints from database (Helper Method within Optimization?)
-        HashMap<String, List<Resource>> constraints = relationDbFunctionGetConstraints(p_bud);
+        // HashMap<String, List<Resource>> constraints = relationDbFunctionGetConstraints(p_bud);
 
         // TODO: Get the kitchen constraints from GenerateMeal?
         // Also, we need to update the hashmap with a few other constraints
@@ -87,21 +87,6 @@ public class Meal {
             // Helper function -> assign Step to User
             User priorUser = this.mapResourceStepToUser(currStep, users, constraints);
 
-            // Add all time dependent previous tasks from the current node to a new list
-            List<Step> timeDependSteps = new ArrayList<Step>();
-
-            // Iterate through time dependent tasks
-//            for(Connection c: currStep.getTimeDependencies()) {
-//                // step -> time dependent step before it
-//
-//                // TODO: Check whether we need to compare this Step's id to get the Step object from the hashmap
-//                Step tStep = c.getEndNode();
-//                // TODO: Do we need to use stepTime?
-//                int stepTime = c.getConnectionTime();
-//
-//                this.mapTimeStepToUser(tStep, priorUser, buddies, constraints);
-//            }
-
             // Add all resource dependent previous tasks from the current node to the evalNodes
             for(Connection c: currStep.getResourceDependencies()) {
                 evalSteps.add(c.getEndNode());
@@ -114,76 +99,6 @@ public class Meal {
         // tail -> prev -> prev -> ... -> head
 
 
-    }
-
-    private void mapTimeStepToUser(
-            Step s,
-            Integer prioBuddyIdx,
-            List<User> buddies,
-            HashMap<String, List<Resource>> constraints
-    ) {
-        // we could give more priority to the same user that just did the resource task that this task relies on
-        // check if prioritized buddy can take this process first
-        User prioBuddy = buddies.get(prioBuddyIdx);//TODO: need to add prioBuddy back to queue once all stuff is added
-        Integer currentTime = prioBuddy.getCurrentTime();
-
-        Integer taskStartTime = currentTime + prioBuddy.getRecentTask().getStep().getStepTime();
-
-        // Confirm task within constraints
-        // Constraints: User does not have another task at the same time already booked
-        UserTask traverse = prioBuddy.getRecentTask();
-        Boolean taskFits = false;
-        while (traverse != null) {
-            Integer after = traverse.getStartTime() + traverse.getUserTime();
-
-            if (after < taskStartTime && (traverse.getNext() == null || taskStartTime + s.getStepTime() <= traverse.getNext().getStartTime())) {
-                // we're good
-                taskFits = true;
-                break;
-            } else {
-                traverse = traverse.getNext();
-            }
-
-        }
-
-        if (!taskFits) {
-            // TODO: Find another user to do the task
-        }
-
-        // If it passes the constraints
-        List<String> resources = s.getResourcesRequired();
-        resources.add(s.getHoldingResource());
-
-        // TODO: Booking resources in advance breaks our constraint implementation
-        // We might need to use a different data structure to represent each resource
-        List<Object> taskResources = findTimeToGetConstraints(taskStartTime, s, "", resources, constraints);
-
-        if (taskStartTime < (Integer) taskResources.get(0)) {
-            // TODO: what do we do in this situation?
-            // we have to wait for resources to become available.
-            // we want to have our time dependent task scheduled immediately before the current task
-            // if the resoures need more time then do we want to push our time dependent task back?
-        }
-
-        // Insert into user stack
-        // TODO: Change last parameter to userTime for a task
-        UserTask newTask = new UserTask(s, (Integer)taskResources.get(0), (Integer)taskResources.get(0));
-
-        // traverse task will always be before newTask
-        if (traverse.getNext() != null) {
-            // Insert newTask between recent and its old next task
-            UserTask temp = traverse.getNext();
-            temp.setPrev(newTask);
-            newTask.setNext(temp);
-            newTask.setPrev(traverse);
-            traverse.setNext(newTask);
-
-        } else {
-            traverse.setNext(newTask);
-            newTask.setPrev(traverse);
-        }
-        // TODO: Add user time instead of step time
-        prioBuddy.setAllottedTime(prioBuddy.getAllottedTime() + s.getStepTime());
     }
 
 //    currNode = NodeE

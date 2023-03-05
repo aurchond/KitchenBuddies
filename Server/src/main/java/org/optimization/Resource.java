@@ -5,7 +5,7 @@ public class Resource {
 
     private Integer id;//should match what is in the array order
 
-    private Integer timeAvailable;//TODO: Switch to queue
+    private Integer timeAvailable;//TODO: Switch to queue THIS IS NEEDED DUE TO GAPS
 
 
     public Resource (String name, Integer id, Integer timeAvailable) {
