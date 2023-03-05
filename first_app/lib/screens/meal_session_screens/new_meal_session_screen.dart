@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../backend_processing/data_class.dart';
+import '../../data_models/friends_list.dart';
+import '../../data_models/recipe_info.dart';
 import 'instructions_screen.dart';
 
 class NewMealSession extends StatefulWidget {
@@ -25,15 +27,33 @@ class _NewMealSessionState extends State<NewMealSession> {
     });
   }
 
-  Future<List<String>> getTokens(List<Map>? myFriends) async {
-    List<String> selectedFriends = <String>[];
-    List<String> tokens = <String>[];
+  List<int> getSelectedRecipes(List<Map>? myRecipes) {
+    List<int>? selectedRecipes = <int>[];
 
-    for (int i = 0; i < (myFriends?.length ?? 0); i++) {
-      if (myFriends?[i]["isSelected"] == true) {
+    for (int i = 0; i< (myRecipes?.length ?? 0); i++) {
+      if(myRecipes?[i]["isSelected"] == true) {
+        selectedRecipes.add(myRecipes?[i]["recipeID"]);
+      }
+    }
+    return selectedRecipes;
+  }
+
+  // todo: make getSelectedFriends function and pass return value to getTokens()
+  List<String> getSelectedFriends(List<Map>? myFriends) {
+    List<String>? selectedFriends = <String>[];
+
+    for (int i = 0; i< (myFriends?.length ?? 0); i++) {
+      if(myFriends?[i]["isSelected"] == true) {
         selectedFriends.add(myFriends?[i]["name"]);
       }
     }
+
+    return selectedFriends;
+  }
+
+
+  Future<List<String>> getTokens(List<String> selectedFriends) async {
+    List<String> tokens = <String>[];
 
     var collection = FirebaseFirestore.instance.collection('users');
     for (int i = 0; i < selectedFriends.length; i++) {
@@ -66,11 +86,33 @@ class _NewMealSessionState extends State<NewMealSession> {
     final List<Map>? myRecipes = List.generate(
         dataModel.pastRecipes?.length ?? 0,
         (index) => {
+              "recipeID": dataModel.pastRecipes?[index]?.recipeID,
               "id": index,
               "title": dataModel.pastRecipes?[index]?.recipeName,
-              "totalTime": dataModel.pastRecipes?[index]?.completionTime,
+              "totalTime": dataModel.pastRecipes?[index]?.totalTime,
               "isSelected": false
             }).toList();
+
+    /// send meal session steps request
+    //set the included friends for the meal session
+    // List<String>? selectedFriends = <String>[];
+    //
+    // for (int i = 0; i< (myFriends?.length ?? 0); i++) {
+    //   if(myFriends?[i]["isSelected"] == true) {
+    //     selectedFriends.add(myFriends?[i]["name"]);
+    //   }
+    // }
+    // dataModel.mealSessionStepsRequest?.includedFriends = selectedFriends;
+    // dataModel.mealSessionStepsRequest?.kitchenConstraints = dataModel.kitchenConstraints;
+    //
+    // //set the included recipes for the meal session
+    // List<RecipeInfo>? selectedRecipes = <RecipeInfo>[];
+    //
+    // for (int i = 0; i< (myRecipes?.length ?? 0); i++) {
+    //   if(myRecipes?[i]["isSelected"] == true) {
+    //     selectedRecipes.add(myRecipes?[i]["name"]);
+    //   }
+    // }
 
     return Scaffold(
       appBar: AppBar(title: const Text("New Meal Session")),
@@ -160,7 +202,9 @@ class _NewMealSessionState extends State<NewMealSession> {
                 height: 60,
                 child: ElevatedButton(
                     onPressed: () async {
-                      List<String> _tokens = await getTokens(myFriends);
+                      List<int> selectedRecipes = getSelectedRecipes(myRecipes);
+                      List<String> selectedFriends = getSelectedFriends(myFriends);
+                      List<String> _tokens = await getTokens(selectedFriends);
                       print(_tokens);
 
                       //send meal session steps to other friends in session

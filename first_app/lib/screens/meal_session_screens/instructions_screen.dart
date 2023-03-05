@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
+import '../../helpers/globals.dart';
 import '../../provider/auth_provider.dart';
 import '../../provider/notification_provider.dart';
 import '../../widgets/grouped_button_text.dart';
@@ -22,7 +23,10 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
   void initState() {
     super.initState();
     final postModel = Provider.of<DataClass>(context, listen: false);
-    postModel.loadMealSessionSteps("shadiz@gmail.com"); //todo: update this to the user's own email
+
+    // get list of selected friends and selected recipes
+
+    postModel.loadMealSessionSteps(myEmail); //todo: update this to the user's own email
   }
 
   @override

@@ -129,7 +129,7 @@ class _AllRecipesState extends State<AllRecipes> {
             title: dataModel.pastRecipes?[i]?.recipeName,
             ingredients:
                 (dataModel.pastRecipes?[i]?.ingredientList)?.join("\n"),
-            totalTime: dataModel.pastRecipes?[i]?.completionTime));
+            totalTime: dataModel.pastRecipes?[i]?.totalTime));
       }
     }
 

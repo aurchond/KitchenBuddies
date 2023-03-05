@@ -1,45 +1,37 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-import 'package:first_app/data_models/kitchen_constraints.dart';
+import 'package:first_app/data_models/kitchen_constraints_model.dart';
 import 'package:first_app/data_models/recipe_info.dart';
 import 'package:first_app/helpers/globals.dart';
 import 'package:first_app/screens/meal_session_screens/new_meal_session_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
+import '../data_models/friends_list.dart';
+import '../data_models/meal_session_steps_request.dart';
 import 'data_class.dart';
 import '../data_models/meal_session_steps.dart';
 
 // called from data class to get actual data from the URL
-Future<MealSessionSteps?> getMealSessionSteps(String emailToFind) async {
-  MealSessionSteps dummy = new MealSessionSteps();
-  try {
-    final response = await http.get(
-      Uri.parse("https://mocki.io/v1/a4a5ff41-edb8-4e40-bbfc-590e8912c2ba"),
-      headers: {
-        HttpHeaders.contentTypeHeader: "application/json",
-      },
-    );
+Future<MealSessionSteps?> requestMealSessionSteps(String emailToFind, MealSessionStepsRequest? mealSessionStepsRequest) async {
 
-    // status code is fine
-    if (response.statusCode == 200) {
-      final item = json.decode(response.body);
-      for (int i = 0; i < item.length; i++) {
-        MealSessionSteps? thisUserSteps = MealSessionSteps.fromJson(item[i]);
+  final body = jsonEncode(<String, String>{
+    // "userEmail": myEmail,
+    // "newFriend": newFriend
+  });
 
-        // emailToFind is the user's own email
-        if (thisUserSteps.userEmail == emailToFind) {
-          return thisUserSteps;
-        }
-      }
-    } else {
-      print("error");
+  Response? response = await sendPostRequest("RequestMealSessionSteps", body);
+  final item = json.decode(response!.body);
+
+  for (int i = 0; i < item.length; i++) {
+    MealSessionSteps? thisUserSteps = MealSessionSteps.fromJson(item[i]);
+
+    // emailToFind is the user's own email
+    if (thisUserSteps.userEmail == emailToFind) {
+      return thisUserSteps;
     }
-  } catch (e) {
-    log(e.toString());
   }
-  return dummy; //error check?
 }
 
 Future<void> addFriend(String newFriend) async {

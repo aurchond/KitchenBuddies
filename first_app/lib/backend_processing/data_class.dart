@@ -1,31 +1,29 @@
 import 'package:first_app/backend_processing/post_requests.dart';
 import 'package:first_app/data_models/friends_list.dart';
-import 'package:first_app/data_models/kitchen_constraints.dart';
+import 'package:first_app/data_models/kitchen_constraints_model.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../data_models/meal_session_steps.dart';
+import '../data_models/meal_session_steps_request.dart';
 import '../data_models/recipe_info.dart';
 import 'get_requests.dart';
 
 class DataClass extends ChangeNotifier {
-  MealSessionSteps? mealSessionSteps;
+
+  bool loading = false;
+
+  // for general GET and POST requests
   String? skillLevel;
   KitchenConstraints? kitchenConstraints;
   FriendsList? friendsList;
   List<RecipeInfo?>? pastRecipes;
 
-  bool loading = false;
+  // for creating a new meal session
+  MealSessionStepsRequest? mealSessionStepsRequest;
+  MealSessionSteps? mealSessionSteps;
+  //List<Map<dynamic, dynamic>>
 
-  // called from instructions screen to get specific instructions for user
-  loadMealSessionSteps(String emailToFind) async {
 
-    // actually show that the screen is loading while the info is fetched
-    loading = true;
-    mealSessionSteps = (await getMealSessionSteps(emailToFind));
-    loading = false;
-
-    notifyListeners();
-  }
 
   loadHomePage() async {
 
@@ -34,6 +32,17 @@ class DataClass extends ChangeNotifier {
     skillLevel = await getUserSkill();
     kitchenConstraints = await getKitchenConstraints();
     friendsList = await getFriendsList();
+    loading = false;
+
+    notifyListeners();
+  }
+
+  // called from instructions screen to get specific instructions for user
+  loadMealSessionSteps(String emailToFind) async {
+
+    // actually show that the screen is loading while the info is fetched
+    loading = true;
+    mealSessionSteps = (await requestMealSessionSteps(emailToFind, mealSessionStepsRequest));
     loading = false;
 
     notifyListeners();
