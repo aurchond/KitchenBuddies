@@ -20,18 +20,10 @@ class ReceivedInstructionScreen extends StatelessWidget {
     final fcmProvider = Provider.of<NotificationProvider>(context);
 
     Map<String, dynamic> dataMap = message.data;
-    Data? data = Data.fromJson(dataMap);
-    //TokenAndStepsCommunication? receivedTokenAndSteps = TokenAndStepsCommunication.fromJson(dataMap);
-    //MealSessionSteps? sessionList = tokenAndSteps?.mealSessionSteps;
-    TokenAndStepsCommunication? receivedTokenAndSteps = data.tokenAndStepsCommunication;
+    print(dataMap.toString());
+    DataCommunicationWrapper? dataCommunicationWrapper = DataCommunicationWrapper.fromJson(dataMap);
+    Body? receivedTokenAndSteps = dataCommunicationWrapper.body;
     MealSessionSteps? thisUserSteps = receivedTokenAndSteps?.mealSessionSteps;
-
-    // for (int i = 0; i < (sessionList?.length ?? 0); i++) {
-    //   // emailToFind is the user's own email
-    //   if (sessionList?[i].userEmail == myEmail) {
-    //     thisUserSteps = sessionList![i];
-    //   }
-    // }
 
     return Scaffold(
       appBar: AppBar(title: const Text("Received Instructions")),

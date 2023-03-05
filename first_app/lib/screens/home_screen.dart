@@ -56,22 +56,24 @@ class _HomeScreenState extends State<HomeScreen> {
     //in foreground listener
     // if you have app open
     FirebaseMessaging.onMessage.listen((event) {
-      LocalNotificationService.init();
-      LocalNotificationService.displayNotification(event);
-
-      //getting problem about widget being unmounted
-      if (mounted) {
-        final splitMessage = (event.data.toString().split('title: '))[1]
-            .split('}');
-        //we will categorize our notifications based on title
-        //notifications to send to other users about completing a step
-        //notification that redirects user to instruction page
-        if (splitMessage[0] != "Step Blocked") {
+      final splitMessage = (event.data.toString().split('title: '))[1]
+          .split('}');
+      //we will categorize our notifications based on title
+      //notifications to send to other users about completing a step
+      //notification that redirects user to instruction page
+      if (splitMessage[0] != "Step Blocked") {
+        if (mounted) {
           Navigator.of(context).push(MaterialPageRoute(
-              //if this starts bugging out again, use pushReplacement
+            //if this starts bugging out again, use pushReplacement
               builder: (context) => ReceivedInstructionScreen(message: event)));
         }
       }
+
+      else {
+      LocalNotificationService.init();
+      LocalNotificationService.displayNotification(event); }
+      //getting problem about widget being unmounted
+
     });
 
     //in background state but not terminated

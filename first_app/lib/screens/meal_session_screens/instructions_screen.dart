@@ -45,7 +45,7 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
     final fcmProvider = Provider.of<NotificationProvider>(context);
 
     //send tokens to everyone so they can also use blocked buttons
-    TokenAndStepsCommunication sendTokenAndSteps = new TokenAndStepsCommunication();
+    Body sendTokenAndSteps = new Body();
     sendTokenAndSteps.tokens = widget.tokens;
     sendTokenAndSteps.mealSessionSteps = postModel.mealSessionSteps;
 
@@ -108,7 +108,7 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                       // display the user's instructions below
                       new Expanded(
                           child: new ListView.builder(
-                              itemCount: postModel.mealSessionSteps?.recipeSteps?.length,
+                              itemCount: postModel.mealSessionSteps?.recipeSteps?.length ?? 0,
                               itemBuilder: (BuildContext context, int index) {
 
                                 // first argument to the function has it's step number

@@ -1,43 +1,45 @@
-import 'meal_session_steps.dart';
-class Data {
-  String? _title;
-  TokenAndStepsCommunication? _tokenAndStepsCommunication;
+import 'dart:convert';
 
-  Data({String? title, TokenAndStepsCommunication? tokenAndStepsCommunication}) {
+import 'package:first_app/data_models/meal_session_steps.dart';
+
+class DataCommunicationWrapper {
+  String? _title;
+  Body? _body;
+
+  DataCommunicationWrapper({String? title, Body? body}) {
     if (title != null) {
       this._title = title;
     }
-    if (tokenAndStepsCommunication != null) {
-      this._tokenAndStepsCommunication = tokenAndStepsCommunication;
+    if (body != null) {
+      this._body = body;
     }
   }
 
   String? get title => _title;
   set title(String? title) => _title = title;
-  TokenAndStepsCommunication? get tokenAndStepsCommunication => _tokenAndStepsCommunication;
-  set body(TokenAndStepsCommunication? tokenAndStepsCommunication) => _tokenAndStepsCommunication = tokenAndStepsCommunication;
+  Body? get body => _body;
+  set body(Body? body) => _body = body;
 
-  Data.fromJson(Map<String, dynamic> json) {
+  DataCommunicationWrapper.fromJson(Map<String, dynamic> json) {
     _title = json['title'];
-    _tokenAndStepsCommunication = json['body'] != null ? new TokenAndStepsCommunication.fromJson(json['body']) : null;
+    _body = json['body'] != null ? new Body.fromJson(jsonDecode(json['body']) as Map<String, dynamic>) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['title'] = this._title;
-    if (this._tokenAndStepsCommunication!= null) {
-      data['body'] = this._tokenAndStepsCommunication!.toJson();
+    if (this._body != null) {
+      data['body'] = this._body!.toJson();
     }
     return data;
   }
 }
 
-class TokenAndStepsCommunication {
+class Body {
   List<String>? _tokens;
   MealSessionSteps? _mealSessionSteps;
 
-  TokenAndStepsCommunication(
-      {List<String>? tokens, MealSessionSteps? mealSessionSteps}) {
+  Body({List<String>? tokens, MealSessionSteps? mealSessionSteps}) {
     if (tokens != null) {
       this._tokens = tokens;
     }
@@ -52,7 +54,7 @@ class TokenAndStepsCommunication {
   set mealSessionSteps(MealSessionSteps? mealSessionSteps) =>
       _mealSessionSteps = mealSessionSteps;
 
-  TokenAndStepsCommunication.fromJson(Map<String, dynamic> json) {
+  Body.fromJson(Map<String, dynamic> json) {
     _tokens = json['tokens'].cast<String>();
     _mealSessionSteps = json['mealSessionSteps'] != null
         ? new MealSessionSteps.fromJson(json['mealSessionSteps'])
