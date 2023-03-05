@@ -31,29 +31,17 @@ public class Meal {
         */
 
         constraints = kConstraints;
-        // First user is the user who initiated the meal
-        User p_bud = buddies.get(0);
-        // Get User kitchen constraints from database (Helper Method within Optimization?)
-        // HashMap<String, List<Resource>> constraints = relationDbFunctionGetConstraints(p_bud);
-
-        // TODO: Get the kitchen constraints from GenerateMeal?
-        // Also, we need to update the hashmap with a few other constraints
-        //  - Burners = Oven*4 to constraints
 
         // Anytime we have a new holding resource, add one to the constraint hashmap (i.e. skillet)
         // Have a list that tracks what additional kitchen resources are needed for this recipe
 
-        // Identifies task from recipe with largest TimeLeft
-        Integer maxTimeLeft = 0;
         // Time of current task
         Integer time = 0;
 
         // Current steps being evaluated
         PriorityQueue<Step> evalSteps = new PriorityQueue<>();
-        //List<Step> evalSteps = new ArrayList<Step>();
 
-        // Initialize evalSteps list - get the last step in each recipe
-        // TODO: Change evalSteps to a max heap
+        // Initialize evalSteps Priority Queue - get the last step in each recipe
         for (Recipe recipe : recipes) {
             evalSteps.add(recipe.getFinalStep());
         }
@@ -68,19 +56,8 @@ public class Meal {
             Step currStep = evalSteps.poll();
             System.out.println("Working on " + currStep.getNodeID());
 
-            /*
-                // LOOP through current node and previous time dependent tasks
-                // Compare Time Dependant Nodes against current time
-                // If they need to get scheduled at this time that happens now
-                // This ensures they get priority
-                // Does this need monitoring
-                    // if so does it have someone to watch it
-                        // Find user who has been available the longest
-                        // Check all user time counters, the one with the least is selected
-                // For init protoype, assume only elements, oven, big applicances for resources with infinite pans
-            */
-
             // Helper function -> assign Step to User
+            //TODO: switch priorUser to time a task was scheduled and pass it to the steps that depend on it
             User priorUser = this.mapResourceStepToUser(currStep, users);
 
             // Add all resource dependent previous tasks from the current node to the evalNodes
@@ -97,26 +74,6 @@ public class Meal {
         // Check which user has the least amount of work so
         User user = buddies.poll();
         Integer leastUserTime = user.getLeastUserTime();
-//        UserTask recent = buddies.peek().getRecent();
-//
-//
-//
-//        Integer leastUserTime = (recent != null) ? recent.getStartTime() + recent.getUserTime() : 0;
-//        User user = buddies.peek();
-//        Integer userIdx = 0;
-//
-//        // TODO: Change this process to a min heap?
-//
-//        for (User u: buddies) {
-//            recent = u.getRecent();
-//            int recentEndTime = (recent != null) ? recent.getStartTime() + recent.getUserTime() : 0;
-//
-//            if (recentEndTime < leastUserTime) {
-//                leastUserTime = recentEndTime;
-//                user = u;
-//                userIdx = 0;//TODO: this should be set to an index
-//            }
-//        }
 
         // Check if constraint is available at this time
         // holding holdingResource and resourcesRequired
@@ -156,6 +113,7 @@ public class Meal {
             String hResource,
             List<String> tools) {
         //TODO: make sure this checks kitchen constraints
+
         // The resources that we are using (by id of objects)
         List<Integer> resourceIds = new ArrayList<Integer>();
 
@@ -170,10 +128,10 @@ public class Meal {
         String recResId = Integer.toString(resourceId) + Long.toString(s.getRecipeID());
 
         // Holding Resource first
-        getResourceTimes(hResourceType, recResId, leastUserTime, resourceIds, earliestTimes, false);
+        getResourceTimes(hResourceType, recResId, leastUserTime, s.getStepTime(), resourceIds, earliestTimes, false);
 
         if (burnerMap.get(hResourceType) != null) {
-            getResourceTimes("burner", hResource, leastUserTime, resourceIds, earliestTimes, true);
+            getResourceTimes("burner", hResource, leastUserTime, s.getStepTime(), resourceIds, earliestTimes, true);
         }
 
         // TODO: Add this back when we add constraints based on recipe
@@ -230,7 +188,7 @@ public class Meal {
         return returnStuff;
     }
 
-    private void getResourceTimes(String hResourceType, String recResId, Integer leastUserTime, List<Integer> resourceIds, List<Integer> earliestTimes, Boolean isBurner) {
+    private void getResourceTimes(String hResourceType, String recResId, Integer leastUserTime, Integer stepTime, List<Integer> resourceIds, List<Integer> earliestTimes, Boolean isBurner) {
         if (mapRecipeResToCon.get(hResourceType) != null) {
             // mapRecipeResToCon = {"bowl":{"2.3":1}}
             // hResourceType = bowl, resource = "2.3" (2=resourceId, 3=RecipeId), constraintMapId = 1
@@ -240,7 +198,8 @@ public class Meal {
             // 
             Integer constraintMapId = mapRecipeResToCon.get(hResourceType).get(recResId);
             Resource holdResource = constraints.get(hResourceType).get(constraintMapId);
-            earliestTimes.add(holdResource.getTimeAvailable());
+
+            earliestTimes.add(holdResource.canFillGap(leastUserTime,stepTime));
             resourceIds.add(constraintMapId);
         } else {
             // Resource needs to be added to mapRecipeResToCon
@@ -252,7 +211,7 @@ public class Meal {
 
             Integer i = 0;
             for (Resource holdResource : constraints.get(hResourceType)) {
-                Integer rTime = holdResource.getTimeAvailable();
+                Integer rTime = holdResource.canFillGap(leastUserTime,stepTime);
                 Integer diff = leastUserTime - rTime;
                 if (0 <= diff && Math.abs(diff) < closestDiff) {
                     closestDiff = Math.abs(diff);
@@ -273,7 +232,7 @@ public class Meal {
             mapRecipeResToCon.put(hResourceType, resourceIdMapping);
 
             Resource holdResource = constraints.get(hResourceType).get(optimalIdx);
-            earliestTimes.add(holdResource.getTimeAvailable());
+            earliestTimes.add(holdResource.canFillGap(leastUserTime,stepTime));
         }
     }
 
@@ -284,7 +243,7 @@ public class Meal {
             Resource holdResource = constraints.get(resources.get(i))//get the resource id list for that type
                     .get(resourceIds.get(i));//get the resource of a sepecifc id
 
-            holdResource.setTimeAvailable(taskStart + s.getStepTime());//update the time at that id to the amount of time it takes for the step to occur
+            holdResource.fillGapAt(taskStart, s.getStepTime());//update the time at that id to the amount of time it takes for the step to occur
         }
     }
 
