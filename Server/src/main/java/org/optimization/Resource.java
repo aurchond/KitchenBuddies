@@ -61,21 +61,34 @@ public class Resource {
         }
         //TODO: when do we delete a gap right now it is only when it is fully used
         if (gapToSplit.getStartTime() <= startFill && gapToSplit.getEndTime() >= (startFill + fillLength)) {
-            if (gapToSplit.getStartTime() == startFill && gapToSplit.getEndTime() == startFill + fillLength) {
+            if (gapToSplit.getEndTime() - gapToSplit.getStartTime() - fillLength < 2) {
+                //remove gap completely
                 if (prevGap != null) {
                     prevGap.setNextGap(gapToSplit.getNextGap());
                 }
                 gapToSplit.setNextGap(null);
                 //TODO: will java auto delete the old gapToSplit
-                //remove gap completely
             } else if (gapToSplit.getStartTime() == startFill) {
                 gapToSplit.setStartTime(startFill + fillLength);//is a plus 1 needed
             } else if (gapToSplit.getEndTime() == startFill + fillLength) {
                 gapToSplit.setEndTime(startFill - 1);
             } else {
-                ResourceGap newGap = new ResourceGap(gapToSplit.getNextGap(), startFill + fillLength, gapToSplit.getEndTime());
-                gapToSplit.setEndTime(startFill - 1);
-                gapToSplit.setNextGap(newGap);
+                if(startFill - gapToSplit.getStartTime() < 2 && gapToSplit.getEndTime() - (startFill + fillLength) < 2){
+                    //remove gap completely
+                    if (prevGap != null) {
+                        prevGap.setNextGap(gapToSplit.getNextGap());
+                    }
+                    gapToSplit.setNextGap(null);
+                    //TODO: will java auto delete the old gapToSplit
+                }else if(startFill - gapToSplit.getStartTime() < 2){
+                    gapToSplit.setStartTime(startFill + fillLength);
+                }else if(gapToSplit.getEndTime() - (startFill + fillLength) < 2){
+                    gapToSplit.setEndTime(startFill - 1);
+                }else{
+                    ResourceGap newGap = new ResourceGap(gapToSplit.getNextGap(), startFill + fillLength, gapToSplit.getEndTime());
+                    gapToSplit.setEndTime(startFill - 1);
+                    gapToSplit.setNextGap(newGap);
+                }
             }
             System.out.println("This should result in the below line being reached");
         }
