@@ -3,18 +3,18 @@ package org.server;
 import java.util.List;
 
 public class RecipeStep {
-    Double number;
+    String number;
     String instructions;
     List<String> ingredientList;
     List<Float> ingredientQuantity;
     String dependencyItem;
     String nextUserEmail;
 
-    public Double getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(Double number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 

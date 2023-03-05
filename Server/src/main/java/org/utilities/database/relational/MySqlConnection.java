@@ -135,7 +135,7 @@ public class MySqlConnection {
     }
 
     public static KitchenConstraint getKitchen(String email) {
-        String getKitchen = "SELECT Burner, Pan, Pot, Knife, CuttingBoard, Oven, Microwave FROM KitchenConstraints WHERE Email = ?";
+        String getKitchen = "SELECT Pan, Pot, Bowl, CuttingBoard, Oven FROM KitchenConstraints WHERE Email = ?";
         KitchenConstraint userKC = new KitchenConstraint();
         try {
             Connection conn = startSession();
@@ -148,13 +148,11 @@ public class MySqlConnection {
                 return userKC;
             }
 
-            userKC.burner = rs.getInt("Burner");
             userKC.pan = rs.getInt("Pan");
             userKC.pot = rs.getInt("Pot");
-            userKC.knife = rs.getInt("Knife");
+            userKC.bowl = rs.getInt("Bowl");
             userKC.cuttingBoard = rs.getInt("CuttingBoard");
             userKC.oven = rs.getInt("Oven");
-            userKC.microwave = rs.getInt("Microwave");
 
         }
         catch (SQLException e) {
@@ -163,7 +161,7 @@ public class MySqlConnection {
         return userKC;
     }
 
-    public static Boolean addKitchen(String email, int burners, int pans, int pots, int knives, int cuttingBoards, int ovens, int microwaves) {
+    public static Boolean addKitchen(String email, int pans, int pots, int bowls, int cuttingBoards, int ovens) {
         String addKitchen = "";
         try {
             Connection conn = startSession();
@@ -176,22 +174,20 @@ public class MySqlConnection {
             ResultSet rs = check.executeQuery();
             if (!rs.next()) {
                 // First time adding kitchen constraints
-                addKitchen = "INSERT INTO KitchenConstraints(Burner, Pan, Pot, Knife, CuttingBoard, Oven, Microwave, Email) VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
+                addKitchen = "INSERT INTO KitchenConstraints(Pan, Pot, Bowl, CuttingBoard, Oven, Email) VALUES(?, ?, ?, ?, ?, ?);";
             } else {
-                addKitchen = "UPDATE KitchenConstraints SET Burner = ?, Pan = ?, Pot = ?, Knife = ?, CuttingBoard = ?, Oven = ?, Microwave = ? WHERE Email = ?;";
+                addKitchen = "UPDATE KitchenConstraints SET Pan = ?, Pot = ?, Bowl = ?, CuttingBoard = ?, Oven = ? WHERE Email = ?;";
             }
             PreparedStatement stmt = conn.prepareStatement(addKitchen);
 
             //fill in parametrized query
-            stmt.setInt(1, burners);
-            stmt.setInt(2, pans);
-            stmt.setInt(3, pots);
-            stmt.setInt(4, knives);
-            stmt.setInt(5, cuttingBoards);
-            stmt.setInt(6, ovens);
-            stmt.setInt(7, microwaves);
-            stmt.setString(8, email);
-
+            stmt.setInt(1, pans);
+            stmt.setInt(2, pots);
+            stmt.setInt(3, bowls);
+            stmt.setInt(4, cuttingBoards);
+            stmt.setInt(5, ovens);
+            stmt.setString(6, email);
+            
             int rowsUpdated = stmt.executeUpdate();
             if (rowsUpdated > 0) {return true;} else {return false;}
 
