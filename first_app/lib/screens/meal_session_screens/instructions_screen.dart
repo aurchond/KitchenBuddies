@@ -34,8 +34,6 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
     postModel.mealSessionStepsRequest = MealSessionStepsRequest(kitchenConstraints: postModel.kitchenConstraints, recipeIDs: widget.selectedRecipes, includedFriends: widget.selectedFriends);
     postModel.loadMealSessionSteps(myEmail);
 
-
-
     //send tokens to everyone so they can also use blocked buttons
   }
 

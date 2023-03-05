@@ -22,7 +22,7 @@ class DataCommunicationWrapper {
 
   DataCommunicationWrapper.fromJson(Map<String, dynamic> json) {
     _title = json['title'];
-    _body = json['body'] != null ? new Body.fromJson(jsonDecode(json['body']) as Map<String, dynamic>) : null;
+    _body = json['body'] != null ? new Body.fromJson(jsonDecode(json["body"]) as Map<String, dynamic>) : null;
   }
 
   Map<String, dynamic> toJson() {

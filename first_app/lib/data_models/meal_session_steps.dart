@@ -106,8 +106,8 @@ class RecipeStep {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['number'] = this._number;
     data['instructions'] = this._instructions;
-    data['ingredientsList'] = this._ingredientsCompleteList;
-    data['ingredientsQuantity'] = 1;
+    data['ingredientList'] = this._ingredientsCompleteList;
+    data['ingredientQuantity'] = [1];
     data['dependencyItem'] = this._dependencyItem;
     data['nextUserEmail'] = this._nextUserEmail;
     return data;
