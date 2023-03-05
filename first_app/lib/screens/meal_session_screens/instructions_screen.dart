@@ -15,8 +15,8 @@ import '../../provider/notification_provider.dart';
 import '../../widgets/grouped_button_text.dart';
 
 class InstructionsScreen extends StatefulWidget {
-  const InstructionsScreen({Key? key, required List<String> this.tokens, required List<int> this.selectedRecipes, required List<String> this.selectedFriends}) : super(key: key);
-  final List<String> tokens;
+  const InstructionsScreen({Key? key, required Map<String, String> this.tokens, required List<int> this.selectedRecipes, required List<String> this.selectedFriends}) : super(key: key);
+  final Map<String, String> tokens;
   final List<int> selectedRecipes;
   final List<String> selectedFriends;
 

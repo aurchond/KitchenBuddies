@@ -52,8 +52,8 @@ class _NewMealSessionState extends State<NewMealSession> {
   }
 
 
-  Future<List<String>> getTokens(List<String> selectedFriends) async {
-    List<String> tokens = <String>[];
+  Future<Map<String,String>> getTokens(List<String> selectedFriends) async {
+    Map<String, String> tokens = new Map();
 
     var collection = FirebaseFirestore.instance.collection('users');
     for (int i = 0; i < selectedFriends.length; i++) {
@@ -61,7 +61,7 @@ class _NewMealSessionState extends State<NewMealSession> {
           await collection.where('email', isEqualTo: selectedFriends[i]).get();
       if (!querySnapshot.docs.isEmpty) {
         for (QueryDocumentSnapshot ds in querySnapshot.docs) {
-          tokens.add(ds.get("token"));
+          tokens[selectedFriends[i]] = ds.get("token");
         } // <-- The value you want to retrieve.
         // Call setState if needed.
       }
@@ -203,7 +203,7 @@ class _NewMealSessionState extends State<NewMealSession> {
                     onPressed: () async {
                       List<int> _selectedRecipes = getSelectedRecipes(myRecipes);
                       List<String> _selectedFriends = getSelectedFriends(myFriends);
-                      List<String> _tokens = await getTokens(_selectedFriends);
+                      Map<String, String> _tokens = await getTokens(_selectedFriends);
                       print(_tokens);
 
                       Navigator.of(context).push(MaterialPageRoute(
