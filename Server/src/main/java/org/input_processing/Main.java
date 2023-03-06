@@ -45,16 +45,20 @@ public class Main {
         
         String url = "https://www.sweetestmenu.com/cinnamon-apple-cake/";
         String demo_file = "demo_exp_cinnamon_apple_cake";
+        // String output_file = "Py_Text_Processing/DEMO_inputs/" + demo_file + ".json";
         // long recipeID = 103;
-        long recipeID = 22;
+        long recipeID = 52;
         // Scrape website and place info in text file within Py_Text_Processing/Input folder
-        Webscrape scraper = new Webscrape(url);
-        InputRecipe in_recipe = scraper.extractRecipe();
+        // Webscrape scraper = new Webscrape(url);
+        // InputRecipe in_recipe = scraper.extractRecipe();
+        InputRecipe in_recipe = new InputRecipe();
 
     //     // TODO: Place basic multithreading (1 thread for steps, other thread for placing recipe in database)
     //     // Use Python to process the recipe instructions, step file exported to json file within Py_Text_Processing/Output folder
-        in_recipe.setRecipeFile("DEMO_Cinnamon_Apple_Cake");
+        in_recipe.setRecipeFile("Summer_Corn_Chowder");
         parseInstructionsPython(in_recipe.recipeFile + ".txt");
+        String output_file = "Py_Text_Processing/output/" + in_recipe.recipeFile + ".json";
+
 
         // Retrieve recipe steps 
         List<Step> steps = new ArrayList<Step>();
@@ -66,8 +70,7 @@ public class Main {
         
         // String demo_file = "exp_Greek_Pasta_Salad";
         parseJson(
-                "Py_Text_Processing/DEMO_inputs/" + demo_file + ".json",
-                // "Py_Text_Processing/output/" + in_recipe.recipeFile + ".json",
+                output_file,
                 steps,
                 baseIngredients,
                 resourcesRequired,

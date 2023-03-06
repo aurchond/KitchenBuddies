@@ -1,13 +1,27 @@
 package org.server;
 
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class RecipeStep {
+    @JsonProperty("number")
     String number;
+
+    @JsonProperty("instructions")
     String instructions;
+    
+    @JsonProperty("ingredientList")
     List<String> ingredientList;
+    
+    @JsonProperty("ingredientQuantity")
     List<Float> ingredientQuantity;
+    
+    @JsonProperty("dependencyItem")
     String dependencyItem;
+    
+    @JsonProperty("nextUserEmail")
     String nextUserEmail;
 
     public String getNumber() {

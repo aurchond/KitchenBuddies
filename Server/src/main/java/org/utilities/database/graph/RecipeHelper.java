@@ -81,6 +81,7 @@ public class RecipeHelper {
         List<Object> result = createSession();
         Session s = (Session)result.get(0);
         SessionFactory sFactory = (SessionFactory)result.get(1);
+        Transaction tx = s.beginTransaction();
 //        //TODO: this should be a db call: also idk if it should be taking in a recipe Name
 //        Long recipeId = recipeNameToID.get(recipeName);
 
@@ -91,7 +92,9 @@ public class RecipeHelper {
         for(Step step: steps){
             stepMap.put(step.getStepID(), step);
         }
-
+        tx.commit();
+        tx.close();
+        s.clear();
         sFactory.close();
         return new Recipe(stepMap, headNode, recipeId);
     }

@@ -55,7 +55,6 @@ public class GenerateMeal {
          */
         List<MealSessionUsersSteps> usersSteps = userStepsToJson(buddies);
         System.out.println("Finished");
-        userStepsToJsonOld(buddies);
         return usersSteps;
         //return null;
     }

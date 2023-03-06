@@ -88,7 +88,7 @@ public class Webscrape {
         inRecipe.findInstructions(microData);
         // System.out.println(inRecipe.instructions.toString());
 
-        // inRecipe.writeTextFile();
+        inRecipe.writeTextFile();
         return inRecipe;
     }
 

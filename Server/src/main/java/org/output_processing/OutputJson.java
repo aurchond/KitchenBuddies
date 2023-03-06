@@ -33,8 +33,8 @@ public class OutputJson {
 
 
                     recipeSteps.add(recipeStep);
-                    task = task.getPrev();
                 }
+                task = task.getPrev();
             }
             //TODO: FILL IN notes LATER
             String notes = "";

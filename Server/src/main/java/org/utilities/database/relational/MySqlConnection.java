@@ -197,6 +197,52 @@ public class MySqlConnection {
         }
     }
 
+    public static Long addToAllRecipesFromText(String recipeName, String ingrString, int recipeTime) {
+        String checkRecipe = "SELECT RecipeId FROM AllRecipes WHERE Name = ?";
+        String addRecipe = "INSERT INTO AllRecipes(Name, Ingredients, TotalTime) VALUES(?, ?, ?);";
+        try {
+            Connection conn = startSession(); 
+            PreparedStatement prep = conn.prepareStatement(addRecipe);  
+            prep.setString(1, recipeName);
+            prep.setString(2, ingrString);
+            prep.setInt(3, recipeTime);
+
+            int rowsUpdated = prep.executeUpdate();
+            if (rowsUpdated == 0) {return -1L;}
+
+            PreparedStatement stmt = conn.prepareStatement(checkRecipe);
+            stmt.setString(1, recipeName);
+            ResultSet rs = stmt.executeQuery();
+            if (!rs.next()) {
+                System.out.println("Result set is empty");
+                return -1L;
+            }
+            return (long)rs.getInt(1);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return -2L;
+        }
+    }
+
+    public static Boolean recipeInGraphDB(Long recipeId){
+        String updateInGraphDB = "UPDATE AllRecipes SET InGraphDB = ? WHERE Name = ?;";
+        try {
+            Connection conn = startSession(); 
+            PreparedStatement stmt = conn.prepareStatement(updateInGraphDB);  
+            stmt.setBoolean(1, true);
+            stmt.setInt(2, recipeId);
+
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated > 0) {return true;}
+
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static Long addToAllRecipes(String recipeName, String recipeUrl, String ingrString, int recipeTime) {
         String checkRecipe = "SELECT RecipeId FROM AllRecipes WHERE URL = ?";
         String addRecipe = "INSERT INTO AllRecipes(Name, Url, Ingredients, TotalTime) VALUES(?, ?, ?, ?);";
@@ -210,9 +256,6 @@ public class MySqlConnection {
             if (result.next() && result.getInt(1) > 0) {
                 System.out.println("Recipe already exists in relational database");
                 return (long) result.getInt(1);
-            }
-            if (recipeUrl.equals("UserInputtedRecipe")) {
-                addRecipe = "INSERT INTO AllRecipes(Name, Ingredients, TotalTime) VALUES(?, ?, ?);";
             }
 
             prep = conn.prepareStatement(addRecipe);

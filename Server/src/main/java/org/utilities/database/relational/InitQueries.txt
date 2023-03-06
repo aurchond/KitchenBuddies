@@ -15,6 +15,7 @@ CREATE TABLE AllRecipes (
 	Ingredients varchar(2000), #this might need to be increased -> storing ingredients as one string for now 
 	TotalTime int, #stored in minutes
     InGraphDB BOOLEAN DEFAULT FALSE,
+	ResourceList varchar(2000),
 	PRIMARY KEY (RecipeId)
 );
 

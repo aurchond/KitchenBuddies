@@ -4,20 +4,26 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.recipe_processing.Recipe;
 import org.server.RecipeInfo;
 import org.server.RecipeInput;
 import org.utilities.database.graph.Step;
+import static org.utilities.database.graph.RecipeHelper.*;
+import static org.recipe_processing.RecipeCreator.createRecipe;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
 import static org.utilities.database.relational.MySqlConnection.addToAllRecipes;
+import static org.utilities.database.relational.MySqlConnection.addToAllRecipesFromText;
 import static org.utilities.database.relational.MySqlConnection.addUserLinkedRecipe;
+import static org.utilities.database.relational.MySqlConnection.recipeInGraphDB;
 
 public class RecipeExtractor {
 
@@ -43,10 +49,9 @@ public class RecipeExtractor {
         inRecipe.setInstructions(instructions);
         inRecipe.writeTextFile();
 
-
-
         // Add to relational database
-        Long recipeID = addToAllRecipes(inRecipe.getRecipeTitle(), "UserInputtedRecipe", inRecipe.convertIngredientsToString(), inRecipe.getTotalTime());
+        Long recipeID = 1000L;
+        // Long recipeID = addToAllRecipesFromText(inRecipe.getRecipeTitle(), inRecipe.convertIngredientsToString(), inRecipe.getTotalTime());
 
         // Add recipe to UserLinkedRecipes
         Boolean res = addUserLinkedRecipe(recipeInput.getUserEmail(), recipeID);
@@ -80,6 +85,10 @@ public class RecipeExtractor {
             // Do nothing
         }
 
+        if (inRecipe.recipeFile == null) {
+            return null;
+        }
+
         // Process Text and Add to graph database
         res = ExtractRecipe(inRecipe, recipeID);
         if (res) {
@@ -95,15 +104,15 @@ public class RecipeExtractor {
 
         // Retrieve recipe steps 
         List<Step> steps = new ArrayList<Step>();
-        HashMap<String, List<Integer>> ingredients = new HashMap<String, List<Integer>>();//<ingredient, List<StepId>>
+        HashMap<String, List<Integer>> baseIngredients = new HashMap<String, List<Integer>>();//<ingredient, List<StepId>>
         HashMap<String, List<Integer>> resourcesRequired = new HashMap<String, List<Integer>>();//<tool, List<StepId>>
         HashMap<String, List<Integer>> holdingResource_Id = new HashMap<String, List<Integer>>();//<holdingResource, List<StepId>>
         HashMap<String, List<Integer>> lineNumbers = new HashMap<String, List<Integer>>();
-        // TODO: Check this works with our json format
+
         parseJson(
                 "Py_Text_Processing/output/" + inRecipe.recipeFile + ".json",
                 steps,
-                ingredients,
+                baseIngredients,
                 resourcesRequired,
                 holdingResource_Id,
                 lineNumbers
@@ -111,23 +120,15 @@ public class RecipeExtractor {
 
         // Metadata = details about a recipe
         
-        
-        // TODO: Fix Recipe Processing
-    //     Recipe out_recipe = createRecipe(steps, ingredients, resourcesRequired, holdingResource_Id, lineNumbers, recipeID);// String will be formatted as "holdingResource_holdingId"
-    //     out_recipe.setRecipeName(inRecipe.recipeTitle);
-    //     saveRecipe(out_recipe, out_recipe.getRecipeName());
+        Recipe outRecipe = createRecipe(steps, baseIngredients, resourcesRequired, holdingResource_Id, lineNumbers, recipeID);// String will be formatted as "holdingResource_holdingId"
+        outRecipe.setRecipeName(inRecipe.recipeTitle);
+        saveRecipe(outRecipe, outRecipe.getRecipeName());
+        Boolean res = recipeInGraphDB(recipeID);
 
-
-        // TODO: Fix Recipe Processing
-
-//             Recipe out_recipe = createRecipe(steps, ingredients, resourcesRequired, holdingResource_Id, recipeID);// String will be formatted as "holdingResource_holdingId"
-//             out_recipe.setRecipeName(inRecipe.recipeTitle);
-//             saveRecipe(out_recipe, out_recipe.getRecipeName());
-//
-//            System.out.println(Arrays.asList(ingredients));
-//            System.out.println(Arrays.asList(resourcesRequired));
-//            System.out.println(Arrays.asList(holdingResource_Id));
-        return true;
+        System.out.println(Arrays.asList(baseIngredients));
+        System.out.println(Arrays.asList(resourcesRequired));
+        System.out.println(Arrays.asList(holdingResource_Id));
+        if (res) {return true;} else {return false;}
     }
 
     private static void parseInstructionsPython(String recipeFile) {
@@ -172,7 +173,7 @@ public class RecipeExtractor {
     public static void parseJson(
             String filePath,
             List<Step> steps,
-            HashMap<String, List<Integer>> ingredients,
+            HashMap<String, List<Integer>> baseIngredients,
             HashMap<String, List<Integer>> resourcesRequired,
             HashMap<String, List<Integer>> holdingResource_Id,
             HashMap<String, List<Integer>> lineNumbers
@@ -191,7 +192,7 @@ public class RecipeExtractor {
 
             stepList.forEach(s -> {
                 try {
-                    parseStepObject( (JSONObject) s, steps, ingredients, resourcesRequired,holdingResource_Id, lineNumbers );
+                    parseStepObject( (JSONObject) s, steps, baseIngredients, resourcesRequired,holdingResource_Id, lineNumbers );
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -209,7 +210,7 @@ public class RecipeExtractor {
     private static void parseStepObject(
             JSONObject step,
             List<Step> steps,
-            HashMap<String, List<Integer>> ingredients,
+            HashMap<String, List<Integer>> baseIngredients,
             HashMap<String, List<Integer>> resourcesRequired,
             HashMap<String, List<Integer>> holdingResource_Id,
             HashMap<String, List<Integer>> lineNumbers
@@ -254,16 +255,17 @@ public class RecipeExtractor {
         // System.out.println(userTime);
         s.setUserTime(userTime);
 
-        List<String> ingredientList = (List<String>) stepObject.get("ingredientList");
+        // TODO: Make the ingredientList the nice ingredients, not the base word
+        List<String> ingredientList = (List<String>) stepObject.get("baseIngredients");
         if (ingredientList == null) {
             ingredientList = new ArrayList<String>();
         }
         s.setIngredientList(ingredientList);
         // System.out.println(ingredientList);
         for (String ingredient : ingredientList) {
-            ingredients.computeIfAbsent(ingredient, k -> new ArrayList<>()).add(stepId);
+            baseIngredients.computeIfAbsent(ingredient, k -> new ArrayList<>()).add(stepId);
         }
-        // System.out.println(Arrays.asList(ingredients));
+        // System.out.println(Arrays.asList(baseIngredients));
 
         List<Float> ingredientQuantity = (List<Float>) stepObject.get("ingredientQuantity");
         // System.out.println(ingredientQuantity);

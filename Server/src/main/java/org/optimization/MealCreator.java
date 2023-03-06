@@ -28,6 +28,7 @@ public class MealCreator {
 
         tx.commit();
         tx.close();
+        sessionFactory.close();
     }
 
 }

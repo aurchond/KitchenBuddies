@@ -183,16 +183,21 @@ public class RestApi {
     }
 
     @PostMapping("/RequestMealSessionSteps")
-    public List<MealSessionUsersSteps> RequestMealSessionSteps(@Valid @RequestBody MealSessionInfo mealSessionInfo) {
+    public ResponseEntity<Object> RequestMealSessionSteps(@Valid @RequestBody MealSessionInfo mealSessionInfo) {
+        try {
+            KitchenConstraint kitchenConstraints = mealSessionInfo.kitchenConstraints;
+            List<Long> recipeIDs = mealSessionInfo.recipeIDs;
+            //Should be emails
+            List<String> includedFriends = mealSessionInfo.includedFriends;
+            List<MealSessionUsersSteps> response = GenerateMeal.SetupMealSteps(kitchenConstraints, recipeIDs, includedFriends);
 
-        KitchenConstraint kitchenConstraints = mealSessionInfo.kitchenConstraints;
-        List<Long> recipeIDs = mealSessionInfo.recipeIDs;
-        //Should be emails
-        List<String> includedFriends = mealSessionInfo.includedFriends;
-        List<MealSessionUsersSteps> response = GenerateMeal.SetupMealSteps(kitchenConstraints, recipeIDs, includedFriends);
-
-         //return meal session steps
-        return response;
+            //return meal session steps
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            List<MealSessionUsersSteps> error = new ArrayList<MealSessionUsersSteps>();
+            // In case another error occurs
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+        }
     }
 
 

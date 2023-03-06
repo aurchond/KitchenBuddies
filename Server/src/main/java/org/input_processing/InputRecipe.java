@@ -53,7 +53,7 @@ public class InputRecipe {
             this.totalTime = (int)cookTime;
         } catch (DateTimeParseException dp) {
             this.totalTime = 0;
-            dp.printStackTrace();
+            System.out.println("TotalTime Duration is type either than isoTime");
         }
 
     }
@@ -68,7 +68,7 @@ public class InputRecipe {
             this.cookTime = (int)cookTime;
         } catch (DateTimeParseException dp) {
             this.cookTime = 0;
-            dp.printStackTrace();
+            System.out.println("CookTime Duration is type either than isoTime");
         }
     }
 
@@ -79,7 +79,7 @@ public class InputRecipe {
             this.prepTime = (int)prepTime;
         } catch (DateTimeParseException dp) {
             this.prepTime = 0;
-            dp.printStackTrace();
+            System.out.println("PrepTime Duration is type either than isoTime");
         }
     }
 

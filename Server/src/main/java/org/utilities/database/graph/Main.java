@@ -9,7 +9,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-        buildSampleRecipe();
+        // buildSampleRecipe();
 
 //        System.out.println(session.countEntitiesOfType(Step.class) + " stations saved");
 //        getRoute("Step 1", "Step 3", session);
@@ -17,22 +17,22 @@ public class Main {
 
     }
 
-    private static void buildSampleRecipe() {
-        System.out.println("Hello world!");
-        final Session session = RecipeHelper.createSession();
-        Transaction tx = session.beginTransaction();
+//     private static void buildSampleRecipe() {
+//         System.out.println("Hello world!");
+//         final Session session = RecipeHelper.createSession();
+//         Transaction tx = session.beginTransaction();
 
-        // These recipes are hard coded for testing purposes
-//        createAsparagus(session);
-//        createChicken(session);
-        // createBakedRotini(session);
-//        createFriedRice(session);
-//        createSalmon(session);
+//         // These recipes are hard coded for testing purposes
+// //        createAsparagus(session);
+// //        createChicken(session);
+//         // createBakedRotini(session);
+// //        createFriedRice(session);
+// //        createSalmon(session);
 
-        tx.commit();
-        tx.close();
-        //Do you have to close the session?
-    }
+//         tx.commit();
+//         tx.close();
+//         //Do you have to close the session?
+//     }
 
     /*
     //https://www.simplyrecipes.com/recipes/asparagus/
