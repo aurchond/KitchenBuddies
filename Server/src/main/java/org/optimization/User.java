@@ -1,5 +1,8 @@
 package org.optimization;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User implements Comparable<User> {
     String email;
     Integer skillLevel;
@@ -7,19 +10,19 @@ public class User implements Comparable<User> {
     private UserTask head;
     private UserTask tail;
     // Only updated on resource tasks
-    private UserTask recent;
+    private List<UserTask> recents;
     // Int counter of how much work User is currently tasked
     private Integer allottedTime;
     // Track where the current user is finished working
-    private Integer currentTime;
+    private List<Integer> currentTime;
 
     public User(String email) {
         this.head = null;
         this.tail = null;
-        this.recent = null;
+        this.recents = new ArrayList<>();
 
         this.allottedTime = 0;
-        this.currentTime = 0;
+        this.currentTime = new ArrayList<>();
         this.email = email;
         this.skillLevel = 2;//TODO: Check what default should be
     }
@@ -27,10 +30,10 @@ public class User implements Comparable<User> {
     public User(String email, Integer skillLevel) {
         this.head = null;
         this.tail = null;
-        this.recent = null;
+        this.recents = new ArrayList<>();
 
         this.allottedTime = 0;
-        this.currentTime = 0;
+        this.currentTime = new ArrayList<>();
         this.email = email;
         this.skillLevel = skillLevel;
     }
@@ -59,28 +62,54 @@ public class User implements Comparable<User> {
         this.tail = tail;
     }
 
-    public UserTask getRecent() {
-        return recent;
+    public List<UserTask> getRecents() {
+        return recents;
+    }
+    public UserTask getRecentsIdx(Integer idx) {
+        if(idx == -1){
+            return null;
+        }
+        return this.recents.get(idx);
     }
 
     public String getEmail() {
         return email;
     }
 
-    public Integer getCurrentTime() {
-        return currentTime;
+    public List<Integer> getCurrentTime() {
+        return this.currentTime;
     }
 
-    public void setCurrentTime(Integer currentTime) {
+    public Integer getCurrentIdx(Integer idx) {
+        if(idx == -1){
+            return 0;
+        }
+        return this.currentTime.get(idx);
+    }
+
+    public void setCurrentTime(List<Integer> currentTime) {
         this.currentTime = currentTime;
     }
 
-    public UserTask getRecentTask() {
-        return recent;
+    public void setCurrentIdx(Integer currentTime, Integer idx) {
+        if(idx == -1){
+            this.currentTime.add(currentTime);
+        }else{
+            this.currentTime.set(idx, currentTime);
+        }
+        //CURRENTLY ONLY ADDING TIMES NOT REMOVING ANY WHEN A GAP GETS TOO SMALL
     }
 
-    public void setRecentTask(UserTask recent) {
-        this.recent = recent;
+    public void setRecents(List<UserTask> recents) {
+        this.recents = recents;
+    }
+    public void setRecentTask(UserTask recents, Integer idx) {
+        if(idx == -1){
+            this.recents.add(recents);
+        }else{
+            this.recents.set(idx, recents);
+        }
+        //CURRENTLY ONLY ADDING TIMES NOT REMOVING ANY WHEN A GAP GETS TOO SMALL
     }
 
     public Integer getAllottedTime() {
@@ -122,12 +151,23 @@ public class User implements Comparable<User> {
 
         System.out.println(stepList);
     }
-    public Integer getLeastUserTime(){
-        return (recent != null) ? recent.getStartTime() + recent.getUserTime() : 0;
+    public Integer getLeastUserTime(Integer userTime){
+        if(recents.size() == 0){
+            return -1;
+        }else{
+            for(int i=0; i<recents.size(); i++){
+                if(recents.get(i).getNext() == null){
+                    return i;
+                }else if(recents.get(i).getNext().getStartTime() - currentTime.get(i) > userTime){
+                    return i;
+                }
+            }
+            return recents.size()-1;
+        }
     }
 
     @Override
     public int compareTo(User o) {
-        return this.getLeastUserTime().compareTo(o.getLeastUserTime() );
+        return this.getAllottedTime().compareTo(o.getAllottedTime());
     }
 }

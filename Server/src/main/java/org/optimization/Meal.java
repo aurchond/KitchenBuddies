@@ -13,9 +13,9 @@ public class Meal {
     // value = Hashmap<String, Int> (i.e. Bowl2.3, 1)
     // Bowl2.3 represents the 2nd bowl in RecipeId 3. The value 1 is a map to bowl 1 in our constraints Hashmap
     // mapRecipeResToCon = mapRecipeResourceToConstraint
-    HashMap<String, HashMap<String, Integer>> mapRecipeResToCon = new HashMap<String, HashMap<String, Integer>>();
-    HashMap<String, String> burnerMap = new HashMap<String, String>();
-    HashMap<String, List<Resource>> constraints = new HashMap<String, List<Resource>>();
+    HashMap<String, HashMap<String, Integer>> mapRecipeResToCon = new HashMap<>();
+    HashMap<String, String> burnerMap = new HashMap<>();
+    HashMap<String, List<Resource>> constraints = new HashMap<>();
 
     public Meal () {
         burnerMap.put("skillet", "burner");
@@ -47,9 +47,7 @@ public class Meal {
         }
 
         PriorityQueue<User> users = new PriorityQueue<>();
-        for (User u : buddies) {
-            users.add(u);
-        }
+        users.addAll(buddies);
 
         while (evalSteps.size() > 0) {
             // Find step to assign to user based on timeLeft
@@ -73,7 +71,8 @@ public class Meal {
     ) {
         // Check which user has the least amount of work so
         User user = buddies.poll();
-        Integer leastUserTime = user.getLeastUserTime();
+        Integer leastTimeIdx = user.getLeastUserTime(s.getUserTime());
+        Integer leastUserTime = user.getCurrentIdx(leastTimeIdx);
 
         // Check if constraint is available at this time
         // holding holdingResource and resourcesRequired
@@ -85,13 +84,13 @@ public class Meal {
             System.out.println("Holding Resource is NULL?!");
         }
 
-        List<Object> taskResources = findTimeToGetConstraints(leastUserTime, s, holdingResource, resources);
+        List<Object> taskResources = findTimeToGetConstraints(leastUserTime+s.getUserTime()-s.getStepTime(), s, holdingResource, resources);
 
         if (s.getHoldingResource() != null) {
             resources.add(0, holdingResource);
         }
 
-        if (appendResourceTaskToUser(user, s, (Integer) taskResources.get(0), s.getUserTime())) {
+        if (appendResourceTaskToUser(user, s, (Integer) taskResources.get(0), s.getUserTime(), leastTimeIdx)) {
             updateResourceTimes(s, resources, constraints, (List<Integer>) taskResources.get(1), (Integer) taskResources.get(0));
         } else {
             // TODO: Do something if false?
@@ -102,11 +101,6 @@ public class Meal {
         return user;
     }
 
-    private Integer findLeastTimeUser() {
-        // TODO: Change user list to a min heap. Return the lowest value in the heap
-        return 0;
-    }
-
     private List<Object> findTimeToGetConstraints(
             Integer leastUserTime,
             Step s,
@@ -115,10 +109,10 @@ public class Meal {
         //TODO: make sure this checks kitchen constraints
 
         // The resources that we are using (by id of objects)
-        List<Integer> resourceIds = new ArrayList<Integer>();
+        List<Integer> resourceIds = new ArrayList<>();
 
         // earliestTimes is the time of the resources
-        List<Integer> earliestTimes = new ArrayList<Integer>();
+        List<Integer> earliestTimes = new ArrayList<>();
 
         // Split holdingResource "Bowl2.3" into "Bowl" and "2.3"
         String sHR = hResource;
@@ -180,8 +174,8 @@ public class Meal {
 
         Integer taskStart = Collections.max(earliestTimes);
 
-        // Find earliest time
-        List<Object> returnStuff = new ArrayList<Object>();
+        // Find the earliest time
+        List<Object> returnStuff = new ArrayList<>();
         returnStuff.add(taskStart);
         returnStuff.add(resourceIds);
 
@@ -227,7 +221,7 @@ public class Meal {
 
             resourceIds.add(optimalIdx);
             // Resource not in mapRecipeResToCon so add a new one
-            HashMap<String, Integer> resourceIdMapping = new HashMap<String, Integer>();
+            HashMap<String, Integer> resourceIdMapping = new HashMap<>();
             resourceIdMapping.put(recResId, optimalIdx);
             mapRecipeResToCon.put(hResourceType, resourceIdMapping);
 
@@ -241,13 +235,13 @@ public class Meal {
         // TODO: Add list functionality to account for gaps
         for (Integer i = 0; i < resources.size(); i++) {
             Resource holdResource = constraints.get(resources.get(i))//get the resource id list for that type
-                    .get(resourceIds.get(i));//get the resource of a sepecifc id
+                    .get(resourceIds.get(i));//get the resource of a specific id
 
             holdResource.fillGapAt(taskStart, s.getStepTime());//update the time at that id to the amount of time it takes for the step to occur
         }
     }
 
-    private Boolean appendResourceTaskToUser(User user, Step s, Integer taskStart, Integer userTime) {
+    private Boolean appendResourceTaskToUser(User user, Step s, Integer taskStart, Integer userTime, Integer leastTimeIdx) {
         // TODO: Change second parameter to userTime for a task
         //Check it has enough time
         //add it to the user -> via link list
@@ -256,50 +250,50 @@ public class Meal {
         //c
         // Check if there's enough space to add task
         Integer stepTime = s.getStepTime();
-        UserTask recent = user.getRecentTask();
+        UserTask recent = user.getRecentsIdx(leastTimeIdx);
         if (recent != null && recent.getNext() != null && (taskStart + stepTime > recent.getNext().startTime)) {
             return false;
         }
 
-        taskStart = user.getCurrentTime() > stepTime ? user.getCurrentTime() : stepTime;
+        taskStart = user.getCurrentIdx(leastTimeIdx) > taskStart ? user.getCurrentIdx(leastTimeIdx) : taskStart;
         UserTask newTask = new UserTask(s, taskStart+stepTime-userTime, userTime);
 
         //WEIRD PLAUSIBLE SCENARIO WHAT IS THE FIRST ITEM YOU ADD IS A TIME DEPENDENCY
         // if resources are needed and found then Insert task into user
         if (user.getHead() == null) {
             user.setHead(newTask);
-            user.setRecentTask(newTask);
+            user.setRecentTask(newTask, leastTimeIdx);
             user.setTail(newTask);
 
             user.setAllottedTime(user.getAllottedTime() + userTime);
-            user.setCurrentTime(taskStart + stepTime);
+            user.setCurrentIdx(taskStart + stepTime, leastTimeIdx);
             //TODO in the fall: can we fill in gaps created by waiting for a resource effectively
 
         } else if (recent.getNext() == null) {
             newTask.setPrev(recent);
             recent.setNext(newTask);
             // Append to end of list
-            user.setRecentTask(newTask);
+            user.setRecentTask(newTask, leastTimeIdx);
             user.setTail(newTask);
 
             user.setAllottedTime(user.getAllottedTime() + userTime);
             // TODO: Fix current time
-            user.setCurrentTime(taskStart + stepTime);
+            user.setCurrentIdx(taskStart + stepTime, leastTimeIdx);
 
         } else {
             // there's enough space to insert
-            // Insert newTask between recent and its old next task
+            //  newTask between recent and its old next task
             UserTask nextNode = recent.getNext();
             nextNode.setPrev(newTask);
             newTask.setNext(nextNode);
             newTask.setPrev(recent);
             recent.setNext(newTask);
 
-            user.setRecentTask(newTask);
+            user.setRecentTask(newTask, leastTimeIdx);
 
             // Update counters
             user.setAllottedTime(user.getAllottedTime() + userTime);
-            user.setCurrentTime(taskStart + stepTime);
+            user.setCurrentIdx(taskStart + stepTime, leastTimeIdx);
         }
         return true;
     }
