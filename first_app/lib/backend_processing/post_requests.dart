@@ -45,7 +45,7 @@ Future<MealSessionSteps?> requestMealSessionSteps(MealSessionStepsRequest? mealS
 Future<List<MealSessionSteps?>> getMealSessionSteps(MealSessionStepsRequest? mealSessionStepsRequest) async {
   List<MealSessionSteps?> allMealSessionSteps = <MealSessionSteps>[];
   try {
-    final uri = Uri.parse("https://mocki.io/v1/18306fbf-cf36-4443-ab63-dcf147243121");
+    final uri = Uri.parse("https://mocki.io/v1/387e0619-762c-48e8-bd6f-130b8c5f9efa");
     final headers = {HttpHeaders.contentTypeHeader: 'application/json'};
     final response = await http.get(uri, headers: headers);
 
@@ -104,7 +104,7 @@ Future<void> addUser(String email, String username) async {
   final body = jsonEncode(<String, String>{
     "userEmail": email,
     "skillLevel": "2",
-    "username": username
+    "userName": username
   });
   Response? response = await sendPostRequest("AddUser", body);
 }
