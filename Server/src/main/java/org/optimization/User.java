@@ -103,10 +103,11 @@ public class User implements Comparable<User> {
     public void setRecents(List<UserTask> recents) {
         this.recents = recents;
     }
-    public void setRecentTask(UserTask recents, Integer idx) {
+    public void setRecentIdx(UserTask recents, Integer idx) {
         if(idx == -1){
             this.recents.add(recents);
         }else{
+            //moves pointer to next task before gap
             this.recents.set(idx, recents);
         }
         //CURRENTLY ONLY ADDING TIMES NOT REMOVING ANY WHEN A GAP GETS TOO SMALL
@@ -151,7 +152,7 @@ public class User implements Comparable<User> {
 
         System.out.println(stepList);
     }
-    public Integer getLeastUserTime(Integer userTime){
+    public Integer getLeastTimeIdx(Integer userTime){
         if(recents.size() == 0){
             return -1;
         }else{

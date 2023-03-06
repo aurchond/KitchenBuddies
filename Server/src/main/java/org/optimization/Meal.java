@@ -103,7 +103,7 @@ public class Meal {
         User firstUser = new User("temp", 1);
         User user = buddies.poll();
 
-        Integer leastTimeIdx = user.getLeastUserTime(s.getUserTime());
+        Integer leastTimeIdx = user.getLeastTimeIdx(s.getUserTime());
         Integer leastUserTime = user.getCurrentIdx(leastTimeIdx);
         Boolean foundUserForTask = false;
         List<User> triedUsers = new ArrayList<User>();
@@ -360,7 +360,7 @@ public class Meal {
         // if resources are needed and found then Insert task into user
         if (user.getHead() == null) {
             user.setHead(newTask);
-            user.setRecentTask(newTask, leastTimeIdx);
+            user.setRecentIdx(newTask, leastTimeIdx);
             user.setTail(newTask);
 
             user.setAllottedTime(user.getAllottedTime() + userTime);
@@ -371,7 +371,7 @@ public class Meal {
             newTask.setPrev(recent);
             recent.setNext(newTask);
             // Append to end of list
-            user.setRecentTask(newTask, leastTimeIdx);
+            user.setRecentIdx(newTask, leastTimeIdx);
             user.setTail(newTask);
 
             user.setAllottedTime(user.getAllottedTime() + userTime);
@@ -387,7 +387,7 @@ public class Meal {
             newTask.setPrev(recent);
             recent.setNext(newTask);
 
-            user.setRecentTask(newTask, leastTimeIdx);
+            user.setRecentIdx(newTask, leastTimeIdx);
 
             // Update counters
             user.setAllottedTime(user.getAllottedTime() + userTime);
