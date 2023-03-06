@@ -51,7 +51,7 @@ public class Step implements Comparable<Step> {
     private String instructions;
 
     private String action; // what is the step actually doing? i.e. frying, baking, chopping, dicing, etc.
-
+    private Integer earliestTimeSchedule;
 
     @Relationship(type = Connection.TYPE, direction = Relationship.OUTGOING)
     private Set<Connection> connections = new HashSet<>();
@@ -74,6 +74,7 @@ public class Step implements Comparable<Step> {
         this.name = this.nodeID;
         this.userTime = userTime;
         this.action = action;
+        this.earliestTimeSchedule = 0;
     }
 
     //for steps like: "preheat oven to 350 degrees", there are no ingredients or resources required
@@ -90,6 +91,7 @@ public class Step implements Comparable<Step> {
         this.nodeID = Long.toString(recipeID) + "." + Integer.toString(stepID);
         this.name = this.nodeID;
         this.userTime = userTime;
+        this.earliestTimeSchedule = 0;
     }
 
     public Step() {
@@ -121,6 +123,7 @@ public class Step implements Comparable<Step> {
     public List<String> getResourcesRequired() { return resourcesRequired; }
     public String getInstructions() {return instructions;}
     public Set<Connection> getConnections() { return connections; }
+    public Integer getEarliestTimeSchedule() {return this.earliestTimeSchedule;}
     public List<Connection> getTimeDependencies() {
         List<Connection> stepConnections = new ArrayList<Connection>();
 
@@ -159,6 +162,7 @@ public class Step implements Comparable<Step> {
     public void setIngredientList(List<String> ingredientList) { this.ingredientList = ingredientList; }
     public void setIngredientQuantity(List<Float> ingredientQuantity) { this.ingredientQuantity = ingredientQuantity; }
     public void setResourcesRequired(List<String> resourcesRequired) { this.resourcesRequired = resourcesRequired; }
+    public void setEarliestTimeSchedule(Integer earliestTimeSchedule) {this.earliestTimeSchedule = earliestTimeSchedule;}
     public void addConnection(Step end) {
         Connection c = new Connection(this, end);
         this.connections.add(c);
