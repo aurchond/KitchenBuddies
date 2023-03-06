@@ -16,11 +16,16 @@ public class Meal {
     HashMap<String, HashMap<String, Integer>> mapRecipeResToCon = new HashMap<String, HashMap<String, Integer>>();
     HashMap<String, String> burnerMap = new HashMap<String, String>();
     HashMap<String, List<Resource>> constraints = new HashMap<String, List<Resource>>();
+    HashMap<Integer, Integer> skillLevels = new HashMap<Integer, Integer>();
 
     public Meal () {
         burnerMap.put("skillet", "burner");
         burnerMap.put("pot", "burner");
         burnerMap.put("pan", "burner");
+
+        skillLevels.put(1, 0);
+        skillLevels.put(2, 2);
+        skillLevels.put(3, 4);
     }
 
     public void createMeal(List<Recipe> recipes, List<User> buddies, HashMap<String, List<Resource>> kConstraints) {
@@ -56,55 +61,139 @@ public class Meal {
             Step currStep = evalSteps.poll();
             System.out.println("Working on " + currStep.getNodeID());
 
-            // Helper function -> assign Step to User
-            //TODO: switch priorUser to time a task was scheduled and pass it to the steps that depend on it
-            User priorUser = this.mapResourceStepToUser(currStep, users);
+            /*
+                // LOOP through current node and previous time dependent tasks
+                // Compare Time Dependant Nodes against current time
+                // If they need to get scheduled at this time that happens now
+                // This ensures they get priority
+                // Does this need monitoring
+                    // if so does it have someone to watch it
+                        // Find user who has been available the longest
+                        // Check all user time counters, the one with the least is selected
+                // For init protoype, assume only elements, oven, big applicances for resources with infinite pans
+            */
+            List<Step> currentTimeDep = new ArrayList<Step>();
+            currentTimeDep.add(currStep);
 
-            // Add all resource dependent previous tasks from the current node to the evalNodes
-            for (Connection c : currStep.getResourceDependencies()) {
-                evalSteps.add(c.getEndNode());
+            Integer earliestTimeForOtherDependencies = 0;
+
+            // currentTimeDep
+            while (currentTimeDep.size() != 0){
+                Step step = currentTimeDep.remove(0);
+                earliestTimeForOtherDependencies = this.mapResourceStepToUser(step, users);
+
+                for (Connection c : currStep.getResourceDependencies()) {
+                    Step dep = c.getEndNode();
+                    Integer earliestTime = dep.getEarliestTimeSchedule() + earliestTimeForOtherDependencies;
+                    dep.setEarliestTimeSchedule(earliestTime);
+                    if (dep.getStepTime() != dep.getUserTime()) {
+                        // Time Dependencies - do these right away
+                        currentTimeDep.add(dep);
+                    } else {
+                        // Add all resource dependent previous tasks from the current node to the evalNodes
+                        evalSteps.add(dep);
+                    }
+                }
             }
         }
     }
 
-    private User mapResourceStepToUser(
+    private Integer mapResourceStepToUser(
             Step s,
             PriorityQueue<User> buddies
     ) {
-        // Check which user has the least amount of work so
+        User firstUser = new User("temp", 1);
         User user = buddies.poll();
-        Integer leastUserTime = user.getLeastUserTime();
+        Boolean foundUserForTask = false;
+        List<User> triedUsers = new ArrayList<User>();
+
+        Integer timeComplete = 0;
+
+        while(!foundUserForTask) {
+
+            if (firstUser.getEmail() == user.getEmail()) {
+                // EDGE CASE
+                // We've tried every user and it doesn't work
+                // Force it to be the user with less work but find a time that prioritizes User first
+                System.out.println("Couldn't find someone to do the task");
+                break;
+            }
+            
+            if (firstUser.getEmail() == "temp") {
+                firstUser = user;
+            }
+
+            Integer userAvailableTime = Math.max(user.getLeastUserTime(), s.getEarliestTimeSchedule());
+
+            List<String> resources = s.getResourcesRequired();
+            String holdingResource = s.getHoldingResource() != null ? s.getHoldingResource() : "";
+    
+            if (holdingResource.equals("")) {
+                System.out.println("Holding Resource is NULL?!");
+            }
+
+            Integer bufferedStepTime = 0;
+
+            if (s.getStepTime() == s.getUserTime()) {
+                // Use the skill level to add a buffer for the task time
+                s.setStepTime(s.getStepTime() + this.skillLevels.get(user.skillLevel));
+                s.setUserTime(s.getUserTime() + this.skillLevels.get(user.skillLevel));
+            }
+    
+            List<Object> taskResources = findTimeToGetConstraints(userAvailableTime, s, holdingResource, resources);
+    
+            if (s.getHoldingResource() != null) {
+                resources.add(0, holdingResource);
+            }
+    
+            if (appendResourceTaskToUser(user, s, (Integer) taskResources.get(0), s.getUserTime())) {
+                updateResourceTimes(s, resources, constraints, (List<Integer>) taskResources.get(1), (Integer) taskResources.get(0));
+                timeComplete = (Integer)taskResources.get(0) + s.getStepTime();
+                foundUserForTask = true;
+            } else {
+                // The resources do not work with this user
+                // Try another user
+                triedUsers.add(user);
+                if (buddies.size() != 0) {
+                    user = buddies.poll();
+                } else {
+                    // No users work, we will try the first user again
+                    user = triedUsers.get(0);
+                }
+            }
+        }
+        
+        for (User u: triedUsers) {
+            buddies.add(u);
+        }
+
+        // Returns the earliest time that it's dependent tasks can start
+        return timeComplete;
+        
+//        UserTask recent = buddies.peek().getRecent();
+//
+//
+//
+//        Integer leastUserTime = (recent != null) ? recent.getStartTime() + recent.getUserTime() : 0;
+//        User user = buddies.peek();
+//        Integer userIdx = 0;
+//
+//        // TODO: Change this process to a min heap?
+//
+//        for (User u: buddies) {
+//            recent = u.getRecent();
+//            int recentEndTime = (recent != null) ? recent.getStartTime() + recent.getUserTime() : 0;
+//
+//            if (recentEndTime < leastUserTime) {
+//                leastUserTime = recentEndTime;
+//                user = u;
+//                userIdx = 0;//TODO: this should be set to an index
+//            }
+//        }
 
         // Check if constraint is available at this time
         // holding holdingResource and resourcesRequired
         //TODO: make sure this adds time depending on a user's skill level
-        List<String> resources = s.getResourcesRequired();
-        String holdingResource = s.getHoldingResource() != null ? s.getHoldingResource() : "";
-
-        if (holdingResource.equals("")) {
-            System.out.println("Holding Resource is NULL?!");
-        }
-
-        List<Object> taskResources = findTimeToGetConstraints(leastUserTime, s, holdingResource, resources);
-
-        if (s.getHoldingResource() != null) {
-            resources.add(0, holdingResource);
-        }
-
-        if (appendResourceTaskToUser(user, s, (Integer) taskResources.get(0), s.getUserTime())) {
-            updateResourceTimes(s, resources, constraints, (List<Integer>) taskResources.get(1), (Integer) taskResources.get(0));
-        } else {
-            // TODO: Do something if false?
-            // Go back to top of function
-        }
-
-        // Return user so that we may be able to prioritize this user to work on time dependent tasks
-        return user;
-    }
-
-    private Integer findLeastTimeUser() {
-        // TODO: Change user list to a min heap. Return the lowest value in the heap
-        return 0;
     }
 
     private List<Object> findTimeToGetConstraints(
@@ -247,7 +336,7 @@ public class Meal {
         }
     }
 
-    private Boolean appendResourceTaskToUser(User user, Step s, Integer taskStart, Integer userTime) {
+    private Boolean appendResourceTaskToUser(User user, Step s, Integer taskStart) {
         // TODO: Change second parameter to userTime for a task
         //Check it has enough time
         //add it to the user -> via link list
@@ -255,7 +344,7 @@ public class Meal {
 
         //c
         // Check if there's enough space to add task
-
+        Integer userTime = s.getUserTime();
         UserTask recent = user.getRecentTask();
         if (recent != null && recent.getNext() != null && (taskStart + userTime > recent.getNext().startTime)) {
             return false;
@@ -264,6 +353,7 @@ public class Meal {
         taskStart = user.getCurrentTime() > taskStart ? user.getCurrentTime() : taskStart;
         UserTask newTask = new UserTask(s, taskStart, userTime);
 
+        // ASSUME FOR RESOURCE DEPENDENT TASK
         // if resources are needed and found then Insert task into user
         if (user.getHead() == null) {
             user.setHead(newTask);
@@ -272,7 +362,6 @@ public class Meal {
 
             user.setAllottedTime(user.getAllottedTime() + userTime);
             user.setCurrentTime(taskStart + userTime);
-            //TODO in the fall: can we fill in gaps created by waiting for a resource effectively
 
         } else if (recent.getNext() == null) {
             newTask.setPrev(recent);
