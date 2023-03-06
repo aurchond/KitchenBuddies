@@ -255,15 +255,16 @@ public class Meal {
 
         //c
         // Check if there's enough space to add task
-
+        Integer stepTime = s.getStepTime();
         UserTask recent = user.getRecentTask();
-        if (recent != null && recent.getNext() != null && (taskStart + userTime > recent.getNext().startTime)) {
+        if (recent != null && recent.getNext() != null && (taskStart + stepTime > recent.getNext().startTime)) {
             return false;
         }
 
-        taskStart = user.getCurrentTime() > taskStart ? user.getCurrentTime() : taskStart;
-        UserTask newTask = new UserTask(s, taskStart, userTime);
+        taskStart = user.getCurrentTime() > stepTime ? user.getCurrentTime() : stepTime;
+        UserTask newTask = new UserTask(s, taskStart+stepTime-userTime, userTime);
 
+        //WEIRD PLAUSIBLE SCENARIO WHAT IS THE FIRST ITEM YOU ADD IS A TIME DEPENDENCY
         // if resources are needed and found then Insert task into user
         if (user.getHead() == null) {
             user.setHead(newTask);
@@ -271,7 +272,7 @@ public class Meal {
             user.setTail(newTask);
 
             user.setAllottedTime(user.getAllottedTime() + userTime);
-            user.setCurrentTime(taskStart + userTime);
+            user.setCurrentTime(taskStart + stepTime);
             //TODO in the fall: can we fill in gaps created by waiting for a resource effectively
 
         } else if (recent.getNext() == null) {
@@ -283,7 +284,7 @@ public class Meal {
 
             user.setAllottedTime(user.getAllottedTime() + userTime);
             // TODO: Fix current time
-            user.setCurrentTime(taskStart + userTime);
+            user.setCurrentTime(taskStart + stepTime);
 
         } else {
             // there's enough space to insert
@@ -298,7 +299,7 @@ public class Meal {
 
             // Update counters
             user.setAllottedTime(user.getAllottedTime() + userTime);
-            user.setCurrentTime(taskStart + userTime);
+            user.setCurrentTime(taskStart + stepTime);
         }
         return true;
     }
