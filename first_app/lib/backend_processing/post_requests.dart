@@ -28,7 +28,7 @@ Future<MealSessionSteps?> requestMealSessionSteps(MealSessionStepsRequest? mealS
   );
   print(response);
 
-  final item = json.decode(response.body);
+  final item = json.decode(response!.body);
   print("item: " + item);
 
   for (int i = 0; i < item.length; i++) {
@@ -42,21 +42,18 @@ Future<MealSessionSteps?> requestMealSessionSteps(MealSessionStepsRequest? mealS
 }
 
 
-Future<List<MealSessionSteps?>?> getMealSessionSteps(MealSessionStepsRequest? mealSessionStepsRequest) async {
-  List<MealSessionSteps?>? allMealSessionSteps = <MealSessionSteps>[];
+Future<List<MealSessionSteps?>> getMealSessionSteps(MealSessionStepsRequest? mealSessionStepsRequest) async {
+  List<MealSessionSteps?> allMealSessionSteps = <MealSessionSteps>[];
   try {
-    final uri = Uri.parse("https://mocki.io/v1/17036dbb-6303-404d-af7d-ca9ac11d578e");
+    final uri = Uri.parse("https://mocki.io/v1/387e0619-762c-48e8-bd6f-130b8c5f9efa");
     final headers = {HttpHeaders.contentTypeHeader: 'application/json'};
     final response = await http.get(uri, headers: headers);
-    print("body: " + response.body);
-    print("item 1: " + json.decode(response.body)[0].toString());
 
     // status code is fine
     if (response.statusCode == 200) {
       final item = json.decode(response.body);
       for (int i = 0; i < item.length; i++) {
-        MealSessionSteps? step = MealSessionSteps.fromJson(item[i]);
-        allMealSessionSteps.add(step);
+        allMealSessionSteps.add(MealSessionSteps.fromJson(item[i]));
       }
     } else {
       print("error");
@@ -64,7 +61,6 @@ Future<List<MealSessionSteps?>?> getMealSessionSteps(MealSessionStepsRequest? me
   } catch (e) {
     log(e.toString());
   }
-  print("made it out of making steps");
   return allMealSessionSteps; //error check?
 }
 
@@ -108,7 +104,7 @@ Future<void> addUser(String email, String username) async {
   final body = jsonEncode(<String, String>{
     "userEmail": email,
     "skillLevel": "2",
-    "username": username
+    "userName": username
   });
   Response? response = await sendPostRequest("AddUser", body);
 }
@@ -145,7 +141,8 @@ Future<Response?> sendPostRequest(String route, String body) async{
     final uri = Uri.http("178.128.227.93:8080",route);
     final headers = {HttpHeaders.contentTypeHeader: 'application/json'};
     final response = await http.post(uri, headers: headers, body: body);
-    //return response;
+    //return response;  https://www.allrecipes.com/recipe/8489220/chimichurri-chicken/
+
     // status code is fine
     if (response.statusCode == 200) {
       return response;
