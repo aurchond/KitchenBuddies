@@ -871,6 +871,7 @@ Pizza
 Saimin
 Sweetened potato chips
 Yogurt-based
+Yogurt
 Vietnamese
 Sakinalu/chakli
 Butter pecan
@@ -1488,6 +1489,8 @@ pepino melon
 Lobster bisque
 Birnen, Bohnen und Speck
 Carrot juice
+juice
+juices
 Villars-Maitre-Chocolatier
 Egg custard
 List of carrot diseases
@@ -3098,6 +3101,7 @@ BeaverTails
 Mayonnaises
 Metworst
 Ground elder
+Ground meat
 Germany
 Kimchi Guk
 Bibim-guksu
@@ -3430,11 +3434,14 @@ Cardamom
 Cardamom, black
 Cinnamomum aromaticum
 Cayenne pepper
+Cayenne
 Celery
 Celery
 Chervil
 Chicory
 Chili pepper
+Chili
+Chili powder
 Buchanania lanzan
 Chives
 Cicely

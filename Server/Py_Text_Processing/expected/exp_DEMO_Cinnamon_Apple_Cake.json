@@ -1,0 +1,474 @@
+[
+    {
+        "1": {
+            "instructions": "Preheat oven to 180 C (350 F) standard / 160 C (320 F) fan-forced",
+            "ingredients": [
+            ],
+            "baseIngredients": [
+            ],
+            "ingredientsQuantity": [
+                180,
+                -1
+            ],
+            "resourcesRequired": [
+                "oven1"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "preheat"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "oven1",
+            "holdingID": 0,
+            "lineNumber": 0
+        }
+    },
+    {
+        "2": {
+            "instructions": " Grease and line an 8-inch round cake pan with baking or parchment paper",
+            "ingredients": [
+                "baking"
+            ],
+            "baseIngredients": [
+                "baking"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "pan1",
+                "baking or parchment paper"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "Grease", 
+                "line"
+            ],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "pan1",
+            "holdingID": 1,
+            "lineNumber": 0
+        }
+    },
+    {
+        "3": {
+            "instructions": "In a large mixing bowl, add flour, baking powder, baking soda, salt and sugar",
+            "ingredients": [
+                "flour",
+                "baking soda",
+                "baking powder",
+                "sugar",
+                "powder",
+                "salt"
+            ],
+            "baseIngredients": [
+                "flour",
+                "powder",
+                "soda",
+                "sugar",
+                "baking",
+                "baking",
+                "salt"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add"
+            ],
+            "stepTime": 6,
+            "userTime": 6,
+            "holdingResource": "bowl1",
+            "holdingID": 2,
+            "lineNumber": 1
+        }
+    },
+    {
+        "4": {
+            "instructions": " Add chopped apple and stir briefly to combine",
+            "ingredients": [
+                "chopped apple"
+            ],
+            "baseIngredients": [
+                "apple"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add",
+                "stir"
+            ],
+            "stepTime": 3,
+            "userTime": 3,
+            "holdingResource": "bowl1",
+            "holdingID": 2,
+            "lineNumber": 1
+        }
+    },
+    {
+        "5": {
+            "instructions": "In a separate bowl, add eggs, vanilla, oil and yogurt",
+            "ingredients": [
+                "oil",
+                "vanilla",
+                "eggs",
+                "yogurt"
+            ],
+            "baseIngredients": [
+                "eggs",
+                "oil",
+                "vanilla", 
+                "yogurt"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl2"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add"
+            ],
+            "stepTime": 3,
+            "userTime": 3,
+            "holdingResource": "bowl2",
+            "holdingID": 3,
+            "lineNumber": 2
+        }
+    },
+    {
+        "6": {
+            "instructions": " Whisk briefly just to break up the egg yolks",
+            "ingredients": [
+                "egg yolks"
+            ],
+            "baseIngredients": [
+                "egg"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl2"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "bowl2",
+            "holdingID": 3,
+            "lineNumber": 2
+        }
+    },
+    {
+        "7": {
+            "instructions": "Add vanilla and egg yolks mix to bowl with flour and gently mix with a wooden spoon until combined, but be careful not to over mix",
+            "ingredients": [
+                "flour",
+                "vanilla",
+                "egg yolks"
+            ],
+            "baseIngredients": [
+                "vanilla",
+                "flour",
+                "egg"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "wooden spoon"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "add",
+                "mix"
+            ],
+            "stepTime": 4,
+            "userTime": 4,
+            "holdingResource": "bowl1",
+            "holdingID": 2,
+            "lineNumber": 3
+        }
+    },
+    {
+        "8": {
+            "instructions": " Spoon cake mix back into prepared pan",
+            "ingredients": [
+                "cake mix"
+            ],
+            "baseIngredients": [
+                "cake"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "pan1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "spoon"
+            ],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "pan1",
+            "holdingID": 1,
+            "lineNumber": 3
+        }
+    },
+    {
+        "9": {
+            "instructions": "To make cinnamon topping, combine cinnamon, sugar and butter in bowl",
+            "ingredients": [
+                "sugar",
+                "cinnamon topping",
+                "butter"
+            ],
+            "baseIngredients": [
+                "cinnamon",
+                "butter",
+                "sugar"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl3"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "combine"
+            ],
+            "stepTime": 3,
+            "userTime": 3,
+            "holdingResource": "bowl3",
+            "holdingID": 4,
+            "lineNumber": 4
+        }
+    },
+    {
+        "10": {
+            "instructions": " Mix together until lumpy and wet",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "bowl3"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "mix"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "bowl3",
+            "holdingID": 4,
+            "lineNumber": 4
+        }
+    },
+    {
+        "11": {
+            "instructions": " Sprinkle over cake batter in pan",
+            "ingredients": [
+                "cake batter"
+            ],
+            "baseIngredients": [
+                "cake"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl3"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "sprinkle"
+            ],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "bowl3",
+            "holdingID": 4,
+            "lineNumber": 4
+        }
+    },
+    {
+        "12": {
+            "instructions": "Bake cake for approximately 30-35 minutes or until a skewer inserted into the middle comes out clean",
+            "ingredients": [
+                "cake"
+            ],
+            "baseIngredients": [
+                "cake"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "skewer",
+                "oven"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "bake",
+                "comes"
+            ],
+            "stepTime": 35,
+            "userTime": 2,
+            "holdingResource": "pan1",
+            "holdingID": 1,
+            "lineNumber": 5
+        }
+    },
+    {
+        "13": {
+            "instructions": " Transfer cake to a wire rack to cool completely",
+            "ingredients": [
+                "cake"
+            ],
+            "baseIngredients": [
+                "cake"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "pan1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "Transfer"
+            ],
+            "stepTime": 0,
+            "userTime": 0,
+            "holdingResource": "pan1",
+            "holdingID": 1,
+            "lineNumber": 5
+        }
+    },
+    {
+        "14": {
+            "instructions": "To make the glaze, mix together sugar and 1 tablespoon milk in bowl",
+            "ingredients": [
+                "sugar",
+                "tablespoon milk"
+            ],
+            "baseIngredients": [
+                "sugar",
+                "milk"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl4"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "mix"
+            ],
+            "stepTime": 4,
+            "userTime": 4,
+            "holdingResource": "bowl4",
+            "holdingID": 5,
+            "lineNumber": 6
+        }
+    },
+    {
+        "15": {
+            "instructions": " Stir until smooth",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "bowl4"
+            ],
+            "prepStep": false,
+            "verbs": ["stir"],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "bowl4",
+            "holdingID": 5,
+            "lineNumber": 6
+        }
+    },
+    {
+        "16": {
+            "instructions": " If the glaze is too thick, add an extra tablespoon of milk",
+            "ingredients": [
+                "extra tablespoon milk"
+            ],
+            "baseIngredients": [
+                "milk"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl4"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "bowl4",
+            "holdingID": 5,
+            "lineNumber": 6
+        }
+    },
+    {
+        "17": {
+            "instructions": " Drizzle glaze all over the cake",
+            "ingredients": [
+                "cake",
+                "glaze"
+            ],
+            "baseIngredients": [
+                "cake",
+                "glaze"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl4"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "bowl4",
+            "holdingID": 5,
+            "lineNumber": 6
+        }
+    }
+]

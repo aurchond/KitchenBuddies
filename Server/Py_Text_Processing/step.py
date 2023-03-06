@@ -54,6 +54,7 @@ time_total_dict = {'preheat': 1,
                    'serve': 1,
                    'set': 1,
                    'pour': 2,
+                   'melt': 2,
                    'snip': 2}
 
 prep_dict = {'preheat':'',
@@ -215,6 +216,9 @@ class Step:
                                 self.stepTime = int(float(Fraction(str(time_check)))*60)
                             elif str(token) in ['minute', 'minutes']:
                                 self.stepTime = int(math.ceil(float(Fraction(str(time_check)))))
+                        
+                        if (str(grandchild) == 'to'):
+                            continue
                         gc_time = int(str(grandchild))
                        # print(gc_time)
                         # time_for_step += str(grandchild)
@@ -278,7 +282,7 @@ class Step:
         else:
             self.userTime = s_time
         
-        if self.stepTime == -1:
+        if self.stepTime == -1 or self.stepTime == 0:
             self.stepTime = 2 
 
     def approx_user_time(self):
@@ -365,7 +369,7 @@ class Step:
                 temp_count = 0
                 for key in hold_res_dic:
                     if str(token) in key: temp_count += 1
-
+                
                 self.holdingResource = str(token) + str(temp_count+1)
                 hold_res_dic[self.holdingResource] = hold_res_count
                 self.holdingID = hold_res_count

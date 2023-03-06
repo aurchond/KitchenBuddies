@@ -1,0 +1,358 @@
+[
+    {
+        "1": {
+            "instructions": "Add the olive oil to a large soup pot and place it over medium-high heat for 2 minutes",
+            "ingredients": [
+                "olive oil"
+            ],
+            "baseIngredients": [
+                "oil"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "add",
+                "place"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 0
+        }
+    },
+    {
+        "2": {
+            "instructions": "  Add the onion",
+            "ingredients": [
+                "onion"
+            ],
+            "baseIngredients": [
+                "onion"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add"
+            ],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 0
+        }
+    },
+    {
+        "3": {
+            "instructions": "  Cook for 5 minutes, stirring occasionally",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 5,
+            "userTime": 5,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 0
+        }
+    },
+    {
+        "4": {
+            "instructions": "Add the ground beef to the pot",
+            "ingredients": [
+                "ground beef"
+            ],
+            "baseIngredients": [
+                "beef"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add"
+            ],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 1
+        }
+    },
+    {
+        "5": {
+            "instructions": "  Break it apart with a wooden spoon",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "wooden spoon",
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "break"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 1
+        }
+    },
+    {
+        "6": {
+            "instructions": "  Cook for 6-7 minutes, until the beef is browned, stirring occasionally",
+            "ingredients": [
+                "beef"
+            ],
+            "baseIngredients": [
+                "beef"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 6,
+            "userTime": 5,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 1
+        }
+    },
+    {
+        "7": {
+            "instructions": "Add the chili powder, cumin, sugar, tomato paste, garlic powder, salt, pepper, and optional cayenne",
+            "ingredients": [
+                "chili powder", 
+                "cumin",
+                "sugar",
+                "garlic powder",
+                "tomato paste",
+                "salt",
+                "pepper", 
+                "optional cayenne"
+            ],
+            "baseIngredients": [
+                "powder",
+                "sugar",
+                "powder",
+                "paste",
+                "pepper",
+                "cumin",
+                "salt", 
+                "cayenne"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add"
+            ],
+            "stepTime": 8,
+            "userTime": 8,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 2
+        }
+    },
+    {
+        "8": {
+            "instructions": "  Stir until well combined",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "combined"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 2
+        }
+    },
+    {
+        "9": {
+            "instructions": "Add the broth, diced tomatoes (with their juice), drained beans, and tomato sauce",
+            "ingredients": [
+                "tomato sauce",
+                "broth",
+                "diced tomatoes",
+                "drained beans"
+            ],
+            "baseIngredients": [
+                "broth",
+                "beans",
+                "tomato", 
+                "sauce"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add",
+                "sauce"
+            ],
+            "stepTime": 6,
+            "userTime": 6,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 3
+        }
+    },
+    {
+        "10": {
+            "instructions": "  Stir well",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "stir"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 3
+        }
+    },
+    {
+        "11": {
+            "instructions": "Bring the liquid to a low boil",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "bring"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 4
+        }
+    },
+    {
+        "12": {
+            "instructions": "  Then, reduce the heat (low to medium-low) to gently simmer the chili, uncovered, for 20-25 minutes, stirring occasionally",
+            "ingredients": [
+                "chili"
+            ],
+            "baseIngredients": [
+                "chili"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "reduce",
+                "simmer"
+            ],
+            "stepTime": 20,
+            "userTime": 2,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 4
+        }
+    },
+    {
+        "13": {
+            "instructions": "Remove the pot from the heat",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "remove"
+            ],
+            "stepTime": 2,
+            "userTime": 0,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 5
+        }
+    },
+    {
+        "14": {
+            "instructions": "  Let the chili rest for 5-10 minutes before serving",
+            "ingredients": [
+                "chili"
+            ],
+            "baseIngredients": [
+                "chili"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "let",
+                "serving"
+            ],
+            "stepTime": 10,
+            "userTime": 5,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 5
+        }
+    }
+]

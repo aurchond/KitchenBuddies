@@ -1,0 +1,196 @@
+[
+    {
+        "1": {
+            "instructions": "Cut the crowns away from the large stems of the broccoli",
+            "ingredients": [
+                "broccoli"
+            ],
+            "baseIngredients": [
+                "broccoli"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "cutting board1"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "cut"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "cutting board1",
+            "holdingID": 0,
+            "lineNumber": 0
+        }
+    },
+    {
+        "2": {
+            "instructions": " Break the crown up into bite-sized florets",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "cutting board1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "break"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "cutting board1",
+            "holdingID": 0,
+            "lineNumber": 0
+        }
+    },
+    {
+        "3": {
+            "instructions": " Rinse the broccoli florets thoroughly",
+            "ingredients": [
+                "broccoli florets"
+            ],
+            "baseIngredients": [
+                "broccoli"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "cutting board1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "rinse"
+            ],
+            "stepTime": 3,
+            "userTime": 3,
+            "holdingResource": "cutting board1",
+            "holdingID": 0,
+            "lineNumber": 0
+        }
+    },
+    {
+        "4": {
+            "instructions": " Peel and discard the thick outer skin of the stems",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "cutting board1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "peel",
+                "discard"
+            ],
+            "stepTime": 3,
+            "userTime": 3,
+            "holdingResource": "cutting board1",
+            "holdingID": 0,
+            "lineNumber": 0
+        }
+    },
+    {
+        "5": {
+            "instructions": " Slice the broccoli stems or cut them into quarters lengthwise",
+            "ingredients": [
+                "broccoli"
+            ],
+            "baseIngredients": [
+                "broccoli"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "cutting board1"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "slice",
+                "cut"
+            ],
+            "stepTime": 4,
+            "userTime": 4,
+            "holdingResource": "cutting board1",
+            "holdingID": 0,
+            "lineNumber": 0
+        }
+    },
+    {
+        "6": {
+            "instructions": "Place 3/4 to 1 inch of water in a saucepan with a pot and bring to a boil",
+            "ingredients": [
+                "water"
+            ],
+            "baseIngredients": [
+                "water"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "place",
+                "bring"
+            ],
+            "stepTime": 5,
+            "userTime": 5,
+            "holdingResource": "pot1",
+            "holdingID": 1,
+            "lineNumber": 1
+        }
+    },
+    {
+        "7": {
+            "instructions": "Add the broccoli to the pot and cover; reduce heat to medium and let cook for 5-6 minutes",
+            "ingredients": [
+                "broccoli"
+            ],
+            "baseIngredients": [
+                "broccoli"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add",
+                "cover",
+                "reduce",
+                "cook"
+            ],
+            "stepTime": 5,
+            "userTime": 5,
+            "holdingResource": "pot1",
+            "holdingID": 1,
+            "lineNumber": 2
+        }
+    },
+    {
+        "8": {
+            "instructions": " As soon as it is pierce-able, remove from heat, place in serving dish",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "pot1",
+            "holdingID": 1,
+            "lineNumber": 2
+        }
+    }
+]

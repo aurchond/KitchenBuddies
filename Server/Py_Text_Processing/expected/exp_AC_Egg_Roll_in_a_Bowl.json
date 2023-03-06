@@ -1,0 +1,237 @@
+[
+    {
+        "1": {
+            "instructions": "Heat a large skillet over medium-high heat",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "skillet1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "heat"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "skillet1",
+            "holdingID": 0,
+            "lineNumber": 0
+        }
+    },
+    {
+        "2": {
+            "instructions": " Add ground meat and cook, stirring, until no longer pink",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "skillet1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add"
+            ],
+            "stepTime": 6,
+            "userTime": 6,
+            "holdingResource": "skillet1",
+            "holdingID": 0,
+            "lineNumber": 0
+        }
+    },
+    {
+        "3": {
+            "instructions": " Drain; return meat to skillet",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "skillet1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "drain",
+                "return"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "skillet1",
+            "holdingID": 0,
+            "lineNumber": 0
+        }
+    },
+    {
+        "4": {
+            "instructions": "Add diced onion, sesame oil, and rice vinegar to the skillet",
+            "ingredients": [
+                "sesame oil",
+                "rice vinegar",
+                "diced onion"
+            ],
+            "baseIngredients": [
+                "onion",
+                "rice",
+                "oil"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "skillet1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add"
+            ],
+            "stepTime": 3,
+            "userTime": 3,
+            "holdingResource": "skillet1",
+            "holdingID": 0,
+            "lineNumber": 1
+        }
+    },
+    {
+        "5": {
+            "instructions": " Cook, stirring, for a few more minutes (until onion is tender)",
+            "ingredients": [
+                "onion"
+            ],
+            "baseIngredients": [
+                "onion"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "skillet1"
+            ],
+            "prepStep": false,
+            "verbs": ["Cook"],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "skillet1",
+            "holdingID": 0,
+            "lineNumber": 1
+        }
+    },
+    {
+        "6": {
+            "instructions": "Add garlic, ginger, soy sauce, hoisin sauce (optional), coleslaw mix, and carrots to the skillet",
+            "ingredients": [
+                "hoisin sauce",
+                "garlic",
+                "coleslaw mix",
+                "ginger", 
+                "carrots", 
+                "soy sauce"
+            ],
+            "baseIngredients": [
+                "garlic",
+                "hoisin",
+                "coleslaw",
+                "ginger", 
+                "carrots", 
+                "soy"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "skillet1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add"
+            ],
+            "stepTime": 6,
+            "userTime": 6,
+            "holdingResource": "skillet1",
+            "holdingID": 0,
+            "lineNumber": 2
+        }
+    },
+    {
+        "7": {
+            "instructions": " Cook, stirring, for about 5-7 more minutes, or until cabbage is wilted",
+            "ingredients": [
+                "cabbage"
+            ],
+            "baseIngredients": [
+                "cabbage"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "skillet1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "wilted"
+            ],
+            "stepTime": 5,
+            "userTime": 5,
+            "holdingResource": "skillet1",
+            "holdingID": 0,
+            "lineNumber": 2
+        }
+    },
+    {
+        "8": {
+            "instructions": "Remove the skillet from the heat",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "skillet1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "remove"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "skillet1",
+            "holdingID": 1,
+            "lineNumber": 3
+        }
+    },
+    {
+        "9": {
+            "instructions": " Stir in green onions and season with salt and pepper, to taste",
+            "ingredients": [
+                "salt",
+                "green onions",
+                "pepper"
+            ],
+            "baseIngredients": [
+                "onions",
+                "pepper",
+                "salt"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "skillet1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "stir",
+                "season"
+            ],
+            "stepTime": 3,
+            "userTime": 3,
+            "holdingResource": "skillet1",
+            "holdingID": 1,
+            "lineNumber": 3
+        }
+    }
+]
