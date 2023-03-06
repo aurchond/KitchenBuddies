@@ -22,10 +22,10 @@ public class Main {
         buddies.add("marley@gmail.com");
 
         List<Long> demoRecipes = new ArrayList<Long>();
-        demoRecipes.add(100L);
-        demoRecipes.add(101L);
-        demoRecipes.add(102L);
-        demoRecipes.add(103L);
+        demoRecipes.add(200L); // Greek Pasta Salad
+        demoRecipes.add(101L); // Schnitzel
+        demoRecipes.add(102L); // Broccoli
+        // demoRecipes.add(103L);
 
         GenerateMeal gm = new GenerateMeal();
         gm.SetupMealSteps(kc, demoRecipes, buddies);

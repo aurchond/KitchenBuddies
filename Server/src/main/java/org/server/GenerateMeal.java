@@ -29,18 +29,18 @@ public class GenerateMeal {
 
         for (Long rId : recipeIDs) {
             Recipe r = getRecipeFromDatabase(rId);
-            r.setResourcesForRecipe(MySqlConnection.getRecipeResourcesFromId(rId));
+            // r.setResourcesForRecipe(MySqlConnection.getRecipeResourcesFromId(rId));
             recipes.add(r);
         }
 
         Meal m = new Meal();
         List<User> buddies = new ArrayList<User>();
-         Integer skillLevel = MySqlConnection.getSkillLevel(kitchenConstraints.userEmail);
-        //Integer skillLevel = 2;
+        //  Integer skillLevel = MySqlConnection.getSkillLevel(kitchenConstraints.userEmail);
+        Integer skillLevel = 2;
         buddies.add(new User(kitchenConstraints.userEmail, skillLevel));
         for (String friend : includedFriends) {
-            skillLevel = MySqlConnection.getSkillLevel(friend);
-            //skillLevel = 2;
+            // skillLevel = MySqlConnection.getSkillLevel(friend);
+            skillLevel = 2;
             buddies.add(new User(friend, skillLevel));
         }
 
@@ -85,17 +85,17 @@ public class GenerateMeal {
 
         List<Resource> cuttingBoards = new ArrayList<Resource>();
         for (int i = 0; i<kitchenConstraints.cuttingBoard; i++) {
-            Resource cuttingBoard = new Resource("cuttingBoard", i);
+            Resource cuttingBoard = new Resource("cutting board", i);
             cuttingBoards.add(cuttingBoard);
         }
-        constraints.put("cuttingBoard", cuttingBoards);
+        constraints.put("cutting board", cuttingBoards);
 
         List<Resource> ovens = new ArrayList<Resource>();
         for (int i = 0; i<kitchenConstraints.oven; i++) {
             Resource oven = new Resource("oven", i);
             ovens.add(oven);
         }
-        constraints.put("cuttingBoard", ovens);
+        constraints.put("oven", ovens);
 
         List<Resource> burners = new ArrayList<Resource>();
         Integer numBurners = 4;

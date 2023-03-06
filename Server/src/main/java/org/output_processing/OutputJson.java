@@ -22,17 +22,19 @@ public class OutputJson {
             List<RecipeStep> recipeSteps = new ArrayList<>();
             UserTask task = u.getTail();
             while (task != null) {
-                Step s = task.getStep();
-                RecipeStep recipeStep = new RecipeStep();
-                recipeStep.setNumber(s.getNodeID());
-                recipeStep.setInstructions(s.getInstructions());
-                recipeStep.setIngredientList(s.getIngredientList());
-                recipeStep.setIngredientQuantity(s.getIngredientQuantity());
-                //TODO: SET dependencyItem and nextUserEmail
+                if(task.getStep() != null){
+                    Step s = task.getStep();
+                    RecipeStep recipeStep = new RecipeStep();
+                    recipeStep.setNumber(s.getNodeID());
+                    recipeStep.setInstructions(s.getInstructions());
+                    recipeStep.setIngredientList(s.getIngredientList());
+                    recipeStep.setIngredientQuantity(s.getIngredientQuantity());
+                    //TODO: SET dependencyItem and nextUserEmail
 
 
-                recipeSteps.add(recipeStep);
-                task = task.getPrev();
+                    recipeSteps.add(recipeStep);
+                    task = task.getPrev();
+                }
             }
             //TODO: FILL IN notes LATER
             String notes = "";

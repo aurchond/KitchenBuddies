@@ -152,6 +152,7 @@ public class User implements Comparable<User> {
 
         System.out.println(stepList);
     }
+    
     public Integer getLeastTimeIdx(Integer userTime){
         if(recents.size() == 0){
             return -1;

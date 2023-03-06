@@ -41,7 +41,8 @@ public class Resource {
     public Integer canFillGap(Integer startFill, Integer fillLength) {
         ResourceGap gapToSplit = firstGap;
         //TODO: Double check that this never gets null and errors
-        while (firstGap.endTime <= startFill + fillLength || firstGap.startTime > startFill) {
+        // + fillLength
+        while (gapToSplit.endTime <= startFill + fillLength || (gapToSplit.startTime > startFill && gapToSplit.endTime - gapToSplit.startTime < fillLength)) {
             gapToSplit = gapToSplit.getNextGap();
         }
         if (gapToSplit.getStartTime() <= startFill && gapToSplit.getEndTime() >= (startFill + fillLength)) {
@@ -55,7 +56,7 @@ public class Resource {
         ResourceGap prevGap = null;
         ResourceGap gapToSplit = firstGap;
         //TODO: Double check that this never gets null and errors
-        while (firstGap.endTime <= startFill + fillLength || firstGap.startTime > startFill) {
+        while (gapToSplit.endTime <= startFill + fillLength || gapToSplit.startTime > startFill) {
             prevGap = gapToSplit;
             gapToSplit = gapToSplit.getNextGap();
         }
@@ -89,6 +90,7 @@ public class Resource {
                     gapToSplit.setEndTime(startFill - 1);
                     gapToSplit.setNextGap(newGap);
                 }
+
             }
             System.out.println("This should result in the below line being reached");
         }

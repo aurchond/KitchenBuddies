@@ -95,7 +95,7 @@ public class Step implements Comparable<Step> {
     }
 
     public Step() {
-
+        this.earliestTimeSchedule = 0;
     }
 
     public void addConnection(Step target, int distance) {
