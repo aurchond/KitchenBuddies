@@ -144,14 +144,20 @@ public class Meal {
             String holdingResource = s.getHoldingResource() != null ? s.getHoldingResource() : "";
             List<String> resources = new ArrayList<String>();
             resources.add(0, holdingResource);
+            String resourceType = holdingResource.substring(0, holdingResource.length() - 1);
 
+            List<Object> taskResources = new ArrayList<Object>();
+            taskResources.add(userAvailableTime);
 
+            if (this.constraints.get(resourceType) != null) {
+                taskResources = findTimeToGetConstraints(userAvailableTime, s, holdingResource, resources);
+            }
 
-            List<Object> taskResources = findTimeToGetConstraints(userAvailableTime, s, holdingResource, resources);
-    
             triedUsers.add(user);
             if (appendResourceTaskToUser(user, s, (Integer) taskResources.get(0), leastTimeIdx)) {
-                updateResourceTimes(s, resources, constraints, (List<Integer>) taskResources.get(1), (Integer) taskResources.get(0));
+                if (this.constraints.get(resourceType) != null) {
+                    updateResourceTimes(s, resources, constraints, (List<Integer>) taskResources.get(1), (Integer) taskResources.get(0));
+                }
                 timeComplete = (Integer)taskResources.get(0) + s.getStepTime();
                 foundUserForTask = true;
 

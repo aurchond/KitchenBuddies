@@ -69,7 +69,7 @@ public class OutputJson {
             recipeDetails.add(userJSON);
         }
 
-        try (FileWriter file = new FileWriter("res/output/userTaskTest.json")) {
+        try (FileWriter file = new FileWriter("res/output/demo_day.json")) {
             //We can write any JSONArray or JSONObject instance to the file
             file.write(recipeDetails.toJSONString());
             file.flush();

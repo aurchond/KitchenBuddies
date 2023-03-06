@@ -12,6 +12,7 @@ import java.util.List;
 
 import static org.output_processing.OutputJson.userStepsToJson;
 import static org.utilities.database.graph.RecipeHelper.getRecipeFromDatabase;
+import static org.output_processing.OutputJson.userStepsToJsonOld;
 
 
 public class GenerateMeal {
@@ -54,6 +55,7 @@ public class GenerateMeal {
          */
         List<MealSessionUsersSteps> usersSteps = userStepsToJson(buddies);
         System.out.println("Finished");
+        userStepsToJsonOld(buddies);
         return usersSteps;
         //return null;
     }

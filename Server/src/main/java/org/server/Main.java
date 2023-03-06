@@ -25,10 +25,11 @@ public class Main {
         demoRecipes.add(200L); // Greek Pasta Salad
         demoRecipes.add(101L); // Schnitzel
         demoRecipes.add(102L); // Broccoli
-        // demoRecipes.add(103L);
+        demoRecipes.add(103L);
 
         GenerateMeal gm = new GenerateMeal();
         gm.SetupMealSteps(kc, demoRecipes, buddies);
+        
         //gm.SetupMealSteps(kitchenConstraints, recipeIDs, includedFriends);
     }
 }
