@@ -60,6 +60,7 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
 
     // this is the body with ALL tokens (including hosts') and the chosen friends' meal steps
     Body sendTokenAndSteps = new Body();
+    sendTokenAndSteps.tokens = <String>[];
     widget.tokenMap.entries
         .forEach((e) => sendTokenAndSteps.tokens?.add(e.value));
 

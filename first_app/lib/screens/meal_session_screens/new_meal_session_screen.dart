@@ -220,7 +220,7 @@ class _NewMealSessionState extends State<NewMealSession> {
                       List<int> _selectedRecipes = getSelectedRecipes(myRecipes);
                       List<String> _selectedFriends = getSelectedFriends(myFriends);
                       Map<String, String> _tokenMap = await getTokenMap(_selectedFriends);
-                      print(_tokenMap);
+                      print("token map:" + _tokenMap.toString());
 
 
                       Navigator.of(context).push(MaterialPageRoute(

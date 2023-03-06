@@ -44,7 +44,7 @@ class DataClass extends ChangeNotifier {
     loading = true;
     // todo: change back to getMealSessionSteps
     allMealSessionSteps = await getMealSessionSteps(mealSessionStepsRequest);
-    print("meal session steps:" + (allMealSessionSteps?[0]?.recipeSteps?.length?.toString() ?? ""));
+    print("meal session steps: " + (allMealSessionSteps?[0]?.recipeSteps?.length?.toString() ?? ""));
     loading = false;
 
     notifyListeners();

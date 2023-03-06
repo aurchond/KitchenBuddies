@@ -25,16 +25,16 @@ class ReceivedInstructionScreen extends StatelessWidget {
     Map<String, dynamic> body = json.decode(dataMap["body"]);
     print("map " + dataMap["body"]);
     print("title " + dataMap["title"]);
-    //print("token " + body["tokens"][0].toString());
+    print("token " + body["tokens"][0].toString());
 
     print(body.toString());
 
-    //int numTokens = body["tokens"].length;
-    // List<String> tokens = List.generate(numTokens, (index) => "");
-    //
-    // for (int i = 0; i < numTokens; i++) {
-    //   tokens[i] = body["tokens"][i].toString();
-    // }
+    int numTokens = body["tokens"].length;
+    List<String> tokens = List.generate(numTokens, (index) => "");
+
+    for (int i = 0; i < numTokens; i++) {
+      tokens[i] = body["tokens"][i].toString();
+    }
 
     String email = body["mealSessionSteps"]["userEmail"].toString();
     int numSteps = body["mealSessionSteps"]["recipeSteps"].length;
@@ -58,7 +58,7 @@ class ReceivedInstructionScreen extends StatelessWidget {
     }
 
     String myToken = body["receiversToken"];
-    //List<String> friendsTokens = removeMyTokenFromList(tokens, myToken);
+    List<String> friendsTokens = removeMyTokenFromList(tokens, myToken);
 
     //testing
     //Map<String, dynamic> steps = json.decode(body["mealSessionSteps"]);
@@ -109,10 +109,9 @@ class ReceivedInstructionScreen extends StatelessWidget {
                                 ")",
                             "I'm blocked on this step!",
                             null, // is not sending in a map,
-                            [""],
-                            //friendsTokens,
+                            //[""],
+                            friendsTokens,
                             false, // is not the host
-                            //receivedTokenAndSteps?.tokens ?? [""],
                             fcmProvider);
                       }))
             ]),
