@@ -1,0 +1,299 @@
+[
+    {
+        "1": {
+            "instructions": "Melt butter in a large pot over medium heat",
+            "ingredients": [
+                "butter"
+            ],
+            "baseIngredients": [
+                "butter"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "melt"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 0
+        }
+    },
+    {
+        "2": {
+            "instructions": " Add the onion and bacon and cook, stirring frequently, until onion has softened and just starting to brown around edges, about 8 - 10 minutes",
+            "ingredients": [
+                "bacon",
+                "onion"
+            ],
+            "baseIngredients": [
+                "onion",
+                "onion",
+                "bacon"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add",
+                "starting",
+                "brown"
+            ],
+            "stepTime": 10,
+            "userTime": 5,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 0
+        }
+    },
+    {
+        "3": {
+            "instructions": "Add in the flour and garlic and cook 1 1/2 minutes",
+            "ingredients": [
+                "flour",
+                "garlic"
+            ],
+            "baseIngredients": [
+                "flour",
+                "garlic"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add",
+                "cook"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 1
+        }
+    },
+    {
+        "4": {
+            "instructions": " While whisking, slowly pour in 5 cups water or broth",
+            "ingredients": [
+                "broth",
+                "cups water"
+            ],
+            "baseIngredients": [
+                "water",
+                "broth"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 1
+        }
+    },
+    {
+        "5": {
+            "instructions": "Bring mixture to a boil, stirring constantly, then stir in corn kernels and potatoes",
+            "ingredients": [
+                "potatoes",
+                "corn kernels"
+            ],
+            "baseIngredients": [
+                "kernels",
+                "potatoes"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "bring",
+                "stir"
+            ],
+            "stepTime": 4,
+            "userTime": 4,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 2
+        }
+    },
+    {
+        "6": {
+            "instructions": " Add in thyme and bay leaf and season with salt and pepper to taste",
+            "ingredients": [
+                "pepper",
+                "thyme",
+                "salt",
+                "bay leaf"
+            ],
+            "baseIngredients": [
+                "thyme",
+                "pepper",
+                "salt",
+                "leaf"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add"
+            ],
+            "stepTime": 3,
+            "userTime": 3,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 2
+        }
+    },
+    {
+        "7": {
+            "instructions": "Bring to a light boil, then reduce heat to medium-low and allow to simmer, stirring occasionally, until potatoes are tender, about 20 minutes",
+            "ingredients": [
+                "potatoes"
+            ],
+            "baseIngredients": [
+                "potatoes"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "bring",
+                "reduce",
+                "allow",
+                "simmer"
+            ],
+            "stepTime": 20,
+            "userTime": 2,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 3
+        }
+    },
+    {
+        "8": {
+            "instructions": "Remove bay leave then transfer 2 1/2 cups of the chowder to a blender and blend until smooth",
+            "ingredients": [
+                "cups of the chowder",
+                "bay leave"
+            ],
+            "baseIngredients": [
+                "chowder",
+                "leave"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "blender1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "remove",
+                "transfer",
+                "blend"
+            ],
+            "stepTime": 4,
+            "userTime": 4,
+            "holdingResource": "blender1",
+            "holdingID": 1,
+            "lineNumber": 4
+        }
+    },
+    {
+        "9": {
+            "instructions": "Stir the mixture back into the pot then stir in half and half and honey",
+            "ingredients": [
+                "half and half",
+                "honey"
+            ],
+            "baseIngredients": [
+                "half",
+                "honey"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "stir",
+                "stir"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 5
+        }
+    },
+    {
+        "10": {
+            "instructions": " Sprinkle each serving with chives and optional cheddar",
+            "ingredients": [
+                "optional cheddar",
+                "chives"
+            ],
+            "baseIngredients": [
+                "chives",
+                "cheddar"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "sprinkle"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 5
+        }
+    }
+]

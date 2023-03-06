@@ -1,0 +1,521 @@
+[
+    {
+        "1": {
+            "instructions": "Preheat the oven to 425 degrees F",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "oven1"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "preheat"
+            ],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "oven1",
+            "holdingID": 0,
+            "lineNumber": 0
+        }
+    },
+    {
+        "2": {
+            "instructions": " Put the salt and caraway seeds into a bowl, mince or grate in the garlic, and stir to combine",
+            "ingredients": [
+                "salt",
+                "garlic",
+                "caraway seeds"
+            ],
+            "baseIngredients": [
+                "salt",
+                "seeds",
+                "garlic",
+                "seeds"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl1"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "put",
+                "stir",
+                "mince", 
+                "grate",
+                "combine"
+            ],
+            "stepTime": 5,
+            "userTime": 5,
+            "holdingResource": "bowl1",
+            "holdingID": 1,
+            "lineNumber": 0
+        }
+    },
+    {
+        "3": {
+            "instructions": " Add the pork knuckles and rub them well with the caraway mixture, getting it into the slits in the rind where it was scored",
+            "ingredients": [
+                "pork knuckles",
+                "caraway mixture",
+                "rind"
+            ],
+            "baseIngredients": [
+                "pork",
+                "rind",
+                "caraway"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add",
+                "rub",
+                "scored"
+            ],
+            "stepTime": 9,
+            "userTime": 9,
+            "holdingResource": "bowl1",
+            "holdingID": 1,
+            "lineNumber": 0
+        }
+    },
+    {
+        "4": {
+            "instructions": "Peel the onions and slice them into rounds and add them to the bottom of a roasting tin, making a bed or platform",
+            "ingredients": [
+                "onions"
+            ],
+            "baseIngredients": [
+                "onions"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [ 
+                "roasting tin1"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "peel",
+                "slice",
+                "add"
+            ],
+            "stepTime": 8,
+            "userTime": 8,
+            "holdingResource": "roasting tin1",
+            "holdingID": 2,
+            "lineNumber": 1
+        }
+    },
+    {
+        "5": {
+            "instructions": " Sit the knuckles on top of the onions and cook them for 30 minutes",
+            "ingredients": [
+                "onions",
+                "knuckles"
+            ],
+            "baseIngredients": [
+                "knuckles",
+                "onions"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "roasting tin1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "sit",
+                "cook"
+            ],
+            "stepTime": 30,
+            "userTime": 2,
+            "holdingResource": "roasting tin1",
+            "holdingID": 2,
+            "lineNumber": 1
+        }
+    },
+    {
+        "6": {
+            "instructions": "Take the tin out of the oven and quickly arrange the apples and potatoes around the knuckles",
+            "ingredients": [
+                "apples",
+                "tin",
+                "potatoes"
+            ],
+            "baseIngredients": [
+                "apples",
+                "tin",
+                "potatoes"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "roasting tin1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "take",
+                "arrange"
+            ],
+            "stepTime": 4,
+            "userTime": 4,
+            "holdingResource": "roasting tin1",
+            "holdingID": 2,
+            "lineNumber": 2
+        }
+    },
+    {
+        "7": {
+            "instructions": " Carefully pour 1 cup of the beer over the knuckles, so they are basted as the liquid pours into the tin",
+            "ingredients": [
+                "cup of the beer",
+                "knuckles"
+            ],
+            "baseIngredients": [
+                "beer",
+                "knuckles"
+            ],
+            "ingredientsQuantity": [
+                1,
+                -1
+            ],
+            "resourcesRequired": [
+                "roasting tin1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "pour",
+                "basted"
+            ],
+            "stepTime": 4,
+            "userTime": 4,
+            "holdingResource": "roasting tin1",
+            "holdingID": 2,
+            "lineNumber": 2
+        }
+    },
+    {
+        "8": {
+            "instructions": " Put the tin back into the oven",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "roasting tin1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "put"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "roasting tin1",
+            "holdingID": 2,
+            "lineNumber": 2
+        }
+    },
+    {
+        "9": {
+            "instructions": " Lower the oven temperature to 325 degrees F and roast for 2 hours",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "roasting tin1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "lower"
+            ],
+            "stepTime": 120,
+            "userTime": 2,
+            "holdingResource": "roasting tin1",
+            "holdingID": 2,
+            "lineNumber": 2
+        }
+    },
+    {
+        "10": {
+            "instructions": "Turn the oven up again to 425 degrees F, and baste the hocks with the remaining beer",
+            "ingredients": [
+                "hocks",
+                "remaining beer"
+            ],
+            "baseIngredients": [
+                "hocks",
+                "beer"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "roasting tin1",
+                "oven"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "turn",
+                "baste"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "roasting tin1",
+            "holdingID": 2,
+            "lineNumber": 3
+        }
+    },
+    {
+        "11": {
+            "instructions": " Roast the hocks for 30 minutes more",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "oven",
+                "roasting tin1"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 30,
+            "userTime": 2,
+            "holdingResource": "roasting tin1",
+            "holdingID": 2,
+            "lineNumber": 3
+        }
+    },
+    {
+        "12": {
+            "instructions": "Remove the tin from the oven and transfer the apples and potatoes to a warmed plate",
+            "ingredients": [
+                "tin",
+                "potatoes"
+            ],
+            "baseIngredients": [
+                "tin",
+                "potatoes"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "plate1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "remove",
+                "transfer"
+            ],
+            "stepTime": 4,
+            "userTime": 4,
+            "holdingResource": "plate1",
+            "holdingID": 3,
+            "lineNumber": 4
+        }
+    },
+    {
+        "13": {
+            "instructions": " Lift the knuckles onto a carving board and leave the onion and juices in the tin",
+            "ingredients": [
+                "tin",
+                "onion",
+                "knuckles",
+                "juices"
+            ],
+            "baseIngredients": [
+                "knuckles",
+                "onion",
+                "tin",
+                "juices"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "board2"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "lift",
+                "leave"
+            ],
+            "stepTime": 6,
+            "userTime": 6,
+            "holdingResource": "board2",
+            "holdingID": 4,
+            "lineNumber": 4
+        }
+    },
+    {
+        "14": {
+            "instructions": " Put the tin on the stove over medium heat and add 2 cups boiling water, stirring to deglaze the tin to make a gravy",
+            "ingredients": [
+                "cups water",
+                "gravy"
+            ],
+            "baseIngredients": [
+                "water",
+                "gravy"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                2
+            ],
+            "resourcesRequired": [
+                "stove",
+                "roasting tin1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "put",
+                "add",
+                "deglaze"
+            ],
+            "stepTime": 6,
+            "userTime": 6,
+            "holdingResource": "roasting tin1",
+            "holdingID": 2,
+            "lineNumber": 4
+        }
+    },
+    {
+        "15": {
+            "instructions": " Transfer the gravy to a serving bowl",
+            "ingredients": [
+                "gravy"
+            ],
+            "baseIngredients": [
+                "gravy"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl2"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "transfer"
+            ],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "bowl2",
+            "holdingID": 5,
+            "lineNumber": 4
+        }
+    },
+    {
+        "16": {
+            "instructions": "Take the crackling off the knuckles and break it into pieces, then add them to a serving bowl",
+            "ingredients": [
+                "knuckles"
+            ],
+            "baseIngredients": [
+                "knuckles"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl3"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "take",
+                "break",
+                "add"
+            ],
+            "stepTime": 3,
+            "userTime": 3,
+            "holdingResource": "bowl3",
+            "holdingID": 6,
+            "lineNumber": 5
+        }
+    },
+    {
+        "17": {
+            "instructions": " Pull or carve the pork meat and add it to the bowl with the crackling",
+            "ingredients": [
+                "pork meat"
+            ],
+            "baseIngredients": [
+                "pork"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl3"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "pull",
+                "carve",
+                "add"
+            ],
+            "stepTime": 3,
+            "userTime": 3,
+            "holdingResource": "bowl3",
+            "holdingID": 6,
+            "lineNumber": 5
+        }
+    },
+    {
+        "18": {
+            "instructions": " Serve with the apples, potatoes, gravy and some German mustard",
+            "ingredients": [
+                "potatoes",
+                "gravy",
+                "German mustard",
+                "apples"
+            ],
+            "baseIngredients": [
+                "apples",
+                "potatoes",
+                "gravy",
+                "mustard"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl3"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "serve"
+            ],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "bowl3",
+            "holdingID": 6,
+            "lineNumber": 5
+        }
+    }
+]

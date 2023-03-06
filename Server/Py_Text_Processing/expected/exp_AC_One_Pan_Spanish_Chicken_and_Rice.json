@@ -1,0 +1,373 @@
+[
+    {
+        "1": {
+            "instructions": "In a small bowl whisk together all ingredients for the Spanish seasoning mix",
+            "ingredients": [
+                "seasoning mix"
+            ],
+            "baseIngredients": [
+                "seasoning"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl1"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "whisk"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "bowl1",
+            "holdingID": 0,
+            "lineNumber": 0
+        }
+    },
+    {
+        "2": {
+            "instructions": " Divide in half and set aside",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "bowl1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "set"
+            ],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "bowl1",
+            "holdingID": 0,
+            "lineNumber": 0
+        }
+    },
+    {
+        "3": {
+            "instructions": " Cut the lemon in half, then thinly slice one half - for garnish - and reserve the other half for juicing later in the recipe",
+            "ingredients": [
+                "lemon"
+            ],
+            "baseIngredients": [
+                "lemon"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "cutting board1"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "cut",
+                "slice",
+                "reserve"
+            ],
+            "stepTime": 7,
+            "userTime": 7,
+            "holdingResource": "cutting board1",
+            "holdingID": 1,
+            "lineNumber": 0
+        }
+    },
+    {
+        "4": {
+            "instructions": "Place chicken in a medium bowl",
+            "ingredients": [
+                "chicken"
+            ],
+            "baseIngredients": [
+                "chicken"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl2"
+            ],
+            "prepStep": false,
+            "verbs": ["Place"],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "bowl2",
+            "holdingID": 2,
+            "lineNumber": 1
+        }
+    },
+    {
+        "5": {
+            "instructions": " Drizzle with 2 tablespoons oil, then toss to coat well",
+            "ingredients": [
+                "tablespoons oil"
+            ],
+            "baseIngredients": [
+                "oil"
+            ],
+            "ingredientsQuantity": [
+                2
+            ],
+            "resourcesRequired": [
+                "bowl2"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "toss",
+                "coat"
+            ],
+            "stepTime": 4,
+            "userTime": 4,
+            "holdingResource": "bowl2",
+            "holdingID": 2,
+            "lineNumber": 1
+        }
+    },
+    {
+        "6": {
+            "instructions": " Use half of the prepared seasoning mix to rub on both sides of each piece of chicken",
+            "ingredients": [
+                "seasoning mix",
+                "chicken"
+            ],
+            "baseIngredients": [
+                "seasoning",
+                "chicken"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl2"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "use",
+                "rub"
+            ],
+            "stepTime": 4,
+            "userTime": 4,
+            "holdingResource": "bowl2",
+            "holdingID": 2,
+            "lineNumber": 1
+        }
+    },
+    {
+        "7": {
+            "instructions": "Drizzle a large skillet with remaining 1 tablespoon of oil and bring to medium heat",
+            "ingredients": [
+                "tablespoon of oil"
+            ],
+            "baseIngredients": [
+                "oil"
+            ],
+            "ingredientsQuantity": [
+                1,
+                -1
+            ],
+            "resourcesRequired": [
+                "large skillet1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "drizzle",
+                "bring"
+            ],
+            "stepTime": 3,
+            "userTime": 3,
+            "holdingResource": "large skillet1",
+            "holdingID": 3,
+            "lineNumber": 2
+        }
+    },
+    {
+        "8": {
+            "instructions": " Cook chicken for 2-3 minutes on each side until browned",
+            "ingredients": [
+                "chicken"
+            ],
+            "baseIngredients": [
+                "chicken"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "large skillet1"
+            ],
+            "prepStep": false,
+            "verbs": ["Cook"],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "large skillet1",
+            "holdingID": 3,
+            "lineNumber": 2
+        }
+    },
+    {
+        "9": {
+            "instructions": " Transfer to a plate",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "plate1"
+            ],
+            "prepStep": false,
+            "verbs": ["Transfer"],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "plate1",
+            "holdingID": 4,
+            "lineNumber": 2
+        }
+    },
+    {
+        "10": {
+            "instructions": " (It won't be cooked through at this point)\n",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "plate1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "cooked"
+            ],
+            "stepTime": 0,
+            "userTime": 0,
+            "holdingResource": "plate1",
+            "holdingID": 4,
+            "lineNumber": 2
+        }
+    },
+    {
+        "11": {
+            "instructions": "Add rice, chicken broth, juice from 1/2 of the lemon, and remaining seasoning mix and stir to combine",
+            "ingredients": [
+                "seasoning mix",
+                "rice",
+                "lemon",
+                "chicken broth"
+            ],
+            "baseIngredients": [
+                "rice",
+                "lemon",
+                "broth",
+                "seasoning"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl2"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add",
+                "stir"
+            ],
+            "stepTime": 8,
+            "userTime": 8,
+            "holdingResource": "bowl2",
+            "holdingID": 2,
+            "lineNumber": 3
+        }
+    },
+    {
+        "12": {
+            "instructions": " Return chicken to the large skillet on top of the rice",
+            "ingredients": [
+                "chicken",
+                "rice"
+            ],
+            "baseIngredients": [
+                "chicken",
+                "rice"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "large skillet1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "return"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "large skillet1",
+            "holdingID": -1,
+            "lineNumber": 3
+        }
+    },
+    {
+        "13": {
+            "instructions": " Cover and cook for 20-25 minutes until liquid is absorbed, rice is tender, and chicken is cooked through",
+            "ingredients": [
+                "chicken",
+                "rice"
+            ],
+            "baseIngredients": [
+                "rice",
+                "chicken"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": ["large skillet1"],
+            "prepStep": false,
+            "verbs": [
+                "cook",
+                "cooked"
+            ],
+            "stepTime": 20,
+            "userTime": 2,
+            "holdingResource": "large skillet1",
+            "holdingID": -1,
+            "lineNumber": 3
+        }
+    },
+    {
+        "14": {
+            "instructions": "Garnish with lemon slices and freshly chopped cilantro or parsley and serve immediately",
+            "ingredients": [
+                "lemon slices",
+                "parsley",
+                "cilantro"
+            ],
+            "baseIngredients": [
+                "lemon",
+                "parsley",
+                "cilantro"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "cutting board1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "chopped",
+                "serve"
+            ],
+            "stepTime": 4,
+            "userTime": 4,
+            "holdingResource": "large skillet1",
+            "holdingID": 1,
+            "lineNumber": 4
+        }
+    }
+]

@@ -1,0 +1,217 @@
+[
+    {
+        "1": {
+            "instructions": "Fill a large pot with lightly salted water and bring to a rolling boil",
+            "ingredients": [
+                "salted water"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "baseIngredients": [
+                "water"
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "fill",
+                "bring"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 0
+        }
+    },
+    {
+        "2": {
+            "instructions": " Stir in penne and return to a boil",
+            "ingredients": [
+                "penne"
+            ],
+            "baseIngredients": [
+                "penne"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "return"
+            ],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 0
+        }
+    },
+    {
+        "3": {
+            "instructions": " Cook pasta uncovered, stirring occasionally, until tender yet firm to the bite, about 10 minutes; rinse with cold water and drain well",
+            "ingredients": [
+                "pasta",
+                "cold water"
+            ],
+            "baseIngredients": [
+                "pasta",
+                "water"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "pot1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "uncovered",
+                "drain"
+            ],
+            "stepTime": 10,
+            "userTime": 5,
+            "holdingResource": "pot1",
+            "holdingID": 0,
+            "lineNumber": 0
+        }
+    },
+    {
+        "4": {
+            "instructions": "Whisk olive oil, vinegar, garlic, lemon juice, oregano, salt, and pepper together in a bowl; set aside",
+            "ingredients": [
+                "olive oil",
+                "pepper",
+                "vinegar",
+                "garlic",
+                "salt", 
+                "oregano", 
+                "lemon juice"
+            ],
+            "baseIngredients": [
+                "oil",
+                "garlic",
+                "pepper",
+                "vinegar",
+                "salt", 
+                "oregano",
+                "juice"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "set"
+            ],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "bowl1",
+            "holdingID": 1,
+            "lineNumber": 1
+        }
+    },
+    {
+        "5": {
+            "instructions": "Combine pasta, tomatoes, green and red peppers, onion, cucumber, olives, and feta cheese in a large bowl",
+            "ingredients": [
+                "pasta",
+                "onion",
+                "tomatoes",
+                "green and red peppers",
+                "cucumber",
+                "feta cheese"
+            ],
+            "baseIngredients": [
+                "pasta",
+                "onion",
+                "feta",
+                "cheese", 
+                "cucumber", 
+                "peppers"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl2"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "combine"
+            ],
+            "stepTime": 4,
+            "userTime": 4,
+            "holdingResource": "bowl2",
+            "holdingID": 2,
+            "lineNumber": 2
+        }
+    },
+    {
+        "6": {
+            "instructions": " Pour vinegar sauce over the pasta mixture and mix well",
+            "ingredients": [
+                "pasta mixture",
+                "vinegar"
+            ],
+            "baseIngredients": [
+                "vinegar",
+                "pasta"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl2"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "pour",
+                "mix"
+            ],
+            "stepTime": 6,
+            "userTime": 5,
+            "holdingResource": "bowl2",
+            "holdingID": 2,
+            "lineNumber": 2 
+        }
+    },
+    {
+        "7": {
+            "instructions": " Cover and chill for 3 hours before serving",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "bowl2"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "cover",
+                "serving"
+            ],
+            "stepTime": 180,
+            "userTime": 2,
+            "holdingResource": "bowl2",
+            "holdingID": 2,
+            "lineNumber": 2
+        }
+    }
+]

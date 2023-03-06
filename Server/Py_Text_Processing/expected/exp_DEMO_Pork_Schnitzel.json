@@ -1,0 +1,388 @@
+[
+    {
+        "1": {
+            "instructions": "Using the flat end of a meat tenderizer, pound the pork working from the center out until the each cutlet is ¼ inch thick",
+            "ingredients": [
+                "cutlet",
+                "pork"
+            ],
+            "baseIngredients": [
+                "pork",
+                "cutlet"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "cutting board1", 
+                "meat tenderizer"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "pound",
+                "working"
+            ],
+            "stepTime": 4,
+            "userTime": 4,
+            "holdingResource": "cutting board1",
+            "holdingID": 0,
+            "lineNumber": 0
+        }
+    },
+    {
+        "2": {
+            "instructions": " Season cutlet with salt and pepper",
+            "ingredients": [
+                "pepper",
+                "cutlet",
+                "salt"
+            ],
+            "baseIngredients": [
+                "cutlet",
+                "pepper",
+                "salt"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "cutting board1"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "cutting board1",
+            "holdingID": 0,
+            "lineNumber": 0
+        }
+    },
+    {
+        "3": {
+            "instructions": "Place flour in a bowl",
+            "ingredients": [
+                "flour"
+            ],
+            "baseIngredients": [
+                "flour"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl1"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "place"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "bowl1",
+            "holdingID": 1,
+            "lineNumber": 1
+        }
+    },
+    {
+        "4": {
+            "instructions": " In another bowl, beat eggs",
+            "ingredients": [
+                "eggs"
+            ],
+            "baseIngredients": [
+                "eggs"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl2"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "beat"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "bowl2",
+            "holdingID": 2,
+            "lineNumber": 1
+        }
+    },
+    {
+        "5": {
+            "instructions": " In another bowl, add breadcrumbs",
+            "ingredients": [
+                "breadcrumbs"
+            ],
+            "baseIngredients": [
+                "breadcrumbs"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl3"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "add"
+            ],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "bowl3",
+            "holdingID": 3,
+            "lineNumber": 1
+        }
+    },
+    {
+        "6": {
+            "instructions": " Season the bowls of flour, eggs and breadcrumbs with salt and pepper",
+            "ingredients": [
+                "pepper",
+                "breadcrumbs",
+                "flour",
+                "salt",
+                "eggs"
+            ],
+            "baseIngredients": [
+                "flour",
+                "breadcrumbs",
+                "pepper",
+                "eggs",
+                "salt"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl3"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 3,
+            "userTime": 3,
+            "holdingResource": "bowl3",
+            "holdingID": 3,
+            "lineNumber": 1
+        }
+    },
+    {
+        "7": {
+            "instructions": " \n",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "bowl3"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 0,
+            "userTime": 0,
+            "holdingResource": "bowl3",
+            "holdingID": 3,
+            "lineNumber": 1
+        }
+    },
+    {
+        "8": {
+            "instructions": "Dredge each cutlet through flour on both sides, next through the beaten eggs and finally through the breadcrumbs",
+            "ingredients": [
+                "cutlet",
+                "flour",
+                "beaten eggs"
+            ],
+            "baseIngredients": [
+                "cutlet",
+                "eggs",
+                "flour"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "bowl3"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "dredge"
+            ],
+            "stepTime": 3,
+            "userTime": 3,
+            "holdingResource": "bowl3",
+            "holdingID": 3,
+            "lineNumber": 2
+        }
+    },
+    {
+        "9": {
+            "instructions": " Place them on a large plate and repeat with remaining cutlets",
+            "ingredients": [
+                "remaining cutlets"
+            ],
+            "baseIngredients": [
+                "cutlets"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "plate1"
+            ],
+            "prepStep": true,
+            "verbs": [
+                "place",
+                "repeat"
+            ],
+            "stepTime": 4,
+            "userTime": 4,
+            "holdingResource": "plate1",
+            "holdingID": 4,
+            "lineNumber": 2
+        }
+    },
+    {
+        "10": {
+            "instructions": "Fill a large skillet with about ½ teaspoon of oil over medium-high heat and heat it until it&#039;s 350°F",
+            "ingredients": [
+                "teaspoon of oil"
+            ],
+            "baseIngredients": [
+                "oil"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "large skillet1"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "fill",
+                "heat"
+            ],
+            "stepTime": 6,
+            "userTime": 6,
+            "holdingResource": "large skillet1",
+            "holdingID": 5,
+            "lineNumber": 3
+        }
+    },
+    {
+        "11": {
+            "instructions": " Fry the cutlets for about 2-3 minutes on each side or until they're a nice deep golden brown",
+            "ingredients": [
+                "cutlets"
+            ],
+            "baseIngredients": [
+                "cutlets"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "large skillet1"
+            ],
+            "prepStep": false,
+            "verbs": [],
+            "stepTime": 6,
+            "userTime": 6,
+            "holdingResource": "large skillet1",
+            "holdingID": 5,
+            "lineNumber": 3
+        }
+    },
+    {
+        "12": {
+            "instructions": " Transfer to a paper towel lined plate and repeat with remaining schnitzel",
+            "ingredients": [],
+            "baseIngredients": [],
+            "ingredientsQuantity": [],
+            "resourcesRequired": [
+                "plate2", 
+                "paper towel"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "Transfer",
+                "repeat"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "plate2",
+            "holdingID": 6,
+            "lineNumber": 3
+        }
+    },
+    {
+        "13": {
+            "instructions": " You might have to change the oil halfway through if it gets too dirty",
+            "ingredients": [
+                "oil"
+            ],
+            "baseIngredients": [
+                "oil"
+            ],
+            "ingredientsQuantity": [
+                -1
+            ],
+            "resourcesRequired": [
+                "plate2"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "have",
+                "change"
+            ],
+            "stepTime": 2,
+            "userTime": 2,
+            "holdingResource": "plate2",
+            "holdingID": 6,
+            "lineNumber": 3
+        }
+    },
+    {
+        "14": {
+            "instructions": "Serve with lemon wedges and mustard over mashed potatoes",
+            "ingredients": [
+                "lemon wedges",
+                "mustard",
+                "mashed potatoes"
+            ],
+            "baseIngredients": [
+                "lemon",
+                "mustard",
+                "potatoes"
+            ],
+            "ingredientsQuantity": [
+                -1,
+                -1,
+                -1
+            ],
+            "resourcesRequired": [
+                "plate2"
+            ],
+            "prepStep": false,
+            "verbs": [
+                "serve"
+            ],
+            "stepTime": 1,
+            "userTime": 1,
+            "holdingResource": "plate2",
+            "holdingID": 6,
+            "lineNumber": 4
+        }
+    }
+]
