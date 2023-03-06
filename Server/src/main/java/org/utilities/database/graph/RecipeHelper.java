@@ -8,7 +8,9 @@ import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.transaction.Transaction;
 import org.recipe_processing.Recipe;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RecipeHelper {
@@ -76,8 +78,9 @@ public class RecipeHelper {
          * two helper function getHeadNode(the head step), getAllNodes(iterable step list)
          * loop through all nodes and add to hashmap<id,step>
          */
-
-        Session s = createSession();
+        List<Object> result = createSession();
+        Session s = (Session)result.get(0);
+        SessionFactory sFactory = (SessionFactory)result.get(1);
 //        //TODO: this should be a db call: also idk if it should be taking in a recipe Name
 //        Long recipeId = recipeNameToID.get(recipeName);
 
@@ -89,10 +92,11 @@ public class RecipeHelper {
             stepMap.put(step.getStepID(), step);
         }
 
+        sFactory.close();
         return new Recipe(stepMap, headNode, recipeId);
     }
 
-    public static Session createSession() {
+    public static List<Object> createSession() {
         String uri = "neo4j+s://db42e3f1.databases.neo4j.io";
         Configuration configuration = new Configuration.Builder()
                 .uri(uri)
@@ -100,12 +104,17 @@ public class RecipeHelper {
                 .build();
         SessionFactory sessionFactory = new SessionFactory(configuration, "org.utilities.database.graph");
         final Session session = sessionFactory.openSession();
-        return session;
+        List<Object> sessionObject = new ArrayList<>();
+        sessionObject.add(session);
+        sessionObject.add(sessionFactory);
+        return sessionObject;
     }
 
     public static void saveRecipe(Recipe recipe, String recipeName) {
         addToRecipeNameToID(recipeName, recipe.getRecipeID());
-        Session s = createSession();
+        List<Object> result = createSession();
+        Session s = (Session)result.get(0);
+        SessionFactory sFactory = (SessionFactory)result.get(1);
         Transaction tx = s.beginTransaction();
 
         // Looping through the HashMap
@@ -117,5 +126,6 @@ public class RecipeHelper {
         tx.commit();
         tx.close();
         s.clear();
+        sFactory.close();
     }
 }
