@@ -9,14 +9,21 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 import '../../data_models/data_communication_wrapper_model.dart';
+import '../../data_models/meal_session_steps_model.dart';
+import '../../helpers/friend_tokens.dart';
 import '../../helpers/globals.dart';
 import '../../provider/auth_provider.dart';
 import '../../provider/notification_provider.dart';
 import '../../widgets/grouped_button_text.dart';
 
 class InstructionsScreen extends StatefulWidget {
-  const InstructionsScreen({Key? key, required Map<String, String> this.tokens, required List<int> this.selectedRecipes, required List<String> this.selectedFriends}) : super(key: key);
-  final Map<String, String> tokens;
+  const InstructionsScreen(
+      {Key? key,
+      required Map<String, String> this.tokenMap,
+      required List<int> this.selectedRecipes,
+      required List<String> this.selectedFriends})
+      : super(key: key);
+  final Map<String, String> tokenMap;
   final List<int> selectedRecipes;
   final List<String> selectedFriends;
 
@@ -29,12 +36,60 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
   void initState() {
     super.initState();
     final postModel = Provider.of<DataClass>(context, listen: false);
+    final fcmProvider =
+        Provider.of<NotificationProvider>(context, listen: false);
 
     postModel.kitchenConstraints?.userEmail = myEmail;
-    postModel.mealSessionStepsRequest = MealSessionStepsRequest(kitchenConstraints: postModel.kitchenConstraints, recipeIDs: widget.selectedRecipes, includedFriends: widget.selectedFriends);
-    postModel.loadMealSessionSteps(myEmail);
+    postModel.mealSessionStepsRequest = MealSessionStepsRequest(
+        kitchenConstraints: postModel.kitchenConstraints,
+        recipeIDs: widget.selectedRecipes,
+        includedFriends: widget.selectedFriends);
+    postModel.loadMealSessionSteps();
 
-    //send tokens to everyone so they can also use blocked buttons
+    // this is the body with ALL tokens (including hosts') and the chosen friends' meal steps
+    Body sendTokenAndSteps = new Body();
+    widget.tokenMap.entries
+        .forEach((e) => sendTokenAndSteps.tokens?.add(e.value));
+
+
+
+    // the total number of meal session friends and the host
+    int? mealChefsCount = postModel.allMealSessionSteps?.length;
+
+    // send meal session steps to other friends in session
+    for (int i = 0; i < widget.selectedFriends.length; i++) {
+      //send tokens to everyone so they can also use blocked buttons
+
+      // helper variables
+      String chosenFriend = widget.selectedFriends[i];
+      String? receiversToken = widget.tokenMap[chosenFriend];
+
+      // go through the session steps and set the
+      if (mealChefsCount! > 0) {
+        for (int i = 0; i < mealChefsCount; i++) {
+          if (postModel.allMealSessionSteps?[i]?.userEmail == chosenFriend) {
+            // set the steps of this person's meal steps to the current one
+            sendTokenAndSteps.mealSessionSteps =
+            postModel.allMealSessionSteps?[i];
+
+            sendTokenAndSteps.receiversToken = receiversToken;
+
+          } else {
+            postModel.mySteps = postModel.allMealSessionSteps?[i];
+          }
+        }
+      }
+
+      // encode the body
+      final body = jsonEncode(sendTokenAndSteps.toJson());
+
+      // send the notification to this specific friend
+      fcmProvider.sendNotification(
+          token: receiversToken.toString(),
+          title: "Meal Session Steps",
+          body: body
+          );
+    }
   }
 
   @override
@@ -42,22 +97,8 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
     final postModel = Provider.of<DataClass>(context);
     final fcmProvider = Provider.of<NotificationProvider>(context);
 
-    //send tokens to everyone so they can also use blocked buttons
-    Body sendTokenAndSteps = new Body();
-    sendTokenAndSteps.tokens = widget.tokens;
-    sendTokenAndSteps.mealSessionSteps = postModel.mealSessionSteps;
+    Map<String,String> friendsTokenMap = removeMyTokenFromMap(widget.tokenMap);
 
-    // zip it up
-    final body = jsonEncode(sendTokenAndSteps.toJson());
-
-    //send meal session steps to other friends in session
-    for (int i = 0; i < widget.tokens.length; i++) {
-      fcmProvider.sendNotification(
-          token: widget.tokens[i],
-          title: "Meal Session Steps",
-          body: body //unzip him -> add a sweather underneath (instructions + tokens) -> zip him up and send in notification
-      );
-    }
 
     return Consumer<AuthProvider>(builder: (context, model, _) {
       return Scaffold(
@@ -90,12 +131,11 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       // display the user's email at the top
                       Container(
                         margin: EdgeInsets.all(20),
                         child: Text(
-                          postModel.mealSessionSteps?.userEmail ?? "",
+                          myEmail,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),
@@ -106,26 +146,32 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                       // display the user's instructions below
                       new Expanded(
                           child: new ListView.builder(
-                              itemCount: postModel.mealSessionSteps?.recipeSteps?.length ?? 0,
+                              itemCount: postModel.mySteps?.recipeSteps?.length ??
+                                  0,
                               itemBuilder: (BuildContext context, int index) {
-
                                 // first argument to the function has it's step number
                                 // appended to the instruction appended to the
                                 // complete list of ingredients for that step
                                 return groupedButtonText(
                                     (index + 1).toString() +
                                         ". " +
-                                        (postModel.mealSessionSteps?.recipeSteps?[index]
+                                        (postModel
+                                                .mySteps
+                                                ?.recipeSteps?[index]
                                                 .instructions ??
                                             "") +
                                         " (" +
-                                        (postModel.mealSessionSteps?.recipeSteps?[index]
+                                        (postModel
+                                                .mySteps
+                                                ?.recipeSteps?[index]
                                                 .ingredientsCompleteList
                                                 ?.join(', ') ??
                                             "") +
                                         ")",
                                     "I'm blocked on this step!",
-                                    widget.tokens,
+                                    friendsTokenMap,
+                                    null, // is not sending a friendsTokenList
+                                    true, // is indeed the host
                                     fcmProvider);
                               })),
                     ],

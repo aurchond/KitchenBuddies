@@ -1,4 +1,5 @@
 import 'package:first_app/data_models/data_communication_wrapper_model.dart';
+import 'package:first_app/helpers/friend_tokens.dart';
 import 'dart:convert';
 import 'package:first_app/screens/home_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -30,18 +31,21 @@ class ReceivedInstructionScreen extends StatelessWidget {
 
     int numTokens = body["tokens"].length;
     List<String> tokens = List.generate(numTokens, (index) => "");
+
     for (int i = 0; i < numTokens; i++) {
       tokens[i] = body["tokens"][i].toString();
     }
+
     String email = body["mealSessionSteps"]["userEmail"].toString();
     int numSteps = body["mealSessionSteps"]["recipeSteps"].length;
     List<String> instructions = List.generate(numSteps, (index) => "");
     List<int> numIngredients = List.generate(numSteps, (index) => 0);
     List<List<String>> ingredientsCompleteList =
         new List.generate(numSteps, (i) => []);
+
     for (int i = 0; i < numSteps; i++) {
       instructions[i] =
-          body["mealSessionSteps"]["recipeSteps"][i]["instructions"];
+      body["mealSessionSteps"]["recipeSteps"][i]["instructions"];
       //get the number of ingredients at that step
 
       numIngredients[i] =
@@ -52,6 +56,9 @@ class ReceivedInstructionScreen extends StatelessWidget {
         //ingredientsCompleteList[i].add((body["mealSessionSteps"]["recipeSteps"][i]["ingredientQuantity"][j].toString() + " " + body["mealSessionSteps"]["recipeSteps"][i]["ingredientList"][j]));
       }
     }
+
+    String myToken = body["receiversToken"];
+    List<String> friendsTokens = removeMyTokenFromList(tokens, myToken);
 
     //testing
     //Map<String, dynamic> steps = json.decode(body["mealSessionSteps"]);
@@ -64,6 +71,9 @@ class ReceivedInstructionScreen extends StatelessWidget {
     //     DataCommunicationWrapper.fromJson(dataMap);
     // Body? receivedTokenAndSteps = dataCommunicationWrapper.body;
     // MealSessionSteps? thisUserSteps = receivedTokenAndSteps?.mealSessionSteps;
+
+    // todo: fix to get the actual meal session step corresponding to the user
+
 
     return Scaffold(
       appBar: AppBar(title: const Text("Received Instructions")),
@@ -98,7 +108,9 @@ class ReceivedInstructionScreen extends StatelessWidget {
                                 ingredientsCompleteList[index].join(', ') +
                                 ")",
                             "I'm blocked on this step!",
-                            tokens,
+                            null, // is not sending in a map
+                            friendsTokens,
+                            false, // is not the host
                             //receivedTokenAndSteps?.tokens ?? [""],
                             fcmProvider);
                       }))

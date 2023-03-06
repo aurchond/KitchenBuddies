@@ -1,0 +1,38 @@
+[
+    {
+        "userEmail": "giver@gmail.com",
+        "notes": "note: there is no error!",
+        "recipeSteps": [
+            {
+                "number": "1.1",
+                "instructions": "instruction 1.1",
+                "ingredientList": [
+                    "teaspoon coconut oil"
+                ],
+                "ingredientQuantity": [
+                    1
+                ],
+                "dependencyItem": "",
+                "nextUserEmail": "aurchond@gmail.com"
+            }
+        ]
+    },
+    {
+        "userEmail": "receiver@gmail.com",
+        "notes": "note: there is no error 2.0!",
+        "recipeSteps": [
+            {
+                "number": "2.1",
+                "instructions": "instruction 2.1",
+                "ingredientList": [
+                    "teaspoon coconut oil"
+                ],
+                "ingredientQuantity": [
+                    1
+                ],
+                "dependencyItem": "",
+                "nextUserEmail": "aurchond@gmail.com"
+            }
+        ]
+    }
+]

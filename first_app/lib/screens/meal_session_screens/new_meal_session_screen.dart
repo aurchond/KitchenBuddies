@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:first_app/helpers/globals.dart';
 import 'package:first_app/provider/notification_provider.dart';
 import 'package:first_app/widgets/checkbox_decorated.dart';
 import 'package:flutter/cupertino.dart';
@@ -52,7 +54,7 @@ class _NewMealSessionState extends State<NewMealSession> {
   }
 
 
-  Future<Map<String,String>> getTokens(List<String> selectedFriends) async {
+  Future<Map<String,String>> getTokenMap(List<String> selectedFriends) async {
     Map<String, String> tokens = new Map();
 
     var collection = FirebaseFirestore.instance.collection('users');
@@ -66,7 +68,21 @@ class _NewMealSessionState extends State<NewMealSession> {
         // Call setState if needed.
       }
     }
+
+    // add my token to the tokens map
+    String myDeviceToken = await getDeviceToken();
+    tokens[myEmail] = myDeviceToken;
+
     return (tokens);
+  }
+
+  // get this device's token to save in the Firebase Auth later
+  Future<String> getDeviceToken() async {
+    final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+
+    final String? token =
+    await firebaseMessaging.getToken(); // get the device's token
+    return token!;
   }
 
   @override
@@ -203,15 +219,18 @@ class _NewMealSessionState extends State<NewMealSession> {
                     onPressed: () async {
                       List<int> _selectedRecipes = getSelectedRecipes(myRecipes);
                       List<String> _selectedFriends = getSelectedFriends(myFriends);
-                      Map<String, String> _tokens = await getTokens(_selectedFriends);
-                      print(_tokens);
+                      Map<String, String> _tokenMap = await getTokenMap(_selectedFriends);
+                      print(_tokenMap);
+
 
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) =>
-                              InstructionsScreen(tokens: _tokens, selectedRecipes: _selectedRecipes, selectedFriends: _selectedFriends)));
+                              InstructionsScreen(tokenMap: _tokenMap, selectedRecipes: _selectedRecipes, selectedFriends: _selectedFriends)));
                     },
                     child: Text("Start new session!"))),
           ])),
     );
   }
 }
+
+

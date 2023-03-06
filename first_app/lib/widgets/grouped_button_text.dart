@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // Widget to group together texts and buttons, such that after clicking the button
 // a notification can be sent
 Widget groupedButtonText(
-    String text, String buttonText, List<String> tokens, final fcmProvider) {
+    String text, String buttonText, Map<String, String>? friendsTokenMap, List<String>? friendsTokenList, bool isHost, final fcmProvider) {
   return Padding(
     padding: const EdgeInsets.only(bottom: 15),
     child: Row(
@@ -38,11 +38,26 @@ Widget groupedButtonText(
                                 padding: const EdgeInsets.all(10),
                                 backgroundColor: Colors.deepOrange),
                             onPressed: () {
-                              for (int i = 0; i < tokens.length; i++) {
-                                fcmProvider.sendNotification(
-                                    token: tokens[i],
-                                  title: "Step Blocked",
-                                  body: "I'm blocked on my step!");}
+
+                              // if it's the host they use a map from the regular instructions screen
+                              if (isHost && friendsTokenMap != null) {
+                                for (var email in friendsTokenMap.keys) {
+                                  fcmProvider.sendNotification(
+                                      token: friendsTokenMap[email],
+                                      title: "Step Blocked",
+                                      body: "I'm blocked on my step!");}
+                              }
+
+                              // if it's the non-hosts/friends then use a list from received instructinos
+                              else {
+                                for (int i = 0; i < (friendsTokenList?.length ?? 0); i++) {
+                                  fcmProvider.sendNotification(
+                                      token: friendsTokenList?[i],
+                                      title: "Step Blocked",
+                                      body: "I'm blocked on my step!");}
+                              }
+
+
                             },
                             child: Text(buttonText),
                           ),

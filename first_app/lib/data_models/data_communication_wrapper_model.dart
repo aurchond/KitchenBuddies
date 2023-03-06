@@ -36,10 +36,17 @@ class DataCommunicationWrapper {
 }
 
 class Body {
+  String? _receiversToken;
   List<String>? _tokens;
   MealSessionSteps? _mealSessionSteps;
 
-  Body({List<String>? tokens, MealSessionSteps? mealSessionSteps}) {
+  Body(
+      {String? receiversToken,
+        List<String>? tokens,
+        MealSessionSteps? mealSessionSteps}) {
+    if (receiversToken != null) {
+      this._receiversToken = receiversToken;
+    }
     if (tokens != null) {
       this._tokens = tokens;
     }
@@ -48,6 +55,9 @@ class Body {
     }
   }
 
+  String? get receiversToken => _receiversToken;
+  set receiversToken(String? receiversToken) =>
+      _receiversToken = receiversToken;
   List<String>? get tokens => _tokens;
   set tokens(List<String>? tokens) => _tokens = tokens;
   MealSessionSteps? get mealSessionSteps => _mealSessionSteps;
@@ -55,6 +65,7 @@ class Body {
       _mealSessionSteps = mealSessionSteps;
 
   Body.fromJson(Map<String, dynamic> json) {
+    _receiversToken = json['receiversToken'];
     _tokens = json['tokens'].cast<String>();
     _mealSessionSteps = json['mealSessionSteps'] != null
         ? new MealSessionSteps.fromJson(json['mealSessionSteps'])
@@ -63,6 +74,7 @@ class Body {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['receiversToken'] = this._receiversToken;
     data['tokens'] = this._tokens;
     if (this._mealSessionSteps != null) {
       data['mealSessionSteps'] = this._mealSessionSteps!.toJson();

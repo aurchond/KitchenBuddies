@@ -1,6 +1,6 @@
 [
     {
-        "userEmail": "nathan@gmail.com",
+        "userEmail": "giver@gmail.com",
         "notes": "note: there is no error!",
         "recipeSteps": [
             {
@@ -60,7 +60,7 @@
         ]
     },
     {
-        "userEmail": "test@gmail.com",
+        "userEmail": "receiver@gmail.com",
         "notes": "note: there is no error 2.0!",
         "recipeSteps": [
             {

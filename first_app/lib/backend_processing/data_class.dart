@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:first_app/backend_processing/post_requests.dart';
 import 'package:first_app/data_models/friends_list_model.dart';
 import 'package:first_app/data_models/kitchen_constraints_model.dart';
@@ -7,6 +8,7 @@ import '../data_models/meal_session_steps_model.dart';
 import '../data_models/meal_session_steps_request_model.dart';
 import '../data_models/recipe_info_model.dart';
 import 'get_requests.dart';
+import '../provider/auth_provider.dart';
 
 class DataClass extends ChangeNotifier {
 
@@ -20,8 +22,8 @@ class DataClass extends ChangeNotifier {
 
   // for creating a new meal session
   MealSessionStepsRequest? mealSessionStepsRequest;
-  MealSessionSteps? mealSessionSteps;
-  //List<Map<dynamic, dynamic>>
+  List<MealSessionSteps?>? allMealSessionSteps;
+  MealSessionSteps? mySteps;
 
 
 
@@ -38,11 +40,13 @@ class DataClass extends ChangeNotifier {
   }
 
   // called from instructions screen to get specific instructions for user
-  loadMealSessionSteps(String emailToFind) async {
+  loadMealSessionSteps() async {
 
     // actually show that the screen is loading while the info is fetched
     loading = true;
-    mealSessionSteps = (await requestMealSessionSteps(emailToFind, mealSessionStepsRequest));
+    // todo: change back to getMealSessionSteps
+    allMealSessionSteps = (await getMealSessionSteps(mealSessionStepsRequest));
+    //print(mealSessionSteps);
     loading = false;
 
     notifyListeners();

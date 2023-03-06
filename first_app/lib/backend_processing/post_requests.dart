@@ -14,30 +14,56 @@ import 'data_class.dart';
 import '../data_models/meal_session_steps_model.dart';
 
 // called from data class to get actual data from the URL
-Future<MealSessionSteps?> requestMealSessionSteps(String emailToFind, MealSessionStepsRequest? mealSessionStepsRequest) async {
+Future<MealSessionSteps?> requestMealSessionSteps(MealSessionStepsRequest? mealSessionStepsRequest) async {
 
   final body = jsonEncode(mealSessionStepsRequest!.toJson());
   //Response? response = await sendPostRequest("RequestMealSessionSteps", body);
 
   // todo: this is mocked! take it out later
   final response = await http.get(
-    Uri.parse("https://mocki.io/v1/2fa01f7e-97ea-49a7-ad38-27a7d2f3c802"),
+    Uri.parse("https://mocki.io/v1/bfc64f72-2777-4833-bcfa-caefc6f31530"),
     headers: {
       HttpHeaders.contentTypeHeader: "application/json",
     },
   );
+  print(response);
 
   final item = json.decode(response!.body);
+  print("item: " + item);
 
   for (int i = 0; i < item.length; i++) {
     MealSessionSteps? thisUserSteps = MealSessionSteps.fromJson(item[i]);
 
     // emailToFind is the user's own email
-    if (thisUserSteps.userEmail == emailToFind) {
+    if (thisUserSteps.userEmail == myEmail) {
       return thisUserSteps;
     }
   }
 }
+
+
+Future<List<MealSessionSteps?>> getMealSessionSteps(MealSessionStepsRequest? mealSessionStepsRequest) async {
+  List<MealSessionSteps?> allMealSessionSteps = <MealSessionSteps>[];
+  try {
+    final uri = Uri.parse("https://mocki.io/v1/18306fbf-cf36-4443-ab63-dcf147243121");
+    final headers = {HttpHeaders.contentTypeHeader: 'application/json'};
+    final response = await http.get(uri, headers: headers);
+
+    // status code is fine
+    if (response.statusCode == 200) {
+      final item = json.decode(response.body);
+      for (int i = 0; i < item.length; i++) {
+        allMealSessionSteps.add(MealSessionSteps.fromJson(item[i]));
+      }
+    } else {
+      print("error");
+    }
+  } catch (e) {
+    log(e.toString());
+  }
+  return allMealSessionSteps; //error check?
+}
+
 
 Future<void> addFriend(String newFriend) async {
 
