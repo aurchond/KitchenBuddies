@@ -226,12 +226,12 @@ public class MySqlConnection {
     }
 
     public static Boolean recipeInGraphDB(Long recipeId){
-        String updateInGraphDB = "UPDATE AllRecipes SET InGraphDB = ? WHERE Name = ?;";
+        String updateInGraphDB = "UPDATE AllRecipes SET InGraphDB = ? WHERE RecipeId = ?;";
         try {
             Connection conn = startSession(); 
             PreparedStatement stmt = conn.prepareStatement(updateInGraphDB);  
             stmt.setBoolean(1, true);
-            stmt.setInt(2, recipeId);
+            stmt.setLong(2, recipeId);
 
             int rowsUpdated = stmt.executeUpdate();
             if (rowsUpdated > 0) {return true;}

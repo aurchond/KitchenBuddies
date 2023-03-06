@@ -50,8 +50,7 @@ public class RecipeExtractor {
         inRecipe.writeTextFile();
 
         // Add to relational database
-        Long recipeID = 1000L;
-        // Long recipeID = addToAllRecipesFromText(inRecipe.getRecipeTitle(), inRecipe.convertIngredientsToString(), inRecipe.getTotalTime());
+        Long recipeID = addToAllRecipesFromText(inRecipe.getRecipeTitle(), inRecipe.convertIngredientsToString(), inRecipe.getTotalTime());
 
         // Add recipe to UserLinkedRecipes
         Boolean res = addUserLinkedRecipe(recipeInput.getUserEmail(), recipeID);
