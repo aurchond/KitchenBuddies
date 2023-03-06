@@ -44,18 +44,26 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
         kitchenConstraints: postModel.kitchenConstraints,
         recipeIDs: widget.selectedRecipes,
         includedFriends: widget.selectedFriends);
+    print("attempt to load meal session steps");
     postModel.loadMealSessionSteps();
+    print("returned from loading steps");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final postModel = Provider.of<DataClass>(context);
+    final fcmProvider = Provider.of<NotificationProvider>(context);
+
+    Map<String,String> friendsTokenMap = removeMyTokenFromMap(widget.tokenMap);
+
+    print(postModel.allMealSessionSteps?.length.toString());
 
     // this is the body with ALL tokens (including hosts') and the chosen friends' meal steps
     Body sendTokenAndSteps = new Body();
     widget.tokenMap.entries
         .forEach((e) => sendTokenAndSteps.tokens?.add(e.value));
 
-
-
     // the total number of meal session friends and the host
-    int? mealChefsCount = postModel.allMealSessionSteps?.length;
-
     // send meal session steps to other friends in session
     for (int i = 0; i < widget.selectedFriends.length; i++) {
       //send tokens to everyone so they can also use blocked buttons
@@ -65,18 +73,17 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
       String? receiversToken = widget.tokenMap[chosenFriend];
 
       // go through the session steps and set the
-      if (mealChefsCount! > 0) {
-        for (int i = 0; i < mealChefsCount; i++) {
-          if (postModel.allMealSessionSteps?[i]?.userEmail == chosenFriend) {
-            // set the steps of this person's meal steps to the current one
-            sendTokenAndSteps.mealSessionSteps =
-            postModel.allMealSessionSteps?[i];
+      for (int i = 0; i < (postModel.allMealSessionSteps?.length ?? 0) ; i++) {
+        if (postModel.allMealSessionSteps?[i]?.userEmail == chosenFriend) {
+          // set the steps of this person's meal steps to the current one
+          sendTokenAndSteps.mealSessionSteps =
+          postModel.allMealSessionSteps?[i];
 
-            sendTokenAndSteps.receiversToken = receiversToken;
+          sendTokenAndSteps.receiversToken = receiversToken;
 
-          } else {
-            postModel.mySteps = postModel.allMealSessionSteps?[i];
-          }
+        } else {
+          print("we got my steps");
+          postModel.mySteps = postModel.allMealSessionSteps?[i];
         }
       }
 
@@ -88,17 +95,8 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
           token: receiversToken.toString(),
           title: "Meal Session Steps",
           body: body
-          );
+      );
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final postModel = Provider.of<DataClass>(context);
-    final fcmProvider = Provider.of<NotificationProvider>(context);
-
-    Map<String,String> friendsTokenMap = removeMyTokenFromMap(widget.tokenMap);
-
 
     return Consumer<AuthProvider>(builder: (context, model, _) {
       return Scaffold(

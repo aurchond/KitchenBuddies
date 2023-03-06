@@ -25,8 +25,6 @@ class DataClass extends ChangeNotifier {
   List<MealSessionSteps?>? allMealSessionSteps;
   MealSessionSteps? mySteps;
 
-
-
   loadHomePage() async {
 
     // actually show that the screen is loading while the info is fetched
@@ -45,8 +43,8 @@ class DataClass extends ChangeNotifier {
     // actually show that the screen is loading while the info is fetched
     loading = true;
     // todo: change back to getMealSessionSteps
-    allMealSessionSteps = (await getMealSessionSteps(mealSessionStepsRequest));
-    //print(mealSessionSteps);
+    allMealSessionSteps = await getMealSessionSteps(mealSessionStepsRequest);
+    print("meal session steps:" + (allMealSessionSteps?[0]?.recipeSteps?.length?.toString() ?? ""));
     loading = false;
 
     notifyListeners();
