@@ -4,11 +4,13 @@ import org.optimization.Meal;
 import org.optimization.Resource;
 import org.optimization.User;
 import org.recipe_processing.Recipe;
+import org.utilities.database.relational.MySqlConnection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static org.output_processing.OutputJson.userStepsToJson;
 import static org.utilities.database.graph.RecipeHelper.getRecipeFromDatabase;
 
 
@@ -27,18 +29,18 @@ public class GenerateMeal {
 
         for (Long rId : recipeIDs) {
             Recipe r = getRecipeFromDatabase(rId);
-            // r.setRecipeName(MySqlConnection.getRecipeNameFromId(rId));
+            r.setResourcesForRecipe(MySqlConnection.getRecipeResourcesFromId(rId));
             recipes.add(r);
         }
 
         Meal m = new Meal();
         List<User> buddies = new ArrayList<User>();
-        // Integer skillLevel = MySqlConnection.getSkillLevel(kitchenConstraints.userEmail);
-        Integer skillLevel = 2;
+         Integer skillLevel = MySqlConnection.getSkillLevel(kitchenConstraints.userEmail);
+        //Integer skillLevel = 2;
         buddies.add(new User(kitchenConstraints.userEmail, skillLevel));
         for (String friend : includedFriends) {
-            // skillLevel = MySqlConnection.getSkillLevel(friend);
-            skillLevel = 2;
+            skillLevel = MySqlConnection.getSkillLevel(friend);
+            //skillLevel = 2;
             buddies.add(new User(friend, skillLevel));
         }
 
@@ -50,10 +52,10 @@ public class GenerateMeal {
         /**
          * Send off to users using the buddies listed and the result of create Meal
          */
-        // List<MealSessionUsersSteps> usersSteps = userStepsToJson(buddies);
+        List<MealSessionUsersSteps> usersSteps = userStepsToJson(buddies);
         System.out.println("Finished");
-        // return usersSteps;
-        return null;
+        return usersSteps;
+        //return null;
     }
 
     private static HashMap<String, List<Resource>> setupConstraints(KitchenConstraint kitchenConstraints) {
