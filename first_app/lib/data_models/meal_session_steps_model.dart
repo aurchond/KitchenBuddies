@@ -49,15 +49,11 @@ class RecipeStep {
   String? _number;
   String? _instructions;
   List<String>? _ingredientsCompleteList;
-  String? _dependencyItem;
-  String? _nextUserEmail;
 
   RecipeStep(
       {String? number,
         String? instructions,
-        List<String>? ingredientsCompleteList,
-        String? dependencyItem,
-        String? nextUserEmail}) {
+        List<String>? ingredientsCompleteList,}){
     if (number != null) {
       this._number = number;
     }
@@ -66,12 +62,6 @@ class RecipeStep {
     }
     if (ingredientsCompleteList != null) {
       this._ingredientsCompleteList = ingredientsCompleteList;
-    }
-    if (dependencyItem != null) {
-      this._dependencyItem = dependencyItem;
-    }
-    if (nextUserEmail != null) {
-      this._nextUserEmail = nextUserEmail;
     }
   }
 
@@ -82,23 +72,18 @@ class RecipeStep {
   List<String>? get ingredientsCompleteList => _ingredientsCompleteList;
   set ingredientsCompleteList(List<String>? ingredientsCompleteList) =>
       _ingredientsCompleteList = ingredientsCompleteList;
-  String? get dependencyItem => _dependencyItem;
-  set dependencyItem(String? dependencyItem) =>
-      _dependencyItem = dependencyItem;
-  String? get nextUserEmail => _nextUserEmail;
-  set nextUserEmail(String? nextUserEmail) => _nextUserEmail = nextUserEmail;
 
   RecipeStep.fromJson(Map<String, dynamic> json) {
     _number = json['number'];
     _instructions = json['instructions'];
-    var ingredientsListLength = json['ingredientQuantity'].length;
+    var ingredientsListLength = json['ingredientList'].length;
 
     // manually concat quantity and list of ingredients
     _ingredientsCompleteList = List<String>.filled(ingredientsListLength, '');
     for (int i = 0; i < ingredientsListLength; i++) {
-      _ingredientsCompleteList?[i] = json['ingredientQuantity'][i].toString() + " " + json['ingredientList'][i];
+      //_ingredientsCompleteList?[i] = json['ingredientQuantity'][i].toString() + " " + json['ingredientList'][i];
+      _ingredientsCompleteList?[i] = json['ingredientList'][i];
     }
-    _nextUserEmail = json['nextUserEmail'];
   }
 
   // todo: need to fix ingredientsList so that it can get ingredient list only from ingredientCompleteList
@@ -107,9 +92,7 @@ class RecipeStep {
     data['number'] = this._number;
     data['instructions'] = this._instructions;
     data['ingredientList'] = this._ingredientsCompleteList;
-    data['ingredientQuantity'] = [1];
-    data['dependencyItem'] = this._dependencyItem;
-    data['nextUserEmail'] = this._nextUserEmail;
+    //data['ingredientQuantity'] = [1];
     return data;
   }
 }

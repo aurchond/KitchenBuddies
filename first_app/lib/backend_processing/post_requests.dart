@@ -21,7 +21,7 @@ Future<MealSessionSteps?> requestMealSessionSteps(MealSessionStepsRequest? mealS
 
   // todo: this is mocked! take it out later
   final response = await http.get(
-    Uri.parse("https://mocki.io/v1/bfc64f72-2777-4833-bcfa-caefc6f31530"),
+    Uri.parse("https://mocki.io/v1/a67044ec-63ba-4bf1-b58f-b9be22b2efd0"),
     headers: {
       HttpHeaders.contentTypeHeader: "application/json",
     },
@@ -45,9 +45,10 @@ Future<MealSessionSteps?> requestMealSessionSteps(MealSessionStepsRequest? mealS
 Future<List<MealSessionSteps?>> getMealSessionSteps(MealSessionStepsRequest? mealSessionStepsRequest) async {
   List<MealSessionSteps?> allMealSessionSteps = <MealSessionSteps>[];
   try {
-    final uri = Uri.parse("https://mocki.io/v1/387e0619-762c-48e8-bd6f-130b8c5f9efa");
+    final uri = Uri.parse("https://mocki.io/v1/a67044ec-63ba-4bf1-b58f-b9be22b2efd0");
     final headers = {HttpHeaders.contentTypeHeader: 'application/json'};
     final response = await http.get(uri, headers: headers);
+
 
     // status code is fine
     if (response.statusCode == 200) {

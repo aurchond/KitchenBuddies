@@ -152,8 +152,8 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                                 // appended to the instruction appended to the
                                 // complete list of ingredients for that step
                                 return groupedButtonText(
-                                    (index + 1).toString() +
-                                        ". " +
+                                    //(index + 1).toString() + ". " +
+                                    (postModel.mySteps?.recipeSteps?[index].number.toString() ?? "") + ". " +
                                         (postModel
                                                 .mySteps
                                                 ?.recipeSteps?[index]
@@ -167,7 +167,7 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                                                 ?.join(', ') ??
                                             "") +
                                         ")",
-                                    "I'm blocked on this step!",
+                                    "I'm blocked on step " + (postModel.mySteps?.recipeSteps?[index].number.toString() ?? "")+  "!",
                                     friendsTokenMap,
                                     null, // is not sending a friendsTokenList
                                     true, // is indeed the host
