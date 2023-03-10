@@ -16,6 +16,10 @@ import '../../provider/auth_provider.dart';
 import '../../provider/notification_provider.dart';
 import '../../widgets/grouped_button_text.dart';
 
+List<Color> accentColours = [Colors.red.shade300, Colors.deepOrange.shade300, Colors.yellow.shade300, Colors.green.shade300, Colors.lightBlue.shade300, Colors.deepPurple.shade300];
+List<Color> fillColours = [Colors.red.shade200, Colors.deepOrange.shade200, Colors.yellow.shade200, Colors.green.shade200, Colors.lightBlue.shade200, Colors.deepPurple.shade200];
+List<Color> buttonColours = [Colors.red.shade400, Colors.deepOrange.shade400, Colors.yellow.shade400, Colors.green.shade400, Colors.lightBlue.shade400, Colors.deepPurple.shade400];
+
 class InstructionsScreen extends StatefulWidget {
   const InstructionsScreen(
       {Key? key,
@@ -36,8 +40,6 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
   void initState() {
     super.initState();
     final postModel = Provider.of<DataClass>(context, listen: false);
-    final fcmProvider =
-        Provider.of<NotificationProvider>(context, listen: false);
 
     postModel.kitchenConstraints?.userEmail = myEmail;
     postModel.mealSessionStepsRequest = MealSessionStepsRequest(
@@ -54,7 +56,7 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
     final postModel = Provider.of<DataClass>(context);
     final fcmProvider = Provider.of<NotificationProvider>(context);
 
-    Map<String,String> friendsTokenMap = removeMyTokenFromMap(widget.tokenMap);
+    Map<String, String> friendsTokenMap = removeMyTokenFromMap(widget.tokenMap);
 
     print(postModel.allMealSessionSteps?.length.toString());
 
@@ -74,14 +76,13 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
       String? receiversToken = widget.tokenMap[chosenFriend];
 
       // go through the session steps and set the
-      for (int i = 0; i < (postModel.allMealSessionSteps?.length ?? 0) ; i++) {
+      for (int i = 0; i < (postModel.allMealSessionSteps?.length ?? 0); i++) {
         if (postModel.allMealSessionSteps?[i]?.userEmail == chosenFriend) {
           // set the steps of this person's meal steps to the current one
           sendTokenAndSteps.mealSessionSteps =
-          postModel.allMealSessionSteps?[i];
+              postModel.allMealSessionSteps?[i];
 
           sendTokenAndSteps.receiversToken = receiversToken;
-
         } else {
           print("we got my steps");
           postModel.mySteps = postModel.allMealSessionSteps?[i];
@@ -95,9 +96,42 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
       fcmProvider.sendNotification(
           token: receiversToken.toString(),
           title: "Meal Session Steps",
-          body: body
-      );
+          body: body);
     }
+
+    //real version
+    // Map fillColourIds = Map<int, Color>();
+    // for (int i = 0; i < widget.selectedRecipes.length; i++) {
+    //   fillColourIds[widget.selectedRecipes[i]] = fillColours[i];
+    // }
+    //
+    // Map accentColourIds = Map<int, Color>();
+    // for (int i = 0; i < widget.selectedRecipes.length; i++) {
+    //   accentColourIds[widget.selectedRecipes[i]] = accentColours[i];
+    // }
+    //
+    // Map buttonColourIds = Map<int, Color>();
+    // for (int i = 0; i < widget.selectedRecipes.length; i++) {
+    //   buttonColourIds[widget.selectedRecipes[i]] = buttonColours[i];
+    // }
+
+    List<int> fake = [1,2];
+    Map fillColourIds = Map<int, Color>();
+    for (int i = 0; i < fake.length; i++) {
+      fillColourIds[fake[i]] = fillColours[i];
+    }
+
+    Map accentColourIds = Map<int, Color>();
+    for (int i = 0; i < fake.length; i++) {
+      accentColourIds[fake[i]] = accentColours[i];
+    }
+
+    Map buttonColourIds = Map<int, Color>();
+    for (int i = 0; i < fake.length; i++) {
+      buttonColourIds[fake[i]] = buttonColours[i];
+    }
+
+    final List<bool> selected = List.generate(20, (i) => true);
 
     return Consumer<AuthProvider>(builder: (context, model, _) {
       return Scaffold(
@@ -143,36 +177,154 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                       // todo: display all ingredients necessary here
 
                       // display the user's instructions below
-                      new Expanded(
-                          child: new ListView.builder(
-                              itemCount: postModel.mySteps?.recipeSteps?.length ??
-                                  0,
-                              itemBuilder: (BuildContext context, int index) {
-                                // first argument to the function has it's step number
-                                // appended to the instruction appended to the
-                                // complete list of ingredients for that step
-                                return groupedButtonText(
-                                    //(index + 1).toString() + ". " +
-                                    (postModel.mySteps?.recipeSteps?[index].number.toString() ?? "") + ". " +
-                                        (postModel
-                                                .mySteps
-                                                ?.recipeSteps?[index]
-                                                .instructions ??
-                                            "") +
-                                        " (" +
-                                        (postModel
-                                                .mySteps
-                                                ?.recipeSteps?[index]
-                                                .ingredientsCompleteList
-                                                ?.join(', ') ??
-                                            "") +
-                                        ")",
-                                    "I'm blocked on step " + (postModel.mySteps?.recipeSteps?[index].number.toString() ?? "")+  "!",
-                                    friendsTokenMap,
-                                    null, // is not sending a friendsTokenList
-                                    true, // is indeed the host
-                                    fcmProvider);
-                              })),
+                      StatefulBuilder(builder:
+                          (BuildContext context, StateSetter setState) {
+                        return Expanded(
+                            child: Column(children: [
+                          Expanded(
+                              child: new ListView.builder(
+                                  itemCount:
+                                      postModel.mySteps?.recipeSteps?.length ??
+                                          0,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 15),
+                                      child: Row(
+                                        children: [
+                                          Flexible(
+                                              child: InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                selected[index] =
+                                                    !selected[index];
+                                              });
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                  color: selected[index] ? fillColourIds[double.parse(postModel
+                                                      .mySteps
+                                                      ?.recipeSteps?[
+                                                  index]
+                                                      .number ?? "").floor()]
+                                                      // ? Colors
+                                                      //     .deepOrange.shade200
+                                                      : Colors.grey.shade300,
+                                                  border: Border.all(
+                                                      width: 3,
+                                                      color: selected[index]
+                                                          ? accentColourIds[double.parse(postModel
+                                                          .mySteps
+                                                          ?.recipeSteps?[
+                                                      index]
+                                                          .number ?? "").floor()]
+                                                          : Colors
+                                                              .grey.shade400)),
+                                              padding: const EdgeInsets.all(15),
+                                              child: Wrap(
+                                                  alignment: WrapAlignment
+                                                      .spaceBetween,
+                                                  runAlignment: WrapAlignment
+                                                      .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                        (postModel
+                                                                    .mySteps
+                                                                    ?.recipeSteps?[
+                                                                        index]
+                                                                    .number
+                                                                    .toString() ??
+                                                                "") +
+                                                            ". " +
+                                                            (postModel
+                                                                    .mySteps
+                                                                    ?.recipeSteps?[
+                                                                        index]
+                                                                    .instructions ??
+                                                                "") +
+                                                            " (" +
+                                                            (postModel
+                                                                    .mySteps
+                                                                    ?.recipeSteps?[
+                                                                        index]
+                                                                    .ingredientsCompleteList
+                                                                    ?.join(
+                                                                        ', ') ??
+                                                                "") +
+                                                            ")",
+                                                        style: TextStyle(
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        )),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 10),
+                                                      child: Center(
+                                                        child: ElevatedButton(
+                                                          style: ElevatedButton.styleFrom(
+                                                              textStyle:
+                                                                  const TextStyle(
+                                                                      fontSize:
+                                                                          18),
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(10),
+                                                              backgroundColor:
+                                                                  selected[
+                                                                          index]
+                                                                      ? buttonColourIds[double.parse(postModel
+                                                                      .mySteps
+                                                                      ?.recipeSteps?[
+                                                                  index]
+                                                                      .number ?? "").floor()]
+                                                                      : Colors
+                                                                          .grey),
+                                                          onPressed:
+                                                              (!selected[index])
+                                                                  ? null
+                                                                  : () {
+                                                                      // if it's the host they use a map from the regular instructions screen
+                                                                      //if you have moved past this step, don't send a notification
+                                                                      for (var email
+                                                                          in friendsTokenMap
+                                                                              .keys) {
+                                                                        fcmProvider.sendNotification(
+                                                                            token: friendsTokenMap[
+                                                                                email]!,
+                                                                            title:
+                                                                                "Step Blocked",
+                                                                            body:
+                                                                                "I'm blocked on my step!");
+                                                                      }
+                                                                    },
+                                                          child: Text(
+                                                            "I'm blocked on step " +
+                                                                (postModel
+                                                                        .mySteps
+                                                                        ?.recipeSteps?[
+                                                                            index]
+                                                                        .number
+                                                                        .toString() ??
+                                                                    "") +
+                                                                "!",
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ]),
+                                            ),
+                                          )),
+                                        ],
+                                      ),
+                                    );
+                                  })),
+                        ]));
+                      }),
                     ],
                   ),
                 ),

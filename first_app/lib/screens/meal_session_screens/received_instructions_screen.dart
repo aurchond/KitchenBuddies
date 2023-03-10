@@ -69,6 +69,8 @@ class ReceivedInstructionScreen extends StatelessWidget {
     // String myToken = body["receiversToken"];
     // List<String> friendsTokens = removeMyTokenFromList(tokens, myToken);
 
+    //TODO: set up fade later
+    bool visible = true;
     return Scaffold(
       appBar: AppBar(title: const Text("Received Instructions")),
       body: Container(
@@ -85,15 +87,17 @@ class ReceivedInstructionScreen extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
-              new Expanded(
-                  child: new ListView.builder(
-                      //itemCount: numSteps ?? 0,
-                      itemCount: thisUserSteps?.recipeSteps?.length ?? 0,
+              StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+                return Expanded(
+                    child: new ListView.builder(
+                    //itemCount: numSteps ?? 0,
+                    itemCount
+                : thisUserSteps?.recipeSteps?.length ?? 0,
                       itemBuilder: (BuildContext context, int index) {
                         // first argument to the function has it's step number
                         // appended to the instruction appended to the
                         // complete list of ingredients for that step
-                        return groupedButtonText(
+                        return groupedButtonText(visible,
                             (thisUserSteps?.recipeSteps?[index].number.toString() ?? "") + ". " +
                                 (thisUserSteps
                                     ?.recipeSteps?[index]
@@ -106,18 +110,12 @@ class ReceivedInstructionScreen extends StatelessWidget {
                                     ?.join(', ') ??
                                     "") +
                                 ")",
-                          // stepNumber[index] + ". " +
-                          //       instructions[index] +
-                          //       " (" +
-                          //       ingredientsCompleteList[index].join(', ') +
-                          //       ")",
                             "I'm blocked on step " + (thisUserSteps?.recipeSteps?[index].number.toString() ?? "")+  "!",
                             null, // is not sending in a map,
-                            //[""],
                             receivedTokenAndSteps?.tokens,
                             false, // is not the host
-                            fcmProvider);
-                      }))
+                            fcmProvider, setState);
+                      }));})
             ]),
           )),
     );

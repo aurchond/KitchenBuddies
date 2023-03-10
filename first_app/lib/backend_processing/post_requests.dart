@@ -45,7 +45,7 @@ Future<MealSessionSteps?> requestMealSessionSteps(MealSessionStepsRequest? mealS
 Future<List<MealSessionSteps?>> getMealSessionSteps(MealSessionStepsRequest? mealSessionStepsRequest) async {
   List<MealSessionSteps?> allMealSessionSteps = <MealSessionSteps>[];
   try {
-    final uri = Uri.parse("https://mocki.io/v1/a67044ec-63ba-4bf1-b58f-b9be22b2efd0");
+    final uri = Uri.parse("https://mocki.io/v1/4c0fd806-90cc-419c-80d2-a3c557d82670");
     final headers = {HttpHeaders.contentTypeHeader: 'application/json'};
     final response = await http.get(uri, headers: headers);
 
