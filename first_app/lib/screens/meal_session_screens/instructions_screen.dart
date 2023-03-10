@@ -16,9 +16,9 @@ import '../../provider/auth_provider.dart';
 import '../../provider/notification_provider.dart';
 import '../../widgets/grouped_button_text.dart';
 
-List<Color> accentColours = [Colors.red.shade300, Colors.deepOrange.shade300, Colors.yellow.shade300, Colors.green.shade300, Colors.lightBlue.shade300, Colors.deepPurple.shade300];
-List<Color> fillColours = [Colors.red.shade200, Colors.deepOrange.shade200, Colors.yellow.shade200, Colors.green.shade200, Colors.lightBlue.shade200, Colors.deepPurple.shade200];
-List<Color> buttonColours = [Colors.red.shade400, Colors.deepOrange.shade400, Colors.yellow.shade400, Colors.green.shade400, Colors.lightBlue.shade400, Colors.deepPurple.shade400];
+List<Color> accentColours = [Colors.red.shade300, Colors.deepOrange.shade300, Colors.yellow.shade200, Colors.green.shade300, Colors.lightBlue.shade300, Colors.deepPurple.shade300];
+List<Color> fillColours = [Colors.red.shade200, Colors.deepOrange.shade200, Colors.yellow.shade400, Colors.green.shade200, Colors.lightBlue.shade200, Colors.deepPurple.shade200];
+List<Color> buttonColours = [Colors.red.shade400, Colors.deepOrange.shade400, Colors.yellow.shade600, Colors.green.shade400, Colors.lightBlue.shade400, Colors.deepPurple.shade400];
 
 class InstructionsScreen extends StatefulWidget {
   const InstructionsScreen(
@@ -115,7 +115,7 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
     //   buttonColourIds[widget.selectedRecipes[i]] = buttonColours[i];
     // }
 
-    List<int> fake = [1,2];
+    List<int> fake = [200, 101, 102, 103];
     Map fillColourIds = Map<int, Color>();
     for (int i = 0; i < fake.length; i++) {
       fillColourIds[fake[i]] = fillColours[i];
