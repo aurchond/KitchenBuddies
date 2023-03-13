@@ -132,7 +132,8 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
     //   buttonColourIds[fake[i]] = buttonColours[i];
     // }
 
-    final List<bool> selected = List.generate(20, (i) => true);
+    final List<bool> selected = List.generate(postModel.mySteps?.recipeSteps?.length ??
+        0, (i) => true);
 
     return Consumer<AuthProvider>(builder: (context, model, _) {
       return Scaffold(
