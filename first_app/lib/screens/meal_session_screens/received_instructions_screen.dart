@@ -29,8 +29,8 @@ class ReceivedInstructionScreen extends StatelessWidget {
     Body? receivedTokenAndSteps = dataCommunicationWrapper.body;
     MealSessionSteps? thisUserSteps = receivedTokenAndSteps?.mealSessionSteps;
 
-    // Map<String, dynamic> body = json.decode(dataMap["body"]);
-    // print("map " + dataMap["body"]);
+     Map<String, dynamic> body = json.decode(dataMap["body"]);
+     print("map " + dataMap["body"]);
     // print("title " + dataMap["title"]);
     // print("token " + body["tokens"][0].toString());
     //
