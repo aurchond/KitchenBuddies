@@ -200,7 +200,9 @@ class _AllRecipesState extends State<AllRecipes> {
                                     requestRecipeByURL(
                                         recipeByUrlController.text);
                                     myFocusNode.unfocus();
-                                    dataModel.loadAllRecipesPage();
+                                    setState(() {
+                                      dataModel.loadAllRecipesPage();
+                                    });
                                   },
                                   child: Text("Add recipe!")),
                             )
@@ -214,15 +216,53 @@ class _AllRecipesState extends State<AllRecipes> {
                     height: 60,
                     child: ElevatedButton(
                       onPressed: () {
-                        alertDialog(
-                            context,
-                            buttonCallback,
-                            parseCallback,
-                            textCallback,
-                            recipeByTextController,
-                            "Add Recipe By Text",
-                            "Enter your recipe text");
-                      },
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                                insetPadding: EdgeInsets.all(10),
+                                title: Text("Add Recipe By Text"),
+                                content: Center(
+                                    child: SizedBox(
+                                        width: MediaQuery.of(context).size.width,
+                                        child: TextField(
+                                          minLines: 20,
+                                          maxLines: null,
+                                          keyboardType: TextInputType.multiline,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              valueText = value;
+                                            });
+
+                                            textEntered = true;
+                                          },
+                                          controller: recipeByTextController,
+                                          decoration: InputDecoration(
+                                              hintText: "Enter your recipe text",
+                                              suffixIcon: IconButton(
+                                                  onPressed: recipeByTextController.clear,
+                                                  icon: Icon(Icons.clear))),
+                                        ))),
+                                actions: <Widget>[
+                                  ElevatedButton(
+                                    child: Text('CANCEL'),
+                                    onPressed: buttonCallback,
+                                  ),
+                                  ElevatedButton(
+                                    child: Text('OK'),
+                                    onPressed: () {
+                                      parseCallback();
+                                      setState(() {
+                                        dataModel.loadAllRecipesPage();
+                                      });
+                                    }
+                              ),
+                              ],
+                              );
+                              });
+                            },
                       child: Text('Add recipe by text!'), //TODO: make this refresh the user's recipes
                     ))
               ],
