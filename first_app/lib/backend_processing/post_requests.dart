@@ -14,38 +14,28 @@ import 'data_class.dart';
 import '../data_models/meal_session_steps_model.dart';
 
 // called from data class to get actual data from the URL
-Future<MealSessionSteps?> requestMealSessionSteps(MealSessionStepsRequest? mealSessionStepsRequest) async {
+Future<List<MealSessionSteps?>> requestMealSessionSteps(MealSessionStepsRequest? mealSessionStepsRequest) async {
 
   final body = jsonEncode(mealSessionStepsRequest!.toJson());
-  //Response? response = await sendPostRequest("RequestMealSessionSteps", body);
-
-  // todo: this is mocked! take it out later
-  final response = await http.get(
-    Uri.parse("https://mocki.io/v1/a67044ec-63ba-4bf1-b58f-b9be22b2efd0"),
-    headers: {
-      HttpHeaders.contentTypeHeader: "application/json",
-    },
-  );
+  Response? response = await sendPostRequest("RequestMealSessionSteps", body);
   print(response);
 
   final item = json.decode(response!.body);
   print("item: " + item);
 
+  List<MealSessionSteps?> allMealSessionSteps = <MealSessionSteps>[];
   for (int i = 0; i < item.length; i++) {
-    MealSessionSteps? thisUserSteps = MealSessionSteps.fromJson(item[i]);
-
-    // emailToFind is the user's own email
-    if (thisUserSteps.userEmail == myEmail) {
-      return thisUserSteps;
-    }
+    allMealSessionSteps.add(MealSessionSteps.fromJson(item[i]));
   }
+
+  return allMealSessionSteps; //error check?
 }
 
 
 Future<List<MealSessionSteps?>> getMealSessionSteps(MealSessionStepsRequest? mealSessionStepsRequest) async {
   List<MealSessionSteps?> allMealSessionSteps = <MealSessionSteps>[];
   try {
-    final uri = Uri.parse("https://mocki.io/v1/7d85f165-7b56-411c-b222-91d99523d227");
+    final uri = Uri.parse("https://mocki.io/v1/798b07f6-05d4-4c7e-b0a1-b034eb2eb2d9");
     final headers = {HttpHeaders.contentTypeHeader: 'application/json'};
     final response = await http.get(uri, headers: headers);
 

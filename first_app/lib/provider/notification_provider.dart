@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 class NotificationProvider extends ChangeNotifier {
 
   sendNotification ({
-    required String token, required String title, required String body}) async {
+    required String token, required String title, required String body, required bool isBlocked}) async {
       const postUrl = 'https://fcm.googleapis.com/fcm/send';
 
       Map<String, dynamic> data;
@@ -16,7 +16,7 @@ class NotificationProvider extends ChangeNotifier {
         "collapse_key": "type_a",
         "notification": {
           "title": title,
-          "body": body, // currently sending as string
+          "body": isBlocked ? body : "" , // currently sending as string
         },
         'data': {
           "title": title,

@@ -96,7 +96,8 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
       fcmProvider.sendNotification(
           token: receiversToken.toString(),
           title: "Meal Session Steps",
-          body: body);
+          body: body,
+          isBlocked: false);
     }
 
     //real version
@@ -299,7 +300,8 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                                                                             title:
                                                                                 "Step Blocked",
                                                                             body:
-                                                                                "I'm blocked on my step!");
+                                                                                "I'm blocked on my step!",
+                                                                            isBlocked: true);
                                                                       }
                                                                     },
                                                           child: Text(
