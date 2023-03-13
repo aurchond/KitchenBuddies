@@ -1,8 +1,9 @@
 package org.server;
 
-import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RecipeStep {
@@ -23,6 +24,15 @@ public class RecipeStep {
     
     @JsonProperty("nextUserEmail")
     String nextUserEmail;
+    Integer timeOfStep;
+
+    public Integer getTimeOfStep() {
+        return timeOfStep;
+    }
+
+    public void setTimeOfStep(Integer timeOfStep) {
+        this.timeOfStep = timeOfStep;
+    }
 
     public String getNumber() {
         return number;
