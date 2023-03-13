@@ -160,9 +160,6 @@ class _NewMealSessionState extends State<NewMealSession> {
                                   Text(
                                     myRecipes[index]["title"],
                                   ),
-                                  Text("Total time: " +
-                                      myRecipes[index]["totalTime"].toString() +
-                                      " minutes"),
                                   true,
                                   checkboxCallback,
                                   setState)),
@@ -204,7 +201,6 @@ class _NewMealSessionState extends State<NewMealSession> {
                                 index,
                                 Text(myFriends[index]["name"],
                                     style: TextStyle(fontSize: 12)),
-                                Text(""),
                                 false,
                                 checkboxCallback,
                                 setState);

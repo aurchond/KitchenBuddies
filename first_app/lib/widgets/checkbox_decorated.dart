@@ -7,7 +7,6 @@ Widget CheckboxDecorated(
     Icon icon,
     int index,
     Text title,
-    Text subtitle,
     bool hasSub,
     Function(bool? value, List<Map> _data, int index, StateSetter setState)
         callback,
@@ -23,7 +22,7 @@ Widget CheckboxDecorated(
           ? CheckboxListTile(
               secondary: Text("  "+ (index+1).toString(), style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
               title: title,
-              subtitle: subtitle,
+              //subtitle: subtitle,
               value: _data[index]["isSelected"],
               onChanged: (value) {
                 callback(value, _data, index, setState);

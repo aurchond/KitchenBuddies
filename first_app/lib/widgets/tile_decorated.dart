@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 //TODO: optional fields for subtitle and body
 Widget TileDecorated(
-    Color fill, Icon icon, int index, Text title, Text subtitle, Text body, bool hasSub) {
+    Color fill, Icon icon, int index, Text title, Text body, bool hasSub) {
   return hasSub
       ? Container(
           //this is for recipes
@@ -14,7 +14,7 @@ Widget TileDecorated(
     child: ExpansionTile(
       leading: Text("  "+ (index+1).toString(), style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
       title: title,
-      subtitle: subtitle,
+      //subtitle: subtitle,
       children: <Widget>[
         ListTile(
                 title: body),
