@@ -110,8 +110,6 @@ class _HomeScreenState extends State<HomeScreen> {
     List<String>? myFriends = dataModel.friendsList?.friends;
     KitchenConstraints? kitchenConstraints = dataModel?.kitchenConstraints;
 
-    String myUsername = "calebc";
-
     List<bool> isTextFieldShown = List.filled(5, false, growable: true);
 
     return Consumer<AuthProvider>(builder: (context, model, _) {

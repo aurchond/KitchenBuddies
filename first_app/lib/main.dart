@@ -66,6 +66,7 @@ class MyApp extends StatelessWidget {
                 if (snapshot.hasData) {
                   User? user = snapshot.data;
                   myEmail = user?.email ?? "";
+                  myUsername = "calebc";
                   return BottomNavigation();
                 }
                 else {

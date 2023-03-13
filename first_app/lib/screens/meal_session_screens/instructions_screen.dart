@@ -138,7 +138,7 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
     return Consumer<AuthProvider>(builder: (context, model, _) {
       return Scaffold(
         appBar: AppBar(
-          title: Text("Instructions"),
+          title: Text(myUsername + "'s Meal Instructions: "),
         ),
         body: Container(
           padding: EdgeInsets.all(20),
@@ -167,14 +167,14 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // display the user's email at the top
-                      Container(
-                        margin: EdgeInsets.all(20),
-                        child: Text(
-                          myEmail,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
-                        ),
-                      ),
+                      // Container(
+                      //   margin: EdgeInsets.all(20),
+                      //   child: Text(
+                      //     myEmail,
+                      //     style: TextStyle(
+                      //         fontWeight: FontWeight.bold, fontSize: 18),
+                      //   ),
+                      // ),
 
                       // todo: display all ingredients necessary here
 
