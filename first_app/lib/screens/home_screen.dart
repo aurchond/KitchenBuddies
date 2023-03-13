@@ -182,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.w400)),
-                                              Text(""), Text(""),
+                                              Text(""),
                                               false);
                                         }))),
                             Container(

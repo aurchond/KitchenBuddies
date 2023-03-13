@@ -158,9 +158,6 @@ class _AllRecipesState extends State<AllRecipes> {
                                 Icon(Icons.fastfood),
                                 index,
                                 Text(_pastRecipes[index].title!),
-                                Text("Total time: " +
-                                    _pastRecipes[index].totalTime.toString() +
-                                    " minutes"),
                                 Text(_pastRecipes[index].ingredients!),
                                 true),
                           ),
