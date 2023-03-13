@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 // Widget to group together texts and buttons, such that after clicking the button
 // a notification can be sent
-Widget groupedButtonText(
-    String text, String buttonText, Map<String, String>? friendsTokenMap, List<String>? friendsTokenList, bool isHost, final fcmProvider) {
+Widget groupedButtonText(bool _selected,
+    String text, String buttonText, Map<String, String>? friendsTokenMap, List<String>? friendsTokenList, bool isHost, final fcmProvider, setState) {
   return Padding(
     padding: const EdgeInsets.only(bottom: 15),
     child: Row(
@@ -13,21 +13,26 @@ Widget groupedButtonText(
           child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                color: Colors.deepOrange.shade200,
-                border: Border.all(width: 3, color: Colors.deepOrange.shade300),
+                color: _selected ? Colors.deepOrange.shade200 : Colors.grey.shade300,
+                border: Border.all(width: 3, color: _selected ? Colors.deepOrange.shade300 : Colors.grey.shade400)
               ),
               padding: const EdgeInsets.all(15),
               child:
                 Wrap(
                     alignment: WrapAlignment.spaceBetween,
                     runAlignment: WrapAlignment.spaceBetween,
-                    children: [
+                    children: [ ListTile(title:
                       Text(
                         text,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w400,
-                        ),
+                        )),
+                      onTap: () {
+                      setState(() {
+                        _selected = !_selected;
+                      });
+                      },
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
@@ -36,7 +41,7 @@ Widget groupedButtonText(
                             style: ElevatedButton.styleFrom(
                                 textStyle: const TextStyle(fontSize: 18),
                                 padding: const EdgeInsets.all(10),
-                                backgroundColor: Colors.deepOrange),
+                                backgroundColor: _selected ? Colors.deepOrange: Colors.grey),
                             onPressed: () {
 
                               // if it's the host they use a map from the regular instructions screen
