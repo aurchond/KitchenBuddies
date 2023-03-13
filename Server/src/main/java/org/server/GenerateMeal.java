@@ -3,7 +3,9 @@ package org.server;
 import org.optimization.Meal;
 import org.optimization.Resource;
 import org.optimization.User;
+import org.optimization.UserTask;
 import org.recipe_processing.Recipe;
+import org.utilities.database.graph.Step;
 import org.utilities.database.relational.MySqlConnection;
 
 import java.util.ArrayList;
@@ -50,10 +52,12 @@ public class GenerateMeal {
         HashMap<String, List<Resource>> constraints = setupConstraints(kitchenConstraints);
 
         m.createMeal(recipes, buddies, constraints);
+        compareUserTimes(buddies);
         /**
          * Send off to users using the buddies listed and the result of create Meal
          */
         List<MealSessionUsersSteps> usersSteps = userStepsToJson(buddies);
+
         System.out.println("Finished");
         return usersSteps;
         //return null;
@@ -107,5 +111,28 @@ public class GenerateMeal {
         constraints.put("burner", burners);
 
         return constraints;
+    }
+
+    private static void compareUserTimes(List<User> buddies) {
+        for (User u : buddies) {
+            List<RecipeStep> recipeSteps = new ArrayList<>();
+            UserTask task = u.getTail();
+            Integer totalUserTime = 0;
+            Integer totalStepTime = 0;
+            Integer numSteps = 0;
+            while (task != null) {
+                if(task.getStep() != null){
+                    Step s = task.getStep();
+                    totalUserTime += s.getUserTime();
+                    totalStepTime += s.getStepTime();
+                    numSteps += 1;
+
+                }
+                
+                task = task.getPrev();
+            }
+            System.out.println(u.getEmail() + " spent " + Integer.toString(totalUserTime) +" on " + Integer.toString(numSteps) + "steps");
+            System.out.println(u.getEmail() + " Total Step Time: " + Integer.toString(totalStepTime));
+        }
     }
 }
