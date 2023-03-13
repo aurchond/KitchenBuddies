@@ -115,14 +115,15 @@ class _HomeScreenState extends State<HomeScreen> {
     return Consumer<AuthProvider>(builder: (context, model, _) {
       return Scaffold(
           appBar: AppBar(
-            actions: [
-              IconButton(
-                onPressed: () {
-                  model.logOut();
-                },
-                icon: const Icon(Icons.logout),
-              )
-            ],
+              title: const Text("Kitchen Buddies"),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    model.logOut();
+                  },
+                  icon: const Icon(Icons.logout),
+                )
+              ],
           ),
           body: SingleChildScrollView(
               physics: ClampingScrollPhysics(),

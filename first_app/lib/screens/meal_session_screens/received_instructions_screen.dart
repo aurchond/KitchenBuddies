@@ -31,43 +31,8 @@ class ReceivedInstructionScreen extends StatelessWidget {
 
      Map<String, dynamic> body = json.decode(dataMap["body"]);
      print("map " + dataMap["body"]);
-    // print("title " + dataMap["title"]);
-    // print("token " + body["tokens"][0].toString());
-    //
-    // print(body.toString());
-    //
-    // int numTokens = body["tokens"].length;
-    // List<String> tokens = List.generate(numTokens, (index) => "");
-    //
-    // for (int i = 0; i < numTokens; i++) {
-    //   tokens[i] = body["tokens"][i].toString();
-    // }
-    //
-    // String email = body["mealSessionSteps"]["userEmail"].toString();
-    // int numSteps = body["mealSessionSteps"]["recipeSteps"].length;
-    // List<String> instructions = List.generate(numSteps, (index) => "");
-    // List<int> numIngredients = List.generate(numSteps, (index) => 0);
-    // List<List<String>> ingredientsCompleteList =
-    //     new List.generate(numSteps, (i) => []);
-    // List<String> stepNumber = List.generate(numSteps, (index) => "");
-    //
-    // for (int i = 0; i < numSteps; i++) {
-    //   instructions[i] =
-    //   body["mealSessionSteps"]["recipeSteps"][i]["instructions"];
-    //   //get the number of ingredients at that step
-    //
-    //   numIngredients[i] =
-    //       body["mealSessionSteps"]["recipeSteps"][i]["ingredientList"].length;
-    //   stepNumber[i] = body["mealSessionSteps"]["recipeSteps"][i]["number"].toString();
-    //   for (int j = 0; j < numIngredients[i]; j++) {
-    //     ingredientsCompleteList[i].add(
-    //         body["mealSessionSteps"]["recipeSteps"][i]["ingredientList"][j]);
-    //     //ingredientsCompleteList[i].add((body["mealSessionSteps"]["recipeSteps"][i]["ingredientQuantity"][j].toString() + " " + body["mealSessionSteps"]["recipeSteps"][i]["ingredientList"][j]));
-    //   }
-    // }
-    //
-    // String myToken = body["receiversToken"];
-    // List<String> friendsTokens = removeMyTokenFromList(tokens, myToken);
+
+
 
     //TODO: set up fade later
     bool visible = true;
