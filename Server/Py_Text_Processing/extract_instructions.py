@@ -130,9 +130,21 @@ def extract_text_from_steps(recipe_ingredients, instr_steps):
             if hold_res_nonnumeric in resource: 
                 step.resourcesRequired.remove(resource)
                 step.resourcesRequired.append(step.holdingResource)
-        
+            
         if len(step.resourcesRequired) == 0 and step.holdingResource != '':
             step.resourcesRequired.append(step.holdingResource)
+
+        for i in range(len(step.ingredientsQuantity)):      #concatenating the ingredient quantity to ingredient 
+            if len(step.ingredientsQuantity) != len(step.ingredients): 
+                print('The ingredientsQuantity list and ingredients list are not equal length')
+                break
+            if step.ingredientsQuantity[i] != -1 :
+                step.ingredients[
+                    i] = str(step.ingredientsQuantity[i]) + ' ' + step.ingredients[i]
+
+        if len(steps_out) != 0: 
+            if (step.lineNumber == steps_out[-1].lineNumber) and (len(step.ingredients) == 0):
+                step.ingredients = steps_out[-1].ingredients
 
         steps_out.append(step)
         step.baseIngredients = ingr_base_words

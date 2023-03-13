@@ -335,9 +335,16 @@ class Step:
                 print(f"{ingr} was considered as an ingr??")
                 continue
             values = verbose_ingr[ingr.lower()]
-            self.ingredients.append(values[0])
-            self.ingredientsQuantity.append(values[1])
-        self.ingredients = list(set(self.ingredients)) #removes duplicate entries 
+
+            duplicate = False 
+            for i in range(len(self.ingredients)):
+                if values[0] == self.ingredients[i]: duplicate = True
+
+            if duplicate == False: 
+                self.ingredients.append(values[0])
+                self.ingredientsQuantity.append(values[1])
+
+        #self.ingredients = list(set(self.ingredients)) #removes duplicate entries 
         
         for supply in supplies_out:
             if supply.lower() not in verbose_ingr:
