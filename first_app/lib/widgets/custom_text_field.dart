@@ -22,7 +22,7 @@ class CustomTextField extends StatelessWidget {
         child: Container(
             height: 40,
             decoration: BoxDecoration(
-                border: Border.all(color: Colors.green),
+                border: Border.all(color: Colors.deepOrange),
                 borderRadius: BorderRadius.circular(20)),
             child: TextField(
               controller: controller,

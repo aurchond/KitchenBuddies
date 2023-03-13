@@ -22,6 +22,19 @@ class EmailPassScreen extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Text(
+                          "Kitchen \n Buddies",
+                          style: TextStyle(
+                              fontSize: 60,
+                            fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          "\ncooking together made simple.\n",
+                          style: TextStyle(
+                              fontSize: 25,
+                              fontStyle: FontStyle.italic,
+                              color: Colors.grey),
+                        ),
                         CustomTextField(
                           controller: model.emailController,
                           hintText: "Email",
