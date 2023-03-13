@@ -153,7 +153,6 @@ class _AllRecipesState extends State<AllRecipes> {
                         return Center(
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            //TODO: deal with format exception
                             child: TileDecorated(
                                 Colors.white,
                                 Icon(Icons.fastfood),
