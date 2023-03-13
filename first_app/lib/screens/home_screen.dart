@@ -110,12 +110,14 @@ class _HomeScreenState extends State<HomeScreen> {
     List<String>? myFriends = dataModel.friendsList?.friends;
     KitchenConstraints? kitchenConstraints = dataModel?.kitchenConstraints;
 
+    String myUsername = "myname";
+
     List<bool> isTextFieldShown = List.filled(5, false, growable: true);
 
     return Consumer<AuthProvider>(builder: (context, model, _) {
       return Scaffold(
           appBar: AppBar(
-              title: const Text("Kitchen Buddies"),
+              title: Text("Kitchen Buddies | Hello " + myUsername + "!"),
               actions: [
                 IconButton(
                   onPressed: () {
@@ -144,7 +146,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Container(
                                 margin: EdgeInsets.only(top: 20, bottom: 15),
                                 child: Text(
-                                  "Hello " + myEmail + "! Your friends:",
+                                  "Here are you friends: ",
+                                  textAlign: TextAlign.left,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18),

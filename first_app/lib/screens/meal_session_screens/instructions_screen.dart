@@ -101,36 +101,36 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
     }
 
     //real version
-    // Map fillColourIds = Map<int, Color>();
-    // for (int i = 0; i < widget.selectedRecipes.length; i++) {
-    //   fillColourIds[widget.selectedRecipes[i]] = fillColours[i];
-    // }
-    //
-    // Map accentColourIds = Map<int, Color>();
-    // for (int i = 0; i < widget.selectedRecipes.length; i++) {
-    //   accentColourIds[widget.selectedRecipes[i]] = accentColours[i];
-    // }
-    //
-    // Map buttonColourIds = Map<int, Color>();
-    // for (int i = 0; i < widget.selectedRecipes.length; i++) {
-    //   buttonColourIds[widget.selectedRecipes[i]] = buttonColours[i];
-    // }
-
-    List<int> fake = [200, 101, 102, 103];
     Map fillColourIds = Map<int, Color>();
-    for (int i = 0; i < fake.length; i++) {
-      fillColourIds[fake[i]] = fillColours[i];
+    for (int i = 0; i < widget.selectedRecipes.length; i++) {
+      fillColourIds[widget.selectedRecipes[i]] = fillColours[i];
     }
 
     Map accentColourIds = Map<int, Color>();
-    for (int i = 0; i < fake.length; i++) {
-      accentColourIds[fake[i]] = accentColours[i];
+    for (int i = 0; i < widget.selectedRecipes.length; i++) {
+      accentColourIds[widget.selectedRecipes[i]] = accentColours[i];
     }
 
     Map buttonColourIds = Map<int, Color>();
-    for (int i = 0; i < fake.length; i++) {
-      buttonColourIds[fake[i]] = buttonColours[i];
+    for (int i = 0; i < widget.selectedRecipes.length; i++) {
+      buttonColourIds[widget.selectedRecipes[i]] = buttonColours[i];
     }
+
+    // List<int> fake = [200, 101, 102, 103];
+    // Map fillColourIds = Map<int, Color>();
+    // for (int i = 0; i < fake.length; i++) {
+    //   fillColourIds[fake[i]] = fillColours[i];
+    // }
+    //
+    // Map accentColourIds = Map<int, Color>();
+    // for (int i = 0; i < fake.length; i++) {
+    //   accentColourIds[fake[i]] = accentColours[i];
+    // }
+    //
+    // Map buttonColourIds = Map<int, Color>();
+    // for (int i = 0; i < fake.length; i++) {
+    //   buttonColourIds[fake[i]] = buttonColours[i];
+    // }
 
     final List<bool> selected = List.generate(20, (i) => true);
 

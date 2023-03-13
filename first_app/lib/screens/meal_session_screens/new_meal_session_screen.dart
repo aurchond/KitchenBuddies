@@ -23,8 +23,8 @@ class NewMealSession extends StatefulWidget {
 class _NewMealSessionState extends State<NewMealSession> {
   dynamic tokens;
 
-  checkboxCallback(bool? val, List<Map> _data, int index,
-      StateSetter setState) {
+  checkboxCallback(
+      bool? val, List<Map> _data, int index, StateSetter setState) {
     setState(() {
       _data[index]["isSelected"] = val!;
     });
@@ -54,14 +54,13 @@ class _NewMealSessionState extends State<NewMealSession> {
     return selectedFriends;
   }
 
-
   Future<Map<String, String>> getTokenMap(List<String> selectedFriends) async {
     Map<String, String> tokens = new Map();
 
     var collection = FirebaseFirestore.instance.collection('users');
     for (int i = 0; i < selectedFriends.length; i++) {
       var querySnapshot =
-      await collection.where('email', isEqualTo: selectedFriends[i]).get();
+          await collection.where('email', isEqualTo: selectedFriends[i]).get();
       if (!querySnapshot.docs.isEmpty) {
         for (QueryDocumentSnapshot ds in querySnapshot.docs) {
           tokens[selectedFriends[i]] = ds.get("token");
@@ -82,7 +81,7 @@ class _NewMealSessionState extends State<NewMealSession> {
     final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
     final String? token =
-    await firebaseMessaging.getToken(); // get the device's token
+        await firebaseMessaging.getToken(); // get the device's token
     return token!;
   }
 
@@ -93,23 +92,21 @@ class _NewMealSessionState extends State<NewMealSession> {
 
     final List<Map>? myFriends = List.generate(
         dataModel.friendsList?.friends?.length ?? 0,
-            (index) =>
-        {
-          "id": index,
-          "name": dataModel.friendsList?.friends?[index],
-          "isSelected": false
-        }).toList();
+        (index) => {
+              "id": index,
+              "name": dataModel.friendsList?.friends?[index],
+              "isSelected": false
+            }).toList();
 
     final List<Map>? myRecipes = List.generate(
         dataModel.pastRecipes?.length ?? 0,
-            (index) =>
-        {
-          "recipeID": dataModel.pastRecipes?[index]?.recipeID,
-          "id": index,
-          "title": dataModel.pastRecipes?[index]?.recipeName,
-          "totalTime": dataModel.pastRecipes?[index]?.totalTime,
-          "isSelected": false
-        }).toList();
+        (index) => {
+              "recipeID": dataModel.pastRecipes?[index]?.recipeID,
+              "id": index,
+              "title": dataModel.pastRecipes?[index]?.recipeName,
+              "totalTime": dataModel.pastRecipes?[index]?.totalTime,
+              "isSelected": false
+            }).toList();
 
     /// send meal session steps request
     //set the included friends for the meal session
@@ -198,11 +195,11 @@ class _NewMealSessionState extends State<NewMealSession> {
                         padding: const EdgeInsets.all(10),
                         child: GridView.builder(
                             gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                childAspectRatio: 4 / 2,
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 10),
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    childAspectRatio: 4 / 2,
+                                    crossAxisSpacing: 10,
+                                    mainAxisSpacing: 10),
                             itemCount: myFriends?.length,
                             itemBuilder: (BuildContext context, index) {
                               return CheckboxDecorated(
@@ -227,20 +224,19 @@ class _NewMealSessionState extends State<NewMealSession> {
                   height: 60,
                   child: ElevatedButton(
                       onPressed: () async {
-                        List<int> _selectedRecipes = getSelectedRecipes(
-                            myRecipes);
-                        List<String> _selectedFriends = getSelectedFriends(
-                            myFriends);
-                        Map<String, String> _tokenMap = await getTokenMap(
-                            _selectedFriends);
+                        List<int> _selectedRecipes =
+                            getSelectedRecipes(myRecipes);
+                        List<String> _selectedFriends =
+                            getSelectedFriends(myFriends);
+                        Map<String, String> _tokenMap =
+                            await getTokenMap(_selectedFriends);
                         print("token map:" + _tokenMap.toString());
 
-
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) =>
-                                InstructionsScreen(tokenMap: _tokenMap,
-                                    selectedRecipes: _selectedRecipes,
-                                    selectedFriends: _selectedFriends)));
+                            builder: (context) => InstructionsScreen(
+                                tokenMap: _tokenMap,
+                                selectedRecipes: _selectedRecipes,
+                                selectedFriends: _selectedFriends)));
                       },
                       child: Text("Start new session!"))),
             ])),
