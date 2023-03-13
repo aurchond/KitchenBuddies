@@ -21,7 +21,7 @@ Future<List<MealSessionSteps?>> requestMealSessionSteps(MealSessionStepsRequest?
   print(response);
 
   final item = json.decode(response!.body);
-  print("item: " + item);
+  //print("item: " + item);
 
   List<MealSessionSteps?> allMealSessionSteps = <MealSessionSteps>[];
   for (int i = 0; i < item.length; i++) {
@@ -47,7 +47,7 @@ Future<List<MealSessionSteps?>> getMealSessionSteps(MealSessionStepsRequest? mea
         allMealSessionSteps.add(MealSessionSteps.fromJson(item[i]));
       }
     } else {
-      print("error");
+      print("error: " + response.body.toString());
     }
   } catch (e) {
     log(e.toString());

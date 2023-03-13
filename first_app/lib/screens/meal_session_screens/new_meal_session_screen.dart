@@ -130,7 +130,7 @@ class _NewMealSessionState extends State<NewMealSession> {
     // }
 
     return Scaffold(
-      appBar: AppBar(title: const Text("New Meal Session")),
+      appBar: AppBar(title: const Text("Create A New Meal Session")),
       body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(children: [
