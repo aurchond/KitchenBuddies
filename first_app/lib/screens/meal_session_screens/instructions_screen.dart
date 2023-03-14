@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:first_app/backend_processing/data_class.dart';
 import 'package:first_app/data_models/meal_session_steps_request_model.dart';
+import 'package:first_app/helpers/string_extension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -117,20 +118,25 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
     }
 
     Map<String, String> friendsTokenMap = removeMyTokenFromMap(widget.tokenMap);
+    Map<int, String> recipeIdToName = new Map<int,String>();
+    for (int i = 0; i< (postModel?.mySteps?.notes?.length ?? 0); i++) {
+      String strToParse = postModel?.mySteps?.notes?[i] ?? "";
+      int dashIndex = strToParse.indexOf("-");
+      String recipeName = strToParse.substring(dashIndex+1);
+      int recipeId = int.parse(strToParse.substring(0, dashIndex));
+      recipeIdToName[recipeId] = recipeName;
+    }
 
     Map fillColourIds = Map<int, Color>();
-    for (int i = 0; i < widget.selectedRecipes.length; i++) {
-      fillColourIds[widget.selectedRecipes[i]] = fillColours[i];
-    }
-
     Map accentColourIds = Map<int, Color>();
-    for (int i = 0; i < widget.selectedRecipes.length; i++) {
-      accentColourIds[widget.selectedRecipes[i]] = accentColours[i];
-    }
-
     Map buttonColourIds = Map<int, Color>();
-    for (int i = 0; i < widget.selectedRecipes.length; i++) {
-      buttonColourIds[widget.selectedRecipes[i]] = buttonColours[i];
+    List<int> recipeIdList = new List<int>.from(recipeIdToName.keys);
+    print(recipeIdList);
+
+    for (int i = 0; i < recipeIdList.length; i++) {
+      fillColourIds[recipeIdList[i]] = fillColours[i];
+      accentColourIds[recipeIdList[i]] = accentColours[i];
+      buttonColourIds[recipeIdList[i]] = buttonColours[i];
     }
 
     final List<bool> selected =
@@ -139,7 +145,7 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
     return Consumer<AuthProvider>(builder: (context, model, _) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(myUsername + "'s Meal Instructions: "),
+          title: Text(myUsername.capitalize() + "'s Meal Instructions: "),
         ),
         body: Container(
           padding: EdgeInsets.all(20),
@@ -167,23 +173,12 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // display the user's email at the top
-                      // Container(
-                      //   margin: EdgeInsets.all(20),
-                      //   child: Text(
-                      //     myEmail,
-                      //     style: TextStyle(
-                      //         fontWeight: FontWeight.bold, fontSize: 18),
-                      //   ),
-                      // ),
-
-                      // todo: display all ingredients necessary here
-
                       // display the user's instructions below
                       StatefulBuilder(builder:
                           (BuildContext context, StateSetter setState) {
                         return Expanded(
                             child: Column(children: [
+                              // Expanded(child: new ListView.builder))
                           Expanded(
                               child: new ListView.builder(
                                   itemCount:

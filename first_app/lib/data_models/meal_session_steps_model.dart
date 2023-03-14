@@ -1,10 +1,9 @@
 class MealSessionSteps {
   String? _userEmail;
-  String? _notes;
+  List<String>? _notes;
   List<RecipeStep>? _recipeSteps;
-
   MealSessionSteps(
-      {String? userEmail, String? notes, List<RecipeStep>? recipeSteps}) {
+      {String? userEmail, List<String>? notes, List<RecipeStep>? recipeSteps}) {
     if (userEmail != null) {
       this._userEmail = userEmail;
     }
@@ -15,17 +14,15 @@ class MealSessionSteps {
       this._recipeSteps = recipeSteps;
     }
   }
-
   String? get userEmail => _userEmail;
   set userEmail(String? userEmail) => _userEmail = userEmail;
-  String? get notes => _notes;
-  set notes(String? notes) => _notes = notes;
+  List<String>? get notes => _notes;
+  set notes(List<String>? notes) => _notes = notes;
   List<RecipeStep>? get recipeSteps => _recipeSteps;
   set recipeSteps(List<RecipeStep>? recipeSteps) => _recipeSteps = recipeSteps;
-
   MealSessionSteps.fromJson(Map<String, dynamic> json) {
     _userEmail = json['userEmail'];
-    _notes = json['notes'];
+    _notes = json['notes'].cast<String>();
     if (json['recipeSteps'] != null) {
       _recipeSteps = <RecipeStep>[];
       json['recipeSteps'].forEach((v) {
@@ -33,7 +30,6 @@ class MealSessionSteps {
       });
     }
   }
-
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['userEmail'] = this._userEmail;
@@ -86,7 +82,6 @@ class RecipeStep {
     }
   }
 
-  // todo: need to fix ingredientsList so that it can get ingredient list only from ingredientCompleteList
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['number'] = this._number;

@@ -73,7 +73,7 @@ class _AllRecipesState extends State<AllRecipes> {
 
       //add or subtract 1 to index to account for newline character we don't want
       String ingredients =
-      valueText.substring(ingredientIndex + 14, instructionsIndex -
+      valueText.substring(ingredientIndex + 13, instructionsIndex -
           1); //this only works if we have more than 1 ingredient?
       List<String> ingredientList = ingredients.split('\n');
       print(ingredientList);

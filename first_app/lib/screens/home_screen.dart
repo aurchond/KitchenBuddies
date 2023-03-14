@@ -150,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Container(
                                 margin: EdgeInsets.only(top: 20, bottom: 15),
                                 child: Text(
-                                  "Here are you friends: ",
+                                  "Here are your friends: ",
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
