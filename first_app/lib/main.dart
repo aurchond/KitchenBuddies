@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -45,6 +46,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -66,7 +68,14 @@ class MyApp extends StatelessWidget {
                 if (snapshot.hasData) {
                   User? user = snapshot.data;
                   myEmail = user?.email ?? "";
-                  myUsername = "calebc";
+
+                  FirebaseFirestore.instance
+                      .collection("users")
+                      .doc(user?.uid)
+                      .get()
+                      .then((value) {
+                    myUsername = value.data()?["user_name"];
+                  });
                   return BottomNavigation();
                 }
                 else {

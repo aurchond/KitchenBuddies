@@ -1,5 +1,6 @@
 import 'package:first_app/data_models/data_communication_wrapper_model.dart';
 import 'package:first_app/helpers/friend_tokens.dart';
+import 'package:first_app/helpers/string_extension.dart';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -39,7 +40,7 @@ class ReceivedInstructionScreen extends StatelessWidget {
         List.generate(thisUserSteps?.recipeSteps?.length ?? 0, (i) => true);
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Received Instructions")),
+      appBar: AppBar(title: Text(myUsername.capitalize() + "'s Received Instructions")),
       body: Container(
           padding: EdgeInsets.all(20),
           child: Center(
