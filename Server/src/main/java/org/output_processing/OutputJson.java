@@ -15,7 +15,7 @@ import java.util.List;
 
 public class OutputJson {
 
-    public static List<MealSessionUsersSteps> userStepsToJson(List<User> users) {
+    public static List<MealSessionUsersSteps> userStepsToJson(List<User> users, List<String> notes) {
         List<MealSessionUsersSteps> usersStepsList = new ArrayList<>();
 
         for (User u : users) {
@@ -28,7 +28,7 @@ public class OutputJson {
                     recipeStep.setNumber(s.getNodeID());
                     recipeStep.setInstructions(s.getInstructions());
                     recipeStep.setIngredientList(s.getIngredientList());
-                    recipeStep.setIngredientQuantity(s.getIngredientQuantity());
+                    // recipeStep.setIngredientQuantity(s.getIngredientQuantity());
                     //TODO: SET dependencyItem and nextUserEmail
 
 
@@ -37,7 +37,6 @@ public class OutputJson {
                 task = task.getPrev();
             }
             //TODO: FILL IN notes LATER
-            String notes = "";
             MealSessionUsersSteps user = new MealSessionUsersSteps(u.getEmail(), notes, recipeSteps);
             usersStepsList.add(user);
         }

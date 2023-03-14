@@ -524,6 +524,28 @@ public class MySqlConnection {
 
     }
 
+    public static String getRecipeName(Long recipeId) {
+        try {
+            String sql = "SELECT Name FROM AllRecipes WHERE RecipeId=?;";
+            Connection conn = startSession();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setLong(1, recipeId);
+            ResultSet rs = stmt.executeQuery();
+            if (!rs.next()) {
+                System.out.println("Result set is empty");
+                return "";
+            }
+            String name = rs.getString(1);
+            return name;
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return "";
+        }
+
+    }
+
     //call this from front page of app to show the names of your saved recipes
     public static List<RecipeInfo> findUserRecipes(String email) {
         String joinRecipeTables = "SELECT ar.RecipeId, ar.Name, ar.Ingredients, ar.TotalTime, url.LastDateMade FROM AllRecipes as ar INNER JOIN UserLinkedRecipes as url on ar.RecipeId=url.RecipeId WHERE url.Email = ?;";

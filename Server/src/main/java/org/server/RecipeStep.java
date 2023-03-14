@@ -16,8 +16,8 @@ public class RecipeStep {
     @JsonProperty("ingredientList")
     List<String> ingredientList;
     
-    @JsonProperty("ingredientQuantity")
-    List<Float> ingredientQuantity;
+    // @JsonProperty("ingredientQuantity")
+    // List<Float> ingredientQuantity;
     
     @JsonProperty("dependencyItem")
     String dependencyItem;
@@ -58,13 +58,13 @@ public class RecipeStep {
         this.ingredientList = ingredientList;
     }
 
-    public List<Float> getIngredientQuantity() {
-        return ingredientQuantity;
-    }
+    // public List<Float> getIngredientQuantity() {
+    //     return ingredientQuantity;
+    // }
 
-    public void setIngredientQuantity(List<Float> ingredientQuantity) {
-        this.ingredientQuantity = ingredientQuantity;
-    }
+    // public void setIngredientQuantity(List<Float> ingredientQuantity) {
+    //     this.ingredientQuantity = ingredientQuantity;
+    // }
 
     public String getDependencyItem() {
         return dependencyItem;

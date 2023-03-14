@@ -29,9 +29,12 @@ public class GenerateMeal {
          */
 
         List<Recipe> recipes = new ArrayList<Recipe>();
+        List<String> recipeNames = new ArrayList<String>();
 
         for (Long rId : recipeIDs) {
             Recipe r = getRecipeFromDatabase(rId);
+            String rName = MySqlConnection.getRecipeName(rId);
+            recipeNames.add(Long.toString(rId) + "-" + rName);
             // r.setResourcesForRecipe(MySqlConnection.getRecipeResourcesFromId(rId));
             recipes.add(r);
         }
@@ -56,7 +59,7 @@ public class GenerateMeal {
         /**
          * Send off to users using the buddies listed and the result of create Meal
          */
-        List<MealSessionUsersSteps> usersSteps = userStepsToJson(buddies);
+        List<MealSessionUsersSteps> usersSteps = userStepsToJson(buddies, recipeNames);
 
         System.out.println("Finished");
         return usersSteps;

@@ -10,12 +10,12 @@ public class MealSessionUsersSteps {
     String userEmail;  
 
     @JsonProperty("notes")
-    String notes;   
+    List<String> notes;   
 
     @JsonProperty("recipeSteps")
     List<RecipeStep> recipeSteps;
 
-    public MealSessionUsersSteps(String userEmail, String notes, List<RecipeStep> recipeSteps) {
+    public MealSessionUsersSteps(String userEmail, List<String> notes, List<RecipeStep> recipeSteps) {
         this.userEmail = userEmail;
         this.notes = notes;
         this.recipeSteps = recipeSteps;
