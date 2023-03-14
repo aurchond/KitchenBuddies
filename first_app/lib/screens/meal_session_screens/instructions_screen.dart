@@ -176,7 +176,7 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                       Container(
                           margin: EdgeInsets.only(top: 5, bottom: 15),
                           child: Text(
-                            "Recipes Legend",
+                            "Recipe Legend",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 18),
