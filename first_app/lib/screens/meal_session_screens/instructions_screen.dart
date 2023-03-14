@@ -117,6 +117,7 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
     }
 
     Map<String, String> friendsTokenMap = removeMyTokenFromMap(widget.tokenMap);
+    print("tokenmap: " + friendsTokenMap.toString());
 
     Map fillColourIds = Map<int, Color>();
     for (int i = 0; i < widget.selectedRecipes.length; i++) {
