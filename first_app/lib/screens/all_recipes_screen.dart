@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import '../backend_processing/data_class.dart';
 import '../backend_processing/post_requests.dart';
 import '../local_notification_service.dart';
+import '../provider/auth_provider.dart';
 import '../widgets/alert_dialog.dart';
 import 'meal_session_screens/received_instructions_screen.dart';
 
@@ -24,8 +25,7 @@ class AllRecipes extends StatefulWidget {
 //no field for isSelected
 class recipeTile {
   final String? title;
-  final String?
-      ingredients; //todo: we will join list of ingredients with .join(", ")
+  final String? ingredients;
   final int? totalTime;
   final DateTime? lastDateMade;
 
@@ -43,29 +43,7 @@ class _AllRecipesState extends State<AllRecipes> {
   @override
   void initState() {
     final dataModel = Provider.of<DataClass>(context, listen: false);
-    dataModel.loadAllRecipesPage(); //todo: save string value
-
-    FirebaseMessaging.onMessage.listen((event) {
-      final splitMessage = (event.data.toString().split('title: '))[1]
-          .split('}');
-      //we will categorize our notifications based on title
-      //notifications to send to other users about completing a step
-      //notification that redirects user to instruction page
-      if (splitMessage[0] != "Step Blocked") {
-        if (mounted) {
-          Navigator.of(context).push(MaterialPageRoute(
-            //if this starts bugging out again, use pushReplacement
-              builder: (context) => ReceivedInstructionScreen(message: event)));
-        }
-      }
-
-      else {
-        LocalNotificationService.init();
-        LocalNotificationService.displayNotification(event); }
-      //getting problem about widget being unmounted
-
-    });
-
+    dataModel.loadAllRecipesPage();
     super.initState();
   }
 
@@ -95,7 +73,8 @@ class _AllRecipesState extends State<AllRecipes> {
 
       //add or subtract 1 to index to account for newline character we don't want
       String ingredients =
-          valueText.substring(ingredientIndex + 14, instructionsIndex - 1); //this only works if we have more than 1 ingredient?
+      valueText.substring(ingredientIndex + 14, instructionsIndex -
+          1); //this only works if we have more than 1 ingredient?
       List<String> ingredientList = ingredients.split('\n');
       print(ingredientList);
 
@@ -148,146 +127,170 @@ class _AllRecipesState extends State<AllRecipes> {
         _pastRecipes.add(recipeTile(
             title: dataModel.pastRecipes?[i]?.recipeName,
             ingredients:
-                (dataModel.pastRecipes?[i]?.ingredientList)?.join("\n"),
+            (dataModel.pastRecipes?[i]?.ingredientList)?.join("\n"),
             totalTime: dataModel.pastRecipes?[i]?.totalTime));
       }
     }
 
-    return Scaffold(
-      appBar: AppBar(title: const Text("All Recipes")),
-      body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: StatefulBuilder(
-              builder: (BuildContext context, StateSetter setState) {
-            return Column(
-              children: [
-                //https://www.allrecipes.com/recipe/209578/blt/
-                Container(
-                    margin: EdgeInsets.only(top: 20, bottom: 20),
-                    child: Text(
-                      "Welcome to your pantry!",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                    )),
-                Expanded(
-                  child: new ListView.builder(
-                      itemCount: _pastRecipes?.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: TileDecorated(
-                                Colors.white,
-                                Icon(Icons.fastfood),
-                                index,
-                                Text(_pastRecipes[index].title!),
-                                Text(_pastRecipes[index].ingredients!),
-                                true),
-                          ),
-                        );
-                      }),
-                ),
-                SizedBox(width: 10, height: 10),
-                Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.deepOrange.shade200,
-                          border: Border.all(
-                              width: 3, color: Colors.deepOrange.shade300),
-                        ), //https://www.allrecipes.com/recipe/26317/chicken-pot-pie-ix/
-                        child: Row(
-                          children: [
-                            Expanded(
-                                child: TextField(
-                              focusNode: myFocusNode,
-                              controller: recipeByUrlController,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: "Input your recipe URL",
-                                suffixIcon: IconButton(
-                                  onPressed: recipeByUrlController.clear,
-                                  icon: Icon(Icons.clear),
+    return Consumer<AuthProvider>(builder: (context, model, _) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text("AllRecipes"),
+          actions: [
+            IconButton(
+              onPressed: () {
+                model.logOut();
+              },
+              icon: const Icon(Icons.logout),
+            )
+          ],
+        ),
+        body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+                  return Column(
+                    children: [
+                      //https://www.allrecipes.com/recipe/209578/blt/
+                      Container(
+                          margin: EdgeInsets.only(top: 20, bottom: 20),
+                          child: Text(
+                            "Welcome to your pantry!",
+                            style:
+                            TextStyle(fontWeight: FontWeight.bold,
+                                fontSize: 18),
+                          )),
+                      Expanded(
+                        child: new ListView.builder(
+                            itemCount: _pastRecipes?.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TileDecorated(
+                                      Colors.white,
+                                      Icon(Icons.fastfood),
+                                      index,
+                                      Text(_pastRecipes[index].title!),
+                                      Text(_pastRecipes[index].ingredients!),
+                                      true),
                                 ),
-                              ),
-                            )),
-                            SizedBox(
-                              width: 120,
-                              height: 60,
-                              child: ElevatedButton(
-                                  onPressed: () {
-                                    requestRecipeByURL(
-                                        recipeByUrlController.text);
-                                    myFocusNode.unfocus();
-                                    setState(() {
-                                      dataModel.loadAllRecipesPage();
-                                    });
-                                  },
-                                  child: Text("Add recipe!")),
-                            )
-                          ],
-                        ))),
-                // inputTextButton(recipeByUrlController, "Input your recipe URL",
-                //     "Add recipe!", myFocusNode, onPressedCallback),
-                SizedBox(width: 10, height: 10),
-                SizedBox(
-                    width: 360,
-                    height: 60,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                                insetPadding: EdgeInsets.all(10),
-                                title: Text("Add Recipe By Text"),
-                                content: Center(
-                                    child: SizedBox(
-                                        width: MediaQuery.of(context).size.width,
-                                        child: TextField(
-                                          minLines: 20,
-                                          maxLines: null,
-                                          keyboardType: TextInputType.multiline,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              valueText = value;
-                                            });
-
-                                            textEntered = true;
-                                          },
-                                          controller: recipeByTextController,
-                                          decoration: InputDecoration(
-                                              hintText: "Enter your recipe text",
-                                              suffixIcon: IconButton(
-                                                  onPressed: recipeByTextController.clear,
-                                                  icon: Icon(Icons.clear))),
-                                        ))),
-                                actions: <Widget>[
-                                  ElevatedButton(
-                                    child: Text('CANCEL'),
-                                    onPressed: buttonCallback,
-                                  ),
-                                  ElevatedButton(
-                                    child: Text('OK'),
-                                    onPressed: () {
-                                      parseCallback();
-                                      setState(() {
-                                        dataModel.loadAllRecipesPage();
-                                      });
-                                    }
-                              ),
-                              ],
                               );
-                              });
+                            }),
+                      ),
+                      SizedBox(width: 10, height: 10),
+                      Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.deepOrange.shade200,
+                                border: Border.all(
+                                    width: 3,
+                                    color: Colors.deepOrange.shade300),
+                              ),
+                              //https://www.allrecipes.com/recipe/26317/chicken-pot-pie-ix/
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      child: TextField(
+                                        focusNode: myFocusNode,
+                                        controller: recipeByUrlController,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          hintText: "Input your recipe URL",
+                                          suffixIcon: IconButton(
+                                            onPressed: recipeByUrlController
+                                                .clear,
+                                            icon: Icon(Icons.clear),
+                                          ),
+                                        ),
+                                      )),
+                                  SizedBox(
+                                    width: 120,
+                                    height: 60,
+                                    child: ElevatedButton(
+                                        onPressed: () {
+                                          requestRecipeByURL(
+                                              recipeByUrlController.text);
+                                          myFocusNode.unfocus();
+                                          setState(() {
+                                            dataModel.loadAllRecipesPage();
+                                          });
+                                        },
+                                        child: Text("Add recipe!")),
+                                  )
+                                ],
+                              ))),
+                      // inputTextButton(recipeByUrlController, "Input your recipe URL",
+                      //     "Add recipe!", myFocusNode, onPressedCallback),
+                      SizedBox(width: 10, height: 10),
+                      SizedBox(
+                          width: 360,
+                          height: 60,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0))),
+                                      insetPadding: EdgeInsets.all(10),
+                                      title: Text("Add Recipe By Text"),
+                                      content: Center(
+                                          child: SizedBox(
+                                              width: MediaQuery
+                                                  .of(context)
+                                                  .size
+                                                  .width,
+                                              child: TextField(
+                                                minLines: 20,
+                                                maxLines: null,
+                                                keyboardType: TextInputType
+                                                    .multiline,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    valueText = value;
+                                                  });
+
+                                                  textEntered = true;
+                                                },
+                                                controller: recipeByTextController,
+                                                decoration: InputDecoration(
+                                                    hintText: "Enter your recipe text",
+                                                    suffixIcon: IconButton(
+                                                        onPressed: recipeByTextController
+                                                            .clear,
+                                                        icon: Icon(
+                                                            Icons.clear))),
+                                              ))),
+                                      actions: <Widget>[
+                                        ElevatedButton(
+                                          child: Text('CANCEL'),
+                                          onPressed: buttonCallback,
+                                        ),
+                                        ElevatedButton(
+                                            child: Text('OK'),
+                                            onPressed: () {
+                                              parseCallback();
+                                              setState(() {
+                                                dataModel.loadAllRecipesPage();
+                                              });
+                                            }
+                                        ),
+                                      ],
+                                    );
+                                  });
                             },
-                      child: Text('Add recipe by text!'), //TODO: make this refresh the user's recipes
-                    ))
-              ],
-            );
-          })),
-    );
+                            child: Text(
+                                'Add recipe by text!'), //TODO: make this refresh the user's recipes
+                          ))
+                    ],
+                  );
+                })),
+      );
+    });
   }
 }
