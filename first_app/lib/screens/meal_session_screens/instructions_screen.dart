@@ -119,8 +119,8 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
 
     Map<String, String> friendsTokenMap = removeMyTokenFromMap(widget.tokenMap);
     Map<int, String> recipeIdToName = new Map<int, String>();
-    for (int i = 0; i < (postModel?.mySteps?.notes?.length ?? 0); i++) {
-      String strToParse = postModel?.mySteps?.notes?[i] ?? "";
+    for (int i = 0; i < (postModel.mySteps?.notes?.length ?? 0); i++) {
+      String strToParse = postModel.mySteps?.notes?[i] ?? "";
       int dashIndex = strToParse.indexOf("-");
       String recipeName = strToParse.substring(dashIndex + 1);
       int recipeId = int.parse(strToParse.substring(0, dashIndex));
@@ -222,8 +222,12 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                                 String instructionNumber = (postModel
                                         .mySteps?.recipeSteps?[index].number ??
                                     "");
-                                String id = int.parse(instructionNumber.split(".")[0]).toString();
-                                String number = int.parse(instructionNumber.split(".")[1]).toString();
+                                String id =
+                                    int.parse(instructionNumber.split(".")[0])
+                                        .toString();
+                                String number =
+                                    int.parse(instructionNumber.split(".")[1])
+                                        .toString();
 
                                 return Padding(
                                   padding: const EdgeInsets.only(bottom: 15),
@@ -270,32 +274,41 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                                               runAlignment:
                                                   WrapAlignment.spaceBetween,
                                               children: [
-                                                Text("Recipe " + id + " - Step " + number, style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight:
-                                                  FontWeight.bold,
-                                                )),
-                                                Text((postModel
-                                                                .mySteps
-                                                                ?.recipeSteps?[
-                                                                    index]
-                                                                .instructions ??
-                                                            ""),
+                                                Text(
+                                                    "Recipe " +
+                                                        id +
+                                                        " - Step " +
+                                                        number,
+                                                    style: TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    )),
+                                                Text(
+                                                    (postModel
+                                                            .mySteps
+                                                            ?.recipeSteps?[
+                                                                index]
+                                                            .instructions ??
+                                                        ""),
                                                     style: TextStyle(
                                                       fontSize: 18,
                                                       fontWeight:
                                                           FontWeight.w400,
                                                     )),
-                                                Text("Ingredients: " +
-                                                    (postModel
-                                                        .mySteps?.recipeSteps?[
-                                                    index]
-                                                        .ingredientsCompleteList
-                                                        ?.join(
-                                                        ', ') ??
-                                                        ""), style: TextStyle(
-                                                    fontSize: 18,
-                                                    fontStyle: FontStyle.italic)),
+                                                Text(
+                                                    "Ingredients: " +
+                                                        (postModel
+                                                                .mySteps
+                                                                ?.recipeSteps?[
+                                                                    index]
+                                                                .ingredientsCompleteList
+                                                                ?.join(', ') ??
+                                                            ""),
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontStyle:
+                                                            FontStyle.italic)),
                                                 Padding(
                                                   padding:
                                                       const EdgeInsets.only(
@@ -333,13 +346,21 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                                                                             email]!,
                                                                         title:
                                                                             "Step Blocked",
-                                                                        body: "I'm blocked on Recipe " + id + " - Step " + number +  "!",
+                                                                        body: "I'm blocked on Recipe " +
+                                                                            id +
+                                                                            " - Step " +
+                                                                            number +
+                                                                            "!",
                                                                         isBlocked:
                                                                             true);
                                                                   }
                                                                 },
                                                       child: Text(
-                                                        "I'm blocked on Recipe " + id + " - Step " + number +  "!",
+                                                        "I'm blocked on Recipe " +
+                                                            id +
+                                                            " - Step " +
+                                                            number +
+                                                            "!",
                                                       ),
                                                     ),
                                                   ),

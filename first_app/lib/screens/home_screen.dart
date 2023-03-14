@@ -56,6 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
     //in foreground listener
     // if you have app open
     FirebaseMessaging.onMessage.listen((event) {
+
+      print("got a new notification");
       final splitMessage = (event.data.toString().split('title: '))[1]
           .split('}');
       //we will categorize our notifications based on title
@@ -70,8 +72,9 @@ class _HomeScreenState extends State<HomeScreen> {
       }
 
       else {
-      LocalNotificationService.init();
-      LocalNotificationService.displayNotification(event); }
+        LocalNotificationService.init();
+        LocalNotificationService.displayNotification(event);
+      }
       //getting problem about widget being unmounted
 
     });

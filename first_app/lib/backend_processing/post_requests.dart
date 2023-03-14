@@ -100,7 +100,6 @@ Future<void> addUser(String email, String username) async {
   Response? response = await sendPostRequest("AddUser", body);
 }
 
-// todo: test this out after make changes to response
 Future<RecipeInfo?> requestRecipeByURL(String recipeURL) async {
 
   final body = jsonEncode(<String, String>{
@@ -114,7 +113,6 @@ Future<RecipeInfo?> requestRecipeByURL(String recipeURL) async {
   return recipeFromURL;
 }
 
-// todo: test this out lol
 Future<RecipeInfo?> requestRecipeByInput(RecipeInfo recipeByText) async {
 
   final body = jsonEncode(recipeByText.toJson());

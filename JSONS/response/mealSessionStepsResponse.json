@@ -1,7 +1,10 @@
 [
     {
         "userEmail": "giver@gmail.com",
-        "notes": "note: there is no error!",
+        "notes": [
+            "15-Devilled Eggs",
+            "14-Scrambled Eggs"
+        ],
         "recipeSteps": [
             {
                 "number": "1.1",
@@ -61,7 +64,10 @@
     },
     {
         "userEmail": "receiver@gmail.com",
-        "notes": "note: there is no error 2.0!",
+        "notes": [
+            "15-Devilled Eggs",
+            "14-Scrambled Eggs"
+        ],
         "recipeSteps": [
             {
                 "number": "2.1",

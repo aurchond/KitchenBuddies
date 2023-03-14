@@ -88,7 +88,7 @@ class _AllRecipesState extends State<AllRecipes> {
           totalTime: int.tryParse(totalTime) ?? 0,
           instructionList: instructionList
       );
-      // todo ad: error check
+
       requestRecipeByInput(recipeByText);
     }
   }
