@@ -78,9 +78,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
     //in background state but not terminated
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
-/*      Navigator.of(context).push(new MaterialPageRoute(
-          builder: (context) => ReceivedInstructionScreen(message: event)));*/
-    });
+      final splitMessage = (event.data.toString().split('title: '))[1]
+          .split('}');
+      if (splitMessage[0] != "Step Blocked") {
+        if (mounted) {
+          Navigator.of(context).push(MaterialPageRoute(
+            //if this starts bugging out again, use pushReplacement
+              builder: (context) => ReceivedInstructionScreen(message: event)));
+        }
+    }});
 
     // TODO: implement initstate
     super.initState();

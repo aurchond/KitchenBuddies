@@ -1,22 +1,26 @@
 import 'globals.dart';
 
 Map<String,String> removeMyTokenFromMap(Map<String,String> allTokensMap)  {
-  allTokensMap.forEach((email, token) {
-    if (allTokensMap[email] == myEmail) {
-      allTokensMap.remove(email);
-    }
-  });
+  Map<String, String> newTokensMap = new Map<String, String>.from(allTokensMap);
+  newTokensMap.removeWhere((key, value) => key == myEmail);
 
-  return allTokensMap;
+  return newTokensMap;
 }
 
-List<String> removeMyTokenFromList(List<String> tokensMap, String tokenToRemoved)  {
-  for (int i=0; i<tokensMap.length; i++) {
-    if (tokensMap[i] == tokenToRemoved) {
-      tokensMap.removeAt(i);
+List<String> removeMyTokenFromList(List<String> tokensList, String tokenToRemove)  {
+  int removeIndex = -1; //yikes
+  for (int i=0; i<tokensList.length; i++) {
+    if (tokensList[i] == tokenToRemove) {
+      removeIndex = i;
     }
   }
 
-  return tokensMap;
+  if (removeIndex != -1) {
+    print(tokensList);
+    tokensList.removeAt(removeIndex);
+    print(tokensList);
+    return tokensList;
+  }
+    return tokensList;
 }
 

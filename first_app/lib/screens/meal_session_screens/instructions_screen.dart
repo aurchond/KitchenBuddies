@@ -16,9 +16,30 @@ import '../../provider/auth_provider.dart';
 import '../../provider/notification_provider.dart';
 import '../../widgets/grouped_button_text.dart';
 
-List<Color> accentColours = [Colors.red.shade300, Colors.deepOrange.shade300, Colors.yellow.shade200, Colors.green.shade300, Colors.lightBlue.shade300, Colors.deepPurple.shade300];
-List<Color> fillColours = [Colors.red.shade200, Colors.deepOrange.shade200, Colors.yellow.shade400, Colors.green.shade200, Colors.lightBlue.shade200, Colors.deepPurple.shade200];
-List<Color> buttonColours = [Colors.red.shade400, Colors.deepOrange.shade400, Colors.yellow.shade600, Colors.green.shade400, Colors.lightBlue.shade400, Colors.deepPurple.shade400];
+List<Color> accentColours = [
+  Colors.red.shade300,
+  Colors.deepOrange.shade300,
+  Colors.yellow.shade200,
+  Colors.green.shade300,
+  Colors.lightBlue.shade300,
+  Colors.deepPurple.shade300
+];
+List<Color> fillColours = [
+  Colors.red.shade200,
+  Colors.deepOrange.shade200,
+  Colors.yellow.shade400,
+  Colors.green.shade200,
+  Colors.lightBlue.shade200,
+  Colors.deepPurple.shade200
+];
+List<Color> buttonColours = [
+  Colors.red.shade400,
+  Colors.deepOrange.shade400,
+  Colors.yellow.shade600,
+  Colors.green.shade400,
+  Colors.lightBlue.shade400,
+  Colors.deepPurple.shade400
+];
 
 class InstructionsScreen extends StatefulWidget {
   const InstructionsScreen(
@@ -56,10 +77,6 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
     final postModel = Provider.of<DataClass>(context);
     final fcmProvider = Provider.of<NotificationProvider>(context);
 
-    Map<String, String> friendsTokenMap = removeMyTokenFromMap(widget.tokenMap);
-
-    print(postModel.allMealSessionSteps?.length.toString());
-
     // this is the body with ALL tokens (including hosts') and the chosen friends' meal steps
     Body sendTokenAndSteps = new Body();
     sendTokenAndSteps.tokens = <String>[];
@@ -74,6 +91,7 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
       // helper variables
       String chosenFriend = widget.selectedFriends[i];
       String? receiversToken = widget.tokenMap[chosenFriend];
+      sendTokenAndSteps.receiversToken = receiversToken;
 
       // go through the session steps and set the
       for (int i = 0; i < (postModel.allMealSessionSteps?.length ?? 0); i++) {
@@ -81,8 +99,6 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
           // set the steps of this person's meal steps to the current one
           sendTokenAndSteps.mealSessionSteps =
               postModel.allMealSessionSteps?[i];
-
-          sendTokenAndSteps.receiversToken = receiversToken;
         } else {
           print("we got my steps");
           postModel.mySteps = postModel.allMealSessionSteps?[i];
@@ -100,7 +116,8 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
           isBlocked: false);
     }
 
-    //real version
+    Map<String, String> friendsTokenMap = removeMyTokenFromMap(widget.tokenMap);
+
     Map fillColourIds = Map<int, Color>();
     for (int i = 0; i < widget.selectedRecipes.length; i++) {
       fillColourIds[widget.selectedRecipes[i]] = fillColours[i];
@@ -116,24 +133,8 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
       buttonColourIds[widget.selectedRecipes[i]] = buttonColours[i];
     }
 
-    // List<int> fake = [200, 101, 102, 103];
-    // Map fillColourIds = Map<int, Color>();
-    // for (int i = 0; i < fake.length; i++) {
-    //   fillColourIds[fake[i]] = fillColours[i];
-    // }
-    //
-    // Map accentColourIds = Map<int, Color>();
-    // for (int i = 0; i < fake.length; i++) {
-    //   accentColourIds[fake[i]] = accentColours[i];
-    // }
-    //
-    // Map buttonColourIds = Map<int, Color>();
-    // for (int i = 0; i < fake.length; i++) {
-    //   buttonColourIds[fake[i]] = buttonColours[i];
-    // }
-
-    final List<bool> selected = List.generate(postModel.mySteps?.recipeSteps?.length ??
-        0, (i) => true);
+    final List<bool> selected =
+        List.generate(postModel.mySteps?.recipeSteps?.length ?? 0, (i) => true);
 
     return Consumer<AuthProvider>(builder: (context, model, _) {
       return Scaffold(
@@ -207,11 +208,15 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                                               decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(15),
-                                                  color: selected[index] ? fillColourIds[double.parse(postModel
-                                                      .mySteps
-                                                      ?.recipeSteps?[
-                                                  index]
-                                                      .number ?? "").floor()]
+                                                  color: selected[index]
+                                                      ? fillColourIds[
+                                                          double.parse(postModel
+                                                                      .mySteps
+                                                                      ?.recipeSteps?[
+                                                                          index]
+                                                                      .number ??
+                                                                  "")
+                                                              .floor()]
                                                       // ? Colors
                                                       //     .deepOrange.shade200
                                                       : Colors.grey.shade300,
@@ -219,12 +224,12 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                                                       width: 3,
                                                       color: selected[index]
                                                           ? accentColourIds[double.parse(postModel
-                                                          .mySteps
-                                                          ?.recipeSteps?[
-                                                      index]
-                                                          .number ?? "").floor()]
-                                                          : Colors
-                                                              .grey.shade400)),
+                                                                      .mySteps
+                                                                      ?.recipeSteps?[index]
+                                                                      .number ??
+                                                                  "")
+                                                              .floor()]
+                                                          : Colors.grey.shade400)),
                                               padding: const EdgeInsets.all(15),
                                               child: Wrap(
                                                   alignment: WrapAlignment
@@ -269,23 +274,19 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                                                       child: Center(
                                                         child: ElevatedButton(
                                                           style: ElevatedButton.styleFrom(
-                                                              textStyle:
-                                                                  const TextStyle(
-                                                                      fontSize:
-                                                                          18),
+                                                              textStyle: const TextStyle(
+                                                                  fontSize: 18),
                                                               padding:
                                                                   const EdgeInsets
                                                                       .all(10),
-                                                              backgroundColor:
-                                                                  selected[
-                                                                          index]
-                                                                      ? buttonColourIds[double.parse(postModel
-                                                                      .mySteps
-                                                                      ?.recipeSteps?[
-                                                                  index]
-                                                                      .number ?? "").floor()]
-                                                                      : Colors
-                                                                          .grey),
+                                                              backgroundColor: selected[
+                                                                      index]
+                                                                  ? buttonColourIds[
+                                                                      double.parse(postModel.mySteps?.recipeSteps?[index].number ??
+                                                                              "")
+                                                                          .floor()]
+                                                                  : Colors
+                                                                      .grey),
                                                           onPressed:
                                                               (!selected[index])
                                                                   ? null
@@ -300,8 +301,9 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                                                                                 email]!,
                                                                             title:
                                                                                 "Step Blocked",
-                                                                            body:
-                                                                                "I'm blocked on my step!",
+                                                                            body: "I'm blocked on step " +
+                                                                                (postModel?.mySteps?.recipeSteps?[index].number.toString() ?? "") +
+                                                                                "!",
                                                                             isBlocked: true);
                                                                       }
                                                                     },

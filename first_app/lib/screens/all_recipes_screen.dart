@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:first_app/helpers/globals.dart';
 import 'package:first_app/data_models/recipe_info_model.dart';
 import 'package:first_app/widgets/input_text_button.dart';
@@ -9,7 +10,9 @@ import 'package:provider/provider.dart';
 
 import '../backend_processing/data_class.dart';
 import '../backend_processing/post_requests.dart';
+import '../local_notification_service.dart';
 import '../widgets/alert_dialog.dart';
+import 'meal_session_screens/received_instructions_screen.dart';
 
 class AllRecipes extends StatefulWidget {
   const AllRecipes({Key? key}) : super(key: key);
@@ -41,6 +44,27 @@ class _AllRecipesState extends State<AllRecipes> {
   void initState() {
     final dataModel = Provider.of<DataClass>(context, listen: false);
     dataModel.loadAllRecipesPage(); //todo: save string value
+
+    FirebaseMessaging.onMessage.listen((event) {
+      final splitMessage = (event.data.toString().split('title: '))[1]
+          .split('}');
+      //we will categorize our notifications based on title
+      //notifications to send to other users about completing a step
+      //notification that redirects user to instruction page
+      if (splitMessage[0] != "Step Blocked") {
+        if (mounted) {
+          Navigator.of(context).push(MaterialPageRoute(
+            //if this starts bugging out again, use pushReplacement
+              builder: (context) => ReceivedInstructionScreen(message: event)));
+        }
+      }
+
+      else {
+        LocalNotificationService.init();
+        LocalNotificationService.displayNotification(event); }
+      //getting problem about widget being unmounted
+
+    });
 
     super.initState();
   }

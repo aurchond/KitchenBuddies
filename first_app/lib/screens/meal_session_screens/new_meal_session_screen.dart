@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:first_app/helpers/globals.dart';
 import 'package:first_app/provider/notification_provider.dart';
+import 'package:first_app/screens/meal_session_screens/received_instructions_screen.dart';
 import 'package:first_app/widgets/checkbox_decorated.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:provider/provider.dart';
 import '../../backend_processing/data_class.dart';
 import '../../data_models/friends_list_model.dart';
 import '../../data_models/recipe_info_model.dart';
+import '../../local_notification_service.dart';
 import '../../provider/auth_provider.dart';
 import 'instructions_screen.dart';
 
@@ -22,6 +24,32 @@ class NewMealSession extends StatefulWidget {
 
 class _NewMealSessionState extends State<NewMealSession> {
   dynamic tokens;
+
+  @override
+  void initState() {
+    FirebaseMessaging.onMessage.listen((event) {
+      final splitMessage = (event.data.toString().split('title: '))[1]
+          .split('}');
+      //we will categorize our notifications based on title
+      //notifications to send to other users about completing a step
+      //notification that redirects user to instruction page
+      if (splitMessage[0] != "Step Blocked") {
+        if (mounted) {
+          Navigator.of(context).push(MaterialPageRoute(
+            //if this starts bugging out again, use pushReplacement
+              builder: (context) => ReceivedInstructionScreen(message: event)));
+        }
+      }
+
+      else {
+        LocalNotificationService.init();
+        LocalNotificationService.displayNotification(event); }
+      //getting problem about widget being unmounted
+
+    });
+
+    super.initState();
+  }
 
   checkboxCallback(
       bool? val, List<Map> _data, int index, StateSetter setState) {

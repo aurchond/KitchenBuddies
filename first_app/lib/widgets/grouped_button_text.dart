@@ -61,7 +61,7 @@ Widget groupedButtonText(
                               fcmProvider.sendNotification(
                                   token: friendsTokenMap[email],
                                   title: "Step Blocked",
-                                  body: "I'm blocked on my step!");
+                                  body: buttonText, isBlocked: true);
                             }
                           }
 
@@ -73,7 +73,7 @@ Widget groupedButtonText(
                               fcmProvider.sendNotification(
                                   token: friendsTokenList?[i],
                                   title: "Step Blocked",
-                                  body: "I'm blocked on my step!");
+                                  body: buttonText, isBlocked: true);
                             }
                           }
                         },
