@@ -135,7 +135,7 @@ class _AllRecipesState extends State<AllRecipes> {
     return Consumer<AuthProvider>(builder: (context, model, _) {
       return Scaffold(
         appBar: AppBar(
-          title: const Text("AllRecipes"),
+          title: const Text("Cookbook"),
           actions: [
             IconButton(
               onPressed: () {
@@ -155,7 +155,7 @@ class _AllRecipesState extends State<AllRecipes> {
                       Container(
                           margin: EdgeInsets.only(top: 20, bottom: 20),
                           child: Text(
-                            "Welcome to your pantry!",
+                            "Welcome to your cookbook!",
                             style:
                             TextStyle(fontWeight: FontWeight.bold,
                                 fontSize: 18),

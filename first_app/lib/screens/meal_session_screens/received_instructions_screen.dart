@@ -256,12 +256,12 @@ class ReceivedInstructionScreen extends StatelessWidget {
                                                                                 0;
                                                                             i < (friendTokenList.length ?? 0);
                                                                             i++) {
-                                                                          fcmProvider.sendNotification(
-                                                                              token: friendTokenList[i],
-                                                                              title: "Step Blocked",
-                                                                              body: "I'm blocked on Recipe " + id + " - Step " + number + "!",
-                                                                              isBlocked: true);
-                                                                        }
+
+                                                                        }fcmProvider.sendNotification(
+                                                                            token: friendTokenList[index],
+                                                                            title: "Step Blocked",
+                                                                            body: "I'm blocked on Recipe " + id + " - Step " + number + "!",
+                                                                            isBlocked: true);
                                                                       },
                                                             child: Text(
                                                               "I'm blocked on Recipe " +
