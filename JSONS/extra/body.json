@@ -1,0 +1,40 @@
+{
+    "receiversToken": "jdkdcbghkjdzchjkdhj",
+    "tokens": [
+        "jdkdcbghkjdzchjkdhj",
+        "jkdzfcgkfjzkdxghjdjszfxghkldzfxgfhhk",
+        "nzghxgjzfdxgffjkzxbhkfzkjsxhjkfjh"
+    ],
+    "mealSessionSteps":
+        {
+            "userEmail": "aurchond@gmail.com",
+            "recipeStep": [
+                {
+                    "number": "2.1",
+                    "instructions": "heat oil in a wok",
+                    "ingredientList": [
+                        "teaspoon coconut oil"
+                    ],
+                    "ingredientQuantity": [
+                        1
+                    ],
+                    "dependencyItem": "",
+                    "nextUserEmail": "aurchond@gmail.com"
+                },
+                {
+                    "number": "2.2",
+                    "instructions": "cook veggies in wok",
+                    "ingredientList": [
+                        "teaspoon salt",
+                        "shredded carrots"
+                    ],
+                    "ingredientQuantity": [
+                        1,
+                        2
+                    ],
+                    "dependencyItem": "",
+                    "nextUserEmail": "shadi@gmail.com"
+                }
+            ]
+        }
+}

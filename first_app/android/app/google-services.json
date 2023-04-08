@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "838725511021",
+    "project_id": "kb-reborn",
+    "storage_bucket": "kb-reborn.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:838725511021:android:275e736baf0451a2ce1c64",
+        "android_client_info": {
+          "package_name": "com.example.first_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "838725511021-svtvnbc7ht1hg37ub9trljodao63taja.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKVzFRjMCehKmnMibQYuwIdhnH0o276ew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "838725511021-svtvnbc7ht1hg37ub9trljodao63taja.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
