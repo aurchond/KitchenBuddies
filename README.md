@@ -1,17 +1,10 @@
 # KitchenBuddies
 UWaterloo ECE Fourth Year Design Project - SMAC'M (Shadi, Maya, Aurchon, Caleb, Marley)
 
-Prototype:
+This social cooking app offers a solution for busy families, groups of friends, or anyone looking to streamline their meal preparation process.
 
-Frontend References:
+Kitchen Buddies optimizes the cooking workflow, enabling multiple people to cook multiple recipes in parallel. It facilitates coordination and structure in the process of meal preparation, ensuring all recipes are ready at the same time - this allows all freshly cooked dishes to be enjoyed hot and fresh!
 
-Setting up Fragments/Navigation - https://www.youtube.com/watch?v=obYxPd2ot7Q&ab_channel=CodeWithCal
-Expandable RecyclerView - https://www.youtube.com/watch?v=HQX0WHJm7BI&ab_channel=AndroidWorldClub
-Setting up cross-device notifications - https://www.youtube.com/watch?v=HoFWPPv1ih8&ab_channel=PhilippLackner
-Fragments/Navigation - https://zhuinden.medium.com/creating-a-bottomnavigation-multi-stack-using-child-fragments-with-jetpack-navigation-5d4c24ea6f4f 
- 
-
-Input Processing:
-JSON file after clicking add recipe button, process in backend (currently processing JSON files?)
+We created this app to bring people together in the kitchen and make mealtime a more enjoyable and efficient experience. Although the backend is not being hosted anymore after, feel free to check out a short demo video here: https://youtu.be/wGmMyfTvzW0
 
 
