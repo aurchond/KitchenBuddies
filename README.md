@@ -7,6 +7,6 @@ Kitchen Buddies optimizes the cooking workflow, enabling multiple people to cook
 
 We created this app to bring people together in the kitchen and make mealtime a more enjoyable and efficient experience. Although the backend is not being hosted anymore after, feel free to check out a short demo video here: https://youtu.be/wGmMyfTvzW0
 
-If you would like more info on the apps design and the decisions we made, please refer to `Kitchen Buddies Report.pdf`.
+If you would like more info on the app's design and the decisions we made, please refer to `Kitchen Buddies Report.pdf`.
 
 
